@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.ui#content{
+  
+  padding-top: 10px;
+}
+
+.profilecard{
+  background: #F0F0F3;
+  box-shadow: 10px 10px 30px rgba(174, 174, 192, 0.4), -10px -10px 30px #FFFFFF;
+  border-radius: 5px;
+}
