@@ -1,19 +1,35 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import {Grid,Segment,Placeholder,Divider,Menu,Button,Icon,Item} from 'semantic-ui-react';
+import ContentContext from '../context/ContentContext';
 
 import ContentCard from './ContentCard'
+import {FETCH_FEED_ITEMS} from '../util/graphql';
 
-function ContentMiddle(){
+function ContentMiddle(props){
+    const [contentTag] = useContext(ContentContext)
     var activeItem = 'home';
+    
     function handleItemClick(){
 
     }
+
+    function ContentLoaded(){
+        console.log("Loaded")
+    }
+    
+    const temp = useQuery(FETCH_FEED_ITEMS,{
+        onCompleted:ContentLoaded(),
+    });
+
+    const loading = temp['loading']
+    var posts;
+
     return(
-        <>
+        <>   
         <Menu pointing secondary>
           <Menu.Item
-            name='Blockchain'
+            name={contentTag.currentTag}
             active={activeItem === 'home'}
           />
           <Menu.Item
@@ -42,70 +58,30 @@ function ContentMiddle(){
             onClick={handleItemClick}
           />
           <Menu.Menu position='right'>
-            <Button icon>
+              <div className='icobutton'>
+            <Button icon >
                 <Icon name='bell' />
             </Button>
             <Button icon>
                 <Icon name='share alternate' />
             </Button>
+            </div>
           </Menu.Menu>
         </Menu>
-        <Divider/>
-        <Item.Group>
-            <ContentCard/>
-            <ContentCard/>
-            <ContentCard/>
-            <ContentCard/>
-            <ContentCard/>
-            <ContentCard/>
-            <ContentCard/>
-            <ContentCard/>
-
-        </Item.Group>
-        {/* <Grid columns={1}>
-            <Grid.Column>
-                <Segment raised>
-                    <Placeholder>
-                    <Placeholder.Header image>
-                        <Placeholder.Line />
-                        <Placeholder.Line />
-                    </Placeholder.Header>
-                    <Placeholder.Paragraph>
-                        <Placeholder.Line length='medium' />
-                        <Placeholder.Line length='short' />
-                    </Placeholder.Paragraph>
-                    </Placeholder>
-                </Segment>
-            </Grid.Column>
-            <Grid.Column>
-                <Segment raised>
-                    <Placeholder>
-                    <Placeholder.Header image>
-                        <Placeholder.Line />
-                        <Placeholder.Line />
-                    </Placeholder.Header>
-                    <Placeholder.Paragraph>
-                        <Placeholder.Line length='medium' />
-                        <Placeholder.Line length='short' />
-                    </Placeholder.Paragraph>
-                    </Placeholder>
-                </Segment>
-            </Grid.Column>
-            <Grid.Column>
-                <Segment raised>
-                    <Placeholder>
-                    <Placeholder.Header image>
-                        <Placeholder.Line />
-                        <Placeholder.Line />
-                    </Placeholder.Header>
-                    <Placeholder.Paragraph>
-                        <Placeholder.Line length='medium' />
-                        <Placeholder.Line length='short' />
-                    </Placeholder.Paragraph>
-                    </Placeholder>
-                </Segment>
-            </Grid.Column>
-        </Grid> */}
+        
+            {<Item.Group>
+                {loading?
+                    (<h1>Loading!!</h1>):
+                    (
+                        // {contentChange(contentTag=>({...contentTag,currentTag:'Loaded'})}
+                        posts = temp['data']['items'],
+                        posts && posts.map(post=>(
+                            <ContentCard key={post.id} postdata={post}/>
+                        ))
+                    )
+                }
+            </Item.Group>}
+        
         </>
     )
 }

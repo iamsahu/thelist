@@ -40,10 +40,18 @@
 .ui#content{
   
   padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .profilecard{
   background: #F0F0F3;
   box-shadow: 10px 10px 30px rgba(174, 174, 192, 0.4), -10px -10px 30px #FFFFFF;
   border-radius: 5px;
+}
+
+.icobutton{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  
 }

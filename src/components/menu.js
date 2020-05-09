@@ -10,7 +10,7 @@ function MenuBar(){
 
     return(
         <div>
-            <Sticky context={contextRef}>
+            
             <Menu pointing attached='top'>
             <Menu.Item
                 name='Curato'
@@ -31,7 +31,7 @@ function MenuBar(){
               />
           </Menu.Menu>
         </Menu>
-        </Sticky>
+        
         </div>
     )
 }

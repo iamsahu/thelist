@@ -1,13 +1,14 @@
 import React from 'react'
 import {Item,Button,Icon} from 'semantic-ui-react'
 
-function ContentCard(){
+function ContentCard(postdata){
+    const post = postdata.postdata
     return(
         <>
         <Item>
             <Item.Image size='small' src='https://react.semantic-ui.com/images/wireframe/image.png' />
             <Item.Content>
-                <Item.Header as='a'>Cute Dog</Item.Header>
+                <Item.Header as='a' href={post.link}>{post.name}</Item.Header>
                 <Button icon floated='right'>
                     <Icon name='bookmark outline' />
                 </Button>
@@ -21,15 +22,7 @@ function ContentCard(){
                 <Item.Description>
                 <p></p>
                 <p>
-                    Many people also have their own barometers for what makes a cute
-                    dog. Many people also have their own barometers for what makes a cute
-                    dog. Many people also have their own barometers for what makes a cute
-                    dog. Many people also have their own barometers for what makes a cute
-                    dog. Many people also have their own barometers for what makes a cute
-                    dog. Many people also have their own barometers for what makes a cute
-                    dog. Many people also have their own barometers for what makes a cute
-                    dog. Many people also have their own barometers for what makes a cute
-                    dog.
+                    {post.description}
                 </p>
                 </Item.Description>
                 
