@@ -1,5 +1,4 @@
 import React,{useContext} from 'react'
-import {Card} from 'semantic-ui-react'
 import ContentContext from '../context/ContentContext';
 import UserContext from '../context/UserContext';
 
@@ -14,7 +13,7 @@ function ContentRight(){
         <>
         <ProfileCard/>
         <CurationReasonCard/>
-        <PopularProfile/>
+        {/* <PopularProfile/> */}
         </>
     )
 }

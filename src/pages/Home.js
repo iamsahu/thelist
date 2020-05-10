@@ -1,21 +1,22 @@
 import React,{useContext,useState} from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import {Grid,Segment,Placeholder} from 'semantic-ui-react';
-import SearchLeft from '../components/SearchLeft'
+
+import {Grid} from 'semantic-ui-react';
+
 import ContentMiddle from '../components/ContentMiddle'
 import ContentRight from '../components/ContentRight'
 import CurationList from '../components/CurationList'
 
 import UserContext from '../context/UserContext';
-import {ContentProvider} from '../context/ContentContext';
+
 
 function Home(){
     const user = useContext(UserContext);
-    const [contentTag,contentChange] = useState({currentTag:'None'})//Passing a function so that the consumer can change the contentTag
-    console.log('Home')
-    console.log(contentTag);
+
+
+    // console.log('Home')
+    // console.log(content);
     return(
-        <ContentProvider value={[contentTag,contentChange]}>
+
             <div id="content" className="ui">
                 <Grid columns={3} >
                     <Grid.Column width={3}>
@@ -29,7 +30,7 @@ function Home(){
                     </Grid.Column>
                 </Grid>
             </div>
-        </ContentProvider>
+
     )
 }
 

@@ -1,13 +1,16 @@
 import React,{useContext} from 'react';
-import {Modal,Button,Header,Image,Icon,Form,Input} from 'semantic-ui-react';
+import {Modal,Button,Form,Dropdown} from 'semantic-ui-react';
 import useForm from '../util/hook';
 import {useMutation } from '@apollo/react-hooks';
 import {CREATE_ITEM} from '../util/graphql';
-import {FETCH_FEED_ITEMS} from '../util/graphql';
+import {FETCH_FEED_ITEMS,INSERT_TAG} from '../util/graphql';
 import UserContext from '../context/UserContext';
+import ContentContext from '../context/ContentContext';
 
 function AddItem(){
+    const [content,contentChange] = useContext(ContentContext)
     const user = useContext(UserContext)
+    
     const {values,onChange,onSubmit} = useForm(createPostCallback,{
         name:'',
         link:'',
@@ -15,6 +18,10 @@ function AddItem(){
         tag:'',
         curator:user.loggedin_user_id
     })
+
+    const [createTag,{errorTag}] = useMutation(INSERT_TAG,{
+        variables:{curator:values.curator,tag:values.tag}
+    });
     
     const [createPost,{error}] = useMutation(CREATE_ITEM,{
         variables:values,
@@ -22,10 +29,10 @@ function AddItem(){
             const data =proxy.readQuery({
                 query:FETCH_FEED_ITEMS
             })
-            console.log(data)
-            console.log(result)
-            data.items = [result.data.insert_items.returning,...data.items];
-            proxy.writeQuery({query:FETCH_FEED_ITEMS,data})
+            // console.log(data)
+            // console.log(result)
+            // data.items = [result.data.insert_items.returning,...data.items];
+            // proxy.writeQuery({query:FETCH_FEED_ITEMS,data})
             values.reason="";
             values.name='';
             values.link='';
@@ -35,7 +42,13 @@ function AddItem(){
     });
     
     function createPostCallback(){
-        createPost()
+        console.log("TAGGGS")
+        console.log(values.tag)
+        createPost();
+        // var tags = String.split(values.tag);/
+        if(values.tag!==''){
+            createTag();
+        }
     }
 
     return(
@@ -61,7 +74,7 @@ function AddItem(){
                             placeholder='Link' 
                             onChange={onChange}
                             value={values.link}
-                            // error={error?true:false}
+                            error={error?true:false}
                         />
                     </Form.Field>
                     <Form.Field inline name="description">
@@ -71,9 +84,26 @@ function AddItem(){
                             placeholder='Description'
                             onChange={onChange}
                             value={values.description}
+                            error={error?true:false}
                         />
                     </Form.Field>
-                    <Form.Input
+                    <Form.Field inline name="tag">
+                        <label>Tags</label>
+                        <Form.Input>
+                            <Dropdown
+                                name='tag'
+                                placeholder='Tags'
+                                fluid
+                                multiple
+                                search
+                                selection
+                                options={Object.values(content.tags)}
+                                onChange={onChange}
+                                // value={values.tag}
+                            />
+                        </Form.Input>
+                    </Form.Field>
+                    {/* <Form.Input
                         icon='tags'
                         iconPosition='left'
                         // label={{ tag: true, content: 'Add Tag' }}
@@ -82,7 +112,8 @@ function AddItem(){
                         placeholder='Enter tags'
                         onChange={onChange}
                         value={values.tag}
-                    />
+                        // errorTag={errorTag?true:false}
+                    /> */}
                     <Button primary type='submit' >
                         Submit
                     </Button>

@@ -15,7 +15,7 @@ function ContentMiddle(props){
     }
 
     function ContentLoaded(){
-        console.log("Loaded")
+        // console.log("Loaded")
     }
     
     const temp = useQuery(FETCH_FEED_ITEMS,{
@@ -26,13 +26,14 @@ function ContentMiddle(props){
     var posts;
 
     return(
-        <>   
+        <>
+        <h1>{contentTag.currentTag}</h1>
         <Menu pointing secondary>
           <Menu.Item
-            name={contentTag.currentTag}
+            name="Home"
             active={activeItem === 'home'}
           />
-          <Menu.Item
+          {/* <Menu.Item
             name='Latest'
             active={activeItem === 'Latest'}
             onClick={handleItemClick}
@@ -51,7 +52,7 @@ function ContentMiddle(props){
             name='All'
             active={activeItem === 'All'}
             onClick={handleItemClick}
-          />
+          /> */}
           <Menu.Item
             name='Bookmarked'
             active={activeItem === 'Bookmarked'}
@@ -69,18 +70,22 @@ function ContentMiddle(props){
           </Menu.Menu>
         </Menu>
         
-            {<Item.Group>
-                {loading?
-                    (<h1>Loading!!</h1>):
-                    (
-                        // {contentChange(contentTag=>({...contentTag,currentTag:'Loaded'})}
-                        posts = temp['data']['items'],
-                        posts && posts.map(post=>(
-                            <ContentCard key={post.id} postdata={post}/>
-                        ))
-                    )
-                }
-            </Item.Group>}
+            {
+              <div className="scrolly">
+                <Item.Group >
+                  {loading?
+                      (<h1>Loading!!</h1>):
+                      (
+                          // {contentChange(contentTag=>({...contentTag,currentTag:'Loaded'})}
+                          posts = temp['data']['items'],
+                          posts && posts.map(post=>(
+                              <ContentCard key={post.id} postdata={post}/>
+                          ))
+                      )
+                  }
+                </Item.Group>
+              </div>
+            }
         
         </>
     )
