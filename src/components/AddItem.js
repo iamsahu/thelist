@@ -30,6 +30,8 @@ function AddItem(){
         }
     });
 
+    
+
     const updateCache = (cache, {data}) => {
         // Fetch the items from the cache
         const existingItems = cache.readQuery({
@@ -41,7 +43,7 @@ function AddItem(){
           query: FETCH_FEED_ITEMS,
           data: {items: [newItem, ...existingItems.items]}
         });
-        values.reason="";
+        values.reason='';
         values.name='';
         values.link='';
         values.description='';
@@ -53,7 +55,6 @@ function AddItem(){
     }});
     
     function createPostCallback(){
-        console.log(values)
         createPost();
         if(tagSelection!==''){
             createTag()
@@ -111,46 +112,44 @@ function AddItem(){
                             value={values.description}
                             error={error?true:false}
                         />
-                    </Form.Field>
-
-                    
+                    </Form.Field>                    
                         <Grid columns={2} relaxed='very' stackable>
                             <Grid.Column>
-                            <Segment placeholder>
+                                <Segment placeholder>
+                                    <Form.Field inline name="tag">
+                                        <label>Tags</label>
+                                        <Form.Input>
+                                            <Dropdown
+                                                name='tag'
+                                                placeholder='Tags'
+                                                fluid
+                                                multiple
+                                                search
+                                                selection
+                                                options={Object.values(content.tags)}
+                                                onChange={handleChange}
+                                                // value={values.tag}
+                                            />
+                                        </Form.Input>
+                                </Form.Field>
+                                <Divider horizontal>Or</Divider>
                                 <Form.Field inline name="tag">
-                                    <label>Tags</label>
-                                    <Form.Input>
-                                        <Dropdown
+                                        <Form.Input
+                                            // icon='tags'
+                                            // iconPosition='left'
+                                            // label={{ tag: true, content: 'Add Tag' }}
+                                            labelPosition='right'
                                             name='tag'
-                                            placeholder='Tags'
-                                            fluid
-                                            multiple
-                                            search
-                                            selection
-                                            options={Object.values(content.tags)}
+                                            placeholder='Enter new tags'
                                             onChange={handleChange}
                                             // value={values.tag}
-                                        />
-                                    </Form.Input>
-                            </Form.Field>
-                            <Divider horizontal>Or</Divider>
-                            <Form.Field inline name="tag">
-                                    <Form.Input
-                                        // icon='tags'
-                                        // iconPosition='left'
-                                        // label={{ tag: true, content: 'Add Tag' }}
-                                        labelPosition='right'
-                                        name='tag'
-                                        placeholder='Enter new tags'
-                                        onChange={handleChange}
-                                        // value={values.tag}
-                                        // errorTag={errorTag?true:false}
-                                    /> 
-                                </Form.Field>
-                                </Segment>
+                                            // errorTag={errorTag?true:false}
+                                        /> 
+                                    </Form.Field>
+                                    </Segment>
                             </Grid.Column>
                             <Grid.Column>
-                            <Segment placeholder><Form.Field>
+                                <Segment placeholder><Form.Field>
                                     <label>List Name</label>
                                     {/* <Form.Input>
                                         <Dropdown
@@ -173,18 +172,17 @@ function AddItem(){
                                         // onChange={handleChange}
                                         // value={values.tag}
                                         // errorTag={errorTag?true:false}
-                                    /> 
-                                </Form.Field>
-                                
+                                        /> 
+                                    </Form.Field>
                                 </Segment>
                             </Grid.Column>
                         </Grid>
                         {/* <Divider vertical>Or</Divider> */}
+                        <br/>
                         <Button primary type='submit' >
-                Submit
-            </Button>
+                            Submit
+                        </Button>
                 </Form>
-                
             </Modal.Content>
             <Modal.Actions>
             

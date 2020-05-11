@@ -89,7 +89,11 @@ export const CREATE_ITEM=gql`
 
 export const DELETE_ITEM=gql`
     mutation ($item_id:uuid!,$curator:uuid!){
-        delete_items(where: {id: {_eq: $item_id},curator: {_eq: $curator}})
+        delete_items(where: {id: {_eq: $item_id},curator: {_eq: $curator}}){
+    returning {
+      id
+    }
+        }
     }
 `
 
