@@ -79,6 +79,9 @@ export const CREATE_ITEM=gql`
                 name
                 share_count
                 view_count
+                user {
+                    id
+                }
             }
         }
     }

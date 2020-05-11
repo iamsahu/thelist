@@ -30,46 +30,31 @@ function AddItem(){
         }
     });
 
-    // const updateCache = (cache, {data}) => {
-    //     // If this is for the public feed, do nothing
-    //     if (isPublic) {
-    //       return null;
-    //     }
-    //     // Fetch the todos from the cache
-    //     const existingTodos = cache.readQuery({
-    //       query: FETCH_FEED_ITEMS
-    //     });
-    //     // Add the new todo to the cache
-    //     const newTodo = data.insert_todos.returning[0];
-    //     cache.writeQuery({
-    //       query: FETCH_FEED_ITEMS,
-    //       data: {todos: [newTodo, ...existingTodos.todos]}
-    //     });
-    // };
+    const updateCache = (cache, {data}) => {
+        // Fetch the items from the cache
+        const existingItems = cache.readQuery({
+          query: FETCH_FEED_ITEMS
+        });
+        // Add the new item to the cache
+        const newItem = data.insert_items.returning[0];
+        cache.writeQuery({
+          query: FETCH_FEED_ITEMS,
+          data: {items: [newItem, ...existingItems.items]}
+        });
+        values.reason="";
+        values.name='';
+        values.link='';
+        values.description='';
+    };
     
     const [createPost,{error}] = useMutation(CREATE_ITEM,{
-        variables:values,
-        update(proxy,result){
-            const data =proxy.readQuery({
-                query:FETCH_FEED_ITEMS
-            })
-            // console.log(data)
-            // console.log(result)
-            // data.items = [result.data.insert_items.returning,...data.items];
-            // proxy.writeQuery({query:FETCH_FEED_ITEMS,data})
-            values.reason="";
-            values.name='';
-            values.link='';
-            values.description='';
-        },
-        onError:(error)=>{
+        variables:values,update:updateCache,onError:(error)=>{
             console.log(error)
-        }
-    });
+    }});
     
     function createPostCallback(){
         console.log(values)
-        // createPost();
+        createPost();
         if(tagSelection!==''){
             createTag()
         }
