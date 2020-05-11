@@ -65,7 +65,7 @@ query($user_id:uuid!){
 `
 
 export const CREATE_ITEM=gql`
-    mutation ($curator:uuid!,$description:String!,$link:String!,$name:String!,$tag:String!) {
+    mutation ($curator:uuid!,$description:String!,$link:String!,$name:String!) {
         insert_items(objects: {link: $link, name: $name, description: $description, curator: $curator}){
             affected_rows
             returning{
@@ -94,7 +94,32 @@ export const INSERT_TAG=gql`
     mutation ($tag:String!,$curator:uuid!){
         insert_tag(objects: {name: $tag, user_id: $curator}) {
             returning {
-            id
+                id
+            }
+        }
+    }
+`
+
+// gql`type tag_insert_input{
+//     name:String!
+//     user_id:uuid!
+// }``
+
+export const INSERT_TAGS=gql`
+    mutation($objects:[tag_insert_input!]!){
+        insert_tags(objects:$objects){
+            returning{
+                id
+            }
+        }
+    }
+`
+
+export const INSERT_TAGS2 = gql`
+    mutation MyMutation($objects: [tag_insert_input!]!) {
+        insert_tag(objects: $objects) {
+            returning {
+            name
             }
         }
     }

@@ -1,5 +1,5 @@
-import React,{useContext} from 'react';
-import {Modal,Button,Form,Dropdown} from 'semantic-ui-react';
+import React,{useContext, useState} from 'react';
+import {Modal,Button,Form,Dropdown,Divider,Segment, Grid} from 'semantic-ui-react';
 import useForm from '../util/hook';
 import {useMutation } from '@apollo/react-hooks';
 import {CREATE_ITEM} from '../util/graphql';
@@ -9,19 +9,43 @@ import ContentContext from '../context/ContentContext';
 
 function AddItem(){
     const [content,contentChange] = useContext(ContentContext)
+    const [singleTag,SetTag] = useState('')
     const user = useContext(UserContext)
-    
+    console.log(user.loggedin_user_id)
+    var tagSelection = {};
+    var tagSelectionFinal={};
+
     const {values,onChange,onSubmit} = useForm(createPostCallback,{
         name:'',
         link:'',
         description:'',
-        tag:'',
         curator:user.loggedin_user_id
     })
 
     const [createTag,{errorTag}] = useMutation(INSERT_TAG,{
-        variables:{curator:values.curator,tag:values.tag}
+        variables:singleTag,//[{tag: "test1", curator: "26b4e98c-b5dc-4810-97b9-909ddc74c4f0"},{tag: "test2", curator: "26b4e98c-b5dc-4810-97b9-909ddc74c4f0"}],
+        onError:(error,variables)=>{
+            console.log(error)
+            // console.log(variables)
+        }
     });
+
+    // const updateCache = (cache, {data}) => {
+    //     // If this is for the public feed, do nothing
+    //     if (isPublic) {
+    //       return null;
+    //     }
+    //     // Fetch the todos from the cache
+    //     const existingTodos = cache.readQuery({
+    //       query: FETCH_FEED_ITEMS
+    //     });
+    //     // Add the new todo to the cache
+    //     const newTodo = data.insert_todos.returning[0];
+    //     cache.writeQuery({
+    //       query: FETCH_FEED_ITEMS,
+    //       data: {todos: [newTodo, ...existingTodos.todos]}
+    //     });
+    // };
     
     const [createPost,{error}] = useMutation(CREATE_ITEM,{
         variables:values,
@@ -37,19 +61,35 @@ function AddItem(){
             values.name='';
             values.link='';
             values.description='';
-            values.tag='';        
+        },
+        onError:(error)=>{
+            console.log(error)
         }
     });
     
     function createPostCallback(){
-        console.log("TAGGGS")
-        console.log(values.tag)
-        createPost();
-        // var tags = String.split(values.tag);/
-        if(values.tag!==''){
-            createTag();
+        console.log(values)
+        // createPost();
+        if(tagSelection!==''){
+            createTag()
         }
     }
+
+    const handleChange = (e, { value }) => {
+        tagSelection = value
+        console.log(tagSelection)
+        if(tagSelection!==''){
+            tagSelection = tagSelection.map(tag=>(
+                {tag:tag,curator:user.loggedin_user_id}
+            ))
+            for (var a in tagSelection){
+                tagSelectionFinal = tagSelection[a]
+                SetTag(tagSelectionFinal)
+                console.log(tagSelectionFinal)
+                break
+            }
+        }
+    };
 
     return(
         <>
@@ -87,40 +127,82 @@ function AddItem(){
                             error={error?true:false}
                         />
                     </Form.Field>
-                    <Form.Field inline name="tag">
-                        <label>Tags</label>
-                        <Form.Input>
-                            <Dropdown
-                                name='tag'
-                                placeholder='Tags'
-                                fluid
-                                multiple
-                                search
-                                selection
-                                options={Object.values(content.tags)}
-                                onChange={onChange}
-                                // value={values.tag}
-                            />
-                        </Form.Input>
-                    </Form.Field>
-                    {/* <Form.Input
-                        icon='tags'
-                        iconPosition='left'
-                        // label={{ tag: true, content: 'Add Tag' }}
-                        labelPosition='right'
-                        name='tag'
-                        placeholder='Enter tags'
-                        onChange={onChange}
-                        value={values.tag}
-                        // errorTag={errorTag?true:false}
-                    /> */}
-                    <Button primary type='submit' >
-                        Submit
-                    </Button>
+
+                    
+                        <Grid columns={2} relaxed='very' stackable>
+                            <Grid.Column>
+                            <Segment placeholder>
+                                <Form.Field inline name="tag">
+                                    <label>Tags</label>
+                                    <Form.Input>
+                                        <Dropdown
+                                            name='tag'
+                                            placeholder='Tags'
+                                            fluid
+                                            multiple
+                                            search
+                                            selection
+                                            options={Object.values(content.tags)}
+                                            onChange={handleChange}
+                                            // value={values.tag}
+                                        />
+                                    </Form.Input>
+                            </Form.Field>
+                            <Divider horizontal>Or</Divider>
+                            <Form.Field inline name="tag">
+                                    <Form.Input
+                                        // icon='tags'
+                                        // iconPosition='left'
+                                        // label={{ tag: true, content: 'Add Tag' }}
+                                        labelPosition='right'
+                                        name='tag'
+                                        placeholder='Enter new tags'
+                                        onChange={handleChange}
+                                        // value={values.tag}
+                                        // errorTag={errorTag?true:false}
+                                    /> 
+                                </Form.Field>
+                                </Segment>
+                            </Grid.Column>
+                            <Grid.Column>
+                            <Segment placeholder><Form.Field>
+                                    <label>List Name</label>
+                                    {/* <Form.Input>
+                                        <Dropdown
+                                            name='list_name'
+                                            placeholder='Choose list name'
+                                            fluid
+                                            multiple
+                                            search
+                                            selection
+                                        />
+                                    </Form.Input> */}
+                                    <Divider horizontal>Or</Divider>
+                                    <Form.Input
+                                        icon='list ol'
+                                        iconPosition='left'
+                                        // label={{ tag: true, content: 'Add Tag' }}
+                                        labelPosition='right'
+                                        name='newlistname'
+                                        placeholder='Enter new name'
+                                        // onChange={handleChange}
+                                        // value={values.tag}
+                                        // errorTag={errorTag?true:false}
+                                    /> 
+                                </Form.Field>
+                                
+                                </Segment>
+                            </Grid.Column>
+                        </Grid>
+                        {/* <Divider vertical>Or</Divider> */}
+                        <Button primary type='submit' >
+                Submit
+            </Button>
                 </Form>
+                
             </Modal.Content>
             <Modal.Actions>
-                
+            
             </Modal.Actions>
         </Modal>
         </>

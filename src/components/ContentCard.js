@@ -3,7 +3,10 @@ import {Item,Button,Icon} from 'semantic-ui-react'
 import { useAuth0 } from '../react-auth0-spa'
 
 function ContentCard(postdata){
-    const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+    const { isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
+    // if(user){
+    //     console.log(user['sub'])
+    // }
     const post = postdata.postdata
     return(
         <>
