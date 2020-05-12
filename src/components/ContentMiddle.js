@@ -69,25 +69,23 @@ function ContentMiddle(props){
             </div>
           </Menu.Menu>
         </Menu>
-        
-            {
-              <div className="scrolly">
-                <Item.Group >
-                  {loading?
-                      (<h1>Loading!!</h1>):
-                      (
-                          // {contentChange(contentTag=>({...contentTag,currentTag:'Loaded'})}
-                          posts = temp['data']['items'],
-                          posts && posts.map(post=>(
-                              <ContentCard key={post.id} postdata={post}/>
-                          ))
-                      )
-                  }
-                </Item.Group>
-              </div>
-            }
-        
-        </>
+          {
+            <div className="overflow-auto">
+              <Item.Group >
+                {loading?
+                    (<h1>Loading!!</h1>):
+                    (
+                        // {contentChange(contentTag=>({...contentTag,currentTag:'Loaded'})}
+                        posts = temp['data']['items'],
+                        posts && posts.map(post=>(
+                            <ContentCard key={post.id} postdata={post}/>
+                        ))
+                    )
+                }
+              </Item.Group>
+            </div>
+          }
+      </>
     )
 }
 

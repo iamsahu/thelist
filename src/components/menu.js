@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Input, Menu } from 'semantic-ui-react'
 import AddItem from './AddItem';
+import AddList from './AddList';
+import TopSearch from './TopSearch'
 import { useAuth0 } from '../react-auth0-spa'
 
 function MenuBar(){
@@ -23,11 +25,13 @@ function MenuBar(){
             />
             <Menu.Menu position='left'>
             <Menu.Item>
-              <Input icon='search' placeholder='Search...' />
+              <TopSearch/>
+              {/* <Input icon='search' placeholder='Search...' /> */}
             </Menu.Item>
           </Menu.Menu>
           <Menu.Menu position='right'>
             <AddItem/>
+            <AddList/>
               {/* <Menu.Item> */}
               {!isAuthenticated && (
                 <Menu.Item
@@ -38,6 +42,7 @@ function MenuBar(){
               )}
 
               {isAuthenticated && (
+                
                 <Menu.Item
                 name='Logout'
                 active={activeItem === 'Logout'}

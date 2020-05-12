@@ -12,6 +12,8 @@ export const CREATE_POST_MUTATION = gql`
     }
 `
 
+
+
 export const FETCH_POSTS_QUERY= gql`
     {       
         posts{
@@ -43,25 +45,56 @@ export const FETCH_FEED_ITEMS = gql`
     }
 `
 
-// export const FETCH_TAGS = gql`
-//     {
-//         tag(where: {user_tags: {user_id: {_eq: "26b4e98c-b5dc-4810-97b9-909ddc74c4f0"}}}) {
-//             user_tags {
-//             id
-//             }
-//             id
-//             name
-//         }
-//     }
-// `
+export const COMBINED_FETCH = gql`
+    query  ($user_id:uuid!){
+        lists(where: {curator_id: {_eq: $user_id}}) {
+            list_name
+            id
+            description
+            curator_id
+        }
+        tag(where: {user_id: {_eq: $user_id}}) {
+            id
+            name
+            user_id
+        }
+    }
+`
+
+export const FETCH_ALL = gql`
+    query  {
+        lists {
+            list_name
+            id
+            description
+            curator_id
+        }
+        tag {
+            id
+            name
+            user_id
+        }
+    }
+`
 
 export const FETCH_TAGS = gql `
-query($user_id:uuid!){
-    tag(where: {user_id: {_eq: $user_id}}) {
-    name
-    id
-  }
-}
+    query($user_id:uuid!){
+        tag(where: {user_id: {_eq: $user_id}}) {
+            name
+            id
+        }
+    }
+`
+
+export const FETCH_LISTS = gql`
+    query ($curator_id:uuid!) {
+        lists(where: {user_id: {_eq: $curator_id}}) {
+            id
+            list_name
+            curator_id
+            description
+        }
+    }
 `
 
 export const CREATE_ITEM=gql`
@@ -87,6 +120,18 @@ export const CREATE_ITEM=gql`
     }
 `
 
+export const CREATE_LIST =gql`
+    mutation ($list_name:String!,$description:String!,$curator:uuid!) {
+        insert_lists(objects: {list_name: $list_name,description:$description, curator_id: $curator}) {
+            returning {
+                id
+                description
+                list_name
+            }
+        }
+    }
+`
+
 export const DELETE_ITEM=gql`
     mutation ($item_id:uuid!,$curator:uuid!){
         delete_items(where: {id: {_eq: $item_id},curator: {_eq: $curator}}){
@@ -96,6 +141,7 @@ export const DELETE_ITEM=gql`
         }
     }
 `
+
 
 export const INSERT_TAG=gql`
     mutation ($tag:String!,$curator:uuid!){

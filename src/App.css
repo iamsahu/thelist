@@ -62,3 +62,10 @@
   overflow-y: scroll;
   height: 85vh;
 }
+
+.overflow-auto::-webkit-scrollbar,
+.overflow-y-auto::-webkit-scrollbar,
+.overflow-x-auto::-webkit-scrollbar {
+  width: 7px;
+  height: 85vh;
+}

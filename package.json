@@ -11,6 +11,8 @@
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-link-http": "^1.5.17",
+    "faker": "^4.1.0",
+    "grabity": "^1.0.5",
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
     "moment": "^2.25.3",

@@ -1,9 +1,10 @@
-import React,{useState,useContext} from 'react'
+import React,{useState,useContext,useEffect} from 'react'
 import {Item,Button,Icon} from 'semantic-ui-react'
 import { useAuth0 } from '../react-auth0-spa'
 import {FETCH_FEED_ITEMS,INSERT_TAG,DELETE_ITEM} from '../util/graphql';
 import {useMutation} from '@apollo/react-hooks'
 import UserContext from '../context/UserContext';
+import grabity from 'grabity'
 
 function ContentCard(postdata){
     const { isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
@@ -13,7 +14,6 @@ function ContentCard(postdata){
     //     console.log(user['sub'])
     // }
     //post.user.id //Would be useful for checking if the post beind deleted belongs to the person
-    const [itemID,SetID] = useState('')
     const [deleteItem] = useMutation(DELETE_ITEM,{
         variables:{item_id:post.id,curator:userC.loggedin_user_id},
         update: (cache) => {
@@ -27,16 +27,43 @@ function ContentCard(postdata){
             });
         }
     })
+
+    const [thumbImage,thumbImageSet] = useState('https://react.semantic-ui.com/images/wireframe/image.png')
+
+    const [token, setToken] = useState('');
+
+    //Fetches thumbnail image
+    try{
+        const thumb =async () => {
+            let it = await grabity.grabIt("https://cors-anywhere.herokuapp.com/"+post.link);
+            // console.log(it)
+            if(it['favicon']){
+                thumbImageSet(it['favicon'])
+            }else if(it['image']){
+                thumbImageSet(it['image'])
+            }
+            // console.log(post.link)
+            // console.log(it)
+            setToken('l')
+        };
+        useEffect(() => {
+            // You need to restrict it at some point
+            // This is just dummy code and should be replaced by actual
+            if (!token) {
+                thumb();
+            }
+        }, [thumb, token]);
+    }catch (e){
+        // console.log(e)
+    }
     
-    
-    // SetID(post.user.id)
     return(
         <>
         <Item>
-            <Item.Image size='small' src='https://react.semantic-ui.com/images/wireframe/image.png' />
+            <Item.Image size='tiny' src={thumbImage}/>
             <Item.Content>
-                <Item.Header as='a' href={post.link}>{post.name}</Item.Header>
-                {isAuthenticated&&(
+                <Item.Header as='a' target='_blank' href={post.link}>{post.name}</Item.Header>
+                {isAuthenticated&&(post.user.id===userC.loggedin_user_id)&&(
                     <Button icon floated='right' onClick={deleteItem}>
                         <Icon name='delete' />
                     </Button>
@@ -59,7 +86,7 @@ function ContentCard(postdata){
                 </Item.Description>
                 
             </Item.Content>
-            </Item>
+        </Item>
         </>
     )
 }

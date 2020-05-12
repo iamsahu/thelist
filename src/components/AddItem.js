@@ -1,5 +1,5 @@
 import React,{useContext, useState} from 'react';
-import {Modal,Button,Form,Dropdown,Divider,Segment, Grid} from 'semantic-ui-react';
+import {Modal,Button,Form,Dropdown,Divider,Segment, Grid,Icon} from 'semantic-ui-react';
 import useForm from '../util/hook';
 import {useMutation } from '@apollo/react-hooks';
 import {CREATE_ITEM} from '../util/graphql';
@@ -10,6 +10,7 @@ import ContentContext from '../context/ContentContext';
 function AddItem(){
     const [content,contentChange] = useContext(ContentContext)
     const [singleTag,SetTag] = useState('')
+    const [showModal,SetModal] = useState(false)
     const user = useContext(UserContext)
     console.log(user.loggedin_user_id)
     var tagSelection = {};
@@ -29,8 +30,6 @@ function AddItem(){
             // console.log(variables)
         }
     });
-
-    
 
     const updateCache = (cache, {data}) => {
         // Fetch the items from the cache
@@ -59,6 +58,7 @@ function AddItem(){
         if(tagSelection!==''){
             createTag()
         }
+        SetModal(false)
     }
 
     const handleChange = (e, { value }) => {
@@ -79,8 +79,13 @@ function AddItem(){
 
     return(
         <>
-        <Modal trigger={<div className='icobutton'><Button>Add Item</Button></div>} >
-            <Modal.Header>Add Item</Modal.Header>
+        <Modal open={showModal} trigger={<div className='icobutton'><Button onClick={()=>SetModal(true)}>Add Item</Button></div>} >
+            <Modal.Header>
+                Add Item
+                <Button icon position="right" onClick={()=>SetModal(false)}>
+                    <Icon name='close' />
+                </Button>
+            </Modal.Header>
             <Modal.Content image scrolling>
                 <Form onSubmit={onSubmit}>
                     <Form.Field inline name="name">
@@ -105,13 +110,20 @@ function AddItem(){
                     </Form.Field>
                     <Form.Field inline name="description">
                         <label>Description</label>
-                        <Form.Input 
+                        <Form.TextArea 
                             name='description' 
                             placeholder='Description'
+                            style={{ minHeight: 100 }} 
                             onChange={onChange}
                             value={values.description}
                             error={error?true:false}
                         />
+                            
+                        {/* <Form.Input 
+                            name='description' 
+                            placeholder='Description'
+                            
+                        /> */}
                     </Form.Field>                    
                         <Grid columns={2} relaxed='very' stackable>
                             <Grid.Column>
@@ -183,9 +195,10 @@ function AddItem(){
                             Submit
                         </Button>
                 </Form>
+
             </Modal.Content>
             <Modal.Actions>
-            
+                
             </Modal.Actions>
         </Modal>
         </>
