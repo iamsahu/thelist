@@ -42,6 +42,9 @@ function ContentCard(postdata){
             }else if(it['image']){
                 thumbImageSet(it['image'])
             }
+            if(post.description===""){
+                post.description=it['description']
+            }
             // console.log(post.link)
             // console.log(it)
             setToken('l')

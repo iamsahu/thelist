@@ -9,7 +9,6 @@ function CurationList(){
     const [content,contentChange] = useContext(ContentContext)
     const user = useContext(UserContext)
     const tagData = useQuery(COMBINED_FETCH,{variables:{user_id:user.loggedin_user_id},onCompleted:curationTags});
-    // const listData = useQuery(FETCH_LISTS,{variables:{curator_id:user.loggedin_user_id},onCompleted:curationLists});
     const loading = tagData['loading']
     // const loadingList =listData['loading']
     // console.log(listData)
@@ -30,6 +29,9 @@ function CurationList(){
         
         lists = tagData['data']['lists']
         const tempArr2 = lists.map(item=>({
+            text:item.list_name,
+            key:item.list_name,
+            value:item.list_name,
             id:item.id,
             list_name:item.list_name,
             description:item.description,
@@ -55,12 +57,18 @@ function CurationList(){
     function RenderTags(){
         return(
             <List animated verticalAlign='middle'>
+                <List.Item key="all">
+                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:"all"}))}>
+                                # All
+                            </List.Content>
+                    </List.Item>
                 {
                     posts = tagData['data']['tag'],
+                    
                     // content.tags = posts.map(post=>(post.name)),
                     posts && posts.map(post=>(
                         <List.Item key={post.id}>
-                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:post.name}))}>
+                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:post.name,currentTagID:post.id}))}>
                                 # {post.name}
                             </List.Content>
                         </List.Item>
@@ -78,7 +86,7 @@ function CurationList(){
                     // content.tags = lists.map(post=>(post.name)),
                     lists && lists.map(post=>(
                         <List.Item key={post.id}>
-                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentList:post.list_name}))}>
+                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentList:post.list_name,currentListID:post.id}))}>
                                 # {post.list_name}
                             </List.Content>
                         </List.Item>
@@ -90,7 +98,7 @@ function CurationList(){
 
     return(
         <>
-        My Curations
+        {/* My Curations */}
         {/* <Divider/> */}
         {
             (loading)?(

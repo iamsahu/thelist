@@ -23,16 +23,19 @@ function MenuBar(){
                 active={activeItem === 'curato'}
                 onClick={handleItemClick}
             />
-            <Menu.Menu position='left'>
+            {/* <Menu.Menu position='left'>
             <Menu.Item>
               <TopSearch/>
               {/* <Input icon='search' placeholder='Search...' /> */}
-            </Menu.Item>
-          </Menu.Menu>
+            {/* </Menu.Item>
+          </Menu.Menu> */} 
+          {/* <Menu.Menu position='right'>
+          {isAuthenticated && (
+            
+              )}
+          </Menu.Menu> */}
           <Menu.Menu position='right'>
-            <AddItem/>
-            <AddList/>
-              {/* <Menu.Item> */}
+          
               {!isAuthenticated && (
                 <Menu.Item
                 name='Login'
@@ -41,14 +44,22 @@ function MenuBar(){
                 />
               )}
 
-              {isAuthenticated && (
-                
+              
+                {isAuthenticated && (
+                  <>
+                 
+                  <AddItem/>
+                      <AddList/>
+                    
+                      
                 <Menu.Item
                 name='Logout'
                 active={activeItem === 'Logout'}
                 onClick={() => logout()}
                 />
+                </>
               )}
+              
           </Menu.Menu>
         </Menu>
         

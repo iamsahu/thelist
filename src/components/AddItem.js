@@ -11,6 +11,7 @@ function AddItem(){
     const [content,contentChange] = useContext(ContentContext)
     const [singleTag,SetTag] = useState('')
     const [showModal,SetModal] = useState(false)
+    const [listID,SetListID] = useState('')
     const user = useContext(UserContext)
     console.log(user.loggedin_user_id)
     var tagSelection = {};
@@ -20,6 +21,7 @@ function AddItem(){
         name:'',
         link:'',
         description:'',
+        // list_id:listID,
         curator:user.loggedin_user_id
     })
 
@@ -49,13 +51,13 @@ function AddItem(){
     };
     
     const [createPost,{error}] = useMutation(CREATE_ITEM,{
-        variables:values,update:updateCache,onError:(error)=>{
+        variables:{...values,list_id:listID},update:updateCache,onError:(error)=>{
             console.log(error)
     }});
     
     function createPostCallback(){
         createPost();
-        if(tagSelection!==''){
+        if(singleTag!==''){
             createTag()
         }
         SetModal(false)
@@ -72,6 +74,17 @@ function AddItem(){
                 tagSelectionFinal = tagSelection[a]
                 SetTag(tagSelectionFinal)
                 console.log(tagSelectionFinal)
+                break
+            }
+        }
+    };
+
+    const handleChangeList = (e, { value }) => {
+        // console.log(value)
+        for(var a in content.lists){
+            if(content.lists[a]['list_name']===value){
+                console.log(content.lists[a]['id'])
+                SetListID(content.lists[a]['id'])
                 break
             }
         }
@@ -161,19 +174,20 @@ function AddItem(){
                                     </Segment>
                             </Grid.Column>
                             <Grid.Column>
-                                <Segment placeholder><Form.Field>
+                                {/* <Segment placeholder><Form.Field> */}
                                     <label>List Name</label>
-                                    {/* <Form.Input>
+                                    <Form.Input>
                                         <Dropdown
                                             name='list_name'
                                             placeholder='Choose list name'
                                             fluid
-                                            multiple
                                             search
                                             selection
+                                            options={Object.values(content.lists)}
+                                            onChange={handleChangeList}
                                         />
-                                    </Form.Input> */}
-                                    <Divider horizontal>Or</Divider>
+                                    </Form.Input>
+                                    {/* <Divider horizontal>Or</Divider>
                                     <Form.Input
                                         icon='list ol'
                                         iconPosition='left'
@@ -185,8 +199,8 @@ function AddItem(){
                                         // value={values.tag}
                                         // errorTag={errorTag?true:false}
                                         /> 
-                                    </Form.Field>
-                                </Segment>
+                                    </Form.Field> */}
+                                {/* </Segment> */}
                             </Grid.Column>
                         </Grid>
                         {/* <Divider vertical>Or</Divider> */}

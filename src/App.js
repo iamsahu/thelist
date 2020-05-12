@@ -16,6 +16,7 @@ function App() {
   const [content,contentChange] = useState({currentTag:'None',contentType:'Lists',lists:{},tags:{}})//Passing a function so that the consumer can change the content
   const { isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
     if(user){
+      // console.log(user)
         // console.log(user['sub'])
         // console.log(user['sub'].split('|')[1])
         // userC['loggedin_user_id'] = user['sub'].split('|')[1]

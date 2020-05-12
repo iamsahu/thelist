@@ -98,8 +98,8 @@ export const FETCH_LISTS = gql`
 `
 
 export const CREATE_ITEM=gql`
-    mutation ($curator:uuid!,$description:String!,$link:String!,$name:String!) {
-        insert_items(objects: {link: $link, name: $name, description: $description, curator: $curator}){
+    mutation ($curator:uuid!,$description:String!,$link:String!,$name:String!,$list_id:uuid) {
+        insert_items(objects: {link: $link, name: $name, description: $description, curator: $curator,list_id:$list_id}){
             affected_rows
             returning{
                 appreciation_count
@@ -112,6 +112,7 @@ export const CREATE_ITEM=gql`
                 name
                 share_count
                 view_count
+                list_id
                 user {
                     id
                 }
@@ -127,6 +128,7 @@ export const CREATE_LIST =gql`
                 id
                 description
                 list_name
+                curator_id
             }
         }
     }
