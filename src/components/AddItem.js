@@ -12,6 +12,7 @@ function AddItem(){
     const [singleTag,SetTag] = useState('')
     const [showModal,SetModal] = useState(false)
     const [listID,SetListID] = useState('')
+    const [newItemID,SetItemID] = useState('')
     const user = useContext(UserContext)
     console.log(user.loggedin_user_id)
     var tagSelection = {};
@@ -48,6 +49,7 @@ function AddItem(){
         values.name='';
         values.link='';
         values.description='';
+        SetItemID(newItem.id)
     };
     
     const [createPost,{error}] = useMutation(CREATE_ITEM,{
@@ -138,9 +140,9 @@ function AddItem(){
                             
                         /> */}
                     </Form.Field>                    
-                        <Grid columns={2} relaxed='very' stackable>
-                            <Grid.Column>
-                                <Segment placeholder>
+                        {/* <Grid columns={2} relaxed='very' stackable>
+                            <Grid.Column> */}
+                                {/* <Segment placeholder> */}
                                     <Form.Field inline name="tag">
                                         <label>Tags</label>
                                         <Form.Input>
@@ -157,7 +159,7 @@ function AddItem(){
                                             />
                                         </Form.Input>
                                 </Form.Field>
-                                <Divider horizontal>Or</Divider>
+                                {/* <Divider horizontal>Or</Divider>
                                 <Form.Field inline name="tag">
                                         <Form.Input
                                             // icon='tags'
@@ -171,9 +173,9 @@ function AddItem(){
                                             // errorTag={errorTag?true:false}
                                         /> 
                                     </Form.Field>
-                                    </Segment>
-                            </Grid.Column>
-                            <Grid.Column>
+                                    </Segment> */}
+                            {/* </Grid.Column>
+                            <Grid.Column> */}
                                 {/* <Segment placeholder><Form.Field> */}
                                     <label>List Name</label>
                                     <Form.Input>
@@ -201,8 +203,8 @@ function AddItem(){
                                         /> 
                                     </Form.Field> */}
                                 {/* </Segment> */}
-                            </Grid.Column>
-                        </Grid>
+                            {/* </Grid.Column>
+                        </Grid> */}
                         {/* <Divider vertical>Or</Divider> */}
                         <br/>
                         <Button primary type='submit' >

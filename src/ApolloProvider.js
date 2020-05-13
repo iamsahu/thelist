@@ -16,9 +16,11 @@ const httpLink = createHttpLink({
 const client = new ApolloClient({
     link:httpLink,
     cache:new InMemoryCache(),
+    fetch,
     headers: {
         // FIXME: This gives admin rights to all. Need to use user permissions using access Token
-        'x-hasura-admin-secret': 'thesecretkey',
+        'Content-Type': 'application/json',
+        'x-hasura-admin-secret': 'veryverysecret',
     },
 })
 

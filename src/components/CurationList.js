@@ -25,13 +25,13 @@ function CurationList(){
         const tempArr = posts.map(post=>({
             text:post.name,
             key:post.name,
-            value:post.name}))
+            value:post.id}))
         
         lists = tagData['data']['lists']
         const tempArr2 = lists.map(item=>({
             text:item.list_name,
             key:item.list_name,
-            value:item.list_name,
+            value:item.id,
             id:item.id,
             list_name:item.list_name,
             description:item.description,

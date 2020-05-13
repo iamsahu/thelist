@@ -8,29 +8,25 @@ import CurationList from '../components/CurationList'
 
 import UserContext from '../context/UserContext';
 
-
 function Home(){
     const user = useContext(UserContext);
-
 
     // console.log('Home')
     // console.log(content);
     return(
-
-            <div id="content" className="ui">
-                <Grid columns={3} >
-                    <Grid.Column width={3}>
-                        <CurationList />
-                    </Grid.Column>
-                    <Grid.Column width={9}>
-                        <ContentMiddle/>
-                    </Grid.Column>
-                    <Grid.Column width={4}>
-                        <ContentRight/>
-                    </Grid.Column>
-                </Grid>
-            </div>
-
+        <div id="content" className="ui">
+            <Grid columns={3} >
+                <Grid.Column width={3}>
+                    <CurationList />
+                </Grid.Column>
+                <Grid.Column width={9}>
+                    <ContentMiddle/>
+                </Grid.Column>
+                <Grid.Column width={4}>
+                    <ContentRight/>
+                </Grid.Column>
+            </Grid>
+        </div>
     )
 }
 
