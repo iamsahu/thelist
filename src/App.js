@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import {BrowserRouter as Router,Route} from 'react-router-dom';
-import 'semantic-ui-css/semantic.min.css';
+// import 'semantic-ui-forest-themes/semantic.yeti.min.css'
+import 'semantic-ui-css/semantic.min.css';//readable
 import './App.css';
 
 import { UserProvider } from './context/UserContext'
@@ -12,7 +13,7 @@ import { useAuth0 } from './react-auth0-spa'
 
 function App() {
   const userC = { name: 'Tania',curator_id:'26b4e98c-b5dc-4810-97b9-909ddc74c4f0',loggedin_user_id:'26b4e98c-b5dc-4810-97b9-909ddc74c4f0'}
-  const [content,contentChange] = useState({currentTag:'None',contentType:'Lists',lists:{},tags:{}})//Passing a function so that the consumer can change the content
+  const [content,contentChange] = useState({currentTag:'None',contentType:'Lists',lists:{},tags:{},currentList:'',currentTagID:'',currentListID:''})//Passing a function so that the consumer can change the content
   const { isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
   
   if(user){

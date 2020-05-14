@@ -15,7 +15,7 @@ function ProfileCard(){
                     <Card.Header>Prafful Sahu</Card.Header>
                     <Card.Meta>Friends of Elliot</Card.Meta>
                     <Card.Description>
-                    A master procrastinator with with penchant for reading all that is unecessary!
+                    A master procrastinator with a penchant for reading all that is unecessary!
                     </Card.Description>
                 </Card.Content>
             </Card>

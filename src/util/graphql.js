@@ -45,6 +45,57 @@ export const FETCH_FEED_ITEMS = gql`
     }
 `
 
+export const FETCH_FEED_ITEMS_OFCURATOR = gql `
+    query FETCH_FEED_ITEMS_OFCURATOR($curator_id:uuid!) {
+        items(where: {user: {id: {_eq: $curator_id}}}, order_by: {created_at: desc}) {
+            appreciation_count
+            bookmarks_count
+            copy_count
+            created_at
+            curator
+            description
+            id
+            link
+            list_id
+            name
+            posts_tags(where: {}) {
+            tag_id
+            }
+            share_count
+            view_count
+            user {
+                id
+            }
+        }
+    }
+`
+
+export const FETCH_FEED_ITEMS_OFCURATOR_LISTID = gql `
+    query MyQuery ($curator_id:uuid!,$list_id:uuid!){
+        items(where: {user: {id: {_eq: $curator_id}}, list_id: {_eq: $list_id}}, order_by: {created_at: desc}) {
+            appreciation_count
+            bookmarks_count
+            copy_count
+            created_at
+            curator
+            description
+            id
+            link
+            list_id
+            name
+            posts_tags(where: {}) {
+                tag_id
+            }
+            share_count
+            view_count
+            user {
+                id
+            }
+        }
+    }
+`
+
+
 export const COMBINED_FETCH = gql`
     query  ($user_id:uuid!){
         lists(where: {curator_id: {_eq: $user_id}}) {
@@ -180,6 +231,96 @@ export const INSERT_TAGS2 = gql`
     }
 `
 
+//Inserting new tag
+export const INSERT_TAG_ARTICLE=gql`
+    mutation MyMutation($name:String!,$curator_id:uuid!,$item_id:uuid!) {
+        insert_tag(objects: {
+            name: $name, 
+            user_id: $curator_id, 
+            posts_tags: {
+                data: {
+                    user_id: $curator_id, 
+                    item_id: $item_id
+                    }
+                }
+            }) {
+            returning {
+                id
+                name
+                user_id
+            }
+        }
+    }
+`
+
+export const INSERT_ITEM_OLD_TAG=gql`
+    mutation MyMutation ($curator:uuid!,$description:String!,$link:String!,$name:String!,$list_id:uuid,$tag_id:uuid!) {
+        insert_items(objects: {
+            description: $description, 
+            curator: $curator, 
+            link: $link, 
+            list_id: $list_id, 
+            name: $name, 
+            posts_tags: {
+                data: {
+                    tag_id:$tag_id 
+                    }
+                }
+            }) {
+            returning {
+                appreciation_count
+                bookmarks_count
+                copy_count
+                curator
+                description
+                id
+                link
+                list_id
+                share_count
+                view_count
+                name
+            }
+        }
+    }
+`
+
+// var xyz=gql`type posts_tag_insert_input {
+//     tag_id: uuid!
+// }`
+
+export const INSERT_ITEM_OLD_TAG_MULTI=gql`
+    mutation MyMutation($data: [posts_tag_insert_input!]! ,$curator:uuid!,$description:String!,$link:String!,$name:String!,$list_id:uuid) {
+        insert_items(objects: {description: $description, curator: $curator, link: $link, list_id: $list_id, name: $name, posts_tags: {data: $data}}) {
+            returning {
+                appreciation_count
+                bookmarks_count
+                copy_count
+                curator
+                description
+                id
+                link
+                list_id
+                share_count
+                view_count
+                name
+                user {
+                    id
+                }
+            }
+        }
+    }
+`
+
+export const INSERT_TAG_MULTI=gql`
+    mutation MyMutation($objects: [tag_insert_input!]! ) {
+        insert_tag(objects: $objects) {
+            returning {
+               id
+            }
+            affected_rows
+        }
+    }
+`
 // export const CREATE_ITEM=gql`
 //     mutation($curator:uuid!,$description:String!,$link:String!,$name:String!,$tag:String!){
 //         insert_items(objects: 
@@ -222,5 +363,4 @@ export const INSERT_TAGS2 = gql`
 //             }
 //         }
 //     }
-
 // `

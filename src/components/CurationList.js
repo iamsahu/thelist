@@ -8,7 +8,7 @@ import {FETCH_TAGS,FETCH_LISTS,COMBINED_FETCH} from '../util/graphql'
 function CurationList(){
     const [content,contentChange] = useContext(ContentContext)
     const user = useContext(UserContext)
-    const tagData = useQuery(COMBINED_FETCH,{variables:{user_id:user.loggedin_user_id},onCompleted:curationTags});
+    const tagData = useQuery(COMBINED_FETCH,{variables:{user_id:user.curator_id},onCompleted:curationTags});
     const loading = tagData['loading']
     // const loadingList =listData['loading']
     // console.log(listData)
@@ -38,7 +38,7 @@ function CurationList(){
             curator_id:item.curator_id
         }))
 
-        contentChange({tags:tempArr,lists:tempArr2,currentList:lists[0].list_name})
+        contentChange({tags:tempArr,lists:tempArr2,currentList:lists[0].list_name,currentListID:lists[0].id})
         // curationLists()
     }
 
@@ -68,7 +68,7 @@ function CurationList(){
                     // content.tags = posts.map(post=>(post.name)),
                     posts && posts.map(post=>(
                         <List.Item key={post.id}>
-                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:post.name,currentTagID:post.id}))}>
+                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:post.name,currentTagID:post.id,currentListID:''}))}>
                                 # {post.name}
                             </List.Content>
                         </List.Item>
@@ -86,7 +86,7 @@ function CurationList(){
                     // content.tags = lists.map(post=>(post.name)),
                     lists && lists.map(post=>(
                         <List.Item key={post.id}>
-                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentList:post.list_name,currentListID:post.id}))}>
+                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentList:post.list_name,currentListID:post.id,currentTagID:''}))}>
                                 # {post.list_name}
                             </List.Content>
                         </List.Item>

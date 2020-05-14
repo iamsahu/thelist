@@ -13,7 +13,7 @@ const httpLink = createHttpLink({
     uri: 'https://thelistspacetest.herokuapp.com/v1/graphql'
 })
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
     link:httpLink,
     cache:new InMemoryCache(),
     fetch,

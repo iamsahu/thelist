@@ -33,32 +33,36 @@ function ContentCard(postdata){
     const [token, setToken] = useState('');
 
     //Fetches thumbnail image
-    try{
-        const thumb =async () => {
-            let it = await grabity.grabIt("https://cors-anywhere.herokuapp.com/"+post.link);
-            // console.log(it)
-            if(it['favicon']){
-                thumbImageSet(it['favicon'])
-            }else if(it['image']){
-                thumbImageSet(it['image'])
-            }
-            if(post.description===""){
-                post.description=it['description']
-            }
-            // console.log(post.link)
-            // console.log(it)
-            setToken('l')
-        };
-        useEffect(() => {
-            // You need to restrict it at some point
-            // This is just dummy code and should be replaced by actual
-            if (!token) {
-                thumb();
-            }
-        }, [thumb, token]);
-    }catch (e){
-        // console.log(e)
-    }
+    // try{
+    //     const thumb =async () => {
+    //         let it = await grabity.grabIt("https://cors-anywhere.herokuapp.com/"+post.link);
+    //         // console.log(it)
+    //         if(it['favicon']){
+    //             if(it['favicon']){
+    //                 thumbImageSet(it['favicon'])
+    //             }
+    //         }else if(it['image']){
+    //             thumbImageSet(it['image'])
+    //         }
+    //         if(post.description===""){
+    //             if(it['description']){
+    //                 post.description=it['description']
+    //             }
+    //         }
+    //         // console.log(post.link)
+    //         // console.log(it)
+    //         setToken('l')
+    //     };
+    //     useEffect(() => {
+    //         // You need to restrict it at some point
+    //         // This is just dummy code and should be replaced by actual
+    //         if (!token) {
+    //             thumb();
+    //         }
+    //     }, [thumb, token]);
+    // }catch (e){
+    //     // console.log(e)
+    // }
     
     return(
         <>

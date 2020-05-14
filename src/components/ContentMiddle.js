@@ -4,10 +4,12 @@ import {Grid,Segment,Placeholder,Divider,Menu,Button,Icon,Item} from 'semantic-u
 import ContentContext from '../context/ContentContext';
 
 import ContentCard from './ContentCard'
-import {FETCH_FEED_ITEMS} from '../util/graphql';
+import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
+import UserContext from '../context/UserContext';
 
 function ContentMiddle(props){
-    const [contentTag] = useContext(ContentContext)
+    const [content] = useContext(ContentContext)
+    const user = useContext(UserContext)
     var activeItem = 'home';
     
     function handleItemClick(){
@@ -22,12 +24,17 @@ function ContentMiddle(props){
         onCompleted:ContentLoaded(),
     });
 
+    // const temp = useQuery(FETCH_FEED_ITEMS_OFCURATOR,{
+    //   variables:{curator_id:user.curator_id},
+    //   onCompleted:ContentLoaded(),
+    // });
+
     const loading = temp['loading']
     var posts;
 
     return(
         <>
-        <h1>{contentTag.currentTag}</h1>
+        <h1>{content.currentTag}</h1>
         <Menu pointing secondary>
           <Menu.Item
             name="Home"
@@ -75,10 +82,12 @@ function ContentMiddle(props){
                 {loading?
                     (<h1>Loading!!</h1>):
                     (
-                        // {contentChange(contentTag=>({...contentTag,currentTag:'Loaded'})}
                         posts = temp['data']['items'],
                         posts && posts.map(post=>(
-                            <ContentCard key={post.id} postdata={post}/>
+                            
+                              <ContentCard key={post.id} postdata={post}/>
+                            
+                            
                         ))
                     )
                 }
