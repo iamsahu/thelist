@@ -77,7 +77,7 @@ function ContentMiddle(props){
           </Menu.Menu>
         </Menu>
           {
-            <div className="overflow-auto">
+            <div className="scrolly">
               <Item.Group >
                 {loading?
                     (<h1>Loading!!</h1>):

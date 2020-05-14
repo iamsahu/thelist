@@ -11,13 +11,14 @@ import {createItem} from '../util/graphqlExecutor';
 function AddItem(){
     const [content,contentChange] = useContext(ContentContext)
     const user = useContext(UserContext)
-    const [singleTag,SetTag] = useState(false)
+    const [dropTag,SetDropTag] = useState(content.tags)
     const [multiTag,SetMultiTag] = useState([])
     const [showModal,SetModal] = useState(false)
     const [listID,SetListID] = useState('')
     const [newItemID,SetItemID] = useState('')
-    const [tags_selection,SetTagSelection] = useState('')
+    const [dropList,SetDropList] = useState(content.lists)
     
+    // SetDropTag(content.tags)
     // console.log(user.loggedin_user_id)
     var tagSelection;
     var tagSelectionFinal={};
@@ -28,22 +29,6 @@ function AddItem(){
         description:'',
         curator:user.loggedin_user_id
     })
-
-    // const [createTag,{errorTag}] = useMutation(INSERT_TAG,{
-    //     variables:singleTag,
-    //     onError:(error,variables)=>{
-    //         console.log(error)
-    //     }
-    // });
-
-    // const [createTag,{errorTag}] = useMutation(INSERT_TAG_MULTI,{
-    //     variables:multiTag,
-    //     onError:(error,variables)=>{
-    //         console.log(error)
-    //         console.log(multiTag)
-    //         console.log(variables)
-    //     }
-    // });
 
     function MultiTagMutation(taged_data){
         const [createTag,{errorTag}] = useMutation(INSERT_TAG_MULTI,{
@@ -75,7 +60,7 @@ function AddItem(){
         values.description='';
         values.data = 
         SetItemID(newItem.id)
-        MultiTagInsert(newItem.id)
+        
     };
     
     const [createPost,{error}] = useMutation(CREATE_ITEM,{
@@ -86,124 +71,39 @@ function AddItem(){
     }});
     
     function createPostCallback(){
-        createItem({...values,list_id:listID,selTags:content.selTags,loggedin_user_id:user.loggedin_user_id,tags:content.tags})
+        createItem({...values,list_id:content.list_id,selTags:content.selTags,loggedin_user_id:user.loggedin_user_id,tags:content.tags})
         .then((response,response2)=>{
             console.log(response)
             console.log(response2)
         })
-        // console.log(multiTag)
-        // console.log(listID)
-        // createPost();//.then(TagInsert);
-        // if(singleTag!==''){
-        //     // createTag()
-        // }
         SetModal(false)
     }
 
-    // function TagInsert(data){
-    //     console.log(data);
-    //     var temp =[];
-    //     if(content.selTags!==''){
-    //         for(var a in content.selTags){
-    //             console.log(a)
-    //             tagTemplate['posts_tags']['data']['item_id']=item_id;
-    //             tagTemplate['posts_tags']['data']['user_id'] = user.loggedin_user_id;
-    //             tagTemplate['posts_tags']['name'] = FindTagName(content.selTags[a]);
-    //             tagTemplate['posts_tags']['user_id'] = user.loggedin_user_id;
-    //             SetMultiTag(multiTag.concat(tagTemplate))
-    //             temp.push(tagTemplate)
-    //         }
-    //     }
-    //     console.log(temp)
-
-    // }
-    
-
     const handleChange = (e, { value }) => {
         contentChange(content=>({...content,selTags:value}))
-        // console.log(value)
-        // SetTagSelection(value)
-        // // console.log(tags_selection)
-        // tagSelection = value
-        // // console.log(value)
-        // // console.log(tagSelection)
-        // SetMultiTag([])
-        // var temp;
-        // if(tagSelection!==''){
-        //     temp = tagSelection.map(tag=>(
-        //         {
-        //             posts_tags: {
-        //                 data: {
-        //                     item_id: "", 
-        //                     user_id: user.loggedin_user_id}
-        //                 }, 
-        //             name: FindTagName(tag), 
-        //             user_id: user.loggedin_user_id
-        //         }
-        //     ))
-        //     SetMultiTag(multiTag.concat(temp))
-        // }
-        // MultiTagInsert("who is this")
     };
+
+    function handleAddition(e,{value}){
+        console.log(value)
+        SetDropTag(dropTag=>([...dropTag,{text:value,value}]))
+    }
 
     const handleChangeList = (e, { value }) => {
         console.log(e)
         console.log(value)
-        SetListID(value)
+        // SetListID(value)
+        contentChange(content=>({...content,list_id:value}))
+        console.log(dropList)
+        // SetDropList(dropList=>([...dropList,{text:value,value}]))
+        
     };
 
-    const tagTemplate ={
-        posts_tags: {
-            data: {
-                item_id: "7abcdfc4-bb6a-43ec-8eea-b722312c38ac", 
-                user_id: "26b4e98c-b5dc-4810-97b9-909ddc74c4f0"}
-            }, 
-        name: "insert 4", 
-        user_id: "26b4e98c-b5dc-4810-97b9-909ddc74c4f0"
+    function handleChangeListAddition(e,{value}){
+        console.log(e)
+        console.log(value)
+        SetDropList(dropList=>([...dropList,{text:value,value}]))
     }
-
-    function MultiTagInsert(item_id){
-        SetMultiTag([])
-        var temp =[];
-        if(content.selTags!==''){
-            for(var a in content.selTags){
-                console.log(a)
-                tagTemplate['posts_tags']['data']['item_id']=item_id;
-                tagTemplate['posts_tags']['data']['user_id'] = user.loggedin_user_id;
-                tagTemplate['posts_tags']['name'] = FindTagName(content.selTags[a]);
-                tagTemplate['posts_tags']['user_id'] = user.loggedin_user_id;
-                SetMultiTag(multiTag.concat(tagTemplate))
-                temp.push(tagTemplate)
-            }
-            // tagSelection = tags_selection.map(tag=>(
-            //     tagTemplate['posts_tags']['data']['item_id']=item_id,
-            //     tagTemplate['posts_tags']['data']['user_id'] = user.loggedin_user_id,
-            //     tagTemplate['posts_tags']['name'] = FindTagName(tag),
-            //     tagTemplate['posts_tags']['user_id'] = user.loggedin_user_id
-            //     // {tag_id:tag,user_id:user.loggedin_user_id}
-            // ))
-            // console.log(tagSelection)
-            // SetMultiTag(multiTag.concat(tagSelection))
-            SetMultiTag(temp)
-            contentChange(content=>({...content,finTag:temp}))
-            console.log(temp)
-            console.log(content.finTag)
-            console.log(typeof(temp))
-            SetTag(true);
-            SetModal(false);
-            // Test();
-            MultiTagMutation(temp);
-        }
-    }
-    // function Test(){
-    //     console.log(multiTag)
-    //     createTag();
-    // }
-
-    // if(singleTag){
-    //     createTag();
-    // }
-
+    
     function FindTagName(id){
         for(var tag in content.tags){
             if(content.tags[tag]['value']===id){
@@ -269,6 +169,19 @@ function AddItem(){
                                         <Form.Input>
                                             <Dropdown
                                                 name='tag'
+                                                options={Object.values(dropTag)}
+                                                placeholder='Tags'
+                                                search
+                                                selection
+                                                fluid
+                                                multiple
+                                                allowAdditions
+                                                // value={currentValues}
+                                                onAddItem={handleAddition}
+                                                onChange={handleChange}
+                                            />
+                                            {/* <Dropdown
+                                                name='tag'
                                                 placeholder='Tags'
                                                 fluid
                                                 multiple
@@ -277,7 +190,7 @@ function AddItem(){
                                                 options={Object.values(content.tags)}
                                                 onChange={handleChange}
                                                 // value={values.tag}
-                                            />
+                                            /> */}
                                         </Form.Input>
                                 </Form.Field>
                                 {/* <Divider horizontal>Or</Divider>
@@ -302,13 +215,24 @@ function AddItem(){
                                     <Form.Input>
                                         <Dropdown
                                             name='list_name'
+                                            options={Object.values(dropList)}
+                                            placeholder='Choose list name'
+                                            search
+                                            selection
+                                            fluid
+                                            allowAdditions
+                                            onAddItem={handleChangeListAddition}
+                                            onChange={handleChangeList}
+                                            />
+                                        {/* <Dropdown
+                                            name='list_name'
                                             placeholder='Choose list name'
                                             fluid
                                             search
                                             selection
                                             options={Object.values(content.lists)}
                                             onChange={handleChangeList}
-                                        />
+                                        /> */}
                                     </Form.Input>
                                     {/* <Divider horizontal>Or</Divider>
                                     <Form.Input

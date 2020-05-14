@@ -63,8 +63,6 @@ const createItem =(values) => {
                 query:FETCH_FEED_ITEMS,
             })
             const newItem = data.insert_items.returning[0];
-            console.log(newItem)
-            console.log("New Item")
             cache.writeQuery({
                 query: FETCH_FEED_ITEMS,
                 data: {items: [newItem, ...existingItems.items]}
@@ -85,7 +83,13 @@ const createItem =(values) => {
                 temp.push({item_id: item.id, tag_id: values.selTags[a], user_id: values.loggedin_user_id})
             }
         }
-        return (response,client.mutate({
+
+        //Write code here to add the new tag as well
+        // if(thereIsNewTags){
+        //     Add new tag and then add them to posts_tag
+        // }
+
+        return client.mutate({
             mutation:gql`
                 mutation MyMutation($objects: [posts_tag_insert_input!]! ) {
                     insert_posts_tag(objects: $objects) {
@@ -106,7 +110,7 @@ const createItem =(values) => {
                 
             })).catch(error => { 
                 console.log(error) 
-        }))
+        })
         
     }).catch(error=>{
         console.log(error)
