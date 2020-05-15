@@ -3,7 +3,7 @@ import {Card} from 'semantic-ui-react'
 import ContentContext from '../context/ContentContext';
 import UserContext from '../context/UserContext';
 
-function CurationReasonCard(){
+function CurationReasonCard(props){
     const [contentTag,contentChange] = useContext(ContentContext)
     const user = useContext(UserContext);
     return(

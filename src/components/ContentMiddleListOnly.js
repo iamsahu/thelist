@@ -1,4 +1,4 @@
-import React,{useContext} from 'react';
+import React,{useState,useContext, useEffect} from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import {Grid,Segment,Placeholder,Divider,Menu,Button,Icon,Item} from 'semantic-ui-react';
 import ContentContext from '../context/ContentContext';
@@ -8,29 +8,32 @@ import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
 import UserContext from '../context/UserContext';
 import {GetList} from '../util/graphqlExecutor'
 
-function ContentMiddle(props){
+function ContentMiddleListOnly(props){
     const [content] = useContext(ContentContext)
+    const [posts,setPosts] = useState(null)
+    // const [loading,setLoading] = useState(true)
     const user = useContext(UserContext)
     var activeItem = 'home';
-    console.log(props)
+    // console.log(props)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const loadData=()=>{
+        GetList({userid:props.userid,listid:props.listid}).then((data)=>{
+            setPosts(data)
+        })
+    }
+
+    useEffect(()=>{
+        loadData()
+    },[loadData, posts]);
+
     function handleItemClick(){
 
     }
 
-    function ContentLoaded(){
-        // console.log("Loaded")
-    }
-    
-    const temp = useQuery(FETCH_FEED_ITEMS,{
-        onCompleted:ContentLoaded(),
-    });
-
-    const loading = temp['loading']
-    var posts;
-
     return(
         <>
-        <h1>{content.currentTag}</h1>
+        {/* <h1>{content.currentTag}</h1> */}
         <Menu pointing secondary>
           <Menu.Item
             name="Home"
@@ -72,23 +75,21 @@ function ContentMiddle(props){
             </div>
           </Menu.Menu>
         </Menu>
-          {
-            <div className="scrolly">
-              <Item.Group >
-                {loading?
-                    (<h1>Loading!!</h1>):
-                    (
-                      posts = temp['data']['items'],
-                      posts && posts.map(post=>(
-                        <ContentCard key={post.id} postdata={post}/>
-                        ))
-                    )
-                }
-              </Item.Group>
-            </div>
-          }
+        {
+        <div className="scrolly">
+            <Item.Group >
+            {
+                posts===null?
+                (<h1>Loading!!</h1>):
+                (
+                    posts.items.map(post=>(<ContentCard key={post.id} postdata={post}/>))
+                )
+            }
+            </Item.Group>
+        </div>
+        }
       </>
     )
 }
 
-export default ContentMiddle;
+export default ContentMiddleListOnly;

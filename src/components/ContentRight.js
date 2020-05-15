@@ -6,13 +6,13 @@ import ProfileCard from './ProfileCard'
 import PopularProfile from './PopularProfile'
 import CurationReasonCard from './CurationReasonCard'
 
-function ContentRight(){
+function ContentRight(props){
     const [contentTag,contentChange] = useContext(ContentContext)
     const user = useContext(UserContext);
     return(
         <>
-        <ProfileCard/>
-        <CurationReasonCard/>
+        <ProfileCard userid={props.userid}/>
+        <CurationReasonCard listid={props.listid}/>
         {/* <PopularProfile/> */}
         </>
     )

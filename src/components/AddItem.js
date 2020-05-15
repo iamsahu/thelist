@@ -7,6 +7,7 @@ import {FETCH_FEED_ITEMS,INSERT_TAG,INSERT_ITEM_OLD_TAG_MULTI} from '../util/gra
 import UserContext from '../context/UserContext';
 import ContentContext from '../context/ContentContext';
 import {createItem} from '../util/graphqlExecutor';
+import {MixpanelConsumer } from 'react-mixpanel';
 
 function AddItem(){
     const [content,contentChange] = useContext(ContentContext)
@@ -58,9 +59,7 @@ function AddItem(){
         values.name='';
         values.link='';
         values.description='';
-        values.data = 
-        SetItemID(newItem.id)
-        
+        values.data = SetItemID(newItem.id)
     };
     
     const [createPost,{error}] = useMutation(CREATE_ITEM,{
@@ -89,19 +88,15 @@ function AddItem(){
     }
 
     const handleChangeList = (e, { value }) => {
-        console.log(e)
-        console.log(value)
-
-        // SetListID(value)
+        // console.log(e)
+        // console.log(value)
         contentChange(content=>({...content,list_id:value}))
-        console.log(dropList)
-        // SetDropList(dropList=>([...dropList,{text:value,value}]))
-        
+        // console.log(dropList)
     };
 
     function handleChangeListAddition(e,{value}){
-        console.log(e)
-        console.log(value)
+        // console.log(e)
+        // console.log(value)
         SetDropList(dropList=>([...dropList,{text:value,value}]))
     }
     
@@ -155,113 +150,45 @@ function AddItem(){
                             value={values.description}
                             error={error?true:false}
                         />
-                            
-                        {/* <Form.Input 
-                            name='description' 
-                            placeholder='Description'
-                            
-                        /> */}
-                    </Form.Field>                    
-                        {/* <Grid columns={2} relaxed='very' stackable>
-                            <Grid.Column> */}
-                                {/* <Segment placeholder> */}
-                                    <Form.Field inline name="tag">
-                                        <label>Tags</label>
-                                        <Form.Input>
-                                            <Dropdown
-                                                name='tag'
-                                                options={Object.values(dropTag)}
-                                                placeholder='Tags'
-                                                search
-                                                selection
-                                                fluid
-                                                multiple
-                                                allowAdditions
-                                                // value={currentValues}
-                                                onAddItem={handleAddition}
-                                                onChange={handleChange}
-                                            />
-                                            {/* <Dropdown
-                                                name='tag'
-                                                placeholder='Tags'
-                                                fluid
-                                                multiple
-                                                search
-                                                selection
-                                                options={Object.values(content.tags)}
-                                                onChange={handleChange}
-                                                // value={values.tag}
-                                            /> */}
-                                        </Form.Input>
-                                </Form.Field>
-                                {/* <Divider horizontal>Or</Divider>
-                                <Form.Field inline name="tag">
-                                        <Form.Input
-                                            // icon='tags'
-                                            // iconPosition='left'
-                                            // label={{ tag: true, content: 'Add Tag' }}
-                                            labelPosition='right'
-                                            name='tag'
-                                            placeholder='Enter new tags'
-                                            onChange={handleChange}
-                                            // value={values.tag}
-                                            // errorTag={errorTag?true:false}
-                                        /> 
-                                    </Form.Field>
-                                    </Segment> */}
-                            {/* </Grid.Column>
-                            <Grid.Column> */}
-                                {/* <Segment placeholder><Form.Field> */}
-                                    <label>List Name</label>
-                                    <Form.Input>
-                                        <Dropdown
-                                            name='list_name'
-                                            options={Object.values(dropList)}
-                                            placeholder='Choose list name'
-                                            search
-                                            selection
-                                            fluid
-                                            allowAdditions
-                                            onAddItem={handleChangeListAddition}
-                                            onChange={handleChangeList}
-                                            />
-                                        {/* <Dropdown
-                                            name='list_name'
-                                            placeholder='Choose list name'
-                                            fluid
-                                            search
-                                            selection
-                                            options={Object.values(content.lists)}
-                                            onChange={handleChangeList}
-                                        /> */}
-                                    </Form.Input>
-                                    {/* <Divider horizontal>Or</Divider>
-                                    <Form.Input
-                                        icon='list ol'
-                                        iconPosition='left'
-                                        // label={{ tag: true, content: 'Add Tag' }}
-                                        labelPosition='right'
-                                        name='newlistname'
-                                        placeholder='Enter new name'
-                                        // onChange={handleChange}
-                                        // value={values.tag}
-                                        // errorTag={errorTag?true:false}
-                                        /> 
-                                    </Form.Field> */}
-                                {/* </Segment> */}
-                            {/* </Grid.Column>
-                        </Grid> */}
-                        {/* <Divider vertical>Or</Divider> */}
-                        <br/>
-                        <Button primary type='submit' >
-                            Submit
-                        </Button>
+                    </Form.Field>
+                        <Form.Field inline name="tag">
+                            <label>Tags</label>
+                            <Form.Input>
+                                <Dropdown
+                                    name='tag'
+                                    options={Object.values(dropTag)}
+                                    placeholder='Tags'
+                                    search
+                                    selection
+                                    fluid
+                                    multiple
+                                    allowAdditions
+                                    // value={currentValues}
+                                    onAddItem={handleAddition}
+                                    onChange={handleChange}
+                                />
+                            </Form.Input>
+                    </Form.Field>
+                    <label>List Name</label>
+                    <Form.Input>
+                        <Dropdown
+                            name='list_name'
+                            options={Object.values(dropList)}
+                            placeholder='Choose list name'
+                            search
+                            selection
+                            fluid
+                            allowAdditions
+                            onAddItem={handleChangeListAddition}
+                            onChange={handleChangeList}
+                            />
+                    </Form.Input>
+                    <br/>
+                    <Button primary type='submit' >
+                        Submit
+                    </Button>
                 </Form>
-
             </Modal.Content>
-            <Modal.Actions>
-                
-            </Modal.Actions>
         </Modal>
         </>
     )

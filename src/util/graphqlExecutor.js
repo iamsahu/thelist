@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 import UserContext from '../context/UserContext';
 import ContentContext from '../context/ContentContext';
 import {FETCH_FEED_ITEMS} from './graphql' 
-export {createItem};
+
 
 
 const tagTemplate ={
@@ -300,3 +300,36 @@ const createItem =(values) => {
         }
     }
 }
+
+export const GET_LIST = gql`
+    query MyQuery($userid:uuid,$listid:uuid!) {
+        items(order_by: {created_at: desc_nulls_last}, where: {user: {id: {_eq: $userid}}, list_id: {_eq: $listid}}) {
+            appreciation_count
+            bookmarks_count
+            copy_count
+            curator
+            description
+            id
+            link
+            list_id
+            name
+            share_count
+            view_count
+            user {
+                id
+            }
+        }
+    }
+`
+
+const GetList = (values)=>{
+    return client.query({
+        query:GET_LIST,
+        variables:{
+            userid:values.userid,
+            listid:values.listid
+        }
+    }).then((response) => response.data);
+}
+
+export {createItem,GetList};
