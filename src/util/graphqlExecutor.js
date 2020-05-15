@@ -19,45 +19,111 @@ const tagTemplate ={
 
 const oldTagTemplate= {item_id: "", tag_id: "", user_id: ""}
 
-const createItem =(values) => {
-    function FindTagName(id){
-        for(var tag in values.tags){
-            if(values.tags[tag]['value']===id){
-                return values.tags[tag]['text']
+const TAG_ITEM = gql`
+    mutation MyMutation($objects: [posts_tag_insert_input!]! ) {
+        insert_posts_tag(objects: $objects) {
+            returning {
+                item_id
+                tag_id
+                user_id
+                id
             }
         }
-        return ''
     }
-    
-    return client.mutate({
-        mutation:gql`
-            mutation  {
-                insert_items(objects: {
-                    link: "${values.link}", 
-                    name: "${values.name}", 
-                    description: "${values.description}", 
-                    curator: "${values.curator}",
-                    list_id:"${values.list_id}"}){
-                    affected_rows
-                    returning{
-                        appreciation_count
-                        bookmarks_count
-                        copy_count
-                        curator
-                        description
-                        id
-                        link
-                        name
-                        share_count
-                        view_count
-                        list_id
-                        user {
-                            id
-                        }
-                    }
+`;
+
+const INSERT_LIST = gql`
+    mutation MyMutation($curator_id:uuid!,$list_name:String!,$description:String){
+        insert_lists(objects: {curator_id: $curator_id, list_name: $list_name, description: $description}) {
+            returning {
+                curator_id
+                id
+                list_name
+                description
+            }
+        }
+    }
+`;
+
+const INSERT_TAGS = gql`
+    mutation MyMutation($objects: [tag_insert_input!]! ) {
+        insert_tag(objects: $objects) {
+            returning {
+                id
+                name
+                user_id
+            }
+        }
+    }
+
+`
+
+const INSERT_ITEM=gql`
+    mutation ($link:String,$name:String!,$description:String!,$curator:uuid!,$list_id:uuid!) {
+        insert_items(objects: {
+            link: $link, 
+            name: $name, 
+            description: $description, 
+            curator: $curator,
+            list_id:$list_id}){
+            affected_rows
+            returning{
+                appreciation_count
+                bookmarks_count
+                copy_count
+                curator
+                description
+                id
+                link
+                name
+                share_count
+                view_count
+                list_id
+                user {
+                    id
                 }
             }
-        `,
+        }
+    }
+`
+
+function InsertNewList(loggedin_user_id,list_name,listDescription){
+    return client.mutate({
+        mutation:INSERT_LIST,
+        variables:{
+            curator_id:loggedin_user_id,
+            list_name:list_name,
+            description:listDescription
+        }
+    })
+    // .then((response)=>({
+    //     response   
+    // }))
+    // console.log(values.list_id)
+}
+
+function InsertNewTags(tags){
+    return client.mutate({
+        mutation:INSERT_TAGS,
+        variables:{
+            objects:tags
+        }
+    })
+    // .then((response)=>({
+    //     response   
+    // }))
+}
+
+function InsertItem(link,name,description,loggedin_user_id,list_id){
+    return client.mutate({
+        mutation:INSERT_ITEM,
+        variables:{
+            link:link,
+            name:name,
+            description:description,
+            curator:loggedin_user_id,
+            list_id:list_id
+        },
         update:(cache,{data})=>{
             const existingItems = cache.readQuery({
                 query:FETCH_FEED_ITEMS,
@@ -68,51 +134,169 @@ const createItem =(values) => {
                 data: {items: [newItem, ...existingItems.items]}
             });
         }
-    }).then((response)=>{
-        const item = response.data.insert_items.returning[0];
-        console.log(response)
-        var temp =[];
-        if(values.selTags!==''){
-            for(var a in values.selTags){
-                // console.log(a)
-                tagTemplate['posts_tags']['data']['item_id']=item.id;
-                tagTemplate['posts_tags']['data']['user_id'] = values.loggedin_user_id;
-                tagTemplate['posts_tags']['name'] = FindTagName(values.selTags[a]);
-                tagTemplate['posts_tags']['user_id'] = values.loggedin_user_id;
-                // temp.push(tagTemplate)
-                temp.push({item_id: item.id, tag_id: values.selTags[a], user_id: values.loggedin_user_id})
+    })
+}
+
+function InsertTagPost(temp){
+    return client.mutate({
+        mutation:TAG_ITEM,
+            variables:{
+                objects:temp
+            }
+        })    
+}
+
+const createItem =(values) => {
+    function FindTagName(id){
+        for(var tag in values.tags){
+            if(values.tags[tag]['value']===id){
+                return values.tags[tag]['text']
+                break
             }
         }
+        return ''
+    }
+    var newListID = false
+    var newTag = false
+    var oldTag = false
+    var newTags = []
+    var oldTags = []
+    if(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(values.list_id)){
+        //The supplied list_id works
+    }else{
+        //New list name has to be inserted
+        console.log(values.list_id)
+        newListID = true
+    }
+    if(values.selTags!==''){
+        for(var a in values.selTags){
+            if(FindTagName(values.selTags[a])===''){
+                newTag=true
+                newTags.push({name: values.selTags[a], user_id: values.loggedin_user_id})
+            }else{
+                oldTag = true
+                oldTags.push({ tag_id: values.selTags[a]})
+            }
+        }
+    }
+    if(newListID){
+        if(newTag){
+            if(oldTag){
+                return InsertNewList(values.loggedin_user_id,values.list_id,values.listDescription).then((response)=>{
+                    values.list_id = response.data.insert_lists.returning[0].id
+                    return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id).then((response)=>{
+                        const item = response.data.insert_items.returning[0];
+                        console.log(response)
+                        return InsertNewTags(newTags).then((response)=>{
+                            // console.log(response)
+                            // console.log(item.id)
+                            const receivedTags = response.data.insert_tag.returning;
+                            var temp = []
+                            for(var x in receivedTags){
+                                temp.push({item_id: item.id, tag_id: receivedTags[x].id, user_id: values.loggedin_user_id})
+                            }
+                            for(var y in oldTags){
+                                temp.push({item_id: item.id, tag_id: oldTags[y].tag_id, user_id: values.loggedin_user_id})
+                            }
+                            return InsertTagPost(temp)
 
-        //Write code here to add the new tag as well
-        // if(thereIsNewTags){
-        //     Add new tag and then add them to posts_tag
-        // }
-
-        return client.mutate({
-            mutation:gql`
-                mutation MyMutation($objects: [posts_tag_insert_input!]! ) {
-                    insert_posts_tag(objects: $objects) {
-                        returning {
-                            item_id
-                            tag_id
-                            user_id
-                            id
-                        }
-                    }
-                }`,
-                variables:{
-                    objects:temp
-                }
-
-            }).then((response)=>({
-                response
+                        })
+                    })
+                })
                 
-            })).catch(error => { 
-                console.log(error) 
-        })
-        
-    }).catch(error=>{
-        console.log(error)
-    })
+            }else{
+                return InsertNewList(values.loggedin_user_id,values.list_id,values.listDescription).then((response)=>{
+                    values.list_id = response.data.insert_lists.returning[0].id
+                    return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id).then((response)=>{
+                        const item = response.data.insert_items.returning[0];
+                        console.log(response)
+                        return InsertNewTags(newTags).then((response)=>{
+                            // console.log(response)
+                            // console.log(item.id)
+                            const receivedTags = response.data.insert_tag.returning;
+                            var temp = []
+                            for(var x in receivedTags){
+                                temp.push({item_id: item.id, tag_id: receivedTags[x].id, user_id: values.loggedin_user_id})
+                            }
+                            return InsertTagPost(temp)
+
+                        })
+                    })
+                })
+            }
+        }else{
+            if(oldTag){
+                return InsertNewList(values.loggedin_user_id,values.list_id,values.listDescription).then((response)=>{
+                    values.list_id = response.data.insert_lists.returning[0].id
+                    return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id).then((response)=>{
+                        const item = response.data.insert_items.returning[0];
+                        console.log(response)
+                        var temp =[];
+                        for(var a in oldTags){
+                            temp.push({item_id: item.id, tag_id: oldTags[a].tag_id, user_id: values.loggedin_user_id})
+                        }
+                        return InsertTagPost(temp)
+                        
+                    })
+                })
+            }else{
+                return InsertNewList(values.loggedin_user_id,values.list_id,values.listDescription).then((response)=>{
+                    values.list_id = response.data.insert_lists.returning[0].id
+                    return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id)
+                })
+            }
+        }
+    }else{
+        if(newTag){
+            if(oldTag){
+                return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id).then((response)=>{
+                    const item = response.data.insert_items.returning[0];
+                    // console.log(response)
+                    return InsertNewTags(newTags).then((response)=>{
+                        // console.log(response)
+                        // console.log(item.id)
+                        const receivedTags = response.data.insert_tag.returning;
+                        var temp = []
+                        for(var x in receivedTags){
+                            temp.push({item_id: item.id, tag_id: receivedTags[x].id, user_id: values.loggedin_user_id})
+                        }
+                        for(var y in oldTags){
+                            temp.push({item_id: item.id, tag_id: oldTags[y].tag_id, user_id: values.loggedin_user_id})
+                        }
+                        return InsertTagPost(temp)
+                    })
+                })
+            }else{
+                return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id).then((response)=>{
+                    const item = response.data.insert_items.returning[0];
+                    // console.log(response)
+                    return InsertNewTags(newTags).then((response)=>{
+                        // console.log(response)
+                        // console.log(item.id)
+                        const receivedTags = response.data.insert_tag.returning;
+                        var temp = []
+                        for(var x in receivedTags){
+                            temp.push({item_id: item.id, tag_id: receivedTags[x].id, user_id: values.loggedin_user_id})
+                        }
+                        return InsertTagPost(temp)
+                    })
+                })
+            }
+        }else{
+            if(oldTag){
+                return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id).then((response)=>{
+                    const item = response.data.insert_items.returning[0];
+                    console.log(response)
+                    var temp =[];                    
+                    for(var a in oldTags){
+                        temp.push({item_id: item.id, tag_id: oldTags[a].tag_id, user_id: values.loggedin_user_id})
+                    }
+                    return InsertTagPost(temp)
+                    
+                })
+            }else{
+                return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id)
+            }
+        }
+    }
 }

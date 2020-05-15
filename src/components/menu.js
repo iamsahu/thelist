@@ -49,7 +49,7 @@ function MenuBar(){
                   <>
                  
                   <AddItem/>
-                      <AddList/>
+                      {/* <AddList/> */}
                     
                       
                 <Menu.Item

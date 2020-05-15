@@ -80,8 +80,11 @@ function CurationList(){
 
     function RenderLists(){
         return(
+            <div className="scrolly">
             <List animated verticalAlign='middle'>
+                
                 {
+                    
                     lists = tagData['data']['lists'],
                     // content.tags = lists.map(post=>(post.name)),
                     lists && lists.map(post=>(
@@ -92,7 +95,9 @@ function CurationList(){
                         </List.Item>
                     ))
                 }
+                
             </List>
+            </div>
         )
     }
 
