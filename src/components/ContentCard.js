@@ -2,14 +2,18 @@ import React,{useState,useContext,useEffect} from 'react'
 import {Item,Button,Icon} from 'semantic-ui-react'
 import { useAuth0 } from '../react-auth0-spa'
 import {FETCH_FEED_ITEMS,INSERT_TAG,DELETE_ITEM} from '../util/graphql';
-import {useMutation} from '@apollo/react-hooks'
+import {useMutation} from '@apollo/react-hooks';
 import UserContext from '../context/UserContext';
-import grabity from 'grabity'
+import grabity from 'grabity';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ContentCard(postdata){
     const { isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
     const userC = useContext(UserContext)
     const post = postdata.postdata
+    const notify = () => toast("Link Copied!");
     // if(user){
     //     console.log(user['sub'])
     // }
@@ -31,7 +35,7 @@ function ContentCard(postdata){
     const [thumbImage,thumbImageSet] = useState('https://react.semantic-ui.com/images/wireframe/image.png')
 
     const [token, setToken] = useState('');
-    console.log(postdata)
+    // console.log(postdata)
     //Fetches thumbnail image
     // try{
     //     const thumb =async () => {
@@ -78,9 +82,11 @@ function ContentCard(postdata){
                 <Button icon floated='right'>
                     <Icon name='bookmark outline' />
                 </Button>
-                <Button icon floated='right'>
-                    <Icon name='copy' />
-                </Button>
+                <CopyToClipboard text={post.link} onCopy={notify}>
+                    <Button icon floated='right'>
+                        <Icon name='copy' />
+                    </Button>
+                </CopyToClipboard>
                 
                 <Button icon floated='right'>
                     <Icon name='certificate' />

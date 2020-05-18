@@ -398,7 +398,7 @@ const GetItemsofTag=(values)=>{
                 _in:tags
             }
         })
-        .then((response)=>response.data).catch((error)=>console.log(error))
+        .then((response)=>response.data).catch((error)=>{})
 
     })//.catch((error)=>console.log(error))
 }

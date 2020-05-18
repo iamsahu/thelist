@@ -72,8 +72,8 @@ function AddItem(){
     function createPostCallback(){
         createItem({...values,list_id:content.list_id,selTags:content.selTags,loggedin_user_id:user.loggedin_user_id,tags:content.tags,listDescription:""})
         .then((response,response2)=>{
-            console.log(response)
-            console.log(response2)
+            // console.log(response)
+            // console.log(response2)
         })
         SetModal(false)
     }

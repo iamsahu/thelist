@@ -8,6 +8,7 @@ import CentralList from './CentralList'
 import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
 import UserContext from '../context/UserContext';
 import {GetList} from '../util/graphqlExecutor'
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 function ContentMiddleListOnly(props){
     const [content,contentChange] = useContext(ContentContext)
