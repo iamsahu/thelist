@@ -31,7 +31,7 @@ function ContentCard(postdata){
     const [thumbImage,thumbImageSet] = useState('https://react.semantic-ui.com/images/wireframe/image.png')
 
     const [token, setToken] = useState('');
-
+    console.log(postdata)
     //Fetches thumbnail image
     // try{
     //     const thumb =async () => {

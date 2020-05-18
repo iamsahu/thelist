@@ -7,7 +7,7 @@ import {FETCH_FEED_ITEMS,INSERT_TAG,INSERT_ITEM_OLD_TAG_MULTI} from '../util/gra
 import UserContext from '../context/UserContext';
 import ContentContext from '../context/ContentContext';
 import {createItem} from '../util/graphqlExecutor';
-import {MixpanelConsumer } from 'react-mixpanel';
+import {MixpanelConsumer} from 'react-mixpanel';
 
 function AddItem(){
     const [content,contentChange] = useContext(ContentContext)

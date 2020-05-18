@@ -332,4 +332,75 @@ const GetList = (values)=>{
     }).then((response) => response.data);
 }
 
-export {createItem,GetList};
+export const GET_LIST_DESCRIPTION = gql`
+    query MyQuery($listid:uuid){lists(where: {id: {_eq: $listid}}) {
+    curator_id
+    description
+    id
+    list_name
+  }}
+`
+
+const GetListDescription = (listid)=>{
+    return client.query({
+        query:GET_LIST_DESCRIPTION,
+        variables:{
+            listid:listid
+        }
+    }).then((response) => response.data);
+}
+
+const GET_ITEMS_OF_TAG = gql`
+    query MyQuery($tag_id:uuid!,$user_id:uuid!){
+        posts_tag(where: {tag_id: {_eq: $tag_id},user_id: {_eq: $user_id}}) {
+            item_id
+        }
+    }
+`
+
+const GET_ITEMS = gql`
+    query MyQuery($_in: [uuid!]!){
+        items(where: {id: {_in: $_in}}) {
+            appreciation_count
+            bookmarks_count
+            copy_count
+            created_at
+            curator
+            description
+            id
+            link
+            list_id
+            name
+            share_count
+            view_count
+            user {
+                id
+            }
+        }
+    }
+`
+
+const GetItemsofTag=(values)=>{
+    // console.log(values)
+    return client.query({
+        query:GET_ITEMS_OF_TAG,
+        variables:{
+            tag_id:values.tag_id,
+            user_id:values.user_id
+        }
+    })
+    .then((response)=>{
+        const tags = response.data.posts_tag.map(tag=>tag.item_id)
+        // console.log(tags)
+        return client.query({
+            query:GET_ITEMS,
+            variables:{
+                _in:tags
+            }
+        })
+        .then((response)=>response.data).catch((error)=>console.log(error))
+
+    })//.catch((error)=>console.log(error))
+}
+
+export {createItem,GetList,GetListDescription,GetItemsofTag};

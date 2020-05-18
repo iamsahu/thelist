@@ -7,7 +7,7 @@ import ContentCard from './ContentCard'
 import CentralList from './CentralList'
 import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
 import UserContext from '../context/UserContext';
-import {GetList} from '../util/graphqlExecutor'
+import {GetItemsofTag} from '../util/graphqlExecutor'
 
 function ContentMiddle(props){
   const [content] = useContext(ContentContext)
@@ -23,17 +23,21 @@ function ContentMiddle(props){
       // console.log("Loaded")
   }
   
-  const temp = useQuery(FETCH_FEED_ITEMS,{
-      onCompleted:ContentLoaded(),
-  });
+//   const temp = useQuery(FETCH_FEED_ITEMS,{
+//       onCompleted:ContentLoaded(),
+//   });
 
   // const loading = temp['loading']
-  // var posts;
-
+  // var posts;tag_id
+//   console.log(user.loggedin_user_id)
   const loadData=()=>{
-    GetList({userid:user.loggedin_user_id,listid:content.currentListID}).then((data)=>{
+    GetItemsofTag({user_id:user.loggedin_user_id,tag_id:content.currentTagID})
+    .then((data)=>{
         setPosts(data)
-    }).catch((error)=>console.log(error))
+        // console.log(data.items.length)
+        // console.log(typeof(data))
+    })
+    .catch((error)=>console.log(error))
   }
 
   useEffect(()=>{
@@ -43,7 +47,7 @@ function ContentMiddle(props){
 
   return(
     <>
-    <h1>{content.currentList}</h1>
+    <h1>{content.currentTag}</h1>
     <Menu pointing secondary>
       <Menu.Item
         name="Home"
@@ -100,6 +104,7 @@ function ContentMiddle(props){
                 (
                     // <CentralList posts={posts.items}/>
                     posts.items.length>0?(<CentralList posts={posts.items}/>):(<div>No Data</div>)
+                    
                 )
           }
         </Item.Group>

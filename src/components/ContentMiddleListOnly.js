@@ -4,12 +4,13 @@ import {Grid,Segment,Placeholder,Divider,Menu,Button,Icon,Item} from 'semantic-u
 import ContentContext from '../context/ContentContext';
 
 import ContentCard from './ContentCard'
+import CentralList from './CentralList'
 import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
 import UserContext from '../context/UserContext';
 import {GetList} from '../util/graphqlExecutor'
 
 function ContentMiddleListOnly(props){
-    const [content] = useContext(ContentContext)
+    const [content,contentChange] = useContext(ContentContext)
     const [posts,setPosts] = useState(null)
     // const [loading,setLoading] = useState(true)
     const user = useContext(UserContext)
@@ -20,12 +21,13 @@ function ContentMiddleListOnly(props){
     const loadData=()=>{
         GetList({userid:props.userid,listid:props.listid}).then((data)=>{
             setPosts(data)
-        })
+        }).catch((error)=>console.log("Error from ContentMiddleListOnly"))
     }
 
     useEffect(()=>{
         loadData()
-    },[loadData, posts]);
+        // contentChange(content=>({...content,listdescription: posts.items[0].description}))
+    },[loadData]);
 
     function handleItemClick(){
 
@@ -82,7 +84,7 @@ function ContentMiddleListOnly(props){
                 posts===null?
                 (<h1>Loading!!</h1>):
                 (
-                    posts.items.map(post=>(<ContentCard key={post.id} postdata={post}/>))
+                    <CentralList posts={posts.items}/>
                 )
             }
             </Item.Group>

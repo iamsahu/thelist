@@ -68,7 +68,7 @@ function CurationList(){
                     // content.tags = posts.map(post=>(post.name)),
                     posts && posts.map(post=>(
                         <List.Item key={post.id}>
-                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:post.name,currentTagID:post.id,currentListID:''}))}>
+                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:post.name,currentTagID:post.id,currentListID:'',contentType:'Tags'}))}>
                                 # {post.name}
                             </List.Content>
                         </List.Item>
@@ -89,8 +89,8 @@ function CurationList(){
                     // content.tags = lists.map(post=>(post.name)),
                     lists && lists.map(post=>(
                         <List.Item key={post.id}>
-                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentList:post.list_name,currentListID:post.id,currentTagID:''}))}>
-                                # {post.list_name}
+                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentList:post.list_name,currentListID:post.id,currentTagID:'',contentType:'Lists'}))}>
+                                {post.list_name}
                             </List.Content>
                         </List.Item>
                     ))

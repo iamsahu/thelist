@@ -15,7 +15,7 @@ function ListDisplay(props){
                     <ContentMiddleListOnly userid={userid} listid={listid}/>
                 </Grid.Column>
                 <Grid.Column width={4}>
-                    <ContentRight/>
+                    <ContentRight userid={userid} listid={listid}/>
                 </Grid.Column>
             </Grid>
         </div>

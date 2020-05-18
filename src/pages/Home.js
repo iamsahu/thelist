@@ -3,16 +3,19 @@ import React,{useContext,useState} from 'react';
 import {Grid} from 'semantic-ui-react';
 
 import ContentMiddle from '../components/ContentMiddle'
+import ContentMiddleTag from '../components/ContentMiddleTag'
 import ContentRight from '../components/ContentRight'
 import CurationList from '../components/CurationList'
 
 import UserContext from '../context/UserContext';
+import ContentContext from '../context/ContentContext'
 
 function Home(){
     const user = useContext(UserContext);
-
+    const [content] = useContext(ContentContext)
     // console.log('Home')
     // console.log(content);
+    // console.log(user.loggedin_user_id)
     return(
         <div id="content" className="ui">
             <Grid columns={3} >
@@ -20,7 +23,10 @@ function Home(){
                     <CurationList />
                 </Grid.Column>
                 <Grid.Column width={9}>
-                    <ContentMiddle/>
+                    {
+                        content.contentType==='Lists'?(<ContentMiddle/>):(<ContentMiddleTag/>)
+                    }
+                    
                 </Grid.Column>
                 <Grid.Column width={4}>
                     <ContentRight/>
