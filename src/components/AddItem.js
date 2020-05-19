@@ -84,7 +84,11 @@ function AddItem(){
 
     function handleAddition(e,{value}){
         console.log(value)
-        SetDropTag(dropTag=>([...dropTag,{text:value,value}]))
+        if(dropTag.length>0){
+            SetDropTag(dropTag=>([...dropTag,{text:value,value}]))
+        }else{
+            SetDropTag(dropTag=>([{text:value,value}]))
+        }
     }
 
     const handleChangeList = (e, { value }) => {

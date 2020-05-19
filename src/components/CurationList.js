@@ -38,7 +38,10 @@ function CurationList(){
             curator_id:item.curator_id
         }))
 
-        contentChange({tags:tempArr,lists:tempArr2,currentList:lists[0].list_name,currentListID:lists[0].id})
+        if(lists.length>0){
+            contentChange({tags:tempArr,lists:tempArr2,currentList:lists[0].list_name,currentListID:lists[0].id})
+        }
+        
         // curationLists()
     }
 
@@ -58,7 +61,7 @@ function CurationList(){
         return(
             <List animated verticalAlign='middle'>
                 <List.Item key="all">
-                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:"all"}))}>
+                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:"all",currentTagID:""}))}>
                                 # All
                             </List.Content>
                     </List.Item>

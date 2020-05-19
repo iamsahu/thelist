@@ -10,7 +10,8 @@ import history from "./util/history";
 
 const httpLink = createHttpLink({
     // uri:'http://localhost:5000',
-    uri: 'https://thelistspacetest.herokuapp.com/v1/graphql'
+    // uri: 'https://thelistspacetest.herokuapp.com/v1/graphql'
+    uri:'https://thelistspace.herokuapp.com/v1/graphql'
 })
 
 export const client = new ApolloClient({
@@ -18,13 +19,14 @@ export const client = new ApolloClient({
     cache:new InMemoryCache(),
     fetch,
     headers: {
-        // FIXME: This gives admin rights to all. Need to use user permissions using access Token
-        'Content-Type': 'application/json',
         'x-hasura-admin-secret': 'veryverysecret',
+        'x-hasura-access-key':'veryverysecret',
+        'Content-Type': 'application/json',
     },
 })
 
 const onRedirectCallback = appState => {
+    console.log(appState)
     history.push(
       appState && appState.targetUrl
         ? appState.targetUrl

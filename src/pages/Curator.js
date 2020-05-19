@@ -10,13 +10,12 @@ import CurationList from '../components/CurationList'
 import UserContext from '../context/UserContext';
 import ContentContext from '../context/ContentContext'
 
-function Home(){
+function Curator(props){
     const user = useContext(UserContext);
     const [content] = useContext(ContentContext)
     
     // console.log('Home')
     // console.log(content);
-    // console.log(user.loggedin_user_id)
     return(
         <div id="content" className="ui">
             <Grid columns={3} >
@@ -39,4 +38,4 @@ function Home(){
     )
 }
 
-export default Home;
+export default Curator;

@@ -1,15 +1,15 @@
 import React,{useContext,useState,useEffect} from 'react';
 // import { useQuery } from '@apollo/react-hooks';
-import {Menu,Button,Icon,Item} from 'semantic-ui-react';
+import {Menu,Button,Icon,Item,Placeholder} from 'semantic-ui-react';
 import ContentContext from '../context/ContentContext';
 
 // import ContentCard from './ContentCard'
 import CentralList from './CentralList'
 // import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
 import UserContext from '../context/UserContext';
-import {GetItemsofTag} from '../util/graphqlExecutor'
+import {GetItemsofTag,GetItemsUsers} from '../util/graphqlExecutor'
 
-function ContentMiddle(props){
+function ContentMiddleTag(props){
   const [content] = useContext(ContentContext)
   const [posts,setPosts] = useState(null)
   const user = useContext(UserContext)
@@ -31,13 +31,17 @@ function ContentMiddle(props){
   // var posts;tag_id
 //   console.log(user.loggedin_user_id)
   const loadData=()=>{
-    GetItemsofTag({user_id:user.loggedin_user_id,tag_id:content.currentTagID})
+    (content.currentTag==="all"&&content.currentTagID==="")?
+    (GetItemsUsers({userid:props.userid}).then((data)=>{
+      setPosts(data)
+    })):
+    (GetItemsofTag({user_id:props.userid,tag_id:content.currentTagID})
     .then((data)=>{
         setPosts(data)
         // console.log(data.items.length)
         // console.log(typeof(data))
     })
-    .catch((error)=>{})
+    .catch((error)=>{}))
   }
 
   useEffect(()=>{
@@ -99,13 +103,19 @@ function ContentMiddle(props){
               )
           } */}
           {
-                posts===null?
-                (<h1>Loading!!</h1>):
-                (
-                    // <CentralList posts={posts.items}/>
-                    posts.items.length>0?(<CentralList posts={posts.items}/>):(<div>No Data</div>)
-                    
-                )
+            posts===null?
+            (
+              <Placeholder>
+                <Placeholder.Header image>
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                </Placeholder.Header>
+              </Placeholder>
+            ):
+            (
+                // <CentralList posts={posts.items}/>
+                posts.items.length>0?(<CentralList posts={posts.items}/>):(<div>No Data</div>)
+            )
           }
         </Item.Group>
       </div>
@@ -114,4 +124,4 @@ function ContentMiddle(props){
   )
 }
 
-export default ContentMiddle;
+export default ContentMiddleTag;

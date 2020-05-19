@@ -124,16 +124,16 @@ function InsertItem(link,name,description,loggedin_user_id,list_id){
             curator:loggedin_user_id,
             list_id:list_id
         },
-        update:(cache,{data})=>{
-            const existingItems = cache.readQuery({
-                query:FETCH_FEED_ITEMS,
-            })
-            const newItem = data.insert_items.returning[0];
-            cache.writeQuery({
-                query: FETCH_FEED_ITEMS,
-                data: {items: [newItem, ...existingItems.items]}
-            });
-        }
+        // update:(cache,{data})=>{
+        //     const existingItems = cache.readQuery({
+        //         query:FETCH_FEED_ITEMS,
+        //     })
+        //     const newItem = data.insert_items.returning[0];
+        //     cache.writeQuery({
+        //         query: FETCH_FEED_ITEMS,
+        //         data: {items: [newItem, ...existingItems.items]}
+        //     });
+        // }
     })
 }
 
@@ -403,4 +403,36 @@ const GetItemsofTag=(values)=>{
     })//.catch((error)=>console.log(error))
 }
 
-export {createItem,GetList,GetListDescription,GetItemsofTag};
+const GET_ITEMS_USER=gql`
+    query MyQuery($userid:uuid!) {
+    items(where: {user: {id: {_eq: $userid}}}) {
+        appreciation_count
+        copy_count
+        bookmarks_count
+        curator
+        description
+        id
+        link
+        list_id
+        name
+        user {
+        id
+        }
+        share_count
+        view_count
+    }
+    }
+`
+
+const GetItemsUsers=(values)=>{
+    // console.log(values)
+    return client.query({
+        query:GET_ITEMS_USER,
+        variables:{
+            userid:values.userid
+        }
+    })
+    .then((response)=>response.data).catch((error)=>{console.log(error)})
+}
+
+export {createItem,GetList,GetListDescription,GetItemsofTag,GetItemsUsers};

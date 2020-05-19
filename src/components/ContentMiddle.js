@@ -1,6 +1,6 @@
 import React,{useContext,useState,useEffect} from 'react';
 // import { useQuery } from '@apollo/react-hooks';
-import {Menu,Button,Icon,Item} from 'semantic-ui-react';
+import {Menu,Button,Icon,Item,Placeholder} from 'semantic-ui-react';
 import ContentContext from '../context/ContentContext';
 
 // import ContentCard from './ContentCard'
@@ -31,7 +31,7 @@ function ContentMiddle(props){
   // var posts;
 
   const loadData=()=>{
-    GetList({userid:user.loggedin_user_id,listid:content.currentListID}).then((data)=>{
+    GetList({userid:props.userid,listid:content.currentListID}).then((data)=>{
         setPosts(data)
     }).catch((error)=>console.log(error))
   }
@@ -96,7 +96,12 @@ function ContentMiddle(props){
           } */}
           {
                 posts===null?
-                (<h1>Loading!!</h1>):
+                (<Placeholder>
+                  <Placeholder.Header image>
+                    <Placeholder.Line />
+                    <Placeholder.Line />
+                  </Placeholder.Header>
+                </Placeholder>):
                 (
                     // <CentralList posts={posts.items}/>
                     posts.items.length>0?(<CentralList posts={posts.items}/>):(<div>No Data</div>)
