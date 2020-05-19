@@ -1,4 +1,4 @@
-import React,{useContext,useState} from 'react';
+import React,{useContext} from 'react';
 
 import {Grid} from 'semantic-ui-react';
 
@@ -28,7 +28,6 @@ function Curator(props){
                         (<ContentMiddle userid={user.curator_id}/>):
                         (<ContentMiddleTag userid={user.curator_id}/>)
                     }
-                    
                 </Grid.Column>
                 <Grid.Column width={4}>
                     <ContentRight/>

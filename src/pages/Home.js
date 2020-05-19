@@ -16,7 +16,7 @@ function Home(){
     
     // console.log('Home')
     // console.log(content);
-    // console.log(user.loggedin_user_id)
+    console.log(user.curator_id)
     return(
         <div id="content" className="ui">
             <Grid columns={3} >
@@ -26,10 +26,9 @@ function Home(){
                 <Grid.Column width={9}>
                     {
                         content.contentType==='Lists'?
-                        (<ContentMiddle userid={user.curator_id}/>):
-                        (<ContentMiddleTag userid={user.curator_id}/>)
+                        (<ContentMiddle curator_id={user.curator_id}/>):
+                        (<ContentMiddleTag curator_id={user.curator_id}/>)
                     }
-                    
                 </Grid.Column>
                 <Grid.Column width={4}>
                     <ContentRight/>

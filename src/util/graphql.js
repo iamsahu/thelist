@@ -46,7 +46,7 @@ export const FETCH_FEED_ITEMS = gql`
 `
 
 export const FETCH_FEED_ITEMS_OFCURATOR = gql `
-    query FETCH_FEED_ITEMS_OFCURATOR($curator_id:uuid!) {
+    query FETCH_FEED_ITEMS_OFCURATOR($curator_id:String!) {
         items(where: {user: {id: {_eq: $curator_id}}}, order_by: {created_at: desc}) {
             appreciation_count
             bookmarks_count
@@ -71,7 +71,7 @@ export const FETCH_FEED_ITEMS_OFCURATOR = gql `
 `
 
 export const FETCH_FEED_ITEMS_OFCURATOR_LISTID = gql `
-    query MyQuery ($curator_id:uuid!,$list_id:uuid!){
+    query MyQuery ($curator_id:String!,$list_id:uuid!){
         items(where: {user: {id: {_eq: $curator_id}}, list_id: {_eq: $list_id}}, order_by: {created_at: desc}) {
             appreciation_count
             bookmarks_count
@@ -97,7 +97,7 @@ export const FETCH_FEED_ITEMS_OFCURATOR_LISTID = gql `
 
 
 export const COMBINED_FETCH = gql`
-    query  ($user_id:uuid!){
+    query  ($user_id:String!){
         lists(where: {curator_id: {_eq: $user_id}}) {
             list_name
             id
@@ -129,7 +129,7 @@ export const FETCH_ALL = gql`
 `
 
 export const FETCH_TAGS = gql `
-    query($user_id:uuid!){
+    query($user_id:String!){
         tag(where: {user_id: {_eq: $user_id}}) {
             name
             id
@@ -138,7 +138,7 @@ export const FETCH_TAGS = gql `
 `
 
 export const FETCH_LISTS = gql`
-    query ($curator_id:uuid!) {
+    query ($curator_id:String!) {
         lists(where: {user_id: {_eq: $curator_id}}) {
             id
             list_name
@@ -233,7 +233,7 @@ export const INSERT_TAGS2 = gql`
 
 //Inserting new tag
 export const INSERT_TAG_ARTICLE=gql`
-    mutation MyMutation($name:String!,$curator_id:uuid!,$item_id:uuid!) {
+    mutation MyMutation($name:String!,$curator_id:String!,$item_id:uuid!) {
         insert_tag(objects: {
             name: $name, 
             user_id: $curator_id, 

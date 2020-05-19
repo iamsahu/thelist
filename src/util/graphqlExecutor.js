@@ -20,8 +20,8 @@ const tagTemplate ={
 const oldTagTemplate= {item_id: "", tag_id: "", user_id: ""}
 
 const TAG_ITEM = gql`
-    mutation MyMutation($objects: [posts_tag_insert_input!]! ) {
-        insert_posts_tag(objects: $objects) {
+    mutation MyMutation($objects: [item_tag_insert_input!]! ) {
+        insert_item_tag(objects: $objects) {
             returning {
                 item_id
                 tag_id
@@ -33,7 +33,7 @@ const TAG_ITEM = gql`
 `;
 
 const INSERT_LIST = gql`
-    mutation MyMutation($curator_id:uuid!,$list_name:String!,$description:String){
+    mutation MyMutation($curator_id:String!,$list_name:String!,$description:String){
         insert_lists(objects: {curator_id: $curator_id, list_name: $list_name, description: $description}) {
             returning {
                 curator_id
@@ -59,7 +59,7 @@ const INSERT_TAGS = gql`
 `
 
 const INSERT_ITEM=gql`
-    mutation ($link:String,$name:String!,$description:String!,$curator:uuid!,$list_id:uuid!) {
+    mutation ($link:String,$name:String!,$description:String!,$curator:String!,$list_id:uuid!) {
         insert_items(objects: {
             link: $link, 
             name: $name, 
@@ -87,11 +87,11 @@ const INSERT_ITEM=gql`
     }
 `
 
-function InsertNewList(loggedin_user_id,list_name,listDescription){
+function InsertNewList(curator_id,list_name,listDescription){
     return client.mutate({
         mutation:INSERT_LIST,
         variables:{
-            curator_id:loggedin_user_id,
+            curator_id:curator_id,
             list_name:list_name,
             description:listDescription
         }
@@ -114,26 +114,26 @@ function InsertNewTags(tags){
     // }))
 }
 
-function InsertItem(link,name,description,loggedin_user_id,list_id){
+function InsertItem(link,name,description,curator_id,list_id){
     return client.mutate({
         mutation:INSERT_ITEM,
         variables:{
             link:link,
             name:name,
             description:description,
-            curator:loggedin_user_id,
+            curator:curator_id,
             list_id:list_id
         },
-        // update:(cache,{data})=>{
-        //     const existingItems = cache.readQuery({
-        //         query:FETCH_FEED_ITEMS,
-        //     })
-        //     const newItem = data.insert_items.returning[0];
-        //     cache.writeQuery({
-        //         query: FETCH_FEED_ITEMS,
-        //         data: {items: [newItem, ...existingItems.items]}
-        //     });
-        // }
+        update:(cache,{data})=>{
+            const existingItems = cache.readQuery({
+                query:FETCH_FEED_ITEMS,
+            })
+            const newItem = data.insert_items.returning[0];
+            cache.writeQuery({
+                query: FETCH_FEED_ITEMS,
+                data: {items: [newItem, ...existingItems.items]}
+            });
+        }
     })
 }
 
@@ -172,7 +172,7 @@ const createItem =(values) => {
         for(var a in values.selTags){
             if(FindTagName(values.selTags[a])===''){
                 newTag=true
-                newTags.push({name: values.selTags[a], user_id: values.loggedin_user_id})
+                newTags.push({name: values.selTags[a], user_id: values.curator_id})
             }else{
                 oldTag = true
                 oldTags.push({ tag_id: values.selTags[a]})
@@ -182,9 +182,9 @@ const createItem =(values) => {
     if(newListID){
         if(newTag){
             if(oldTag){
-                return InsertNewList(values.loggedin_user_id,values.list_id,values.listDescription).then((response)=>{
+                return InsertNewList(values.curator_id,values.list_id,values.listDescription).then((response)=>{
                     values.list_id = response.data.insert_lists.returning[0].id
-                    return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id).then((response)=>{
+                    return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).then((response)=>{
                         const item = response.data.insert_items.returning[0];
                         console.log(response)
                         return InsertNewTags(newTags).then((response)=>{
@@ -193,10 +193,10 @@ const createItem =(values) => {
                             const receivedTags = response.data.insert_tag.returning;
                             var temp = []
                             for(var x in receivedTags){
-                                temp.push({item_id: item.id, tag_id: receivedTags[x].id, user_id: values.loggedin_user_id})
+                                temp.push({item_id: item.id, tag_id: receivedTags[x].id, user_id: values.curator_id})
                             }
                             for(var y in oldTags){
-                                temp.push({item_id: item.id, tag_id: oldTags[y].tag_id, user_id: values.loggedin_user_id})
+                                temp.push({item_id: item.id, tag_id: oldTags[y].tag_id, user_id: values.curator_id})
                             }
                             return InsertTagPost(temp)
 
@@ -205,19 +205,20 @@ const createItem =(values) => {
                 })
                 
             }else{
-                return InsertNewList(values.loggedin_user_id,values.list_id,values.listDescription).then((response)=>{
+                return InsertNewList(values.curator_id,values.list_id,values.listDescription).then((response)=>{
                     values.list_id = response.data.insert_lists.returning[0].id
-                    return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id).then((response)=>{
+                    return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).then((response)=>{
                         const item = response.data.insert_items.returning[0];
-                        console.log(response)
+                        // console.log(response)
                         return InsertNewTags(newTags).then((response)=>{
                             // console.log(response)
                             // console.log(item.id)
                             const receivedTags = response.data.insert_tag.returning;
                             var temp = []
                             for(var x in receivedTags){
-                                temp.push({item_id: item.id, tag_id: receivedTags[x].id, user_id: values.loggedin_user_id})
+                                temp.push({item_id: item.id, tag_id: receivedTags[x].id, user_id: values.curator_id})
                             }
+                            // console.log(temp)
                             return InsertTagPost(temp)
 
                         })
@@ -226,30 +227,30 @@ const createItem =(values) => {
             }
         }else{
             if(oldTag){
-                return InsertNewList(values.loggedin_user_id,values.list_id,values.listDescription).then((response)=>{
+                return InsertNewList(values.curator_id,values.list_id,values.listDescription).then((response)=>{
                     values.list_id = response.data.insert_lists.returning[0].id
-                    return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id).then((response)=>{
+                    return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).then((response)=>{
                         const item = response.data.insert_items.returning[0];
                         console.log(response)
                         var temp =[];
                         for(var a in oldTags){
-                            temp.push({item_id: item.id, tag_id: oldTags[a].tag_id, user_id: values.loggedin_user_id})
+                            temp.push({item_id: item.id, tag_id: oldTags[a].tag_id, user_id: values.curator_id})
                         }
                         return InsertTagPost(temp)
                         
                     })
                 })
             }else{
-                return InsertNewList(values.loggedin_user_id,values.list_id,values.listDescription).then((response)=>{
+                return InsertNewList(values.curator_id,values.list_id,values.listDescription).then((response)=>{
                     values.list_id = response.data.insert_lists.returning[0].id
-                    return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id)
+                    return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id)
                 })
             }
         }
     }else{
         if(newTag){
             if(oldTag){
-                return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id).then((response)=>{
+                return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).then((response)=>{
                     const item = response.data.insert_items.returning[0];
                     // console.log(response)
                     return InsertNewTags(newTags).then((response)=>{
@@ -258,16 +259,16 @@ const createItem =(values) => {
                         const receivedTags = response.data.insert_tag.returning;
                         var temp = []
                         for(var x in receivedTags){
-                            temp.push({item_id: item.id, tag_id: receivedTags[x].id, user_id: values.loggedin_user_id})
+                            temp.push({item_id: item.id, tag_id: receivedTags[x].id, user_id: values.curator_id})
                         }
                         for(var y in oldTags){
-                            temp.push({item_id: item.id, tag_id: oldTags[y].tag_id, user_id: values.loggedin_user_id})
+                            temp.push({item_id: item.id, tag_id: oldTags[y].tag_id, user_id: values.curator_id})
                         }
                         return InsertTagPost(temp)
                     })
                 })
             }else{
-                return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id).then((response)=>{
+                return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).then((response)=>{
                     const item = response.data.insert_items.returning[0];
                     // console.log(response)
                     return InsertNewTags(newTags).then((response)=>{
@@ -276,7 +277,7 @@ const createItem =(values) => {
                         const receivedTags = response.data.insert_tag.returning;
                         var temp = []
                         for(var x in receivedTags){
-                            temp.push({item_id: item.id, tag_id: receivedTags[x].id, user_id: values.loggedin_user_id})
+                            temp.push({item_id: item.id, tag_id: receivedTags[x].id, user_id: values.curator_id})
                         }
                         return InsertTagPost(temp)
                     })
@@ -284,25 +285,25 @@ const createItem =(values) => {
             }
         }else{
             if(oldTag){
-                return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id).then((response)=>{
+                return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).then((response)=>{
                     const item = response.data.insert_items.returning[0];
                     console.log(response)
                     var temp =[];                    
                     for(var a in oldTags){
-                        temp.push({item_id: item.id, tag_id: oldTags[a].tag_id, user_id: values.loggedin_user_id})
+                        temp.push({item_id: item.id, tag_id: oldTags[a].tag_id, user_id: values.curator_id})
                     }
                     return InsertTagPost(temp)
                     
                 })
             }else{
-                return InsertItem(values.link,values.name,values.description,values.loggedin_user_id,values.list_id)
+                return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id)
             }
         }
     }
 }
 
 export const GET_LIST = gql`
-    query MyQuery($userid:uuid,$listid:uuid!) {
+    query MyQuery($userid:String,$listid:uuid!) {
         items(order_by: {created_at: desc_nulls_last}, where: {user: {id: {_eq: $userid}}, list_id: {_eq: $listid}}) {
             appreciation_count
             bookmarks_count
@@ -351,7 +352,7 @@ const GetListDescription = (listid)=>{
 }
 
 const GET_ITEMS_OF_TAG = gql`
-    query MyQuery($tag_id:uuid!,$user_id:uuid!){
+    query MyQuery($tag_id:uuid!,$user_id:String!){
         posts_tag(where: {tag_id: {_eq: $tag_id},user_id: {_eq: $user_id}}) {
             item_id
         }
@@ -404,7 +405,7 @@ const GetItemsofTag=(values)=>{
 }
 
 const GET_ITEMS_USER=gql`
-    query MyQuery($userid:uuid!) {
+    query MyQuery($userid:String!) {
     items(where: {user: {id: {_eq: $userid}}}) {
         appreciation_count
         copy_count

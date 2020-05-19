@@ -23,19 +23,14 @@ function ContentMiddleTag(props){
       // console.log("Loaded")
   }
   
-//   const temp = useQuery(FETCH_FEED_ITEMS,{
-//       onCompleted:ContentLoaded(),
-//   });
 
-  // const loading = temp['loading']
-  // var posts;tag_id
-//   console.log(user.loggedin_user_id)
+// console.log(props.curator_id)
   const loadData=()=>{
     (content.currentTag==="all"&&content.currentTagID==="")?
-    (GetItemsUsers({userid:props.userid}).then((data)=>{
+    (GetItemsUsers({curator_id:props.curator_id}).then((data)=>{
       setPosts(data)
     })):
-    (GetItemsofTag({user_id:props.userid,tag_id:content.currentTagID})
+    (GetItemsofTag({user_id:props.curator_id,tag_id:content.currentTagID})
     .then((data)=>{
         setPosts(data)
         // console.log(data.items.length)

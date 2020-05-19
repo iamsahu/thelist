@@ -18,17 +18,17 @@ import { toast } from 'react-toastify';
 toast.configure();
 function App() {
   mixpanel.init("4521493075a15cf75d66df3581c5410e");
-  const userC = {curator_id:'26b4e98c-b5dc-4810-97b9-909ddc74c4f0',loggedin_user_id:'26b4e98c-b5dc-4810-97b9-909ddc74c4f0'}
+  const userC = {curator_id:'',loggedin_user_id:''}
   const [content,contentChange] = useState({currentTag:'None',contentType:'Lists',lists:{},tags:{},currentList:'',currentTagID:'',currentListID:''})//Passing a function so that the consumer can change the content
   const { loading,isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
   // mixpanel.identify(userC.loggedin_user_id)
   // mixpanel.track("Video play", {"genre": "hip-hop", "duration in seconds": 42});
   if(!loading){
-    console.log(user)
+    // console.log(user)
 
     // console.log(user['sub'])
     // console.log(user['sub'].split('|')[1])
-    // userC['loggedin_user_id'] = user['sub'].split('|')[1]
+    userC['curator_id'] = user['sub'].split('|')[1]
   }
   
   return (

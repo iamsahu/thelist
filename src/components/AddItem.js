@@ -27,7 +27,7 @@ function AddItem(){
     const {values,onChange,onSubmit} = useForm(createPostCallback,{
         name:'',
         link:'',
-        description:'',
+        listDescription:'',
         curator:user.loggedin_user_id
     })
 
@@ -40,7 +40,7 @@ function AddItem(){
                 console.log(variables)
             }
         });
-        console.log("Multitagmutation")
+        // console.log("Multitagmutation")
         createTag();
     }
 
@@ -70,7 +70,7 @@ function AddItem(){
     }});
     
     function createPostCallback(){
-        createItem({...values,list_id:content.list_id,selTags:content.selTags,loggedin_user_id:user.loggedin_user_id,tags:content.tags,listDescription:""})
+        createItem({...values,list_id:content.list_id,selTags:content.selTags,curator_id:user.curator_id,tags:content.tags})
         .then((response,response2)=>{
             // console.log(response)
             // console.log(response2)
@@ -101,7 +101,11 @@ function AddItem(){
     function handleChangeListAddition(e,{value}){
         // console.log(e)
         // console.log(value)
-        SetDropList(dropList=>([...dropList,{text:value,value}]))
+        if(dropList.length>0){
+            SetDropList(dropList=>([...dropList,{text:value,value}]))
+        }else{
+            SetDropList(dropList=>([{text:value,value}]))
+        }
     }
     
     function FindTagName(id){
