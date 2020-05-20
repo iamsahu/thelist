@@ -29,6 +29,7 @@ function App() {
     // console.log(user['sub'])
     // console.log(user['sub'].split('|')[1])
     userC['curator_id'] = user['sub'].split('|')[1]
+    userC['loggedin_user_id'] = user['sub'].split('|')[1]
   }
   
   return (
@@ -37,8 +38,10 @@ function App() {
         <MixpanelProvider mixpanel={mixpanel}>
           <Router history={history}>
             <MenuBar/>
+            
             <Route exact path='/' component={Home}/>
             <Route exact path='/lists/:user/:listid' component={ListDisplay}/>
+            
           </Router>
         </MixpanelProvider>
       </ContentProvider>

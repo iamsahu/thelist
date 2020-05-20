@@ -12,13 +12,16 @@ import {MixpanelConsumer} from 'react-mixpanel';
 function AddItem(){
     const [content,contentChange] = useContext(ContentContext)
     const user = useContext(UserContext)
-    const [dropTag,SetDropTag] = useState(content.tags)
     const [multiTag,SetMultiTag] = useState([])
     const [showModal,SetModal] = useState(false)
     const [listID,SetListID] = useState('')
     const [newItemID,SetItemID] = useState('')
+    const [dropTag,SetDropTag] = useState(content.tags)
     const [dropList,SetDropList] = useState(content.lists)
-    
+
+    //Figure out how to add content to thte dropTag
+    // console.log(dropTag)
+    // console.log(content.tags)
     // SetDropTag(content.tags)
     // console.log(user.loggedin_user_id)
     var tagSelection;
@@ -119,7 +122,10 @@ function AddItem(){
     
     return(
         <>
-        <Modal open={showModal} trigger={<div className='icobutton'><Button onClick={()=>SetModal(true)}>Add Item</Button></div>} >
+        <Modal open={showModal} trigger={<div className='icobutton'><Button onClick={()=>{SetModal(true)
+            SetDropTag(content.tags)
+            SetDropList(content.lists)
+            }}>Add Item</Button></div>} >
             <Modal.Header>
                 Add Item
                 <Button icon position="right" onClick={()=>SetModal(false)}>

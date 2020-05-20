@@ -1,11 +1,12 @@
-import React,{useContext} from 'react';
+import React,{useContext,useEffect} from 'react';
 import {Divider,List,Tab} from 'semantic-ui-react'
 import ContentContext from '../context/ContentContext';
 import UserContext from '../context/UserContext';
 import {useQuery} from '@apollo/react-hooks'
 import {FETCH_TAGS,FETCH_LISTS,COMBINED_FETCH} from '../util/graphql'
+import {GetTagsListsUsers} from '../util/graphqlExecutor'
 
-function CurationList(){
+function CurationList(props){
     const [content,contentChange] = useContext(ContentContext)
     const user = useContext(UserContext)
     const tagData = useQuery(COMBINED_FETCH,{variables:{user_id:user.curator_id},onCompleted:curationTags});
@@ -18,7 +19,7 @@ function CurationList(){
         { menuItem: 'Lists',render: () => <Tab.Pane loading>Lists</Tab.Pane>},
         { menuItem: 'Tags', render: () => <Tab.Pane loading> Tags</Tab.Pane> },
         { menuItem: 'Bookmarks', render: () => <Tab.Pane loading> Bookmarks</Tab.Pane> },
-      ]
+    ]
     
     function curationTags(){
         posts = tagData['data']['tag']
@@ -37,11 +38,12 @@ function CurationList(){
             description:item.description,
             curator_id:item.curator_id
         }))
-
+        // console.log(tagData)
         if(lists.length>0){
-            contentChange({tags:tempArr,lists:tempArr2,currentList:lists[0].list_name,currentListID:lists[0].id})
+            // console.log('This was executed')
+            // console.log(tagData)
+            contentChange(content=>({...content,tags:tempArr,lists:tempArr2,currentList:lists[0].list_name,currentListID:lists[0].id}))
         }
-        
         // curationLists()
     }
 
@@ -57,11 +59,25 @@ function CurationList(){
         console.log("lists loaded")
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const loadData=()=>{
+        // console.log(user.curator_id)
+        GetTagsListsUsers({curator_id:user.curator_id})
+        .then((data)=>{
+        //   console.log(data)
+        })
+    }
+    
+      useEffect(()=>{
+          loadData()
+          // contentChange(content=>({...content,listdescription: posts.items[0].description}))
+      },[loadData]);
+
     function RenderTags(){
         return(
             <List animated verticalAlign='middle'>
                 <List.Item key="all">
-                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:"all",currentTagID:""}))}>
+                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:"all",currentTagID:"",contentType:'Tags'}))}>
                                 # All
                             </List.Content>
                     </List.Item>
@@ -87,8 +103,8 @@ function CurationList(){
             <List animated verticalAlign='middle'>
                 
                 {
-                    
-                    lists = tagData['data']['lists'],
+                    (typeof(tagData['data'])!=='undefined')?
+                    (lists = tagData['data']['lists'],
                     // content.tags = lists.map(post=>(post.name)),
                     lists && lists.map(post=>(
                         <List.Item key={post.id}>
@@ -96,7 +112,7 @@ function CurationList(){
                                 {post.list_name}
                             </List.Content>
                         </List.Item>
-                    ))
+                    ))):(<div>No data</div>)
                 }
                 
             </List>

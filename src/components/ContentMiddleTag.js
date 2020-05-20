@@ -23,22 +23,24 @@ function ContentMiddleTag(props){
       // console.log("Loaded")
   }
   
-
 // console.log(props.curator_id)
   const loadData=()=>{
+    
     (content.currentTag==="all"&&content.currentTagID==="")?
     (GetItemsUsers({curator_id:props.curator_id}).then((data)=>{
       setPosts(data)
+      // console.log('Here')
     })):
     (GetItemsofTag({user_id:props.curator_id,tag_id:content.currentTagID})
     .then((data)=>{
         setPosts(data)
+        // console.log('Here')
         // console.log(data.items.length)
         // console.log(typeof(data))
     })
     .catch((error)=>{}))
   }
-
+  // loadData()
   useEffect(()=>{
       loadData()
       // contentChange(content=>({...content,listdescription: posts.items[0].description}))

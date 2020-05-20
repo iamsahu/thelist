@@ -16,12 +16,12 @@ function Home(){
     
     // console.log('Home')
     // console.log(content);
-    console.log(user.curator_id)
+    // console.log(user.curator_id)
     return(
         <div id="content" className="ui">
             <Grid columns={3} >
                 <Grid.Column width={3}>
-                    <CurationList />
+                    <CurationList curator_id={user.curator_id}/>
                 </Grid.Column>
                 <Grid.Column width={9}>
                     {
@@ -31,7 +31,7 @@ function Home(){
                     }
                 </Grid.Column>
                 <Grid.Column width={4}>
-                    <ContentRight/>
+                    <ContentRight curator_id={user.curator_id}/>
                 </Grid.Column>
             </Grid>
         </div>

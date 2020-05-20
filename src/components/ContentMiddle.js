@@ -32,18 +32,18 @@ function ContentMiddle(props){
   // console.log(props.curator_id)
   const loadData=()=>{
     (content.contentType==='Lists'&&content.currentListID==='')?
-    (GetItemsUsers({userid:props.curator_id}).then((data)=>{
+    (GetItemsUsers({curator_id:props.curator_id}).then((data)=>{
       setPosts(data)
     })):
     (GetList({userid:props.curator_id,listid:content.currentListID}).then((data)=>{
         setPosts(data)
     }).catch((error)=>console.log(error)))
   }
-
-  useEffect(()=>{
-      loadData()
-      // contentChange(content=>({...content,listdescription: posts.items[0].description}))
-  },[loadData]);
+  loadData()
+  // useEffect(()=>{
+  //     loadData()
+  //     // contentChange(content=>({...content,listdescription: posts.items[0].description}))
+  // },[loadData]);
 
   return(
     <>
@@ -110,9 +110,10 @@ function ContentMiddle(props){
                     //console.log(posts),
                     // <CentralList posts={posts.items}/>
                     (typeof(posts)!=='undefined')?
-                      (posts.items.length>0?(<CentralList posts={posts.items}/>):(<div>No Data</div>)  ):(<div>Nodata</div>)
-                    
-                    
+                      (posts.items.length>0?
+                        (<CentralList posts={posts.items}/>):
+                        (<div>No Data</div>)):
+                        (<div>Nodata</div>)
                 )
           }
         </Item.Group>

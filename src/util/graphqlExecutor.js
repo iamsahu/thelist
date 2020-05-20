@@ -125,12 +125,20 @@ function InsertItem(link,name,description,curator_id,list_id){
             list_id:list_id
         },
         update:(cache,{data})=>{
+            console.log(data)
             const existingItems = cache.readQuery({
-                query:FETCH_FEED_ITEMS,
+                query:GET_ITEMS_USER,
+                variables:{
+                    userid:curator_id
+                },
             })
+            console.log(existingItems)
             const newItem = data.insert_items.returning[0];
             cache.writeQuery({
-                query: FETCH_FEED_ITEMS,
+                query: GET_ITEMS_USER,
+                variables:{
+                    userid:curator_id
+                },
                 data: {items: [newItem, ...existingItems.items]}
             });
         }
@@ -353,7 +361,7 @@ const GetListDescription = (listid)=>{
 
 const GET_ITEMS_OF_TAG = gql`
     query MyQuery($tag_id:uuid!,$user_id:String!){
-        posts_tag(where: {tag_id: {_eq: $tag_id},user_id: {_eq: $user_id}}) {
+        item_tag(where: {tag_id: {_eq: $tag_id},user_id: {_eq: $user_id}}) {
             item_id
         }
     }
@@ -391,17 +399,18 @@ const GetItemsofTag=(values)=>{
         }
     })
     .then((response)=>{
-        const tags = response.data.posts_tag.map(tag=>tag.item_id)
-        // console.log(tags)
+        
+        // console.log(response)
+        const tags = response.data.item_tag.map(tag=>tag.item_id)
         return client.query({
             query:GET_ITEMS,
             variables:{
                 _in:tags
             }
         })
-        .then((response)=>response.data).catch((error)=>{})
+        .then((response)=>response.data).catch((error)=>{console.log(error)})
 
-    })//.catch((error)=>console.log(error))
+    }).catch((error)=>console.log(error))
 }
 
 const GET_ITEMS_USER=gql`
@@ -430,10 +439,35 @@ const GetItemsUsers=(values)=>{
     return client.query({
         query:GET_ITEMS_USER,
         variables:{
-            userid:values.userid
+            userid:values.curator_id
         }
     })
     .then((response)=>response.data).catch((error)=>{console.log(error)})
 }
 
-export {createItem,GetList,GetListDescription,GetItemsofTag,GetItemsUsers};
+const COMBINED_FETCH = gql`
+    query  ($user_id:String!){
+        lists(where: {curator_id: {_eq: $user_id}}) {
+            list_name
+            id
+            description
+            curator_id
+        }
+        tag(where: {user_id: {_eq: $user_id}}) {
+            id
+            name
+            user_id
+        }
+    }
+`
+
+const GetTagsListsUsers = (values)=>{
+    // console.log(values)
+    return client.query({
+        query:COMBINED_FETCH,
+        variables:{
+            user_id:values.curator_id
+        }
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+export {createItem,GetList,GetListDescription,GetItemsofTag,GetItemsUsers,GetTagsListsUsers};
