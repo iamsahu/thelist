@@ -8,6 +8,7 @@ function ProfileCard(){
     const [userProfile, setuserProfile] = useState('https://react.semantic-ui.com/images/avatar/large/steve.jpg')
     const [username, setusername] = useState("Mojo Jojo")
     const [description, setdescription] = useState('A master procrastinator with a penchant for reading all that is unecessary!')
+    const [twitterNumber,setTwitterNumber]=useState('1')
 
     const loadUser= ()=>{
         DoesUserExists({user_id:user.curator_id})
@@ -18,6 +19,7 @@ function ProfileCard(){
                     // console.log(response.user[0]['image_link'])
                     setuserProfile(response.user[0]['image_link'])
                     setusername(response.user[0]['username'])
+                    setTwitterNumber(response.user[0]['id'])
                 }
             }
         })
@@ -33,9 +35,10 @@ function ProfileCard(){
                     floated='right'
                     size='mini'
                     src={userProfile}
+                    circular
                     />
                     <Card.Header>{username}</Card.Header>
-                    <Card.Meta>Friends of Elliot</Card.Meta>
+                    <Card.Meta>You are twitter user # {twitterNumber}</Card.Meta>
                     <Card.Description>
                     {description}
                     </Card.Description>

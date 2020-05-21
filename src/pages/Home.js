@@ -3,7 +3,6 @@ import React,{useContext,useState} from 'react';
 import {Grid} from 'semantic-ui-react';
 
 import ContentMiddle from '../components/ContentMiddle'
-import ContentMiddleTag from '../components/ContentMiddleTag'
 import ContentRight from '../components/ContentRight'
 import CurationList from '../components/CurationList'
 
@@ -25,9 +24,7 @@ function Home(){
                 </Grid.Column>
                 <Grid.Column width={9}>
                     {
-                        // content.contentType==='Lists'?
                         <ContentMiddle curator_id={user.curator_id}/>
-                        // (<ContentMiddleTag curator_id={user.curator_id}/>)
                     }
                 </Grid.Column>
                 <Grid.Column width={4}>

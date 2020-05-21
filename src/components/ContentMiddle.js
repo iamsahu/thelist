@@ -32,18 +32,22 @@ function ContentMiddle(props){
   // console.log(props.curator_id)
   const loadData=()=>{
     (content.contentType==='Lists')?
-      ((content.currentListID==='')?(GetItemsUsers({curator_id:props.curator_id}).then((data)=>{
-        setPosts(data)
-
+      ((content.currentListID==='')?(GetItemsUsers({curator_id:user.curator_id}).then((data)=>{
+        setPosts(data)        
       })):
-      (GetList({userid:props.curator_id,listid:content.currentListID}).then((data)=>{
+      (GetList({userid:user.curator_id,listid:content.currentListID}).then((data)=>{
         setPosts(data)
-        
+        //TODO: How to get the name of the list when coming through lists/user/listid path
+        // if(typeof(data)!=='undefined'){
+        //   if(data.items.length>0){
+        //     content.currentList=data.items[0]
+        //   }
+        // }
       }).catch((error)=>console.log(error)))):
     (
       (content.contentType==='Tags')?
-      ((content.currentTagID==="")?(GetItemsUsers({curator_id:props.curator_id}).then((data)=>{setPosts(data)})):
-      (GetItemsofTag({user_id:props.curator_id,tag_id:content.currentTagID}).then((data)=>{setPosts(data)}))):
+      ((content.currentTagID==="")?(GetItemsUsers({curator_id:user.curator_id}).then((data)=>{setPosts(data)})):
+      (GetItemsofTag({user_id:user.curator_id,tag_id:content.currentTagID}).then((data)=>{setPosts(data)}))):
       (console.log("Not a valid content"))
     )
     // (content.contentType==='Lists'&&content.currentListID==='')?
@@ -62,7 +66,7 @@ function ContentMiddle(props){
 
   return(
     <>
-    <h1>{content.currentList}</h1>
+    <h1>{content.contentType==='Lists'?content.currentList:content.currentTag}</h1>
     <Menu pointing secondary>
       <Menu.Item
         name="Home"

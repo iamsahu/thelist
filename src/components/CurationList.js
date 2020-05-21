@@ -121,7 +121,7 @@ function CurationList(props){
 
     function RenderLists(){
         return(
-            <div className="scrolly">
+            // <div className="scrolly">
             <List animated verticalAlign='middle'>
                 
                 {
@@ -138,7 +138,7 @@ function CurationList(props){
                 }
                 
             </List>
-            </div>
+            // </div>
         )
     }
 

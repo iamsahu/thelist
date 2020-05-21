@@ -3,6 +3,7 @@ import {BrowserRouter as Router,Route} from 'react-router-dom';
 // import 'semantic-ui-forest-themes/semantic.yeti.min.css'
 import 'semantic-ui-css/semantic.min.css';//readable
 import './App.css';
+import 'react-interactions/dist/main.css';
 import mixpanel from 'mixpanel-browser';
 import { MixpanelProvider } from 'react-mixpanel';
 
@@ -10,12 +11,14 @@ import { UserProvider } from './context/UserContext'
 import {ContentProvider} from './context/ContentContext';
 import MenuBar from './components/menu'
 import Home from './pages/Home'
+import Curator from './pages/Curator'
 import SignUpComplete from './pages/SignUpComplete'
 import ListDisplay from './pages/ListDisplay'
 import history from "./util/history";
 import { useAuth0 } from './react-auth0-spa'
 import { toast } from 'react-toastify';
 import {DoesUserExists,InsertUser} from './util/graphqlExecutor'
+import {Container} from 'semantic-ui-react'
 
 toast.configure();
 function App() {
@@ -61,16 +64,22 @@ function App() {
       <ContentProvider value={[content,contentChange]}>
         <MixpanelProvider mixpanel={mixpanel}>
           <Router history={history}>
+            <div className="novscroll">
             <MenuBar/>
+            <Container style={{ marginTop: '3em',height: '85vh' }} fluid>
             {/* {loadingT?<div>Home</div>:
               (userExists?( */}
               <Route exact path='/' component={Home}/>,
+              <Route exact path='/:user' component={Curator}/>,
               <Route exact path='/lists/:user/:listid' component={ListDisplay}/>
               {/* ):
               (<Route exact path='/signupcomplete' component={SignUpComplete}/>)
               ) */}
             {/* }             */}
+            </Container>
+            </div>
           </Router>
+          
         </MixpanelProvider>
       </ContentProvider>
     </UserProvider>

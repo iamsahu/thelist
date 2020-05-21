@@ -58,10 +58,16 @@
 
 .scrolly
 {
-  flex: 1;
-  overflow-y: scroll;
+  /* flex: 1; */
+  overflow-y: auto;
+  scrollbar-width: 2px;
   height: 85vh;
   /* width: 7px; */
+}
+
+.novscroll{
+  overflow: hidden;
+  height: 100vh;
 }
 
 .overflow-auto::-webkit-scrollbar,
@@ -70,3 +76,5 @@
   width: 7px;
   height: 85vh;
 }
+
+

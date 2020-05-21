@@ -12,8 +12,10 @@ import ContentContext from '../context/ContentContext'
 
 function Curator(props){
     const user = useContext(UserContext);
-    const [content] = useContext(ContentContext)
-    
+    // const [content,contentChange] = useContext(ContentContext)
+    // setUser(user=>({...user,curator_id:props.match.params.user}))
+    user.curator_id=props.match.params.user
+    // const userid = props.match.params.user
     // console.log('Home')
     // console.log(content);
     return(
@@ -24,9 +26,9 @@ function Curator(props){
                 </Grid.Column>
                 <Grid.Column width={9}>
                     {
-                        content.contentType==='Lists'?
-                        (<ContentMiddle userid={user.curator_id}/>):
-                        (<ContentMiddleTag userid={user.curator_id}/>)
+                        // content.contentType==='Lists'?
+                        <ContentMiddle userid={user.curator_id}/>
+                        // (<ContentMiddleTag userid={user.curator_id}/>)
                     }
                 </Grid.Column>
                 <Grid.Column width={4}>

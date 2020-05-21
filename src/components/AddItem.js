@@ -7,7 +7,8 @@ import {FETCH_FEED_ITEMS,INSERT_TAG,INSERT_ITEM_OLD_TAG_MULTI} from '../util/gra
 import UserContext from '../context/UserContext';
 import ContentContext from '../context/ContentContext';
 import {createItem} from '../util/graphqlExecutor';
-import {MixpanelConsumer} from 'react-mixpanel';
+import Tap from 'react-interactions'
+import Reward from "react-rewards"
 
 function validURL(str) {
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
@@ -28,7 +29,8 @@ function AddItem(){
     const [newItemID,SetItemID] = useState('')
     const [dropTag,SetDropTag] = useState(content.tags)
     const [dropList,SetDropList] = useState(content.lists)
-
+    const [listDescription, setlistDescription] = useState(false)
+    const [reward, setreward] = useState(null)
     //Figure out how to add content to thte dropTag
     
 
@@ -85,6 +87,7 @@ function AddItem(){
     // }});
     
     function createPostCallback(){
+        
         // console.log(content.list_id)
         var errors = false
         if(typeof(content.list_id)==='undefined')
@@ -134,6 +137,7 @@ function AddItem(){
                 // console.log(response2)
             })
             SetModal(false)
+            reward.rewardMe();
         }
     }
 
@@ -160,6 +164,12 @@ function AddItem(){
     function handleChangeListAddition(e,{value}){
         // console.log(e)
         // console.log(value)
+        if(!(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(value))){
+            setlistDescription(true)
+        }else{
+            setlistDescription(false)
+            values.listDescription =''
+        }
         if(dropList.length>0){
             SetDropList(dropList=>([...dropList,{text:value,value}]))
         }else{
@@ -178,10 +188,11 @@ function AddItem(){
     
     return(
         <>
+        <Reward ref={(ref) => { setreward(ref) }} type='confetti'>
         <Modal open={showModal} trigger={<div className='icobutton'><Button onClick={()=>{SetModal(true)
             SetDropTag(content.tags)
             SetDropList(content.lists)
-            }}>Add Item</Button></div>} >
+            }}>Add Item<Tap scale fade waves /></Button></div>} >
             <Modal.Header>
                 Add Item
                 <Button icon position="right" onClick={()=>{
@@ -226,23 +237,23 @@ function AddItem(){
                             error={errorDescription?"Please add a description":false}
                         />
                     </Form.Field>
-                        <Form.Field inline name="tag">
-                            <label>Tags</label>
-                            <Form.Input>
-                                <Dropdown
-                                    name='tag'
-                                    options={Object.values(dropTag)}
-                                    placeholder='Tags'
-                                    search
-                                    selection
-                                    fluid
-                                    multiple
-                                    allowAdditions
-                                    // value={currentValues}
-                                    onAddItem={handleAddition}
-                                    onChange={handleChange}
-                                />
-                            </Form.Input>
+                    <Form.Field inline name="tag">
+                        <label>Tags</label>
+                        <Form.Input>
+                            <Dropdown
+                                name='tag'
+                                options={Object.values(dropTag)}
+                                placeholder='Tags'
+                                search
+                                selection
+                                fluid
+                                multiple
+                                allowAdditions
+                                // value={currentValues}
+                                onAddItem={handleAddition}
+                                onChange={handleChange}
+                            />
+                        </Form.Input>
                     </Form.Field>
                     <label>List Name</label>
                     <Form.Input>
@@ -259,13 +270,31 @@ function AddItem(){
                             error={errorList}//?"Please choose a list":false}
                             />
                     </Form.Input>
+                    {listDescription?
+                        
+                        <Form.Field inline name="listDescription">
+                        <label>List Description</label>
+                        <Form.TextArea 
+                            name='listDescription' 
+                            placeholder='Description'
+                            style={{ minHeight: 100 }} 
+                            onChange={onChange}
+                            value={values.listDescription}
+                            error={errorDescription?"Please add a description":false}
+                        />
+                        </Form.Field>
+                        :<div></div>
+                    }
                     <br/>
-                    <Button primary type='submit' >
-                        Submit
-                    </Button>
+                    
+                        <Button primary type='submit' >
+                            Submit
+                        </Button>
+                    
                 </Form>
             </Modal.Content>
         </Modal>
+        </Reward>
         </>
     )
 }

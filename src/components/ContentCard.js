@@ -8,11 +8,14 @@ import grabity from 'grabity';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Tap from 'react-interactions'
+import Reward from "react-rewards"
 
 function ContentCard(postdata){
     const { isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
     const userC = useContext(UserContext)
     const post = postdata.postdata
+    const [reward, setreward] = useState(null)
     const notify = () => toast("Link Copied!");
     // if(user){
     //     console.log(user['sub'])
@@ -67,6 +70,10 @@ function ContentCard(postdata){
     // }catch (e){
     //     // console.log(e)
     // }
+
+    function R(){
+        reward.rewardMe()
+    }
     
     return(
         <>
@@ -77,20 +84,25 @@ function ContentCard(postdata){
                 {isAuthenticated&&(post.user.id===userC.loggedin_user_id)&&(
                     <Button icon floated='right' onClick={deleteItem}>
                         <Icon name='delete' />
+                        <Tap waves />
                     </Button>
                 )}
                 <Button icon floated='right'>
                     <Icon name='bookmark outline' />
+                    <Tap waves />
                 </Button>
                 <CopyToClipboard text={post.link} onCopy={notify}>
                     <Button icon floated='right'>
                         <Icon name='copy' />
+                        <Tap waves />
                     </Button>
                 </CopyToClipboard>
-                
-                <Button icon floated='right'>
+                {/* <Reward ref={(ref) => { setreward(ref) }} type='confetti' config={{springAnimation:false}}> */}
+                <Button icon floated='right' onClick={R}>
                     <Icon name='certificate' />
+                    <Tap waves />
                 </Button>
+                {/* </Reward> */}
                 <Item.Description>
                 <p></p>
                 <p>

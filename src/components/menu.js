@@ -18,8 +18,8 @@ function MenuBar(){
   //     };
 
   return(
-    <div>
-      <Menu pointing attached='top'>
+    
+      <Menu fixed='top' >
         <Menu.Item
             name='Curato'
             active={activeItem === 'curato'}
@@ -65,7 +65,7 @@ function MenuBar(){
           )}
         </Menu.Menu>
       </Menu>
-    </div>
+    
   )
 }
 
