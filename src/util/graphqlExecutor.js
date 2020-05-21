@@ -59,7 +59,7 @@ const INSERT_TAGS = gql`
 `
 
 const INSERT_ITEM=gql`
-    mutation ($link:String,$name:String!,$description:String!,$curator:String!,$list_id:uuid!) {
+    mutation ($link:String,$name:String!,$description:String,$curator:String!,$list_id:uuid!) {
         insert_items(objects: {
             link: $link, 
             name: $name, 
@@ -95,7 +95,7 @@ function InsertNewList(curator_id,list_name,listDescription){
             list_name:list_name,
             description:listDescription
         }
-    })
+    }).catch((error)=>{console.log(error)})
     // .then((response)=>({
     //     response   
     // }))
@@ -108,13 +108,18 @@ function InsertNewTags(tags){
         variables:{
             objects:tags
         }
-    })
+    }).catch((error)=>{console.log(error)})
     // .then((response)=>({
     //     response   
     // }))
 }
 
 function InsertItem(link,name,description,curator_id,list_id){
+    // console.log(link)
+    // console.log(name)
+    // console.log(description)
+    // console.log(curator_id)
+    // console.log(list_id)
     return client.mutate({
         mutation:INSERT_ITEM,
         variables:{
@@ -125,14 +130,14 @@ function InsertItem(link,name,description,curator_id,list_id){
             list_id:list_id
         },
         update:(cache,{data})=>{
-            console.log(data)
+            // console.log(data)
             const existingItems = cache.readQuery({
                 query:GET_ITEMS_USER,
                 variables:{
                     userid:curator_id
                 },
             })
-            console.log(existingItems)
+            // console.log(existingItems)
             const newItem = data.insert_items.returning[0];
             cache.writeQuery({
                 query: GET_ITEMS_USER,
@@ -142,7 +147,7 @@ function InsertItem(link,name,description,curator_id,list_id){
                 data: {items: [newItem, ...existingItems.items]}
             });
         }
-    })
+    }).catch((error)=>{console.log(error)})
 }
 
 function InsertTagPost(temp){
@@ -151,7 +156,7 @@ function InsertTagPost(temp){
             variables:{
                 objects:temp
             }
-        })    
+    }).catch((error)=>{console.log(error)})
 }
 
 const createItem =(values) => {
@@ -206,11 +211,11 @@ const createItem =(values) => {
                             for(var y in oldTags){
                                 temp.push({item_id: item.id, tag_id: oldTags[y].tag_id, user_id: values.curator_id})
                             }
-                            return InsertTagPost(temp)
+                            return InsertTagPost(temp).catch((error)=>{console.log(error)})
 
-                        })
-                    })
-                })
+                        }).catch((error)=>{console.log(error)})
+                    }).catch((error)=>{console.log(error)})
+                }).catch((error)=>{console.log(error)})
                 
             }else{
                 return InsertNewList(values.curator_id,values.list_id,values.listDescription).then((response)=>{
@@ -227,11 +232,11 @@ const createItem =(values) => {
                                 temp.push({item_id: item.id, tag_id: receivedTags[x].id, user_id: values.curator_id})
                             }
                             // console.log(temp)
-                            return InsertTagPost(temp)
+                            return InsertTagPost(temp).catch((error)=>{console.log(error)})
 
-                        })
-                    })
-                })
+                        }).catch((error)=>{console.log(error)})
+                    }).catch((error)=>{console.log(error)})
+                }).catch((error)=>{console.log(error)})
             }
         }else{
             if(oldTag){
@@ -244,15 +249,16 @@ const createItem =(values) => {
                         for(var a in oldTags){
                             temp.push({item_id: item.id, tag_id: oldTags[a].tag_id, user_id: values.curator_id})
                         }
-                        return InsertTagPost(temp)
+                        return InsertTagPost(temp).catch((error)=>{console.log(error)})
                         
-                    })
-                })
+                    }).catch((error)=>{console.log(error)})
+                }).catch((error)=>{console.log(error)})
             }else{
                 return InsertNewList(values.curator_id,values.list_id,values.listDescription).then((response)=>{
                     values.list_id = response.data.insert_lists.returning[0].id
                     return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id)
-                })
+                    .catch((error)=>{console.log(error)})
+                }).catch((error)=>{console.log(error)})
             }
         }
     }else{
@@ -272,9 +278,9 @@ const createItem =(values) => {
                         for(var y in oldTags){
                             temp.push({item_id: item.id, tag_id: oldTags[y].tag_id, user_id: values.curator_id})
                         }
-                        return InsertTagPost(temp)
-                    })
-                })
+                        return InsertTagPost(temp).catch((error)=>{console.log(error)})
+                    }).catch((error)=>{console.log(error)})
+                }).catch((error)=>{console.log(error)})
             }else{
                 return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).then((response)=>{
                     const item = response.data.insert_items.returning[0];
@@ -288,23 +294,23 @@ const createItem =(values) => {
                             temp.push({item_id: item.id, tag_id: receivedTags[x].id, user_id: values.curator_id})
                         }
                         return InsertTagPost(temp)
-                    })
-                })
+                    }).catch((error)=>{console.log(error)})
+                }).catch((error)=>{console.log(error)})
             }
         }else{
             if(oldTag){
                 return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).then((response)=>{
                     const item = response.data.insert_items.returning[0];
-                    console.log(response)
+                    // console.log(response)
                     var temp =[];                    
                     for(var a in oldTags){
                         temp.push({item_id: item.id, tag_id: oldTags[a].tag_id, user_id: values.curator_id})
                     }
                     return InsertTagPost(temp)
                     
-                })
+                }).catch((error)=>console.log(error))
             }else{
-                return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id)
+                return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).catch((error)=>{console.log(error)})
             }
         }
     }
@@ -351,12 +357,13 @@ export const GET_LIST_DESCRIPTION = gql`
 `
 
 const GetListDescription = (listid)=>{
+    // console.log(listid.listid)
     return client.query({
         query:GET_LIST_DESCRIPTION,
         variables:{
-            listid:listid
+            listid:listid.listid
         }
-    }).then((response) => response.data);
+    }).then((response) => response.data).catch((error)=>console.log(error));
 }
 
 const GET_ITEMS_OF_TAG = gql`
@@ -415,7 +422,7 @@ const GetItemsofTag=(values)=>{
 
 const GET_ITEMS_USER=gql`
     query MyQuery($userid:String!) {
-    items(where: {user: {id: {_eq: $userid}}}) {
+    items(order_by: {created_at: desc_nulls_last},where: {user: {id: {_eq: $userid}}}) {
         appreciation_count
         copy_count
         bookmarks_count
@@ -470,4 +477,51 @@ const GetTagsListsUsers = (values)=>{
         }
     }).then((response)=>response.data).catch((error)=>console.log(error))
 }
-export {createItem,GetList,GetListDescription,GetItemsofTag,GetItemsUsers,GetTagsListsUsers};
+
+const GET_USER = gql`
+    query MyQuery ($user_id:String){
+        user(where: {id: {_eq: $user_id}}) {
+            id
+            image_link
+            description
+            username
+        }
+    }
+`
+
+const DoesUserExists = (values)=>{
+    // console.log(values)
+    return client.query({
+        query:GET_USER,
+        variables:{
+            user_id:values.user_id
+        }
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
+const INSERT_USER=gql`
+mutation MyMutation ($id:String,$image_link:String,$username:String){
+  insert_user(objects: {id: $id, image_link: $image_link, username: $username}) {
+    returning {
+      id
+      image_link
+      description
+      username
+    }
+  }
+}
+
+`
+
+const InsertUser = (values)=>{
+    return client.mutate({
+        mutation:INSERT_USER,
+        variables:{
+            id:values.id,
+            image_link:values.image_link,
+            username:values.username
+        }
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
+export {createItem,GetList,GetListDescription,GetItemsofTag,GetItemsUsers,GetTagsListsUsers,DoesUserExists,InsertUser};

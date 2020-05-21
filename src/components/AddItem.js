@@ -9,6 +9,16 @@ import ContentContext from '../context/ContentContext';
 import {createItem} from '../util/graphqlExecutor';
 import {MixpanelConsumer} from 'react-mixpanel';
 
+function validURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    return !!pattern.test(str);
+}
+
 function AddItem(){
     const [content,contentChange] = useContext(ContentContext)
     const user = useContext(UserContext)
@@ -20,17 +30,19 @@ function AddItem(){
     const [dropList,SetDropList] = useState(content.lists)
 
     //Figure out how to add content to thte dropTag
-    // console.log(dropTag)
-    // console.log(content.tags)
-    // SetDropTag(content.tags)
-    // console.log(user.loggedin_user_id)
-    var tagSelection;
-    var tagSelectionFinal={};
+    
 
+    const [errorList,setErrorList]=useState(false);
+    const [errorLink,setErrorLink]=useState(false);
+    const [errorName,setErrorName]=useState(false);
+    const [errorDescription,setErrorDescription]=useState(false);
+    
+    
     const {values,onChange,onSubmit} = useForm(createPostCallback,{
         name:'',
         link:'',
         listDescription:'',
+        description:'',
         curator:user.loggedin_user_id
     })
 
@@ -65,20 +77,64 @@ function AddItem(){
         values.data = SetItemID(newItem.id)
     };
     
-    const [createPost,{error}] = useMutation(CREATE_ITEM,{
-        variables:{...values,list_id:listID},
-        update:updateCache,
-        onError:(error)=>{
-            console.log(error)
-    }});
+    // const [createPost,{error}] = useMutation(CREATE_ITEM,{
+    //     variables:{...values,list_id:listID},
+    //     update:updateCache,
+    //     onError:(error)=>{
+    //         console.log(error)
+    // }});
     
     function createPostCallback(){
-        createItem({...values,list_id:content.list_id,selTags:content.selTags,curator_id:user.curator_id,tags:content.tags})
-        .then((response,response2)=>{
-            // console.log(response)
-            // console.log(response2)
-        })
-        SetModal(false)
+        // console.log(content.list_id)
+        var errors = false
+        if(typeof(content.list_id)==='undefined')
+        {
+            setErrorList(true)
+            errors=true
+        }else{
+            setErrorList(false)
+        }
+        if(values.name===""){
+            setErrorName(true)
+            errors=true
+        }else{
+            setErrorName(false)
+        }
+        if(values.link===""){
+            setErrorLink(true)
+            errors=true
+        }else{
+            if(validURL(values.link)){
+                setErrorLink(false)
+            }else{
+                setErrorLink(true)
+                errors=true
+            }
+        }
+        if(values.description===""){
+            setErrorDescription(true)
+            errors=true
+        }else{
+            setErrorDescription(false)
+        }
+
+        
+        
+        if(!errors){
+            createItem({...values,
+                list_id:content.list_id,
+                selTags:content.selTags,
+                curator_id:user.curator_id,
+                tags:content.tags,
+                contentType:content.contentType,
+                currentListID:content.currentListID,
+                currentTagID:content.currentTagID})
+            .then((response,response2)=>{
+                // console.log(response)
+                // console.log(response2)
+            })
+            SetModal(false)
+        }
     }
 
     const handleChange = (e, { value }) => {
@@ -128,7 +184,12 @@ function AddItem(){
             }}>Add Item</Button></div>} >
             <Modal.Header>
                 Add Item
-                <Button icon position="right" onClick={()=>SetModal(false)}>
+                <Button icon position="right" onClick={()=>{
+                    setErrorList(false)
+                    setErrorDescription(false)
+                    setErrorLink(false)
+                    setErrorName(false)
+                    SetModal(false)}}>
                     <Icon name='close' />
                 </Button>
             </Modal.Header>
@@ -141,7 +202,7 @@ function AddItem(){
                             placeholder='name' 
                             onChange={onChange}
                             value={values.name}
-                            error={error?true:false}
+                            error={errorName?"Please Enter Name":false}
                         />
                     </Form.Field>
                     <Form.Field inline name="link">
@@ -151,7 +212,7 @@ function AddItem(){
                             placeholder='Link' 
                             onChange={onChange}
                             value={values.link}
-                            error={error?true:false}
+                            error={errorLink?"Please add a link":false}
                         />
                     </Form.Field>
                     <Form.Field inline name="description">
@@ -162,7 +223,7 @@ function AddItem(){
                             style={{ minHeight: 100 }} 
                             onChange={onChange}
                             value={values.description}
-                            error={error?true:false}
+                            error={errorDescription?"Please add a description":false}
                         />
                     </Form.Field>
                         <Form.Field inline name="tag">
@@ -195,6 +256,7 @@ function AddItem(){
                             allowAdditions
                             onAddItem={handleChangeListAddition}
                             onChange={handleChangeList}
+                            error={errorList}//?"Please choose a list":false}
                             />
                     </Form.Input>
                     <br/>

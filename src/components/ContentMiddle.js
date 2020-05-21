@@ -7,7 +7,7 @@ import ContentContext from '../context/ContentContext';
 import CentralList from './CentralList'
 // import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
 import UserContext from '../context/UserContext';
-import {GetList,GetItemsUsers} from '../util/graphqlExecutor'
+import {GetList,GetItemsUsers,GetItemsofTag} from '../util/graphqlExecutor'
 
 function ContentMiddle(props){
   const [content] = useContext(ContentContext)
@@ -31,13 +31,28 @@ function ContentMiddle(props){
   // var posts;
   // console.log(props.curator_id)
   const loadData=()=>{
-    (content.contentType==='Lists'&&content.currentListID==='')?
-    (GetItemsUsers({curator_id:props.curator_id}).then((data)=>{
-      setPosts(data)
-    })):
-    (GetList({userid:props.curator_id,listid:content.currentListID}).then((data)=>{
+    (content.contentType==='Lists')?
+      ((content.currentListID==='')?(GetItemsUsers({curator_id:props.curator_id}).then((data)=>{
         setPosts(data)
-    }).catch((error)=>console.log(error)))
+
+      })):
+      (GetList({userid:props.curator_id,listid:content.currentListID}).then((data)=>{
+        setPosts(data)
+        
+      }).catch((error)=>console.log(error)))):
+    (
+      (content.contentType==='Tags')?
+      ((content.currentTagID==="")?(GetItemsUsers({curator_id:props.curator_id}).then((data)=>{setPosts(data)})):
+      (GetItemsofTag({user_id:props.curator_id,tag_id:content.currentTagID}).then((data)=>{setPosts(data)}))):
+      (console.log("Not a valid content"))
+    )
+    // (content.contentType==='Lists'&&content.currentListID==='')?
+    // (GetItemsUsers({curator_id:props.curator_id}).then((data)=>{
+    //   setPosts(data)
+    // })):
+    // (GetList({userid:props.curator_id,listid:content.currentListID}).then((data)=>{
+    //     setPosts(data)
+    // }).catch((error)=>console.log(error)))
   }
   loadData()
   // useEffect(()=>{
@@ -72,12 +87,12 @@ function ContentMiddle(props){
         name='All'
         active={activeItem === 'All'}
         onClick={handleItemClick}
-      /> */}
+      />
       <Menu.Item
         name='Bookmarked'
         active={activeItem === 'Bookmarked'}
         onClick={handleItemClick}
-      />
+      /> */}
       <Menu.Menu position='right'>
           <div className='icobutton'>
         <Button icon >
@@ -112,8 +127,8 @@ function ContentMiddle(props){
                     (typeof(posts)!=='undefined')?
                       (posts.items.length>0?
                         (<CentralList posts={posts.items}/>):
-                        (<div>No Data</div>)):
-                        (<div>Nodata</div>)
+                        (<div>Create some mojo</div>)):
+                        (<div>Create some mojo</div>)
                 )
           }
         </Item.Group>

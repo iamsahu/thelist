@@ -65,19 +65,41 @@ function CurationList(props){
         GetTagsListsUsers({curator_id:user.curator_id})
         .then((data)=>{
         //   console.log(data)
+            // posts = data['tag']
+            // const tempArr = posts.map(post=>({
+            //     text:post.name,
+            //     key:post.name,
+            //     value:post.id}))
+            
+            // lists = data['data']['lists']
+            // const tempArr2 = lists.map(item=>({
+            //     text:item.list_name,
+            //     key:item.list_name,
+            //     value:item.id,
+            //     id:item.id,
+            //     list_name:item.list_name,
+            //     description:item.description,
+            //     curator_id:item.curator_id
+            // }))
+            // // console.log(tagData)
+            // if(lists.length>0){
+            //     // console.log('This was executed')
+            //     // console.log(tagData)
+            //     contentChange(content=>({...content,tags:tempArr,lists:tempArr2,currentList:lists[0].list_name,currentListID:lists[0].id}))
+            // }
         })
     }
     
-      useEffect(()=>{
-          loadData()
-          // contentChange(content=>({...content,listdescription: posts.items[0].description}))
-      },[loadData]);
+    //   useEffect(()=>{
+    //       loadData()
+    //       // contentChange(content=>({...content,listdescription: posts.items[0].description}))
+    //   },[loadData]);
 
     function RenderTags(){
         return(
             <List animated verticalAlign='middle'>
                 <List.Item key="all">
-                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:"all",currentTagID:"",contentType:'Tags'}))}>
+                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:"all",currentTagID:"",contentType:'Tags',currentListID:''}))}>
                                 # All
                             </List.Content>
                     </List.Item>
@@ -125,7 +147,17 @@ function CurationList(props){
         {/* My Curations */}
         {/* <Divider/> */}
         {
-            (loading)?(
+            // (typeof(posts)!=='undefined')?
+            // (posts.items.length>0?
+            //   (<Tab menu={{ secondary: true, pointing: true }} panes={[
+            //     {menuItem: 'Lists',render: () => <Tab.Pane>{RenderLists()} </Tab.Pane>},
+            //     {menuItem: 'Tags', render: () => <Tab.Pane>{RenderTags()}</Tab.Pane> },
+            //     { menuItem: 'Bookmarks', render: () => <Tab.Pane loading> Bookmarks</Tab.Pane> },
+            // ]}/>):
+            //   (<Tab menu={{ secondary: true, pointing: true }} panes={panes}/>)):
+            //   (<Tab menu={{ secondary: true, pointing: true }} panes={panes}/>)
+            
+              (loading)?(
                 <Tab menu={{ secondary: true, pointing: true }} panes={panes}/>
             ):(
                 // console.log(tagData['data']),

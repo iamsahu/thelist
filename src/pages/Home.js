@@ -25,9 +25,9 @@ function Home(){
                 </Grid.Column>
                 <Grid.Column width={9}>
                     {
-                        content.contentType==='Lists'?
-                        (<ContentMiddle curator_id={user.curator_id}/>):
-                        (<ContentMiddleTag curator_id={user.curator_id}/>)
+                        // content.contentType==='Lists'?
+                        <ContentMiddle curator_id={user.curator_id}/>
+                        // (<ContentMiddleTag curator_id={user.curator_id}/>)
                     }
                 </Grid.Column>
                 <Grid.Column width={4}>

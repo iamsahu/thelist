@@ -24,6 +24,7 @@ function ContentMiddleTag(props){
   }
   
 // console.log(props.curator_id)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const loadData=()=>{
     
     (content.currentTag==="all"&&content.currentTagID==="")?
