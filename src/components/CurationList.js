@@ -5,6 +5,7 @@ import UserContext from '../context/UserContext';
 import {useQuery} from '@apollo/react-hooks'
 import {FETCH_TAGS,FETCH_LISTS,COMBINED_FETCH} from '../util/graphql'
 import {GetTagsListsUsers} from '../util/graphqlExecutor'
+import { Link } from 'react-router-dom';
 
 function CurationList(props){
     const [content,contentChange] = useContext(ContentContext)
@@ -109,8 +110,8 @@ function CurationList(props){
                     // content.tags = posts.map(post=>(post.name)),
                     posts && posts.map(post=>(
                         <List.Item key={post.id}>
-                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:post.name,currentTagID:post.id,currentListID:'',contentType:'Tags'}))}>
-                                # {post.name}
+                            <List.Content onClick={()=>contentChange(content=>({...content,currentTag:post.name,currentTagID:post.id,currentListID:'',contentType:'Tags'}))}>
+                                <Link to={`/${user.curator_id}/tags/${post.id}`}># {post.name}</Link>
                             </List.Content>
                         </List.Item>
                     ))
@@ -130,8 +131,8 @@ function CurationList(props){
                     // content.tags = lists.map(post=>(post.name)),
                     lists && lists.map(post=>(
                         <List.Item key={post.id}>
-                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentList:post.list_name,currentListID:post.id,currentTagID:'',contentType:'Lists'}))}>
-                                {post.list_name}
+                            <List.Content onClick={()=>{contentChange(content=>({...content,currentList:post.list_name,currentListID:post.id,currentTagID:'',contentType:'Lists'}))}}>
+                                    <Link to={`/${user.curator_id}/lists/${post.id}`}>{post.list_name}</Link>
                             </List.Content>
                         </List.Item>
                     ))):(<div>No data</div>)

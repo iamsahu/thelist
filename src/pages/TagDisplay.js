@@ -9,34 +9,16 @@ import CurationList from '../components/CurationList'
 import UserContext from '../context/UserContext';
 import ContentContext from '../context/ContentContext'
 
-function Home(props){
-    console.log(props.match.params)
-    
-    // const listid = props.match.params.listid
+function TagDisplay(props){
+    const userid = props.match.params.user
+    const tagid = props.match.params.tagid
     const user = useContext(UserContext);
     const [content,contentChange] = useContext(ContentContext)
-    // user.curator_id=userid
-    // content.contentType='Lists'
-    // content.currentListID = listid
-    // console.log('Home')
-    // console.log(content);
-    // console.log(user.curator_id)
-    // var userid,listid,tagid;
-    // if(typeof(props.match.params.length)!=='undefined'){
-    //     userid = props.match.params.user
-    //     user.curator_id=userid
-    //     if(props.match.params.contenttype==='lists'){
-    //         content.contentType='Lists'
-    //         listid = props.match.params.listid
-    //     }else if(props.match.params.contenttype==='tags'){
-    //         content.contentType='Tags'
-    //         tagid = props.match.params.tagid
-    //     }
-    // }
-    
+    user.curator_id=userid
+    content.contentType='Tags'
+    // console.log(tagid)
+    content.currentTagID = tagid
 
-    // content.contentType='Tags'
-    // content.currentTagID = tagid
     return(
         <div id="content" className="ui">
             <Grid columns={3} >
@@ -56,4 +38,4 @@ function Home(props){
     )
 }
 
-export default Home;
+export default TagDisplay;

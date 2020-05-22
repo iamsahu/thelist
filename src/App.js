@@ -14,6 +14,7 @@ import Home from './pages/Home'
 import Curator from './pages/Curator'
 import SignUpComplete from './pages/SignUpComplete'
 import ListDisplay from './pages/ListDisplay'
+import TagDisplay from './pages/TagDisplay'
 import history from "./util/history";
 import { useAuth0 } from './react-auth0-spa'
 import { toast } from 'react-toastify';
@@ -69,9 +70,11 @@ function App() {
             <Container style={{ marginTop: '3em',height: '85vh' }} fluid>
             {/* {loadingT?<div>Home</div>:
               (userExists?( */}
-              <Route exact path='/' component={Home}/>,
-              <Route exact path='/:user' component={Curator}/>,
-              <Route exact path='/lists/:user/:listid' component={ListDisplay}/>
+              <Route exact path='/' component={Home}/>
+              <Route exact path='/:user' component={Curator}/>
+              {/* <Route exact path='/:user/lists/:listid' component={Curator}/> */}
+              <Route exact path='/:user/:contenttype/:listid' component={Curator}/>
+              <Route exact path='/:user/tags/:tagid' component={Curator}/>
               {/* ):
               (<Route exact path='/signupcomplete' component={SignUpComplete}/>)
               ) */}

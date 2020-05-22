@@ -72,7 +72,7 @@ function ContentCard(postdata){
     // }
 
     function R(){
-        reward.rewardMe()
+        // reward.rewardMe()
     }
     
     return(

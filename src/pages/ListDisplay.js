@@ -36,13 +36,20 @@ import UserContext from '../context/UserContext';
 import ContentContext from '../context/ContentContext'
 
 function ListDisplay(props){
+    
     const userid = props.match.params.user
     const listid = props.match.params.listid
+    // const tagid = props.match.params.tagid
+
     const user = useContext(UserContext);
     const [content,contentChange] = useContext(ContentContext)
     user.curator_id=userid
+
     content.contentType='Lists'
     content.currentListID = listid
+
+    // content.contentType='Tags'
+    // content.currentTagID = tagid
 
     return(
         <div id="content" className="ui">
