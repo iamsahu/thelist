@@ -12,7 +12,7 @@ function ContentRight(props){
     return(
         <>
         <ProfileCard userid={props.userid}/>
-        {content.contentType==="Lists"?(<CurationReasonCard listid={content.currentListID}/>):(<div></div>)}
+        {content.contentType==="lists"?(<CurationReasonCard listid={content.currentListID}/>):(<div></div>)}
         
         {/* <PopularProfile/> */}
         </>

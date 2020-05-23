@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {BrowserRouter as Router,Route} from 'react-router-dom';
+import {BrowserRouter as Router,Route, Switch} from 'react-router-dom';
 // import 'semantic-ui-forest-themes/semantic.yeti.min.css'
 import 'semantic-ui-css/semantic.min.css';//readable
 import './App.css';
@@ -12,6 +12,7 @@ import {ContentProvider} from './context/ContentContext';
 import MenuBar from './components/menu'
 import Home from './pages/Home'
 import Curator from './pages/Curator'
+import SearchResults from './pages/SearchResults'
 import SignUpComplete from './pages/SignUpComplete'
 import ListDisplay from './pages/ListDisplay'
 import TagDisplay from './pages/TagDisplay'
@@ -69,12 +70,14 @@ function App() {
             <MenuBar/>
             <Container style={{ marginTop: '3em',height: '85vh' }} fluid>
             {/* {loadingT?<div>Home</div>:
-              (userExists?( */}
-              <Route exact path='/' component={Home}/>
-              <Route exact path='/:user' component={Curator}/>
-              {/* <Route exact path='/:user/lists/:listid' component={Curator}/> */}
-              <Route exact path='/:user/:contenttype/:listid' component={Curator}/>
-              <Route exact path='/:user/tags/:tagid' component={Curator}/>
+              (userExists?( */}              
+              <Switch>
+                <Route exact path='/search' component={SearchResults}/>
+                <Route exact path='/:user' component={Curator}/>
+                <Route exact path='/:user/:contenttype/:listid' component={Curator}/>
+                <Route exact path='/:user/tags/:tagid' component={Curator}/>
+                <Route exact path='/' component={Home}/>
+              </Switch>
               {/* ):
               (<Route exact path='/signupcomplete' component={SignUpComplete}/>)
               ) */}

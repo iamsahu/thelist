@@ -1,9 +1,10 @@
 import _ from 'lodash'
 import faker from 'faker'
 import React,{useState} from 'react'
-import { Search, Grid, Header, Segment } from 'semantic-ui-react'
+import { Search, Grid, Header, Segment,Input } from 'semantic-ui-react'
 import { useQuery } from '@apollo/react-hooks';
 import {FETCH_ALL} from '../util/graphql'
+import { useHistory } from 'react-router-dom';
 
 const source = _.times(5, () => ({
   title: faker.company.companyName(),
@@ -17,6 +18,8 @@ const initialState = { isLoading: false, results: [], value: '' }
 function TopSearch() {
   const [state,setState] = useState(initialState)
   const { loading, error, data } = useQuery(FETCH_ALL);
+  const [searchquery, setsearchquery] = useState('')
+  const history = useHistory();
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
 
@@ -38,24 +41,43 @@ function TopSearch() {
     }, 300)
   }
 
-  
-    const { isLoading, value, results } = state
+  function KeyPress(ev){
+    if(ev.key==='Enter'){
+      // console.log("EnterKey!!")
+      if(searchquery!==""){
+        routeChange()
+      }
+    }
+  }
 
-    return (
+  function ChangeHandle(event,data){
+    // console.log(event)
+    // console.log(data)
+    setsearchquery(data.value)
+  }
+
+  function routeChange() {
+    let path = `/search?query=${searchquery}`;
+    history.push(path);
+  }
+
+  const { isLoading, value, results } = state
+
+  return (
+    <Input size='small' icon='search' placeholder='Search...' onKeyPress={KeyPress} onChange={ChangeHandle}/>
+        // <Search
+        //   fluid
+        //   loading={isLoading}
+        //   onResultSelect={handleResultSelect}
+        //   onSearchChange={_.debounce(handleSearchChange, 500, {
+        //     leading: true,
+        //   })}
+        //   results={results}
+        //   value={value}
+        //   // {...props}
+        // />
       
-          <Search
-            fluid
-            loading={isLoading}
-            onResultSelect={handleResultSelect}
-            onSearchChange={_.debounce(handleSearchChange, 500, {
-              leading: true,
-            })}
-            results={results}
-            value={value}
-            // {...props}
-          />
-       
-    )
+  )
   
 }
 

@@ -109,8 +109,10 @@ function CurationList(props){
                     
                     // content.tags = posts.map(post=>(post.name)),
                     posts && posts.map(post=>(
+                        console.log(post.id),
                         <List.Item key={post.id}>
-                            <List.Content onClick={()=>contentChange(content=>({...content,currentTag:post.name,currentTagID:post.id,currentListID:'',contentType:'Tags'}))}>
+                            <List.Content onClick={()=>{contentChange(content=>({...content,currentTag:post.name,currentTagID:post.id,currentListID:'',contentType:'Tags'}))
+                        console.log(post.id)}}>
                                 <Link to={`/${user.curator_id}/tags/${post.id}`}># {post.name}</Link>
                             </List.Content>
                         </List.Item>

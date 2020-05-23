@@ -30,8 +30,9 @@ function ContentMiddle(props){
   // const loading = temp['loading']
   // var posts;
   // console.log(props.curator_id)
+  // console.log(content)
   const loadData=()=>{
-    (content.contentType==='Lists')?
+    (content.contentType==='lists')?
       ((content.currentListID==='')?(GetItemsUsers({curator_id:user.curator_id}).then((data)=>{
         setPosts(data)        
       })):
@@ -45,7 +46,8 @@ function ContentMiddle(props){
         // }
       }).catch((error)=>console.log(error)))):
     (
-      (content.contentType==='Tags')?
+      
+      (content.contentType==='tags')?
       ((content.currentTagID==="")?(GetItemsUsers({curator_id:user.curator_id}).then((data)=>{setPosts(data)})):
       (GetItemsofTag({user_id:user.curator_id,tag_id:content.currentTagID}).then((data)=>{setPosts(data)}))):
       (console.log("Not a valid content"))

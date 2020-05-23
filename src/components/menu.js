@@ -25,11 +25,11 @@ function MenuBar(){
             active={activeItem === 'curato'}
             onClick={handleItemClick}
         />
-        {/* <Menu.Menu position='left'>
+        <Menu.Menu position='left'>
         <Menu.Item>
           <TopSearch/>          
          </Menu.Item>
-        </Menu.Menu>  */}
+        </Menu.Menu> 
         <Menu.Menu position='right'>
           {!isAuthenticated && (
             <MixpanelConsumer>

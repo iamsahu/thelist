@@ -524,4 +524,28 @@ const InsertUser = (values)=>{
     }).then((response)=>response.data).catch((error)=>console.log(error))
 }
 
-export {createItem,GetList,GetListDescription,GetItemsofTag,GetItemsUsers,GetTagsListsUsers,DoesUserExists,InsertUser};
+const SEARCH=gql`
+    query MyQuery ($search:String){
+        search_lists(args: {search: $search}) {
+            list_name
+            id
+            description
+            curator_id
+            user {
+                username
+                description
+            }
+        }
+    }
+`
+
+const Search = (values)=>{
+    return client.query({
+        query:SEARCH,
+        variables:{
+            search:values.search
+        }
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
+export {createItem,GetList,GetListDescription,GetItemsofTag,GetItemsUsers,GetTagsListsUsers,DoesUserExists,InsertUser,Search};
