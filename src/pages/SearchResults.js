@@ -5,6 +5,7 @@ import {Item,Grid,Header,Divider} from 'semantic-ui-react'
 
 function SearchResults(props){
     const [searchResult, setsearchResult] = useState(null)
+    const [loading, setloading] = useState(true)
     const search = window.location.search;
     const params = new URLSearchParams(search);
     const foo = params.get('query');
@@ -15,6 +16,7 @@ function SearchResults(props){
             Search({search:foo}).then((response)=>{
                 // console.log(response)
                 setsearchResult(response)
+                setloading(false)
             })
         }
     }
@@ -32,9 +34,12 @@ function SearchResults(props){
                     <Divider/>
                     <Item.Group >
                     {
-                        (searchResult!==null)?
+                        (loading?<h1>loading</h1>:((searchResult!==null)?
                         (searchResult.search_lists.map(result=><SearchResultItem key={result.id} props={result}/>)):
-                        ("No results")
+                        ("No results")))
+                        // (searchResult!==null)?
+                        // (searchResult.search_lists.map(result=><SearchResultItem key={result.id} props={result}/>)):
+                        // ("No results")
                     }
                     </Item.Group>
                 </Grid.Column>

@@ -64,7 +64,7 @@ function TopSearch() {
   const { isLoading, value, results } = state
 
   return (
-    <Input size='small' icon='search' placeholder='Search...' onKeyPress={KeyPress} onChange={ChangeHandle}/>
+    <Input size='small' icon='search' placeholder='You find what you look for' onKeyPress={KeyPress} onChange={ChangeHandle}/>
         // <Search
         //   fluid
         //   loading={isLoading}

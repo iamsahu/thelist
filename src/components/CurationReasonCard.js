@@ -4,7 +4,7 @@ import ContentContext from '../context/ContentContext';
 import {GetListDescription} from '../util/graphqlExecutor'
 
 function CurationReasonCard(props){
-    const [content] = useContext(ContentContext)
+    const [content,contentChange] = useContext(ContentContext)
 
     const [description,setDescription] = useState('')
 
@@ -13,6 +13,7 @@ function CurationReasonCard(props){
             // console.log(response)
             if(typeof(response)!=='undefined')
             {setDescription(response.lists[0].description)}
+            // contentChange(content=>({...content,contentDescription:response.lists[0].description}))
         }).catch((error)=>console.log(error))
     }
 

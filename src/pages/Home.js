@@ -10,7 +10,7 @@ import UserContext from '../context/UserContext';
 import ContentContext from '../context/ContentContext'
 
 function Home(props){
-    console.log(props.match.params)
+    // console.log(props.match.params)
     
     // const listid = props.match.params.listid
     const user = useContext(UserContext);

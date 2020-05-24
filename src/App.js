@@ -26,7 +26,7 @@ toast.configure();
 function App() {
   mixpanel.init("4521493075a15cf75d66df3581c5410e");
   const userC = {curator_id:'',loggedin_user_id:''}
-  const [content,contentChange] = useState({currentTag:'None',contentType:'Lists',lists:{},tags:{},currentList:'',currentTagID:'',currentListID:''})//Passing a function so that the consumer can change the content
+  const [content,contentChange] = useState({currentTag:'None',contentType:'lists',lists:{},tags:{},currentList:'',currentTagID:'',currentListID:''})//Passing a function so that the consumer can change the content
   const { loading,isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
   const [userExists,SetExists] = useState(false)
   const [loadingT, setloading] = useState(true)
@@ -73,7 +73,7 @@ function App() {
               (userExists?( */}              
               <Switch>
                 <Route exact path='/search' component={SearchResults}/>
-                <Route exact path='/:user' component={Curator}/>
+                <Route exact path='/:user' component={Home}/>
                 <Route exact path='/:user/:contenttype/:listid' component={Curator}/>
                 <Route exact path='/:user/tags/:tagid' component={Curator}/>
                 <Route exact path='/' component={Home}/>

@@ -120,7 +120,11 @@ function AddItem(){
         }else{
             setErrorDescription(false)
         }
-
+        if(content.contentType==='tags'){
+            //If the added tag to article also has the tag with which the current content is being displayed
+        }else if(content.contentType==='lists'){
+            //If current list is open is the list to which the new item is being added
+        }
         
         
         if(!errors){
@@ -185,24 +189,33 @@ function AddItem(){
         }
         return ''
     }
+
+    function OnClose(){
+        setErrorList(false)
+        setErrorDescription(false)
+        setErrorLink(false)
+        setErrorName(false)
+        SetModal(false)
+    }
     
     return(
         <>
         <Reward ref={(ref) => { setreward(ref) }} type='confetti'>
-        <Modal open={showModal} trigger={<div className='icobutton'><Button onClick={()=>{SetModal(true)
+        <Modal open={showModal} closeOnDimmerClick={false} onClose={OnClose} closeIcon trigger={<Button onClick={()=>{
+            SetModal(true)
             SetDropTag(content.tags)
             SetDropList(content.lists)
-            }}>Add Item<Tap scale fade waves /></Button></div>} >
+            }}>Add Item<Tap scale fade waves /></Button>} >
             <Modal.Header>
                 Add Item
-                <Button icon position="right" onClick={()=>{
+                {/* <Button icon position="right" onClick={()=>{
                     setErrorList(false)
                     setErrorDescription(false)
                     setErrorLink(false)
                     setErrorName(false)
                     SetModal(false)}}>
                     <Icon name='close' />
-                </Button>
+                </Button> */}
             </Modal.Header>
             <Modal.Content image scrolling>
                 <Form onSubmit={onSubmit}>

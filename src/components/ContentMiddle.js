@@ -1,8 +1,20 @@
 import React,{useContext,useState,useEffect} from 'react';
 // import { useQuery } from '@apollo/react-hooks';
-import {Menu,Button,Icon,Item,Placeholder} from 'semantic-ui-react';
-import ContentContext from '../context/ContentContext';
+import {Menu,Button,Icon,Item,Placeholder,Modal,Header} from 'semantic-ui-react';
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  LinkedinShareButton,
+  PocketShareButton,
+  RedditShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  TwitterIcon,
+  FacebookIcon,
+  WhatsappIcon
+} from "react-share";
 
+import ContentContext from '../context/ContentContext';
 // import ContentCard from './ContentCard'
 import CentralList from './CentralList'
 // import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
@@ -10,9 +22,12 @@ import UserContext from '../context/UserContext';
 import {GetList,GetItemsUsers,GetItemsofTag} from '../util/graphqlExecutor'
 
 function ContentMiddle(props){
+  // console.log(process.env)
+  // console.log(process.env.REACT_APP_BASE_URL)
   const [content] = useContext(ContentContext)
   const [posts,setPosts] = useState(null)
   const user = useContext(UserContext)
+  const [shareUrl, setshareUrl] = useState(window.location.href)
   var activeItem = 'home';
 
   function handleItemClick(){
@@ -68,7 +83,10 @@ function ContentMiddle(props){
 
   return(
     <>
-    <h1>{content.contentType==='Lists'?content.currentList:content.currentTag}</h1>
+    <h1>{content.contentType==='lists'?content.currentList:content.currentTag}</h1>
+    <meta property="og:title" content={content.contentType==='tags'?content.currentTag:content.currentList} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={shareUrl} />
     <Menu pointing secondary>
       <Menu.Item
         name="Home"
@@ -104,9 +122,38 @@ function ContentMiddle(props){
         <Button icon >
             <Icon name='bell' />
         </Button>
-        <Button icon>
+        <Modal closeIcon trigger={<Button icon><Icon name='share alternate' /></Button>} centered={false}>
+          <Modal.Header>Share on Social Media</Modal.Header>
+          <Modal.Content >
+            <div>
+            <FacebookShareButton url={shareUrl} quote={content.contentDescription}>
+              <FacebookIcon size={32} round />
+            </FacebookShareButton>
+            </div>
+
+            <div>
+            <TwitterShareButton
+              url={shareUrl}
+              title='Title'>
+              <TwitterIcon size={32} round />
+            </TwitterShareButton>
+            </div>
+            
+            <div>
+            <WhatsappShareButton
+              url={shareUrl}
+              title={content.contentDescription}
+              separator=":: "
+              className="Demo__some-network__share-button"
+            >
+              <WhatsappIcon size={32} round />
+            </WhatsappShareButton>
+            </div>
+          </Modal.Content>
+        </Modal>
+        {/* <Button icon>
             <Icon name='share alternate' />
-        </Button>
+        </Button> */}
         </div>
       </Menu.Menu>
     </Menu>
@@ -120,22 +167,20 @@ function ContentMiddle(props){
               )
           } */}
           {
-                posts===null?
-                (<Placeholder>
-                  <Placeholder.Header image>
-                    <Placeholder.Line />
-                    <Placeholder.Line />
-                  </Placeholder.Header>
-                </Placeholder>):
-                (
-                    //console.log(posts),
-                    // <CentralList posts={posts.items}/>
-                    (typeof(posts)!=='undefined')?
-                      (posts.items.length>0?
-                        (<CentralList posts={posts.items}/>):
-                        (<div>Create some mojo</div>)):
-                        (<div>Create some mojo</div>)
-                )
+            posts===null?
+            (<Placeholder>
+              <Placeholder.Header image>
+                <Placeholder.Line />
+                <Placeholder.Line />
+              </Placeholder.Header>
+            </Placeholder>):
+            (
+              (typeof(posts)!=='undefined')?
+                (posts.items.length>0?
+                  (<CentralList posts={posts.items}/>):
+                  (<div>Create some mojo</div>)):
+              (<div>Create some mojo</div>)
+            )
           }
         </Item.Group>
       </div>

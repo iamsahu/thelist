@@ -7,11 +7,12 @@ import {ApolloProvider} from '@apollo/react-hooks'
 import { Auth0Provider } from "./react-auth0-spa";
 import config from "./auth_config.json";
 import history from "./util/history";
+// require('dotenv').config();
 
 const httpLink = createHttpLink({
     // uri:'http://localhost:5000',
-    // uri: 'https://thelistspacetest.herokuapp.com/v1/graphql'
-    uri:'https://thelistspace.herokuapp.com/v1/graphql'
+    // uri: 'https://thelistspace.herokuapp.com/v1/graphql',
+    uri:process.env.REACT_APP_HASURA_ENDPOINT,
 })
 
 export const client = new ApolloClient({
@@ -39,7 +40,7 @@ export default(
         <Auth0Provider
             domain={config.domain}
             client_id={config.clientId}
-            redirect_uri={'http://localhost:3000'}
+            redirect_uri={process.env.REACT_APP_BASE_URL}
             onRedirectCallback={onRedirectCallback}
         >
             <App/>

@@ -57,7 +57,7 @@ function CurationList(props){
             curator_id:item.curator_id
         }))
         contentChange({lists:tempArr})
-        console.log("lists loaded")
+        // console.log("lists loaded")
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -100,7 +100,7 @@ function CurationList(props){
         return(
             <List animated verticalAlign='middle'>
                 <List.Item key="all">
-                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:"all",currentTagID:"",contentType:'Tags',currentListID:''}))}>
+                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:"all",currentTagID:"",contentType:'tags',currentListID:''}))}>
                                 # All
                             </List.Content>
                     </List.Item>
@@ -109,10 +109,10 @@ function CurationList(props){
                     
                     // content.tags = posts.map(post=>(post.name)),
                     posts && posts.map(post=>(
-                        console.log(post.id),
+                        
                         <List.Item key={post.id}>
-                            <List.Content onClick={()=>{contentChange(content=>({...content,currentTag:post.name,currentTagID:post.id,currentListID:'',contentType:'Tags'}))
-                        console.log(post.id)}}>
+                            <List.Content onClick={()=>{contentChange(content=>({...content,currentTag:post.name,currentTagID:post.id,currentListID:'',contentType:'tags'}))
+                        }}>
                                 <Link to={`/${user.curator_id}/tags/${post.id}`}># {post.name}</Link>
                             </List.Content>
                         </List.Item>
@@ -133,7 +133,7 @@ function CurationList(props){
                     // content.tags = lists.map(post=>(post.name)),
                     lists && lists.map(post=>(
                         <List.Item key={post.id}>
-                            <List.Content onClick={()=>{contentChange(content=>({...content,currentList:post.list_name,currentListID:post.id,currentTagID:'',contentType:'Lists'}))}}>
+                            <List.Content onClick={()=>{contentChange(content=>({...content,currentList:post.list_name,currentListID:post.id,currentTagID:'',contentType:'lists'}))}}>
                                     <Link to={`/${user.curator_id}/lists/${post.id}`}>{post.list_name}</Link>
                             </List.Content>
                         </List.Item>

@@ -15,7 +15,7 @@ function TagDisplay(props){
     const user = useContext(UserContext);
     const [content,contentChange] = useContext(ContentContext)
     user.curator_id=userid
-    content.contentType='Tags'
+    content.contentType='tags'
     // console.log(tagid)
     content.currentTagID = tagid
 

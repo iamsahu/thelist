@@ -45,7 +45,7 @@ function ListDisplay(props){
     const [content,contentChange] = useContext(ContentContext)
     user.curator_id=userid
 
-    content.contentType='Lists'
+    content.contentType='lists'
     content.currentListID = listid
 
     // content.contentType='Tags'

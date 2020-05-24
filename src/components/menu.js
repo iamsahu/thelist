@@ -19,21 +19,21 @@ function MenuBar(){
 
   return(
     
-      <Menu fixed='top' >
+      <Menu fixed='top' borderless={true} >
         <Menu.Item
-            name='Curato'
+            name='TheListSpace'
             active={activeItem === 'curato'}
             onClick={handleItemClick}
         />
-        <Menu.Menu position='left'>
+        
         <Menu.Item>
-          <TopSearch/>          
-         </Menu.Item>
-        </Menu.Menu> 
+          <TopSearch />          
+        </Menu.Item>
+        
         <Menu.Menu position='right'>
           {!isAuthenticated && (
             <MixpanelConsumer>
-            {mixpanel=>  <Menu.Item
+            {mixpanel=>  <Menu.Item position='right'
                 name='Login'
                 active={activeItem === 'Login'}
                 onClick={()=>{
@@ -47,10 +47,12 @@ function MenuBar(){
           )}
           {isAuthenticated && (
             <>
+            <Menu.Item position='right' fitted='vertically'>
             <AddItem/>
+            </Menu.Item>
             <MixpanelConsumer>
               {mixpanel=>
-              <Menu.Item
+              <Menu.Item position='right'
               name='Logout'
               active={activeItem === 'Logout'}
               onClick={()=>{
@@ -60,7 +62,7 @@ function MenuBar(){
               }}
               />
               }
-              </MixpanelConsumer>
+            </MixpanelConsumer>
             </>
           )}
         </Menu.Menu>

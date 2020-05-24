@@ -15,7 +15,7 @@ function SearchResultItem(props){
                         contentChange(content=>({...content,currentList:props.props.list_name,
                                                             currentListID:props.props.id,
                                                             currentTagID:'',
-                                                            contentType:'Lists'}))
+                                                            contentType:'lists'}))
                         user.curator_id = props.props.curator_id
                                                             }}>
                     <Link to={`/${props.props.curator_id}/lists/${props.props.id}`} >
