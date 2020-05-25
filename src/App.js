@@ -13,9 +13,9 @@ import MenuBar from './components/menu'
 import Home from './pages/Home'
 import Curator from './pages/Curator'
 import SearchResults from './pages/SearchResults'
-import SignUpComplete from './pages/SignUpComplete'
-import ListDisplay from './pages/ListDisplay'
-import TagDisplay from './pages/TagDisplay'
+// import SignUpComplete from './pages/SignUpComplete'
+// import ListDisplay from './pages/ListDisplay'
+// import TagDisplay from './pages/TagDisplay'
 import history from "./util/history";
 import { useAuth0 } from './react-auth0-spa'
 import { toast } from 'react-toastify';
