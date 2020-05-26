@@ -10,8 +10,6 @@ import history from "./util/history";
 // require('dotenv').config();
 
 const httpLink = createHttpLink({
-    // uri:'http://localhost:5000',
-    // uri: 'https://thelistspace.herokuapp.com/v1/graphql',
     uri:process.env.REACT_APP_HASURA_ENDPOINT,
 })
 
@@ -20,8 +18,8 @@ export const client = new ApolloClient({
     cache:new InMemoryCache(),
     fetch,
     headers: {
-        'x-hasura-admin-secret': 'veryverysecret',
-        'x-hasura-access-key':'veryverysecret',
+        'x-hasura-admin-secret': process.env.REACT_APP_HASURA_ADMIN_SECRET,
+        'x-hasura-access-key':process.env.REACT_APP_HASURA_ACCESS_KEY,
         'Content-Type': 'application/json',
     },
 })
