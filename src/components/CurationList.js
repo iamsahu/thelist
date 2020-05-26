@@ -6,6 +6,7 @@ import {useQuery} from '@apollo/react-hooks'
 import {FETCH_TAGS,FETCH_LISTS,COMBINED_FETCH} from '../util/graphql'
 import {GetTagsListsUsers} from '../util/graphqlExecutor'
 import { Link } from 'react-router-dom';
+import {MixpanelConsumer } from 'react-mixpanel';
 
 function CurationList(props){
     const [content,contentChange] = useContext(ContentContext)
@@ -77,9 +78,14 @@ function CurationList(props){
         return(
             <List animated verticalAlign='middle'>
                 <List.Item key="all">
-                            <List.Content onClick={()=>contentChange(content=>({...content,currentTag:"all",currentTagID:"",contentType:'tags',currentListID:''}))}>
+                    <MixpanelConsumer>
+                        {mixpanel=>
+                            <List.Content onClick={()=>{contentChange(content=>({...content,currentTag:"all",currentTagID:"",contentType:'tags',currentListID:''}))
+                                mixpanel.track("Tag Click",{tag:'all',tagID:''})}}>
                                 <Link to={`/${user.curator_id}/tags/`}># All</Link>
                             </List.Content>
+                        }
+                    </MixpanelConsumer>
                     </List.Item>
                 {
                     posts = tagData['data']['tag'],
@@ -88,10 +94,16 @@ function CurationList(props){
                     posts && posts.map(post=>(
                         
                         <List.Item key={post.id}>
-                            <List.Content onClick={()=>{contentChange(content=>({...content,currentTag:post.name,currentTagID:post.id,currentListID:'',contentType:'tags'}))
+                            <MixpanelConsumer>
+                        {mixpanel=>
+                            <List.Content onClick={()=>{
+                                contentChange(content=>({...content,currentTag:post.name,currentTagID:post.id,currentListID:'',contentType:'tags'}))
+                                mixpanel.track("Tag Click",{tag:post.name,tagID:post.id})
                         }}>
                                 <Link to={`/${user.curator_id}/tags/${post.id}`}># {post.name}</Link>
                             </List.Content>
+                            }
+                            </MixpanelConsumer>
                         </List.Item>
                     ))
                 }
@@ -110,9 +122,16 @@ function CurationList(props){
                     // content.tags = lists.map(post=>(post.name)),
                     lists && lists.map(post=>(
                         <List.Item key={post.id}>
-                            <List.Content onClick={()=>{contentChange(content=>({...content,currentList:post.list_name,currentListID:post.id,currentTagID:'',contentType:'lists'}))}}>
+                            <MixpanelConsumer>
+                        {mixpanel=>
+                            <List.Content onClick={()=>{
+                                contentChange(content=>({...content,currentList:post.list_name,currentListID:post.id,currentTagID:'',contentType:'lists'}))
+                                mixpanel.track("List Click",{list:post.list_name,listID:post.id})
+                                }}>
                                     <Link to={`/${user.curator_id}/lists/${post.id}`}>{post.list_name}</Link>
                             </List.Content>
+                        }
+                            </MixpanelConsumer>
                         </List.Item>
                     ))):(<div>No data</div>)
                 }

@@ -39,6 +39,7 @@ function App() {
       if(response.user.length>0){
         // console.log("more")
         SetExists(true)
+        // mixpanel.identify(userC.loggedin_user_id)
       }else{
         SetExists(false)
         if(!userExists)
@@ -61,6 +62,7 @@ function App() {
       userC['name'] =user['name']
       userC['nickname']=user['nickname']
       checkUser(userID)
+      mixpanel.identify(userID)
     }
   }
   

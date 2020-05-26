@@ -4,7 +4,7 @@ import {List,Image} from 'semantic-ui-react'
 function ProfileListItem(props){
     return(
         <>
-        <List.Item>
+        <List.Item key={props.id}>
             <Image avatar src={props.image_link} />
             <List.Content>
                 <List.Header as='a' href={`${process.env.REACT_APP_BASE_URL}/${props.id}`}>{props.username}</List.Header>

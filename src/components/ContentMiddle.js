@@ -170,8 +170,8 @@ function ContentMiddle(props){
               (typeof(posts)!=='undefined')?
                 (posts.items.length>0?
                   (<CentralList posts={posts.items}/>):
-                  (<div>Create some mojo</div>)):
-              (<div>Create some mojo</div>)
+                  (<div>No mojo as of now</div>)):
+              (<div>No mojo as of now</div>)
             )
           }
         </Item.Group>

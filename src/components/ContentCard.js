@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Tap from 'react-interactions'
 import Reward from "react-rewards"
+import {MixpanelConsumer } from 'react-mixpanel';
 
 function ContentCard(postdata){
     const { isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
@@ -77,12 +78,18 @@ function ContentCard(postdata){
     
     return(
         <>
+        <MixpanelConsumer>
+                        {mixpanel=>
         <Item>
             <Item.Image size='tiny' src={thumbImage}/>
             <Item.Content>
-                <Item.Header as='a' target='_blank' href={post.link}>{post.name}</Item.Header>
+                <Item.Header as='a' target='_blank' href={post.link} onClick={mixpanel.track('Link Click',{link:post.link,curator:post.user.id,name:post.name})}>{post.name}</Item.Header>
                 {isAuthenticated&&(post.user.id===userC.loggedin_user_id)&&(
-                    <Button icon floated='right' onClick={deleteItem}>
+                    <Button icon floated='right' onClick={()=>{
+                        deleteItem()
+                        mixpanel.track('Delete Item',{link:post.link,curator:post.user.id,name:post.name})
+                        }
+                    }>
                         <Icon name='delete' />
                         <Tap waves />
                     </Button>
@@ -91,14 +98,20 @@ function ContentCard(postdata){
                     <Icon name='bookmark outline' />
                     <Tap waves />
                 </Button>
-                <CopyToClipboard text={post.link} onCopy={notify}>
+                <CopyToClipboard text={post.link} onCopy={()=>{
+                    notify()
+                    mixpanel.track('Copy Item',{link:post.link,curator:post.user.id,name:post.name})
+                    }}>
                     <Button icon floated='right'>
                         <Icon name='copy' />
                         <Tap waves />
                     </Button>
                 </CopyToClipboard>
                 {/* <Reward ref={(ref) => { setreward(ref) }} type='confetti' config={{springAnimation:false}}> */}
-                <Button icon floated='right' onClick={R}>
+                <Button icon floated='right' onClick={()=>{
+                    R()
+                    mixpanel.track('Appreciate Item',{link:post.link,curator:post.user.id,name:post.name})
+                }}>
                     <Icon name='certificate' />
                     <Tap waves />
                 </Button>
@@ -112,6 +125,8 @@ function ContentCard(postdata){
                 
             </Item.Content>
         </Item>
+        }
+        </MixpanelConsumer>
         </>
     )
 }

@@ -9,6 +9,7 @@ import ContentContext from '../context/ContentContext';
 import {createItem} from '../util/graphqlExecutor';
 import Tap from 'react-interactions'
 import Reward from "react-rewards"
+import {MixpanelConsumer } from 'react-mixpanel';
 
 function validURL(str) {
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
@@ -200,6 +201,8 @@ function AddItem(){
     
     return(
         <>
+        <MixpanelConsumer>
+        {mixpanel=>
         <Reward ref={(ref) => { setreward(ref) }} type='confetti'>
         <Modal open={showModal} closeOnDimmerClick={false} onClose={OnClose} closeIcon trigger={<Button onClick={()=>{
             SetModal(true)
@@ -308,6 +311,8 @@ function AddItem(){
             </Modal.Content>
         </Modal>
         </Reward>
+        }
+        </MixpanelConsumer>
         </>
     )
 }

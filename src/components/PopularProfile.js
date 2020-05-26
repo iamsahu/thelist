@@ -24,7 +24,7 @@ function PopularProfile(){
             (
                 <List>
                 {
-                    allusers.user.map(theone=>(<ProfileListItem image_link={theone.image_link} id={theone.id} username={theone.username} description={theone.description}/>))
+                    allusers.user.map(theone=>(<ProfileListItem key={theone.id} image_link={theone.image_link} id={theone.id} username={theone.username} description={theone.description}/>))
                 }
                 </List>
             )

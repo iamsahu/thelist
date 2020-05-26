@@ -65,14 +65,10 @@ function Home2(props){
         <div id="content" className="ui">
             {(welcomeBox)?
             (
-                <Message
-                onDismiss={handleDismiss}
-                header='Welcome to List Space'
-                content={``}
-                >
+                <Message onDismiss={handleDismiss}>
                     <Message.Header>Welcome to List Space</Message.Header>
                     <Message.List items={items}/>
-                    </Message>
+                </Message>
             ):(<div></div>)
             }
             <Grid columns={3} >

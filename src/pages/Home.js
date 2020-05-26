@@ -12,6 +12,8 @@ import HomeTagsDisplay from '../components/HomeTagsDisplay'
 import UserContext from '../context/UserContext';
 import ContentContext from '../context/ContentContext'
 
+import {GetTagsListsUsers} from '../util/graphqlExecutor'
+
 function Home(props){
     // console.log(props.match.params)
     
@@ -38,6 +40,38 @@ function Home(props){
     //     }
     // }
 
+    const loadData=()=>{
+        // console.log(user.curator_id)
+        GetTagsListsUsers({curator_id:user.curator_id})
+        .then((data)=>{
+            // console.log(data)
+            // posts = tagData['data']['tag']
+        const tempArr = data.lists.map(post=>({
+            text:post.name,
+            key:post.name,
+            value:post.id}))
+        
+        // lists = tagData['data']['lists']
+        const tempArr2 = data.tag.map(item=>({
+            text:item.list_name,
+            key:item.list_name,
+            value:item.id,
+            id:item.id,
+            list_name:item.list_name,
+            description:item.description,
+            curator_id:item.curator_id
+        }))
+        // console.log(tagData)
+        if(data.lists.length>0){
+            // console.log('This was executed')
+            // console.log(tagData)
+            // contentChange(content=>({...content,tags:tempArr,lists:tempArr2}))
+        }
+        })
+    }
+
+    loadData()
+
     function handleDismiss(){
         setwelcomeBox(false)
     }
@@ -54,14 +88,10 @@ function Home(props){
         <div id="content" className="ui">
             {(welcomeBox)?
             (
-                <Message
-                onDismiss={handleDismiss}
-                header='Welcome to List Space'
-                content={``}
-                >
+                <Message onDismiss={handleDismiss}>
                     <Message.Header>Welcome to List Space</Message.Header>
                     <Message.List items={items}/>
-                    </Message>
+                </Message>
             ):(<div></div>)
             }
             <Grid columns={3} >
