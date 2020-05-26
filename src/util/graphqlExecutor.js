@@ -94,6 +94,25 @@ function InsertNewList(curator_id,list_name,listDescription){
             curator_id:curator_id,
             list_name:list_name,
             description:listDescription
+        },update:(cache,{data})=>{
+            const existingItems = cache.readQuery({
+                query:COMBINED_FETCH,
+                variables:{
+                    user_id:curator_id
+                },
+            })
+            // console.log(existingItems)
+            const newItem = data.insert_lists.returning[0];
+            // console.log(newItem)
+            existingItems.lists.push(newItem)
+            // console.log(existingItems)
+            cache.writeQuery({
+                query: COMBINED_FETCH,
+                variables:{
+                    user_id:curator_id
+                },
+                data: existingItems
+            });
         }
     }).catch((error)=>{console.log(error)})
     // .then((response)=>({
@@ -102,19 +121,34 @@ function InsertNewList(curator_id,list_name,listDescription){
     // console.log(values.list_id)
 }
 
-function InsertNewTags(tags){
+function InsertNewTags(tags,curator_id){
     return client.mutate({
         mutation:INSERT_TAGS,
         variables:{
             objects:tags
+        },update:(cache,{data})=>{
+            const existingItems = cache.readQuery({
+                query:COMBINED_FETCH,
+                variables:{
+                    user_id:curator_id
+                },
+            })
+            const newItem = data.insert_tag.returning[0];
+            existingItems.tag.push(newItem)
+            cache.writeQuery({
+                query: COMBINED_FETCH,
+                variables:{
+                    user_id:curator_id
+                },
+                data: existingItems
+            });
         }
-    }).catch((error)=>{console.log(error)})
-    // .then((response)=>({
-    //     response   
-    // }))
+    }).catch((error)=>{
+        console.log(error)
+    })
 }
 
-function InsertItem(link,name,description,curator_id,list_id){
+function InsertItem(link,name,description,curator_id,list_id,contentType,currentListID,currentTagID){
     // console.log(link)
     // console.log(name)
     // console.log(description)
@@ -130,22 +164,80 @@ function InsertItem(link,name,description,curator_id,list_id){
             list_id:list_id
         },
         update:(cache,{data})=>{
+            if(contentType==='lists'){
+                if(currentListID===''){
+                    const existingItems = cache.readQuery({
+                        query:GET_ITEMS_USER,
+                        variables:{
+                            userid:curator_id
+                        },
+                    })
+                    // console.log(existingItems)
+                    const newItem = data.insert_items.returning[0];
+                    cache.writeQuery({
+                        query: GET_ITEMS_USER,
+                        variables:{
+                            userid:curator_id
+                        },
+                        data: {items: [newItem, ...existingItems.items]}
+                    });
+                }else{
+                    // console.log('here')
+                    const existingItems = cache.readQuery({
+                        query:GET_LIST,
+                            variables:{
+                                userid:curator_id,
+                                listid:currentListID
+                            },
+                    })
+                    const newItem = data.insert_items.returning[0];
+                    // console.log(newItem)
+                    cache.writeQuery({
+                        query: GET_LIST,
+                        variables:{
+                            userid:curator_id,
+                            listid:currentListID
+                        },
+                        data: {items: [newItem, ...existingItems.items]}
+                    });
+                }
+            }else if(contentType==='tags'){
+                if(currentTagID===''){
+                    const existingItems = cache.readQuery({
+                        query:GET_ITEMS_USER,
+                        variables:{
+                            userid:curator_id
+                        },
+                    })
+                    // console.log(existingItems)
+                    const newItem = data.insert_items.returning[0];
+                    cache.writeQuery({
+                        query: GET_ITEMS_USER,
+                        variables:{
+                            userid:curator_id
+                        },
+                        data: {items: [newItem, ...existingItems.items]}
+                    });
+                }else{
+                    //TODO: Tag based cache update
+                }
+            }
             // console.log(data)
-            const existingItems = cache.readQuery({
-                query:GET_ITEMS_USER,
-                variables:{
-                    userid:curator_id
-                },
-            })
-            // console.log(existingItems)
-            const newItem = data.insert_items.returning[0];
-            cache.writeQuery({
-                query: GET_ITEMS_USER,
-                variables:{
-                    userid:curator_id
-                },
-                data: {items: [newItem, ...existingItems.items]}
-            });
+            // const existingItems = cache.readQuery({
+            //     query:GET_ITEMS_USER,
+            //     variables:{
+            //         userid:curator_id
+            //     },
+            // })
+            // // console.log(existingItems)
+            // const newItem = data.insert_items.returning[0];
+            // cache.writeQuery({
+            //     query: GET_ITEMS_USER,
+            //     variables:{
+            //         userid:curator_id
+            //     },
+            //     data: {items: [newItem, ...existingItems.items]}
+            // });
         }
     }).catch((error)=>{console.log(error)})
 }
@@ -192,15 +284,22 @@ const createItem =(values) => {
             }
         }
     }
+
+    if(values.contentType==='tags'){
+        //If the added tag to article also has the tag with which the current content is being displayed
+    }else if(values.contentType==='lists'){
+        //If current list is open is the list to which the new item is being added
+    }
+
     if(newListID){
         if(newTag){
             if(oldTag){
                 return InsertNewList(values.curator_id,values.list_id,values.listDescription).then((response)=>{
                     values.list_id = response.data.insert_lists.returning[0].id
-                    return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).then((response)=>{
+                    return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id,values.contentType,values.currentListID,values.currentTagID).then((response)=>{
                         const item = response.data.insert_items.returning[0];
                         console.log(response)
-                        return InsertNewTags(newTags).then((response)=>{
+                        return InsertNewTags(newTags,values.curator_id).then((response)=>{
                             // console.log(response)
                             // console.log(item.id)
                             const receivedTags = response.data.insert_tag.returning;
@@ -220,10 +319,10 @@ const createItem =(values) => {
             }else{
                 return InsertNewList(values.curator_id,values.list_id,values.listDescription).then((response)=>{
                     values.list_id = response.data.insert_lists.returning[0].id
-                    return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).then((response)=>{
+                    return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id,values.contentType,values.currentListID,values.currentTagID).then((response)=>{
                         const item = response.data.insert_items.returning[0];
                         // console.log(response)
-                        return InsertNewTags(newTags).then((response)=>{
+                        return InsertNewTags(newTags,values.curator_id).then((response)=>{
                             // console.log(response)
                             // console.log(item.id)
                             const receivedTags = response.data.insert_tag.returning;
@@ -242,7 +341,7 @@ const createItem =(values) => {
             if(oldTag){
                 return InsertNewList(values.curator_id,values.list_id,values.listDescription).then((response)=>{
                     values.list_id = response.data.insert_lists.returning[0].id
-                    return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).then((response)=>{
+                    return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id,values.contentType,values.currentListID,values.currentTagID).then((response)=>{
                         const item = response.data.insert_items.returning[0];
                         console.log(response)
                         var temp =[];
@@ -256,7 +355,7 @@ const createItem =(values) => {
             }else{
                 return InsertNewList(values.curator_id,values.list_id,values.listDescription).then((response)=>{
                     values.list_id = response.data.insert_lists.returning[0].id
-                    return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id)
+                    return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id,values.contentType,values.currentListID,values.currentTagID)
                     .catch((error)=>{console.log(error)})
                 }).catch((error)=>{console.log(error)})
             }
@@ -264,10 +363,10 @@ const createItem =(values) => {
     }else{
         if(newTag){
             if(oldTag){
-                return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).then((response)=>{
+                return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id,values.contentType,values.currentListID,values.currentTagID).then((response)=>{
                     const item = response.data.insert_items.returning[0];
                     // console.log(response)
-                    return InsertNewTags(newTags).then((response)=>{
+                    return InsertNewTags(newTags,values.curator_id).then((response)=>{
                         // console.log(response)
                         // console.log(item.id)
                         const receivedTags = response.data.insert_tag.returning;
@@ -282,10 +381,10 @@ const createItem =(values) => {
                     }).catch((error)=>{console.log(error)})
                 }).catch((error)=>{console.log(error)})
             }else{
-                return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).then((response)=>{
+                return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id,values.contentType,values.currentListID,values.currentTagID).then((response)=>{
                     const item = response.data.insert_items.returning[0];
                     // console.log(response)
-                    return InsertNewTags(newTags).then((response)=>{
+                    return InsertNewTags(newTags,values.curator_id).then((response)=>{
                         // console.log(response)
                         // console.log(item.id)
                         const receivedTags = response.data.insert_tag.returning;
@@ -299,7 +398,7 @@ const createItem =(values) => {
             }
         }else{
             if(oldTag){
-                return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).then((response)=>{
+                return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id,values.contentType,values.currentListID,values.currentTagID).then((response)=>{
                     const item = response.data.insert_items.returning[0];
                     // console.log(response)
                     var temp =[];                    
@@ -310,7 +409,7 @@ const createItem =(values) => {
                     
                 }).catch((error)=>console.log(error))
             }else{
-                return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id).catch((error)=>{console.log(error)})
+                return InsertItem(values.link,values.name,values.description,values.curator_id,values.list_id,values.contentType,values.currentListID,values.currentTagID).catch((error)=>{console.log(error)})
             }
         }
     }
@@ -468,6 +567,8 @@ const COMBINED_FETCH = gql`
     }
 `
 
+
+
 const GetTagsListsUsers = (values)=>{
     // console.log(values)
     return client.query({
@@ -510,7 +611,6 @@ mutation MyMutation ($id:String,$image_link:String,$username:String){
     }
   }
 }
-
 `
 
 const InsertUser = (values)=>{

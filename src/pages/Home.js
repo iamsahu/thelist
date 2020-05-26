@@ -39,7 +39,8 @@ function Home(props){
     // content.currentTagID = tagid
     return(
         <div id="content" className="ui">
-            <Grid columns={3} >
+            Hello WOrld
+            {/* <Grid columns={3} >
                 <Grid.Column width={3}>
                     <CurationList curator_id={user.curator_id}/>
                 </Grid.Column>
@@ -51,7 +52,7 @@ function Home(props){
                 <Grid.Column width={4}>
                     <ContentRight curator_id={user.curator_id}/>
                 </Grid.Column>
-            </Grid>
+            </Grid> */}
         </div>
     )
 }

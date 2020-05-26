@@ -65,29 +65,6 @@ function CurationList(props){
         // console.log(user.curator_id)
         GetTagsListsUsers({curator_id:user.curator_id})
         .then((data)=>{
-        //   console.log(data)
-            // posts = data['tag']
-            // const tempArr = posts.map(post=>({
-            //     text:post.name,
-            //     key:post.name,
-            //     value:post.id}))
-            
-            // lists = data['data']['lists']
-            // const tempArr2 = lists.map(item=>({
-            //     text:item.list_name,
-            //     key:item.list_name,
-            //     value:item.id,
-            //     id:item.id,
-            //     list_name:item.list_name,
-            //     description:item.description,
-            //     curator_id:item.curator_id
-            // }))
-            // // console.log(tagData)
-            // if(lists.length>0){
-            //     // console.log('This was executed')
-            //     // console.log(tagData)
-            //     contentChange(content=>({...content,tags:tempArr,lists:tempArr2,currentList:lists[0].list_name,currentListID:lists[0].id}))
-            // }
         })
     }
     
@@ -100,8 +77,8 @@ function CurationList(props){
         return(
             <List animated verticalAlign='middle'>
                 <List.Item key="all">
-                            <List.Content as='a' onClick={()=>contentChange(content=>({...content,currentTag:"all",currentTagID:"",contentType:'tags',currentListID:''}))}>
-                                # All
+                            <List.Content onClick={()=>contentChange(content=>({...content,currentTag:"all",currentTagID:"",contentType:'tags',currentListID:''}))}>
+                                <Link to={`/${user.curator_id}/tags/`}># All</Link>
                             </List.Content>
                     </List.Item>
                 {

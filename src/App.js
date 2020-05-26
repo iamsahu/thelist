@@ -57,6 +57,8 @@ function App() {
       var userID = user['sub'].split('|')[1]
       userC['curator_id'] = userID
       userC['loggedin_user_id'] = userID
+      userC['name'] =user['name']
+      userC['nickname']=user['nickname']
       checkUser(userID)
     }
   }
@@ -76,6 +78,7 @@ function App() {
                 <Route exact path='/:user' component={Home}/>
                 <Route exact path='/:user/:contenttype/:listid' component={Curator}/>
                 <Route exact path='/:user/tags/:tagid' component={Curator}/>
+                <Route exact path='/:user/tags/' component={Curator}/>
                 <Route exact path='/' component={Home}/>
               </Switch>
               {/* ):

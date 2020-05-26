@@ -120,12 +120,12 @@ function AddItem(){
         }else{
             setErrorDescription(false)
         }
+
         if(content.contentType==='tags'){
             //If the added tag to article also has the tag with which the current content is being displayed
         }else if(content.contentType==='lists'){
             //If current list is open is the list to which the new item is being added
         }
-        
         
         if(!errors){
             createItem({...values,
