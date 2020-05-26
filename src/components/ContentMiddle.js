@@ -158,12 +158,6 @@ function ContentMiddle(props){
     {
       <div className="scrolly">
         <Item.Group >
-          {/* {loading?
-              (<h1>Loading!!</h1>):
-              (
-                <CentralList posts={temp['data']['items']}/>
-              )
-          } */}
           {
             posts===null?
             (<Placeholder>

@@ -10,6 +10,7 @@ import { MixpanelProvider } from 'react-mixpanel';
 import { UserProvider } from './context/UserContext'
 import {ContentProvider} from './context/ContentContext';
 import MenuBar from './components/menu'
+import Home2 from './pages/Home2'
 import Home from './pages/Home'
 import Curator from './pages/Curator'
 import SearchResults from './pages/SearchResults'

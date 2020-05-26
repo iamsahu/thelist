@@ -1,6 +1,6 @@
 import React,{useContext,useState} from 'react';
 
-import {Card,Grid, Divider,Header,Message} from 'semantic-ui-react';
+import {Card,Grid, Divider,Header,Message,Container} from 'semantic-ui-react';
 
 import ContentMiddle from '../components/ContentMiddle'
 import ContentRight from '../components/ContentRight'
