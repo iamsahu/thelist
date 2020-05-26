@@ -130,7 +130,6 @@ function ContentMiddle(props){
               <FacebookIcon size={32} round />
             </FacebookShareButton>
             </div>
-
             <div>
             <TwitterShareButton
               url={shareUrl}
@@ -138,7 +137,6 @@ function ContentMiddle(props){
               <TwitterIcon size={32} round />
             </TwitterShareButton>
             </div>
-            
             <div>
             <WhatsappShareButton
               url={shareUrl}

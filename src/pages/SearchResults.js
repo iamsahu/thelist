@@ -37,9 +37,6 @@ function SearchResults(props){
                         (loading?<h1>loading</h1>:((searchResult!==null)?
                         (searchResult.search_lists.map(result=><SearchResultItem key={result.id} props={result}/>)):
                         ("No results")))
-                        // (searchResult!==null)?
-                        // (searchResult.search_lists.map(result=><SearchResultItem key={result.id} props={result}/>)):
-                        // ("No results")
                     }
                     </Item.Group>
                 </Grid.Column>

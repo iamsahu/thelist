@@ -648,4 +648,63 @@ const Search = (values)=>{
     }).then((response)=>response.data).catch((error)=>console.log(error))
 }
 
-export {createItem,GetList,GetListDescription,GetItemsofTag,GetItemsUsers,GetTagsListsUsers,DoesUserExists,InsertUser,Search};
+const GET_ALL_LISTS=gql`
+    query MyQuery {
+        lists {
+            description
+            id
+            curator_id
+            list_name
+            user {
+               username
+            }
+        }
+    }
+`
+
+const GetAllLists = ()=>{
+    return client.query({
+        query:GET_ALL_LISTS
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
+const GET_ALL_TAGS=gql`
+    query MyQuery {
+        tag {
+            id
+            name
+            user_id
+            user {
+               username
+            }
+        }
+    }
+`
+
+const GetAllTags = ()=>{
+    return client.query({
+        query:GET_ALL_TAGS
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
+const GET_ALL_USERS=gql`
+    query MyQuery {
+        user {
+            description
+            id
+            image_link
+            username
+        }
+    }
+
+`
+
+const GetAllUsers=()=>{
+    return client.query({
+        query:GET_ALL_USERS
+    }).then((response)=>response.data)
+}
+
+export {createItem,GetList,GetListDescription,GetItemsofTag,
+    GetItemsUsers,GetTagsListsUsers,DoesUserExists,InsertUser,
+    Search,GetAllLists,GetAllTags,GetAllUsers};

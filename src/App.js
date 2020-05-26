@@ -75,7 +75,7 @@ function App() {
               (userExists?( */}              
               <Switch>
                 <Route exact path='/search' component={SearchResults}/>
-                <Route exact path='/:user' component={Home}/>
+                <Route exact path='/:user' component={Curator}/>
                 <Route exact path='/:user/:contenttype/:listid' component={Curator}/>
                 <Route exact path='/:user/tags/:tagid' component={Curator}/>
                 <Route exact path='/:user/tags/' component={Curator}/>
