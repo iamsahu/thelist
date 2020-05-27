@@ -6,6 +6,8 @@ import { useAuth0 } from '../react-auth0-spa'
 // import {MixpanelConsumer } from 'react-mixpanel';
 import UserContext from '../context/UserContext';
 import Mixpanel from '../util/mix'
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 function MenuBar(){
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
@@ -13,6 +15,7 @@ function MenuBar(){
   const handleItemClick = (e, { name }) => setActiveItem(name);
   const [name, setname] = useState('Find')
   const user = useContext(UserContext)
+  const history = useHistory();
   // console.log(user)
   // const mixpanel = useContext(MixpanelConsumer)
   // const DEFAULT_REDIRECT_CALLBACK = () =>
@@ -45,12 +48,13 @@ function MenuBar(){
   }
   return(
     <Menu fixed='top' borderless={true} >
-      <Menu.Item
-          name='TheListSpace'
-          active={activeItem === 'curato'}
-          onClick={handleItemClick}
-      />
-      
+      {/* <Link to={`/`}> */}
+        <Menu.Item
+            name='TheListSpace'
+            active={activeItem === 'curato'}
+            onClick={()=>history.push('/')}
+        />
+      {/* </Link> */}
       <Menu.Item>
         <TopSearch />          
       </Menu.Item>

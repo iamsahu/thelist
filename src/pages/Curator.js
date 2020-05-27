@@ -1,4 +1,4 @@
-import React,{useContext,useState} from 'react';
+import React,{useContext} from 'react';
 
 import {Grid} from 'semantic-ui-react';
 
@@ -15,14 +15,8 @@ function Curator(props){
     // const listid = props.match.params.listid
     const user = useContext(UserContext);
     const [content,contentChange] = useContext(ContentContext)
-    // user.curator_id=userid
-    // content.contentType='Lists'
-    // content.currentListID = listid
-    // console.log('Home')
-    // console.log(content);
-    // console.log(user.curator_id)
-    // console.log(typeof(props.match.params.length))
-    var userid,listid,tagid;
+    
+    var userid;
     if(typeof(props.match.params)!=='undefined'){
             // console.log("here undefined")
             userid = props.match.params.user
@@ -36,10 +30,7 @@ function Curator(props){
                 content.currentTagID = props.match.params.listid//Listid is used instead of tag id as we are using single way to detect the id 
             }
     }
-    // console.log(content)
-
-    // content.contentType='Tags'
-    // content.currentTagID = tagid
+    
     return(
         <div id="content" className="ui">
             <Grid columns={3} >

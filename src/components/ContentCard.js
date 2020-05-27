@@ -13,6 +13,7 @@ import Reward from "react-rewards"
 import {MixpanelConsumer } from 'react-mixpanel';
 import ReactGA from 'react-ga';
 import Mixpanel from '../util/mix'
+import {DeleteItem} from '../util/graphqlExecutor'
 
 function ContentCard(postdata){
     const { isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
@@ -24,19 +25,25 @@ function ContentCard(postdata){
     //     console.log(user['sub'])
     // }
     //post.user.id //Would be useful for checking if the post beind deleted belongs to the person
-    const [deleteItem] = useMutation(DELETE_ITEM,{
-        variables:{item_id:post.id,curator:userC.loggedin_user_id},
-        update: (cache) => {
-            const existingItems = cache.readQuery({
-                query: FETCH_FEED_ITEMS
-            });
-            const newItems = existingItems.items.filter(t => (t.id !== post.id));
-            cache.writeQuery({
-                query: FETCH_FEED_ITEMS,
-                data: {items: newItems}
-            });
-        }
-    })
+    // const [deleteItem] = useMutation(DELETE_ITEM,{
+    //     variables:{item_id:post.id,curator:userC.loggedin_user_id},
+    //     update: (cache) => {
+    //         const existingItems = cache.readQuery({
+    //             query: FETCH_FEED_ITEMS
+    //         });
+    //         const newItems = existingItems.items.filter(t => (t.id !== post.id));
+    //         cache.writeQuery({
+    //             query: FETCH_FEED_ITEMS,
+    //             data: {items: newItems}
+    //         });
+    //     }
+    // })
+
+    const deleteitem = (id)=>{
+        DeleteItem({id:id}).then((response)=>{
+            console.log(response)
+        })
+    }
 
     const [thumbImage,thumbImageSet] = useState('https://react.semantic-ui.com/images/wireframe/image.png')
 
@@ -87,13 +94,13 @@ function ContentCard(postdata){
             <Item.Content>
                 <Item.Header as='a' target='_blank' href={post.link} onClick={Mixpanel.track('Link Click',{"link":post.link,"curator":post.user.id,"name":post.name})}>{post.name}</Item.Header>
                 {isAuthenticated&&(post.user.id===userC.loggedin_user_id)&&(
-                    <Button icon floated='right' onClick={()=>{
-                        deleteItem()
+                    <Button icon floated='right' onClick={(e)=>{
+                        deleteitem(post.id)
                         Mixpanel.track('Delete Item',{"link":post.link,"curator":post.user.id,"name":post.name})
                         ReactGA.event({
                             category: 'Item',
                             action: 'Delete',
-                            value:post.name,
+                            label:post.name,
                             transport: 'beacon'
                         });
                         }
@@ -106,13 +113,13 @@ function ContentCard(postdata){
                     <Icon name='bookmark outline' />
                     <Tap waves />
                 </Button>
-                <CopyToClipboard text={post.link} onCopy={()=>{
+                <CopyToClipboard text={post.link} onCopy={(e)=>{
                     notify()
                     Mixpanel.track('Copy Item',{"link":post.link,"curator":post.user.id,"name":post.name})
                     ReactGA.event({
                         category: 'Item',
                         action: 'Copy',
-                        value:post.name,
+                        label:post.name,
                         transport: 'beacon'
                     });
                     }}>
@@ -122,13 +129,13 @@ function ContentCard(postdata){
                     </Button>
                 </CopyToClipboard>
                 {/* <Reward ref={(ref) => { setreward(ref) }} type='confetti' config={{springAnimation:false}}> */}
-                <Button icon floated='right' onClick={()=>{
+                <Button icon floated='right' onClick={(e)=>{
                     R()
                     Mixpanel.track('Appreciate Item',{"link":post.link,"curator":post.user.id,"name":post.name})
                     ReactGA.event({
                         category: 'Item',
                         action: 'Appreciate',
-                        value:post.name,
+                        label:post.name,
                         transport: 'beacon'
                     });
                 }}>

@@ -1,9 +1,9 @@
-import React,{useContext,useEffect} from 'react';
-import {Divider,List,Tab} from 'semantic-ui-react'
+import React,{useContext} from 'react';
+import {List,Tab} from 'semantic-ui-react'
 import ContentContext from '../context/ContentContext';
 import UserContext from '../context/UserContext';
 import {useQuery} from '@apollo/react-hooks'
-import {FETCH_TAGS,FETCH_LISTS,COMBINED_FETCH} from '../util/graphql'
+import {COMBINED_FETCH} from '../util/graphql'
 import {GetTagsListsUsers} from '../util/graphqlExecutor'
 import { Link } from 'react-router-dom';
 import {MixpanelConsumer } from 'react-mixpanel';
@@ -82,7 +82,7 @@ function CurationList(props){
                 <List.Item key="all">
                     {/* <MixpanelConsumer>
                         {mixpanel=> */}
-                            <List.Content onClick={()=>{contentChange(content=>({...content,currentTag:"all",currentTagID:"",contentType:'tags',currentListID:''}))
+                            <List.Content onClick={(e)=>{contentChange(content=>({...content,currentTag:"all",currentTagID:"",contentType:'tags',currentListID:''}))
                                 Mixpanel.track("Tag Click",{"tag":'all',"tagID":''})
                                     ReactGA.event({
                                         category: 'Tag',
@@ -105,7 +105,7 @@ function CurationList(props){
                         <List.Item key={post.id}>
                             {/* <MixpanelConsumer>
                         {mixpanel=> */}
-                            <List.Content onClick={()=>{
+                            <List.Content onClick={(e)=>{
                                 contentChange(content=>({...content,currentTag:post.name,currentTagID:post.id,currentListID:'',contentType:'tags'}))
                                 Mixpanel.track("Tag Click",{"tag":post.name,"tagID":post.id})
                                 ReactGA.event({
@@ -139,7 +139,7 @@ function CurationList(props){
                         <List.Item key={post.id}>
                             {/* <MixpanelConsumer>
                         {mixpanel=> */}
-                            <List.Content onClick={()=>{
+                            <List.Content onClick={(e)=>{
                                 contentChange(content=>({...content,currentList:post.list_name,currentListID:post.id,currentTagID:'',contentType:'lists'}))
                                 Mixpanel.track("List Click",{"list":post.list_name,"listID":post.id})
                                 ReactGA.event({
@@ -164,19 +164,7 @@ function CurationList(props){
 
     return(
         <>
-        {/* My Curations */}
-        {/* <Divider/> */}
-        {
-            // (typeof(posts)!=='undefined')?
-            // (posts.items.length>0?
-            //   (<Tab menu={{ secondary: true, pointing: true }} panes={[
-            //     {menuItem: 'Lists',render: () => <Tab.Pane>{RenderLists()} </Tab.Pane>},
-            //     {menuItem: 'Tags', render: () => <Tab.Pane>{RenderTags()}</Tab.Pane> },
-            //     { menuItem: 'Bookmarks', render: () => <Tab.Pane loading> Bookmarks</Tab.Pane> },
-            // ]}/>):
-            //   (<Tab menu={{ secondary: true, pointing: true }} panes={panes}/>)):
-            //   (<Tab menu={{ secondary: true, pointing: true }} panes={panes}/>)
-            
+        {            
               (loading)?(
                 <Tab menu={{ secondary: true, pointing: true }} panes={panes}/>
             ):(

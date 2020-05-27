@@ -705,6 +705,43 @@ const GetAllUsers=()=>{
     }).then((response)=>response.data)
 }
 
+const DELETE_ITEM = gql`
+    mutation MyMutation ($id:uuid!){
+        delete_item_tag(where: {item_id: {_eq: $id}}) {
+            affected_rows
+        }
+        delete_items(where: {id: {_eq: $id}}) {
+            returning {
+            appreciation_count
+            bookmarks_count
+            copy_count
+            created_at
+            curator
+            description
+            id
+            link
+            list_id
+            name
+            share_count
+            view_count
+                user {
+                    id
+                }
+            }
+            affected_rows
+        }
+    }
+`
+
+const DeleteItem = (id)=>{
+    return client.mutate({
+        mutation:DELETE_ITEM,
+        variables:{
+            id:id.id
+        }
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
 export {createItem,GetList,GetListDescription,GetItemsofTag,
     GetItemsUsers,GetTagsListsUsers,DoesUserExists,InsertUser,
-    Search,GetAllLists,GetAllTags,GetAllUsers};
+    Search,GetAllLists,GetAllTags,GetAllUsers,DeleteItem};
