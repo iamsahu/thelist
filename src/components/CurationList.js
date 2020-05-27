@@ -7,6 +7,8 @@ import {FETCH_TAGS,FETCH_LISTS,COMBINED_FETCH} from '../util/graphql'
 import {GetTagsListsUsers} from '../util/graphqlExecutor'
 import { Link } from 'react-router-dom';
 import {MixpanelConsumer } from 'react-mixpanel';
+import ReactGA from 'react-ga';
+import Mixpanel from '../util/mix'
 
 function CurationList(props){
     const [content,contentChange] = useContext(ContentContext)
@@ -78,14 +80,21 @@ function CurationList(props){
         return(
             <List animated verticalAlign='middle'>
                 <List.Item key="all">
-                    <MixpanelConsumer>
-                        {mixpanel=>
+                    {/* <MixpanelConsumer>
+                        {mixpanel=> */}
                             <List.Content onClick={()=>{contentChange(content=>({...content,currentTag:"all",currentTagID:"",contentType:'tags',currentListID:''}))
-                                mixpanel.track("Tag Click",{tag:'all',tagID:''})}}>
+                                Mixpanel.track("Tag Click",{"tag":'all',"tagID":''})
+                                    ReactGA.event({
+                                        category: 'Tag',
+                                        action: 'Click',
+                                        value:'all',
+                                        transport: 'beacon'
+                                    });
+                                }}>
                                 <Link to={`/${user.curator_id}/tags/`}># All</Link>
                             </List.Content>
-                        }
-                    </MixpanelConsumer>
+                        {/* }
+                    </MixpanelConsumer> */}
                     </List.Item>
                 {
                     posts = tagData['data']['tag'],
@@ -94,16 +103,22 @@ function CurationList(props){
                     posts && posts.map(post=>(
                         
                         <List.Item key={post.id}>
-                            <MixpanelConsumer>
-                        {mixpanel=>
+                            {/* <MixpanelConsumer>
+                        {mixpanel=> */}
                             <List.Content onClick={()=>{
                                 contentChange(content=>({...content,currentTag:post.name,currentTagID:post.id,currentListID:'',contentType:'tags'}))
-                                mixpanel.track("Tag Click",{tag:post.name,tagID:post.id})
+                                Mixpanel.track("Tag Click",{"tag":post.name,"tagID":post.id})
+                                ReactGA.event({
+                                    category: 'Tag',
+                                    action: 'Click',
+                                    value:post.name,
+                                    transport: 'beacon'
+                                });
                         }}>
                                 <Link to={`/${user.curator_id}/tags/${post.id}`}># {post.name}</Link>
                             </List.Content>
-                            }
-                            </MixpanelConsumer>
+                            {/* }
+                            </MixpanelConsumer> */}
                         </List.Item>
                     ))
                 }
@@ -122,16 +137,22 @@ function CurationList(props){
                     // content.tags = lists.map(post=>(post.name)),
                     lists && lists.map(post=>(
                         <List.Item key={post.id}>
-                            <MixpanelConsumer>
-                        {mixpanel=>
+                            {/* <MixpanelConsumer>
+                        {mixpanel=> */}
                             <List.Content onClick={()=>{
                                 contentChange(content=>({...content,currentList:post.list_name,currentListID:post.id,currentTagID:'',contentType:'lists'}))
-                                mixpanel.track("List Click",{list:post.list_name,listID:post.id})
+                                Mixpanel.track("List Click",{"list":post.list_name,"listID":post.id})
+                                ReactGA.event({
+                                    category: 'List',
+                                    action: 'Click',
+                                    value:post.list_name,
+                                    transport: 'beacon'
+                                });
                                 }}>
                                     <Link to={`/${user.curator_id}/lists/${post.id}`}>{post.list_name}</Link>
                             </List.Content>
-                        }
-                            </MixpanelConsumer>
+                         {/* }
+                             </MixpanelConsumer> */}
                         </List.Item>
                     ))):(<div>No data</div>)
                 }

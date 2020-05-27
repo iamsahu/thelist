@@ -23,9 +23,31 @@ import { toast } from 'react-toastify';
 import {DoesUserExists,InsertUser} from './util/graphqlExecutor'
 import {Container} from 'semantic-ui-react'
 
+import ReactGA from 'react-ga';
+
 toast.configure();
 function App() {
-  mixpanel.init("4521493075a15cf75d66df3581c5410e");
+  // mixpanel.init("4521493075a15cf75d66df3581c5410e");
+  ReactGA.initialize('UA-166934260-1');
+  history.listen((location) => {
+      ReactGA.set({ page: location.pathname });
+      ReactGA.pageview(location.pathname)
+    }
+  );
+
+//   history.listen((location) => {
+//     if(location.pathname.includes('/user')) {
+//       let rootURL = location.pathname.split('/')[1]
+//       let userPage = location.pathname.split('/')[3]
+ 
+//       let pageHit = `/${rootURL}/${userPage}`
+//       ReactGA.pageview(pageHit)
+//     } else {
+//       ReactGA.set({ page: location.pathname });
+//       ReactGA.pageview(location.pathname)
+//     }
+//  });
+
   const userC = {curator_id:'',loggedin_user_id:''}
   const [content,contentChange] = useState({currentTag:'None',contentType:'lists',lists:{},tags:{},currentList:'',currentTagID:'',currentListID:''})//Passing a function so that the consumer can change the content
   const { loading,isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
@@ -33,6 +55,19 @@ function App() {
   const [loadingT, setloading] = useState(true)
   // mixpanel.identify(userC.loggedin_user_id)
   // mixpanel.track("Video play", {"genre": "hip-hop", "duration in seconds": 42});
+
+  const callback = list => {
+    list.getEntries().forEach(entry => {
+      ReactGA.timing({
+        category: "Load Performace",
+        variable: 'Server Latency',
+        value: entry.responseStart - entry.requestStart 
+      })
+    })
+  }
+
+  var observer = new PerformanceObserver(callback);
+  observer.observe({entryTypes: ['navigation'] })
 
   const checkUser = (user_id)=>{
     DoesUserExists({user_id:user_id}).then((response)=>{
@@ -62,39 +97,39 @@ function App() {
       userC['name'] =user['name']
       userC['nickname']=user['nickname']
       checkUser(userID)
-      mixpanel.identify(userID)
+      // mixpanel.identify(userID)
     }
   }
   
   return (
-    <UserProvider value={userC}>
-      <ContentProvider value={[content,contentChange]}>
-        <MixpanelProvider mixpanel={mixpanel}>
-          <Router history={history}>
-            <div className="novscroll">
-            <MenuBar/>
-            <Container style={{ marginTop: '3em',height: '85vh' }} fluid>
-            {/* {loadingT?<div>Home</div>:
-              (userExists?( */}              
-              <Switch>
-                <Route exact path='/search' component={SearchResults}/>
-                <Route exact path='/:user' component={Curator}/>
-                <Route exact path='/:user/:contenttype/:listid' component={Curator}/>
-                <Route exact path='/:user/tags/:tagid' component={Curator}/>
-                <Route exact path='/:user/tags/' component={Curator}/>
-                <Route exact path='/' component={Home}/>
-              </Switch>
-              {/* ):
-              (<Route exact path='/signupcomplete' component={SignUpComplete}/>)
-              ) */}
-            {/* }             */}
-            </Container>
-            </div>
-          </Router>
+    // <MixpanelProvider mixpanel={mixpanel}>
+      <UserProvider value={userC}>
+        <ContentProvider value={[content,contentChange]}>
           
-        </MixpanelProvider>
-      </ContentProvider>
-    </UserProvider>
+            <Router history={history}>
+              <div className="novscroll">
+              <MenuBar/>
+              <Container style={{ marginTop: '3em',height: '85vh' }} fluid>
+              {/* {loadingT?<div>Home</div>:
+                (userExists?( */}              
+                <Switch>
+                  <Route exact path='/search' component={SearchResults}/>
+                  <Route exact path='/:user' component={Curator}/>
+                  <Route exact path='/:user/:contenttype/:listid' component={Curator}/>
+                  <Route exact path='/:user/tags/:tagid' component={Curator}/>
+                  <Route exact path='/:user/tags/' component={Curator}/>
+                  <Route exact path='/' component={Home}/>
+                </Switch>
+                {/* ):
+                (<Route exact path='/signupcomplete' component={SignUpComplete}/>)
+                ) */}
+              {/* }             */}
+              </Container>
+              </div>
+            </Router>
+        </ContentProvider>
+      </UserProvider>
+    // </MixpanelProvider>
   );
 }
 

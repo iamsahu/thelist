@@ -11,6 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Tap from 'react-interactions'
 import Reward from "react-rewards"
 import {MixpanelConsumer } from 'react-mixpanel';
+import ReactGA from 'react-ga';
+import Mixpanel from '../util/mix'
 
 function ContentCard(postdata){
     const { isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
@@ -78,16 +80,22 @@ function ContentCard(postdata){
     
     return(
         <>
-        <MixpanelConsumer>
-                        {mixpanel=>
+        {/* <MixpanelConsumer>
+                        {mixpanel=> */}
         <Item>
             <Item.Image size='tiny' src={thumbImage}/>
             <Item.Content>
-                <Item.Header as='a' target='_blank' href={post.link} onClick={mixpanel.track('Link Click',{link:post.link,curator:post.user.id,name:post.name})}>{post.name}</Item.Header>
+                <Item.Header as='a' target='_blank' href={post.link} onClick={Mixpanel.track('Link Click',{"link":post.link,"curator":post.user.id,"name":post.name})}>{post.name}</Item.Header>
                 {isAuthenticated&&(post.user.id===userC.loggedin_user_id)&&(
                     <Button icon floated='right' onClick={()=>{
                         deleteItem()
-                        mixpanel.track('Delete Item',{link:post.link,curator:post.user.id,name:post.name})
+                        Mixpanel.track('Delete Item',{"link":post.link,"curator":post.user.id,"name":post.name})
+                        ReactGA.event({
+                            category: 'Item',
+                            action: 'Delete',
+                            value:post.name,
+                            transport: 'beacon'
+                        });
                         }
                     }>
                         <Icon name='delete' />
@@ -100,7 +108,13 @@ function ContentCard(postdata){
                 </Button>
                 <CopyToClipboard text={post.link} onCopy={()=>{
                     notify()
-                    mixpanel.track('Copy Item',{link:post.link,curator:post.user.id,name:post.name})
+                    Mixpanel.track('Copy Item',{"link":post.link,"curator":post.user.id,"name":post.name})
+                    ReactGA.event({
+                        category: 'Item',
+                        action: 'Copy',
+                        value:post.name,
+                        transport: 'beacon'
+                    });
                     }}>
                     <Button icon floated='right'>
                         <Icon name='copy' />
@@ -110,7 +124,13 @@ function ContentCard(postdata){
                 {/* <Reward ref={(ref) => { setreward(ref) }} type='confetti' config={{springAnimation:false}}> */}
                 <Button icon floated='right' onClick={()=>{
                     R()
-                    mixpanel.track('Appreciate Item',{link:post.link,curator:post.user.id,name:post.name})
+                    Mixpanel.track('Appreciate Item',{"link":post.link,"curator":post.user.id,"name":post.name})
+                    ReactGA.event({
+                        category: 'Item',
+                        action: 'Appreciate',
+                        value:post.name,
+                        transport: 'beacon'
+                    });
                 }}>
                     <Icon name='certificate' />
                     <Tap waves />
@@ -125,8 +145,8 @@ function ContentCard(postdata){
                 
             </Item.Content>
         </Item>
-        }
-        </MixpanelConsumer>
+        {/* }
+        </MixpanelConsumer> */}
         </>
     )
 }

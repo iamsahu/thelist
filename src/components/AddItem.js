@@ -10,6 +10,8 @@ import {createItem} from '../util/graphqlExecutor';
 import Tap from 'react-interactions'
 import Reward from "react-rewards"
 import {MixpanelConsumer } from 'react-mixpanel';
+import ReactGA from 'react-ga';
+import Mixpanel from '../util/mix'
 
 function validURL(str) {
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
@@ -143,6 +145,11 @@ function AddItem(){
             })
             SetModal(false)
             reward.rewardMe();
+            ReactGA.event({
+                category: 'Item',
+                action: 'Create',
+                transport: 'beacon'
+            });
         }
     }
 
