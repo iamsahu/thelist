@@ -64,9 +64,24 @@
   height: 85vh;
   /* width: 7px; */
 }
+.borderless{
+  border: none;
+}
 
 .novscroll{
   overflow: hidden;
+  height: 100vh;
+}
+
+.usp{
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.scroll{
+  /* width: 0 !important; */
+  overflow: auto;
   height: 100vh;
 }
 
@@ -78,3 +93,15 @@
 }
 
 
+
+
+.xyz{
+  display: flex; 
+align-items: stretch; 
+}
+
+.zxc{
+  background-size: contain;
+  height: 300;
+  width: 300;
+}

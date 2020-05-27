@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import {BrowserRouter as Router,Route, Switch} from 'react-router-dom';
-// import 'semantic-ui-forest-themes/semantic.yeti.min.css'
+// import 'semantic-ui-forest-themes/semantic.slate.min.css'
 import 'semantic-ui-css/semantic.min.css';//readable
 import './App.css';
 import 'react-interactions/dist/main.css';
@@ -10,8 +10,10 @@ import { MixpanelProvider } from 'react-mixpanel';
 import { UserProvider } from './context/UserContext'
 import {ContentProvider} from './context/ContentContext';
 import MenuBar from './components/menu'
+import BottomBar from './components/BottomBar'
 import Home2 from './pages/Home2'
 import Home from './pages/Home'
+import HomeNoLogin from './pages/HomeNoLogin'
 import Curator from './pages/Curator'
 import SearchResults from './pages/SearchResults'
 // import SignUpComplete from './pages/SignUpComplete'
@@ -108,24 +110,27 @@ function App() {
         <ContentProvider value={[content,contentChange]}>
           
             <Router history={history}>
-              <div className="novscroll">
+              
               <MenuBar/>
+              <div className="novscroll">
               <Container style={{ marginTop: '3em',height: '85vh' }} fluid>
               {/* {loadingT?<div>Home</div>:
                 (userExists?( */}              
                 <Switch>
+                  <Route exact path='/explore' component={Home2}/>
                   <Route exact path='/search' component={SearchResults}/>
                   <Route exact path='/:user' component={Curator}/>
                   <Route exact path='/:user/:contenttype/:listid' component={Curator}/>
                   <Route exact path='/:user/tags/:tagid' component={Curator}/>
                   <Route exact path='/:user/tags/' component={Curator}/>
-                  <Route exact path='/' component={Home}/>
+                  <Route exact path='/' component={HomeNoLogin}/>
                 </Switch>
                 {/* ):
                 (<Route exact path='/signupcomplete' component={SignUpComplete}/>)
                 ) */}
               {/* }             */}
               </Container>
+              {/* <BottomBar/>               */}
               </div>
             </Router>
         </ContentProvider>

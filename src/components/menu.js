@@ -47,7 +47,7 @@ function MenuBar(){
     }
   }
   return(
-    <Menu fixed='top' borderless={true} >
+    <Menu fixed='top' borderless={true} inverted>
       {/* <Link to={`/`}> */}
         <Menu.Item
             name='TheListSpace'
