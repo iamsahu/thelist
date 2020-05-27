@@ -36,7 +36,8 @@ function MenuBar(){
 
         break;
       case 'logout':
-        logout()
+        //TODO: in the future write code here to handle the proper redirect
+        logout({returnTo:process.env.REACT_APP_BASE_URL})
         break;
       default:
         break;
