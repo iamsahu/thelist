@@ -3,8 +3,9 @@ import {  Menu,Dropdown,Image } from 'semantic-ui-react'
 import AddItem from './AddItem';
 import TopSearch from './TopSearch'
 import { useAuth0 } from '../react-auth0-spa'
-import {MixpanelConsumer } from 'react-mixpanel';
+// import {MixpanelConsumer } from 'react-mixpanel';
 import UserContext from '../context/UserContext';
+import Mixpanel from '../util/mix'
 
 function MenuBar(){
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
@@ -56,27 +57,28 @@ function MenuBar(){
         
         <Menu.Menu position='right'>
           {!isAuthenticated && (
-            <MixpanelConsumer>
-            {mixpanel=>  <Menu.Item position='right'
+            // <MixpanelConsumer>
+            // {mixpanel=> 
+             <Menu.Item position='right'
                 name='Login'
                 active={activeItem === 'Login'}
                 onClick={()=>{
                   console.log("Login")
-                  mixpanel.track("Login", {"genre": "hip-hop", "duration in seconds": 42});
+                  Mixpanel.track("Login", {"genre": "hip-hop", "duration in seconds": 42});
                   loginWithRedirect({})
                 }}
               />
-          }
-            </MixpanelConsumer>
+          // }
+          //   </MixpanelConsumer>
           )}
           {isAuthenticated && (
             <>
             <Menu.Item position='right' fitted='vertically'>
             <AddItem/>
             </Menu.Item>
-            <MixpanelConsumer>
-              {mixpanel=>
-              // <Menu.Item position='right'
+            {/* <MixpanelConsumer>
+              {mixpanel=> */}
+              {/* // <Menu.Item position='right'
               // name='Logout'
               // active={activeItem === 'Logout'}
               // onClick={()=>{
@@ -91,7 +93,7 @@ function MenuBar(){
               //     <Dropdown.Item icon='globe' text='Choose Language' />
               //     <Dropdown.Item icon='settings' text='Account Settings' />
               //   </Dropdown.Menu>
-              // </Dropdown>
+              // </Dropdown> */}
               <Menu.Item position='right'>
                 <Dropdown
                   trigger={<span><Image avatar src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'> {user.name}</Image></span>}
@@ -101,8 +103,8 @@ function MenuBar(){
                   onChange={handleChangeList}
                 />
               </Menu.Item>
-              }
-            </MixpanelConsumer>
+              {/* }
+            </MixpanelConsumer> */}
             </>
           )}
         </Menu.Menu>
