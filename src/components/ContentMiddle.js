@@ -94,7 +94,7 @@ function ContentMiddle(props){
       <meta property="og:image" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
 
       {/* <!-- Twitter --/> */}
-      <meta property="twitter:card" content="summary_large_image"/>
+      <meta property="twitter:card" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
       <meta property="twitter:url" content={shareUrl}/>
       <meta property="twitter:title" content={content.contentType==='tags'?content.currentTag:content.currentList}/>
       <meta property="twitter:description" content="A place for all your curations!"/>
