@@ -20,6 +20,7 @@ import CentralList from './CentralList'
 // import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
 import UserContext from '../context/UserContext';
 import {GetList,GetItemsUsers,GetItemsofTag} from '../util/graphqlExecutor'
+import MetaTags from 'react-meta-tags';
 
 function ContentMiddle(props){
   // console.log(process.env)
@@ -84,9 +85,26 @@ function ContentMiddle(props){
   return(
     <>
     <h1>{content.contentType==='lists'?content.currentList:content.currentTag}</h1>
-    <meta property="og:title" content={content.contentType==='tags'?content.currentTag:content.currentList} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={shareUrl} />
+    {/* <!-- Open Graph / Facebook --> */}
+    <MetaTags>
+      <meta property="og:type" content="website"/>
+      <meta property="og:url" content={shareUrl}/>
+      <meta property="og:title" content={content.contentType==='tags'?content.currentTag:content.currentList}/>
+      <meta property="og:description" content="A place for all your curations!"/>
+      <meta property="og:image" content="%PUBLIC_URL%/thelistspace.png"/>
+
+      {/* <!-- Twitter --/> */}
+      <meta property="twitter:card" content="summary_large_image"/>
+      <meta property="twitter:url" content={shareUrl}/>
+      <meta property="twitter:title" content={content.contentType==='tags'?content.currentTag:content.currentList}/>
+      <meta property="twitter:description" content="A place for all your curations!"/>
+      <meta property="twitter:image" content="%PUBLIC_URL%/thelistspace.png"/>
+
+      
+      {/* <meta property="og:title" content={content.contentType==='tags'?content.currentTag:content.currentList} />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content={shareUrl} /> */}
+    </MetaTags>
     <Menu pointing secondary>
       <Menu.Item
         name="Home"

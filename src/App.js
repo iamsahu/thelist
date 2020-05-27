@@ -27,6 +27,7 @@ import ReactGA from 'react-ga';
 
 toast.configure();
 function App() {
+  
   // mixpanel.init("4521493075a15cf75d66df3581c5410e");
   ReactGA.initialize('UA-166934260-1');
   history.listen((location) => {

@@ -44,73 +44,71 @@ function MenuBar(){
     }
   }
   return(
-    
-      <Menu fixed='top' borderless={true} >
-        <Menu.Item
-            name='TheListSpace'
-            active={activeItem === 'curato'}
-            onClick={handleItemClick}
-        />
-        
-        <Menu.Item>
-          <TopSearch />          
-        </Menu.Item>
-        
-        <Menu.Menu position='right'>
-          {!isAuthenticated && (
-            // <MixpanelConsumer>
-            // {mixpanel=> 
-             <Menu.Item position='right'
-                name='Login'
-                active={activeItem === 'Login'}
-                onClick={()=>{
-                  console.log("Login")
-                  Mixpanel.track("Login", {"genre": "hip-hop", "duration in seconds": 42});
-                  loginWithRedirect({})
-                }}
+    <Menu fixed='top' borderless={true} >
+      <Menu.Item
+          name='TheListSpace'
+          active={activeItem === 'curato'}
+          onClick={handleItemClick}
+      />
+      
+      <Menu.Item>
+        <TopSearch />          
+      </Menu.Item>
+      
+      <Menu.Menu position='right'>
+        {!isAuthenticated && (
+          // <MixpanelConsumer>
+          // {mixpanel=> 
+            <Menu.Item position='right'
+              name='Login'
+              active={activeItem === 'Login'}
+              onClick={()=>{
+                console.log("Login")
+                Mixpanel.track("Login", {"genre": "hip-hop", "duration in seconds": 42});
+                loginWithRedirect({})
+              }}
+            />
+        // }
+        //   </MixpanelConsumer>
+        )}
+        {isAuthenticated && (
+          <>
+          <Menu.Item position='right' fitted='vertically'>
+          <AddItem/>
+          </Menu.Item>
+          {/* <MixpanelConsumer>
+            {mixpanel=> */}
+            {/* // <Menu.Item position='right'
+            // name='Logout'
+            // active={activeItem === 'Logout'}
+            // onClick={()=>{
+            //   console.log("Logout")
+            //   mixpanel.track('logout')
+            //   logout()
+            // }}
+            // />
+            // <Dropdown item text='More'>
+            //   <Dropdown.Menu>
+            //     <Dropdown.Item icon='edit' text='Edit Profile' />
+            //     <Dropdown.Item icon='globe' text='Choose Language' />
+            //     <Dropdown.Item icon='settings' text='Account Settings' />
+            //   </Dropdown.Menu>
+            // </Dropdown> */}
+            <Menu.Item position='right'>
+              <Dropdown
+                trigger={<span><Image avatar src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'> {user.name}</Image></span>}
+                options={options}
+                pointing='top right'
+                icon={null}
+                onChange={handleChangeList}
               />
-          // }
-          //   </MixpanelConsumer>
-          )}
-          {isAuthenticated && (
-            <>
-            <Menu.Item position='right' fitted='vertically'>
-            <AddItem/>
             </Menu.Item>
-            {/* <MixpanelConsumer>
-              {mixpanel=> */}
-              {/* // <Menu.Item position='right'
-              // name='Logout'
-              // active={activeItem === 'Logout'}
-              // onClick={()=>{
-              //   console.log("Logout")
-              //   mixpanel.track('logout')
-              //   logout()
-              // }}
-              // />
-              // <Dropdown item text='More'>
-              //   <Dropdown.Menu>
-              //     <Dropdown.Item icon='edit' text='Edit Profile' />
-              //     <Dropdown.Item icon='globe' text='Choose Language' />
-              //     <Dropdown.Item icon='settings' text='Account Settings' />
-              //   </Dropdown.Menu>
-              // </Dropdown> */}
-              <Menu.Item position='right'>
-                <Dropdown
-                  trigger={<span><Image avatar src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'> {user.name}</Image></span>}
-                  options={options}
-                  pointing='top right'
-                  icon={null}
-                  onChange={handleChangeList}
-                />
-              </Menu.Item>
-              {/* }
-            </MixpanelConsumer> */}
-            </>
-          )}
-        </Menu.Menu>
-      </Menu>
-    
+            {/* }
+          </MixpanelConsumer> */}
+          </>
+        )}
+      </Menu.Menu>
+    </Menu>
   )
 }
 
