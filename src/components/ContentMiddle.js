@@ -91,14 +91,14 @@ function ContentMiddle(props){
       <meta property="og:url" content={shareUrl}/>
       <meta property="og:title" content={content.contentType==='tags'?content.currentTag:content.currentList}/>
       <meta property="og:description" content="A place for all your curations!"/>
-      <meta property="og:image" content="%PUBLIC_URL%/thelistspace.png"/>
+      <meta property="og:image" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
 
       {/* <!-- Twitter --/> */}
       <meta property="twitter:card" content="summary_large_image"/>
       <meta property="twitter:url" content={shareUrl}/>
       <meta property="twitter:title" content={content.contentType==='tags'?content.currentTag:content.currentList}/>
       <meta property="twitter:description" content="A place for all your curations!"/>
-      <meta property="twitter:image" content="%PUBLIC_URL%/thelistspace.png"/>
+      <meta property="twitter:image" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
 
       
       {/* <meta property="og:title" content={content.contentType==='tags'?content.currentTag:content.currentList} />
