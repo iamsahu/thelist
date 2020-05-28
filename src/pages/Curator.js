@@ -33,7 +33,7 @@ function Curator(props){
     
     return(
         <div id="content" className="ui">
-            <Grid columns={3} >
+            <Grid stackable columns={3} >
                 <Grid.Column width={3}>
                     <CurationList curator_id={user.curator_id}/>
                 </Grid.Column>
