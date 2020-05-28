@@ -49,6 +49,7 @@ function HomeNoLogin(){
             <Grid.Column  width={4}>
                 <Card style={{'height':'431px'}} className='ui fluid card'>
                 {/* <Card style={{'height':'361px'}} className='ui fluid card'> */}
+                {/* <Card className='ui fluid card'> */}
                     <Image src={`${process.env.REACT_APP_BASE_URL}/undraw_online_connection_6778.png`} wrapped ui={false} />
                     {/* <Image src={`${process.env.REACT_APP_BASE_URL}/pablo-sign-up.png`} wrapped ui={false} /> */}
                     <Card.Content header='Share' />
@@ -56,8 +57,8 @@ function HomeNoLogin(){
                 </Card>
             </Grid.Column>
             <Grid.Column width={4}>
-                <Card style={{'height':'431px'}} className='ui fluid card'>
-                {/* <Card className=' fluid card'> */}
+                {/* <Card style={{'height':'431px'}} className='ui fluid card'> */}
+                <Card className=' fluid card'>
                     <Image src={`${process.env.REACT_APP_BASE_URL}/undraw_location_search_bqps.png`} wrapped ui={false} />
                     {/* <Image src={`${process.env.REACT_APP_BASE_URL}/pablo-searching.png`} wrapped ui={false} /> */}
                     <Card.Content header='Discover' />
