@@ -71,6 +71,7 @@
 .novscroll{
   overflow: hidden;
   height: 100vh;
+  
 }
 
 .usp{
@@ -104,4 +105,13 @@ align-items: stretch;
   background-size: contain;
   height: 300;
   width: 300;
+}
+
+.landingBG{
+  background-color: #fdfd96;
+}
+
+.card{
+  flex: 1; /* Shrink and grow according to available height */
+  flex-basis: 0;
 }

@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import {BrowserRouter as Router,Route, Switch} from 'react-router-dom';
-// import 'semantic-ui-forest-themes/semantic.slate.min.css'
-import 'semantic-ui-css/semantic.min.css';//readable
+import 'semantic-ui-forest-themes/semantic.lumen.min.css'
+// import 'semantic-ui-css/semantic.min.css';//readable
 import './App.css';
 import 'react-interactions/dist/main.css';
 import mixpanel from 'mixpanel-browser';
