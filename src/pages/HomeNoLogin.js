@@ -36,7 +36,7 @@ function HomeNoLogin(){
             </Link>
         </Container>
         <Container fluid>
-        <Grid columns={3} className='equal width center aligned ' fluid style={{marginTop: '2rem'}}> 
+        <Grid columns={3} className='equal width center aligned ' stackable style={{marginTop: '2rem'}}> 
             <Grid.Column width={4} >
                 {/* <Card className='ui fluid card'> */}
                 <Card style={{'height':'431px'}} className='ui fluid card'>

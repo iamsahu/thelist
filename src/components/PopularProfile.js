@@ -22,7 +22,7 @@ function PopularProfile(){
         {
             (loading)?(<div>loading</div>):
             (
-                <List>
+                <List divided>
                 {
                     allusers.user.map(theone=>(<ProfileListItem key={theone.id} image_link={theone.image_link} id={theone.id} username={theone.username} description={theone.description}/>))
                 }

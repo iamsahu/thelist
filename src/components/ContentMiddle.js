@@ -1,6 +1,6 @@
 import React,{useContext,useState,useEffect} from 'react';
 // import { useQuery } from '@apollo/react-hooks';
-import {Menu,Button,Icon,Item,Placeholder,Modal,Header} from 'semantic-ui-react';
+import {Menu,Button,Icon,Item,Placeholder,Modal,Image} from 'semantic-ui-react';
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -21,6 +21,9 @@ import CentralList from './CentralList'
 import UserContext from '../context/UserContext';
 import {GetList,GetItemsUsers,GetItemsofTag} from '../util/graphqlExecutor'
 import MetaTags from 'react-meta-tags';
+import ReactGA from 'react-ga';
+import Mixpanel from '../util/mix'
+import Tap from 'react-interactions'
 
 function ContentMiddle(props){
   // console.log(process.env)
@@ -136,7 +139,18 @@ function ContentMiddle(props){
         onClick={handleItemClick}
       /> */}
       <Menu.Menu position='right'>
-          <div className='icobutton'>
+        <div className='icobutton'>
+        <Button icon floated='right' onClick={(e)=>{
+          Mixpanel.track('Appreciate List',{"link":{shareUrl},"curator":user.curator_id,"name":content.currentList})
+          ReactGA.event({
+              category: 'List',
+              action: 'Like',
+              transport: 'beacon'
+          });
+          }}>
+          <Icon name='like' />
+          {/* <Tap waves /> */}
+        </Button>
         <Button icon >
             <Icon name='bell' />
         </Button>
@@ -188,7 +202,12 @@ function ContentMiddle(props){
               (typeof(posts)!=='undefined')?
                 (posts.items.length>0?
                   (<CentralList posts={posts.items}/>):
-                  (<div>No mojo as of now</div>)):
+                  (
+                    
+                   <div className='imageFix'>
+                     <Image centered src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9.png`} size='large' verticalAlign='middle' />
+                  </div> 
+                  )):
               (<div>No mojo as of now</div>)
             )
           }

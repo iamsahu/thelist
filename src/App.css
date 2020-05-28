@@ -63,6 +63,7 @@
   scrollbar-width: 2px;
   height: 85vh;
   /* width: 7px; */
+  
 }
 .borderless{
   border: none;
@@ -114,4 +115,8 @@ align-items: stretch;
 .card{
   flex: 1; /* Shrink and grow according to available height */
   flex-basis: 0;
+}
+
+.imageFix{
+  display:table-cell; vertical-align:middle; text-align:center
 }

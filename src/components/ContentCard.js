@@ -139,7 +139,7 @@ function ContentCard(postdata){
                         transport: 'beacon'
                     });
                 }}>
-                    <Icon name='certificate' />
+                    <Icon name='like' />
                     <Tap waves />
                 </Button>
                 {/* </Reward> */}
