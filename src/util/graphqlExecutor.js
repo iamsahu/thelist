@@ -5,8 +5,6 @@ import UserContext from '../context/UserContext';
 import ContentContext from '../context/ContentContext';
 import {FETCH_FEED_ITEMS} from './graphql' 
 
-
-
 const tagTemplate ={
     posts_tags: {
         data: {
@@ -418,6 +416,8 @@ const createItem =(values) => {
 export const GET_LIST = gql`
     query MyQuery($userid:String,$listid:uuid!) {
         items(order_by: {created_at: desc_nulls_last}, where: {user: {id: {_eq: $userid}}, list_id: {_eq: $listid}}) {
+            auto_description
+            auto_image
             appreciation_count
             bookmarks_count
             copy_count
@@ -432,6 +432,28 @@ export const GET_LIST = gql`
             user {
                 id
             }
+            list {
+                description
+                list_name
+                like_lists_aggregate {
+                    aggregate {
+                    count
+                    }
+                }
+            }
+            like_items_aggregate {
+                aggregate {
+                    count
+                }
+            }
+            like_items(where: {user_id: {_eq: $userid}}) {
+                user_id
+            }
+        }
+        like_list(where: {list_id: {_eq: $listid}, user_id: {_eq: $userid}}) {
+            list_id
+            user_id
+            id
         }
     }
 `
@@ -476,6 +498,8 @@ const GET_ITEMS_OF_TAG = gql`
 const GET_ITEMS = gql`
     query MyQuery($_in: [uuid!]!){
         items(where: {id: {_in: $_in}}) {
+            auto_description
+            auto_image
             appreciation_count
             bookmarks_count
             copy_count
@@ -521,22 +545,31 @@ const GetItemsofTag=(values)=>{
 
 const GET_ITEMS_USER=gql`
     query MyQuery($userid:String!) {
-    items(order_by: {created_at: desc_nulls_last},where: {user: {id: {_eq: $userid}}}) {
-        appreciation_count
-        copy_count
-        bookmarks_count
-        curator
-        description
-        id
-        link
-        list_id
-        name
-        user {
-        id
+        items(order_by: {created_at: desc_nulls_last},where: {user: {id: {_eq: $userid}}}) {
+            auto_description
+            auto_image
+            appreciation_count
+            copy_count
+            bookmarks_count
+            curator
+            description
+            id
+            link
+            list_id
+            name
+            user {
+                id
+            }
+            share_count
+            view_count
+            list {
+                description
+                list_name
+            }
+            like_items(where: {user_id: {_eq: $userid}}) {
+                user_id
+            }
         }
-        share_count
-        view_count
-    }
     }
 `
 
@@ -634,6 +667,7 @@ const SEARCH=gql`
             user {
                 username
                 description
+                image_link
             }
         }
     }
@@ -742,6 +776,139 @@ const DeleteItem = (id)=>{
     }).then((response)=>response.data).catch((error)=>console.log(error))
 }
 
+const LIKE_LIST = gql`
+    mutation MyMutation($list_id:uuid!,$user_id:String!) {
+        insert_like_list(objects: {list_id: $list_id, user_id: $user_id}) {
+            affected_rows
+            returning {
+                list_id
+                user_id
+                id
+            }
+        }
+    }
+`
+
+const LikeList=(list_id,user_id)=>{
+    if(list_id===""||user_id==="")
+    return
+    return client.mutate({
+        mutation:LIKE_LIST,
+        variables:{
+            list_id:list_id,
+            user_id:user_id
+        },update:(cache,{data})=>{
+            const existingItems = cache.readQuery({
+                query:GET_LIST,
+                variables:{
+                    userid:user_id,
+                    listid:list_id
+                },
+            })
+            console.log(existingItems)
+            console.log(data)
+            const newItem = data.insert_like_list.returning[0];
+            // console.log(newItem)
+            existingItems.like_list.push(newItem)
+            // console.log(existingItems)
+            cache.writeQuery({
+                query: GET_LIST,
+                variables:{
+                    userid:user_id,
+                    listid:list_id
+                },
+                data: existingItems
+            });
+        }
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
+const UNLIKE_LIST = gql`
+    mutation MyMutation ($list_id:uuid!,$user_id:String!){
+        delete_like_list(where: {list_id: {_eq: $list_id}, user_id: {_eq: $user_id}}) {
+            affected_rows
+        }
+    }
+`
+
+const UnlikeList=(list_id,user_id)=>{
+    return client.mutate({
+        mutation:UNLIKE_LIST,
+        variables:{
+            list_id:list_id,
+            user_id:user_id
+        },update:(cache,{data})=>{
+            const existingItems = cache.readQuery({
+                query:GET_LIST,
+                variables:{
+                    userid:user_id,
+                    listid:list_id
+                },
+            })
+            console.log(existingItems)
+            console.log(data)
+            // const newItem = data.delete_like_list.returning[0];
+            // console.log(newItem)
+            existingItems.like_list.length=0
+            // console.log(existingItems)
+            cache.writeQuery({
+                query: GET_LIST,
+                variables:{
+                    userid:user_id,
+                    listid:list_id
+                },
+                data: existingItems
+            });
+        }
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
+const LIKE_ITEM=gql`
+    mutation MyMutation ($item_id:uuid!,$user_id:String!){
+        insert_like_item(objects: {item_id: $item_id, user_id: $user_id}) {
+            affected_rows
+        }
+    }
+`
+
+const LikeItem=(item_id,user_id)=>{
+    return client.mutate({
+        mutation:LIKE_ITEM,
+        variables:{
+            item_id:item_id,
+            user_id:user_id
+        }
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
+const UNLIKE_ITEM=gql`
+    mutation MyMutation($item_id:uuid!,$user_id:String!) {
+        delete_like_item(where: {item_id: {_eq: $item_id}, user_id: {_eq: $user_id}}) {
+            affected_rows
+        }
+    }
+`
+
+const UnlikeItem=(item_id,user_id)=>{
+    return client.mutate({
+        mutation:UNLIKE_ITEM,
+        variables:{
+            item_id:item_id,
+            user_id:user_id
+        }
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
+const FETCH_ITEM_LIKES=gql`
+    query MyQuery($item_id:uuid!,$user_id:String!) {
+        like_item_aggregate(where: {item_id: {_eq: $item_id}, user_id: {_eq: $user_id}}) {
+            aggregate {
+                count
+            }
+        }
+    }
+`
+
 export {createItem,GetList,GetListDescription,GetItemsofTag,
     GetItemsUsers,GetTagsListsUsers,DoesUserExists,InsertUser,
-    Search,GetAllLists,GetAllTags,GetAllUsers,DeleteItem};
+    Search,GetAllLists,GetAllTags,GetAllUsers,DeleteItem,LikeList,UnlikeList,LikeItem,UnlikeItem};

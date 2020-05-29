@@ -24,6 +24,7 @@ import { useAuth0 } from './react-auth0-spa'
 import { toast } from 'react-toastify';
 import {DoesUserExists,InsertUser} from './util/graphqlExecutor'
 import {Container} from 'semantic-ui-react'
+import Mixpanel from './util/mix'
 
 import ReactGA from 'react-ga';
 
@@ -92,6 +93,7 @@ function App() {
   }
   
   if(!loading){
+    // console.log('here1')
     if(typeof(user)!=='undefined'){
       // console.log(user)
       var userID = user['sub'].split('|')[1]
@@ -100,10 +102,12 @@ function App() {
       userC['name'] =user['name']
       userC['nickname']=user['nickname']
       checkUser(userID)
-      // mixpanel.identify(userID)
+      Mixpanel.identify(userID)
+      var props = {user:userID}
+      // console.log("here")
     }
   }
-  
+  // console.log(userID)
   return (
     // <MixpanelProvider mixpanel={mixpanel}>
       <UserProvider value={userC}>
@@ -114,8 +118,6 @@ function App() {
               <MenuBar/>
               <div className="novscroll">
               <Container style={{ marginTop: '3em',height: '85vh' }} fluid>
-              {/* {loadingT?<div>Home</div>:
-                (userExists?( */}              
                 <Switch>
                   <Route exact path='/explore' component={Home2}/>
                   <Route exact path='/search' component={SearchResults}/>
@@ -123,14 +125,15 @@ function App() {
                   <Route exact path='/:user/:contenttype/:listid' component={Curator}/>
                   <Route exact path='/:user/tags/:tagid' component={Curator}/>
                   <Route exact path='/:user/tags/' component={Curator}/>
-                  <Route exact path='/' component={HomeNoLogin}/>
+                  {(isAuthenticated&&!(loading)&&!loadingT)?
+                    <Route
+                      path='/'
+                      render={(props) => <Curator user={userC['curator_id']} isAuthed={true} />}/>:
+                    <Route exact path='/' component={HomeNoLogin}/> 
+                  }
+                  
                 </Switch>
-                {/* ):
-                (<Route exact path='/signupcomplete' component={SignUpComplete}/>)
-                ) */}
-              {/* }             */}
               </Container>
-              {/* <BottomBar/>               */}
               </div>
             </Router>
         </ContentProvider>

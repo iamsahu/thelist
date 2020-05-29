@@ -15,8 +15,11 @@ function Curator(props){
     // const listid = props.match.params.listid
     const user = useContext(UserContext);
     const [content,contentChange] = useContext(ContentContext)
-    
     var userid;
+    if(typeof(props.user)!=='undefined'){
+        user.curator_id = props.user
+    }
+    else
     if(typeof(props.match.params)!=='undefined'){
             // console.log("here undefined")
             userid = props.match.params.user

@@ -1,5 +1,5 @@
 import React,{useState,useContext,useEffect} from 'react'
-import {Item,Button,Icon} from 'semantic-ui-react'
+import {Item,Button,Icon,Placeholder} from 'semantic-ui-react'
 import { useAuth0 } from '../react-auth0-spa'
 import {FETCH_FEED_ITEMS,INSERT_TAG,DELETE_ITEM} from '../util/graphql';
 import {useMutation} from '@apollo/react-hooks';
@@ -13,14 +13,77 @@ import Reward from "react-rewards"
 import {MixpanelConsumer } from 'react-mixpanel';
 import ReactGA from 'react-ga';
 import Mixpanel from '../util/mix'
-import {DeleteItem} from '../util/graphqlExecutor'
+import {DeleteItem,LikeItem,UnlikeItem} from '../util/graphqlExecutor'
+import {client} from '../ApolloProvider'
+import gql from 'graphql-tag'
+import { useQuery } from "@apollo/react-hooks";
+
+// const LIKE_ITEM=gql`
+//     mutation MyMutation ($item_id:uuid!,$user_id:String!){
+//         insert_like_item(objects: {item_id: $item_id, user_id: $user_id}) {
+//             affected_rows
+//         }
+//     }
+// `
+
+// const LikeItem=(item_id,user_id)=>{
+//     return client.mutate({
+//         mutation:LIKE_ITEM,
+//         variables:{
+//             item_id:item_id,
+//             user_id:user_id
+//         },
+//         refetchQueries: [
+//             {
+//               query: FETCH_ITEM_LIKES,
+//               variables: { item_id: item_id, user_id: user_id }
+//             }
+//         ]
+//     }).then((response)=>response.data).catch((error)=>console.log(error))
+// }
+
+// const UNLIKE_ITEM=gql`
+//     mutation MyMutation($item_id:uuid!,$user_id:String!) {
+//         delete_like_item(where: {item_id: {_eq: $item_id}, user_id: {_eq: $user_id}}) {
+//             affected_rows
+//         }
+//     }
+// `
+
+// const UnlikeItem=(item_id,user_id)=>{
+//     return client.mutate({
+//         mutation:UNLIKE_ITEM,
+//         variables:{
+//             item_id:item_id,
+//             user_id:user_id
+//         },
+//         refetchQueries: [
+//             {
+//               query: FETCH_ITEM_LIKES,
+//               variables: { item_id: item_id, user_id: user_id }
+//             }
+//         ]
+//     }).then((response)=>response.data).catch((error)=>console.log(error))
+// }
+
+// const FETCH_ITEM_LIKES=gql`
+//     query MyQuery($item_id:uuid!,$user_id:String!) {
+//         like_item_aggregate(where: {item_id: {_eq: $item_id}, user_id: {_eq: $user_id}}) {
+//             aggregate {
+//                 count
+//             }
+//         }
+//     }
+// `
 
 function ContentCard(postdata){
+    // console.log(postdata.postdata['like_items'].length)
     const { isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
     const userC = useContext(UserContext)
     const post = postdata.postdata
     const [reward, setreward] = useState(null)
     const notify = () => toast("Link Copied!");
+    const [liked, setLiked] = useState(-1)
     // if(user){
     //     console.log(user['sub'])
     // }
@@ -84,13 +147,23 @@ function ContentCard(postdata){
     function R(){
         // reward.rewardMe()
     }
+
+    if(liked===-1){
+        if(postdata.postdata['like_items'].length>0){
+            setLiked(true)
+        }else{
+            setLiked(false)
+        }
+    }
+
+    
     
     return(
         <>
         {/* <MixpanelConsumer>
                         {mixpanel=> */}
         <Item>
-            <Item.Image size='tiny' src={thumbImage}/>
+            <Item.Image size='tiny' src={(post.auto_image!=='none')?post.auto_image:thumbImage}/>
             <Item.Content>
                 <Item.Header as='a' target='_blank' href={post.link} onClick={Mixpanel.track('Link Click',{"link":post.link,"curator":post.user.id,"name":post.name})}>{post.name}</Item.Header>
                 {isAuthenticated&&(post.user.id===userC.loggedin_user_id)&&(
@@ -129,27 +202,48 @@ function ContentCard(postdata){
                     </Button>
                 </CopyToClipboard>
                 {/* <Reward ref={(ref) => { setreward(ref) }} type='confetti' config={{springAnimation:false}}> */}
-                <Button icon floated='right' onClick={(e)=>{
-                    R()
-                    Mixpanel.track('Appreciate Item',{"link":post.link,"curator":post.user.id,"name":post.name})
-                    ReactGA.event({
-                        category: 'Item',
-                        action: 'Appreciate',
-                        label:post.name,
-                        transport: 'beacon'
-                    });
-                }}>
-                    <Icon name='like' />
-                    <Tap waves />
-                </Button>
+                {isAuthenticated&&(
+                    (liked)?
+                    (
+                        <Button color='red' icon floated='right' onClick={(e)=>{
+                            R()
+                            UnlikeItem(post.id,userC.loggedin_user_id)
+                            setLiked(false)
+                            Mixpanel.track('Appreciate Item',{"link":post.link,"curator":post.user.id,"name":post.name})
+                            ReactGA.event({
+                                category: 'Item',
+                                action: 'Appreciate',
+                                label:post.name,
+                                transport: 'beacon'
+                            });
+                        }}>
+                            <Icon name='like' />
+                            <Tap waves />
+                        </Button>
+                    ):
+                    (<Button icon floated='right' onClick={(e)=>{
+                        R()
+                        LikeItem(post.id,userC.loggedin_user_id)
+                        setLiked(true)
+                        Mixpanel.track('Appreciate Item',{"link":post.link,"curator":post.user.id,"name":post.name})
+                        ReactGA.event({
+                            category: 'Item',
+                            action: 'Appreciate',
+                            label:post.name,
+                            transport: 'beacon'
+                        });
+                    }}>
+                        <Icon name='like' />
+                        <Tap waves />
+                    </Button>)
+                    )
+                }
                 {/* </Reward> */}
                 <Item.Description>
-                <p></p>
                 <p>
-                    {post.description}
+                    {post.description!==" "?post.description:post.auto_description}
                 </p>
                 </Item.Description>
-                
             </Item.Content>
         </Item>
         {/* }

@@ -5,6 +5,7 @@ import UserContext from '../context/UserContext';
 import ProfileCard from './ProfileCard'
 import PopularProfile from './PopularProfile'
 import CurationReasonCard from './CurationReasonCard'
+import ListStats from './ListStats'
 
 function ContentRight(props){
     const [content,contentChange] = useContext(ContentContext)
@@ -12,7 +13,13 @@ function ContentRight(props){
     return(
         <>
         <ProfileCard userid={props.userid}/>
-        {content.contentType==="lists"?(<CurationReasonCard listid={content.currentListID}/>):(<div></div>)}
+        {content.contentType==="lists"?(
+        <>
+        <CurationReasonCard listid={content.currentListID}/>
+        <ListStats/>
+        </>
+        )
+        :(<div></div>)}
         
         {/* <PopularProfile/> */}
         </>
