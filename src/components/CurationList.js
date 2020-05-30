@@ -91,7 +91,7 @@ function CurationList(props){
                                     ReactGA.event({
                                         category: 'Tag',
                                         action: 'Click',
-                                        value:'all',
+                                        // value:'all',
                                         transport: 'beacon'
                                     });
                                 }}>
@@ -115,7 +115,7 @@ function CurationList(props){
                                 ReactGA.event({
                                     category: 'Tag',
                                     action: 'Click',
-                                    value:post.name,
+                                    // value:post.name,
                                     transport: 'beacon'
                                 });
                         }}>
@@ -149,7 +149,7 @@ function CurationList(props){
                                 ReactGA.event({
                                     category: 'List',
                                     action: 'Click',
-                                    value:post.list_name,
+                                    // value:post.list_name,
                                     transport: 'beacon'
                                 });
                                 }}>

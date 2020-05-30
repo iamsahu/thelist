@@ -158,7 +158,7 @@ function AddItem(){
     };
 
     function handleAddition(e,{value}){
-        console.log(value)
+        // console.log(value)
         if(dropTag.length>0){
             SetDropTag(dropTag=>([...dropTag,{text:value,value}]))
         }else{
@@ -218,7 +218,7 @@ function AddItem(){
                 Add Item
             </Modal.Header>
             <Modal.Content image scrolling>
-                <Form onSubmit={onSubmit} fluid size='large' widths='equal'>
+                <Form onSubmit={onSubmit} size='large' widths='equal'>
                     <Form.Group widths='equal'>
                     <Form.Field inline name="name">
                         <label>Title</label>
@@ -248,7 +248,7 @@ function AddItem(){
                         <Form.TextArea 
                             label='Description'
                             name='description' 
-                            placeholder='Write about your takeaway from this content'
+                            placeholder='Describe what your consumers should expect from this content'
                             style={{ minHeight: 100 }} 
                             onChange={onChange}
                             value={values.description}

@@ -25,7 +25,7 @@ import ReactGA from 'react-ga';
 import Mixpanel from '../util/mix'
 import Tap from 'react-interactions'
 
-function ContentMiddle(props){
+function ContentMiddleNoLoad(props){
   // console.log(props)
   // console.log(process.env)
   // console.log(process.env.REACT_APP_BASE_URL)
@@ -40,98 +40,11 @@ function ContentMiddle(props){
   
   var activeItem = 'home';
 
-  const loadData=()=>{
-    (content.contentType==='lists')?
-      ((content.currentListID==='')?(GetItemsUsers({curator_id:user.curator_id}).then((data)=>{
-        setPosts(data)
-        setloadState(1)
-      })):
-      (GetList({userid:user.curator_id,listid:content.currentListID}).then((data)=>{
-        console.log(data)
-        setPosts(data)
-        setloadState(1)
-        if(typeof(data)!=='undefined'){
-          if(data.items.length>0){
-            setheader(data.items[0]['list']['list_name'])
-            setdescription(data.items[0]['list']['description'])
-          }
-        }
-        if(data.like_list.length>0){
-          // console.log("setting likes")
-          setlistlike(true)
-        }else{
-          setlistlike(false)
-        }
-      }).catch((error)=>console.log(error)))):
-    (
-      (content.contentType==='tags')?
-      ((content.currentTagID==="")?(GetItemsUsers({curator_id:user.curator_id}).then((data)=>{setPosts(data)})):
-      (GetItemsofTag({user_id:user.curator_id,tag_id:content.currentTagID}).then((data)=>{setPosts(data)}))):
-      (console.log("Not a valid content"))
-    )
-  }
 
   //Loading data through props passed parameters
-  const loadData2=()=>{
-    (props.propSent.contentType==='lists')?
-      ((props.propSent.contentID==='')?(GetItemsUsers({curator_id:props.propSent.curator_id}).then((data)=>{
-        setPosts(data.items)
-        setloadState(1)
-      })):
-      (GetList({userid:props.propSent.curator_id,listid:props.propSent.contentID}).then((data)=>{
-        // console.log(data)
-        setPosts(data.items)
-        setloadState(1)
-        if(typeof(data)!=='undefined'){
-          if(data.items.length>0){
-            setheader(data.items[0]['list']['list_name'])
-            setdescription(data.items[0]['list']['description'])
-            // console.log(data.items[0]['list']['description'])
-          }
-        }
-        if(data.like_list.length>0){//Change this to take value from latest data
-          // console.log("setting likes")
-          setlistlike(true)
-        }else{
-          setlistlike(false)
-        }
-      }).catch((error)=>console.log(error)))):
-    (
-      (props.propSent.contentType==='tags')?
-      ((props.propSent.contentID==="")?(
-        GetItemsUsers({curator_id:props.propSent.curator_id}).then((data)=>{setPosts(data.items)})
-        // console.log('Tag with no all')
-      ):
-      (
-        // GetItemsofTag({user_id:props.propSent.curator_id,tag_id:props.propSent.contentID}).then((data)=>{setPosts(data)})
-        GetTagItems({user_id:props.propSent.curator_id,tag_id:props.propSent.contentID}).then((data)=>{
-          console.log(data.tag[0]['item_tags'])
-          // var temp = data.tag[0]['item_tags'].map(item=>item.item)
-          setPosts(data.tag[0]['item_tags'])
-        })
-        
-      )):
-      (console.log("Not a valid content"))
-    )
-  }
-  // console.log('asdf')
-  // console.log(content)
-  // if(loadState===-1){
-  loadData2()
-  //   setloadState(1)
-  // }
-  // useEffect(()=>{
-  //     loadData()
-  //     // contentChange(content=>({...content,listdescription: posts.items[0].description}))
-  // },[loadData]);
-  // if(posts!==null)
-  // if(listlike===-1){
-  //   if(posts.like_list.length>0){
-  //     setlistlike(true)
-  //   }
-  // }
+  
 
-  if(posts===null){
+  if(props.posts===null){
     return(<div>Loading</div>)
   }
 
@@ -261,7 +174,7 @@ function ContentMiddle(props){
       <div className="scrolly">
         <Item.Group >
           {
-            posts===null?
+            props.posts===null?
             (<Placeholder>
               <Placeholder.Header image>
                 <Placeholder.Line />
@@ -269,9 +182,9 @@ function ContentMiddle(props){
               </Placeholder.Header>
             </Placeholder>):
             (
-              (typeof(posts)!=='undefined')?
-                (posts.length>0?
-                  (<CentralList posts={posts} contentType={props.propSent.contentType}/>):
+              (typeof(props.posts)!=='undefined')?
+                (props.posts.length>0?
+                  (<CentralList posts={props.posts} contentType={props.propSent.contentType}/>):
                   (
                     
                    <div className='imageFix'>
@@ -288,4 +201,4 @@ function ContentMiddle(props){
   )
 }
 
-export default ContentMiddle;
+export default ContentMiddleNoLoad;

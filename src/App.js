@@ -15,6 +15,7 @@ import Home2 from './pages/Home2'
 import Home from './pages/Home'
 import HomeNoLogin from './pages/HomeNoLogin'
 import Curator from './pages/Curator'
+import Curator2 from './pages/Curator2'
 import SearchResults from './pages/SearchResults'
 // import SignUpComplete from './pages/SignUpComplete'
 // import ListDisplay from './pages/ListDisplay'
@@ -106,7 +107,7 @@ function App() {
       checkUser(userID)
       Mixpanel.identify(userID)
       // var props = {user:userID}
-      console.log("here")
+      // console.log("here")
     }
   }
   // console.log(userID)
@@ -123,15 +124,15 @@ function App() {
                 <Switch>
                   <Route exact path='/explore' component={Home2}/>
                   <Route exact path='/search' component={SearchResults}/>
-                  <Route exact path='/:user' component={Curator}/>
-                  <Route exact path='/:user/:contenttype/:listid' component={Curator}/>
-                  <Route exact path='/:user/tags/:tagid' component={Curator}/>
-                  <Route exact path='/:user/tags/' component={Curator}/>
+                  <Route exact path='/:user/:contenttype/:contentid' component={Curator2}/>
+                  {/* <Route exact path='/:user/tags/:tagid' component={Curator2}/> */}
+                  <Route exact path='/:user/:contenttype' component={Curator2}/>
+                  <Route exact path='/:user' component={Curator2}/>
                   {
                     (isAuthenticated&&!(loading)&&!loadingT)?
                     <Route
                       path='/'
-                      render={(props) => <Curator user={userC['curator_id']} isAuthed={true} />}/>:
+                      render={(props) => <Curator2 user={userC['curator_id']} isAuthed={true} />}/>:
                     <Route exact path='/' component={HomeNoLogin}/> 
                   }
                 </Switch>

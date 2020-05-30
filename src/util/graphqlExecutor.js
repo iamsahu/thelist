@@ -66,19 +66,39 @@ const INSERT_ITEM=gql`
             list_id:$list_id}){
             affected_rows
             returning{
+                auto_description
+                auto_image
                 appreciation_count
                 bookmarks_count
                 copy_count
+                created_at
                 curator
                 description
                 id
                 link
+                list_id
                 name
                 share_count
                 view_count
-                list_id
                 user {
                     id
+                }
+                list {
+                    description
+                    list_name
+                    like_lists_aggregate {
+                        aggregate {
+                        count
+                        }
+                    }
+                }
+                like_items_aggregate {
+                    aggregate {
+                        count
+                    }
+                }
+                like_items(where: {user_id: {_eq: $curator}}) {
+                    user_id
                 }
             }
         }
@@ -147,6 +167,9 @@ function InsertNewTags(tags,curator_id){
 }
 
 function InsertItem(link,name,description,curator_id,list_id,contentType,currentListID,currentTagID){
+    console.log(contentType)
+    console.log(currentListID)
+    console.log(currentTagID)
     // console.log(link)
     // console.log(name)
     // console.log(description)
@@ -218,6 +241,33 @@ function InsertItem(link,name,description,curator_id,list_id,contentType,current
                     });
                 }else{
                     //TODO: Tag based cache update
+                    console.log('Here in tag')
+                    const itemidsoftag = cache.readQuery({
+                        query:GET_ITEMS_OF_TAG,
+                        variables:{
+                            tag_id:currentTagID,
+                            user_id:curator_id
+                        }
+                    })
+                    console.log(itemidsoftag)
+                    const itemids = itemidsoftag.item_tag.map(tag=>tag.item_id)
+                    const itemsoftag = cache.readQuery({
+                        query:GET_ITEMS,
+                        variables:{
+                            _in:itemids,
+                            user_id:curator_id
+                        }
+                    })
+                    console.log(data.insert_items.returning[0])
+                    console.log(itemsoftag)
+                    client.writeQuery({
+                        query:GET_ITEMS,
+                        variables:{
+                            _in:itemids,
+                            user_id:curator_id
+                        },
+                        data: {items: [data.insert_items.returning[0], ...itemsoftag.items]}
+                    });
                 }
             }
             // console.log(data)
@@ -236,7 +286,48 @@ function InsertItem(link,name,description,curator_id,list_id,contentType,current
             //     },
             //     data: {items: [newItem, ...existingItems.items]}
             // });
-        }
+        },
+        refetchQueries:(contentType,currentListID,currentTagID)=>
+            (contentType==='lists')?((currentListID==='')?[{
+                query:GET_ITEMS_USER,
+                        variables:{
+                            userid:curator_id
+                        },
+            }]:[
+                {
+                    query: GET_LIST,
+                        variables:{
+                            userid:curator_id,
+                            listid:currentListID
+                        }
+                }
+            ]):((currentTagID==='')?[
+                {
+                    query:GET_ITEMS_USER,
+                            variables:{
+                                userid:curator_id
+                            },
+                }
+            ]:[
+                {       
+                    query:GTI,
+                    variables:{
+                        id:currentTagID,
+                        user_id:curator_id
+                    }
+                }
+            ])
+        // ,fetchPolicy:"cache-and-network"
+        
+        
+        
+        // {
+        //     query:GET_ITEMS,
+        //                 variables:{
+        //                     // _in:,
+        //                     user_id:curator_id
+        //                 }
+        // }
     }).catch((error)=>{console.log(error)})
 }
 
@@ -537,7 +628,7 @@ const GET_ITEMS = gql`
 `
 
 const GetItemsofTag=(values)=>{
-    console.log(values)
+    // console.log(values)
     return client.query({
         query:GET_ITEMS_OF_TAG,
         variables:{
@@ -548,11 +639,11 @@ const GetItemsofTag=(values)=>{
     .then((response)=>{
         
         // console.log(response)
-        const tags = response.data.item_tag.map(tag=>tag.item_id)
+        const items = response.data.item_tag.map(tag=>tag.item_id)
         return client.query({
             query:GET_ITEMS,
             variables:{
-                _in:tags,
+                _in:items,
                 user_id:values.user_id
             }
         })
@@ -937,6 +1028,63 @@ const FETCH_ITEM_LIKES=gql`
     }
 `
 
+const GTI=gql`
+    query MyQuery($id:uuid,$user_id:String) {
+        tag(where: {id: {_eq: $id}}) {
+            id
+            name
+            item_tags {
+            item {
+                appreciation_count
+                auto_description
+                auto_image
+                bookmarks_count
+                copy_count
+                created_at
+                curator
+                description
+                id
+                link
+                list_id
+                name
+                share_count
+                view_count
+                user {
+                    id
+                }
+                list {
+                    description
+                    list_name
+                    like_lists_aggregate {
+                        aggregate {
+                            count
+                        }
+                    }
+                }
+                like_items_aggregate {
+                    aggregate {
+                        count
+                    }
+                }
+                like_items(where: {user_id: {_eq: $user_id}}) {
+                    user_id
+                }
+            }
+            }
+        }
+    }
+`
+
+const GetTagItems=(values)=>{
+    return client.query({
+        query:GTI,
+        variables:{
+            id:values.tag_id,
+            user_id:values.user_id
+        }
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
 export {createItem,GetList,GetListDescription,GetItemsofTag,
-    GetItemsUsers,GetTagsListsUsers,DoesUserExists,InsertUser,
-    Search,GetAllLists,GetAllTags,GetAllUsers,DeleteItem,LikeList,UnlikeList,LikeItem,UnlikeItem};
+        GetItemsUsers,GetTagsListsUsers,DoesUserExists,InsertUser,
+        Search,GetAllLists,GetAllTags,GetAllUsers,DeleteItem,LikeList,UnlikeList,LikeItem,UnlikeItem,GetTagItems};

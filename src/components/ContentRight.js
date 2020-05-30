@@ -10,14 +10,14 @@ import ListStats from './ListStats'
 function ContentRight(props){
     const [content,contentChange] = useContext(ContentContext)
     const user = useContext(UserContext);
+    const val = props.propSent.curator_id===user.loggedin_user_id
     return(
         <>
-        <ProfileCard userid={props.userid}/>
-        {content.contentType==="lists"?(
+        <ProfileCard userid={props.propSent.curator_id}/>
+        {props.propSent.contentType==="lists"?(
         <>
-        <CurationReasonCard listid={content.currentListID}/>
-        {/* TODO: The list stats should be visible only to the user who is creator */}
-        <ListStats userid={props.userid} listid={content.currentListID}/>
+        <CurationReasonCard listid={props.propSent.contentID}/>
+        {(props.propSent.curator_id===user.loggedin_user_id)&&(<ListStats userid={props.propSent.curator_id} listid={props.propSent.contentID}/>)}
         </>
         )
         :(<div></div>)}
