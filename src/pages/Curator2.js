@@ -63,6 +63,10 @@ function Curator(props){
           ((propSent.contentID==='')?(GetItemsUsers({curator_id:propSent.curator_id}).then((data)=>{
             setPosts(data.items)
             setloadState(1)
+            if(data.items.length>0){
+                setheader(data.items[0]['list']['list_name'])
+                setdescription(data.items[0]['list']['description'])
+            }
           })):
           (GetList({userid:propSent.curator_id,listid:propSent.contentID}).then((data)=>{
             // console.log(data)
@@ -85,7 +89,10 @@ function Curator(props){
         (
           (propSent.contentType==='tags')?
           ((propSent.contentID==="")?(
-            GetItemsUsers({curator_id:propSent.curator_id}).then((data)=>{setPosts(data.items)})
+            GetItemsUsers({curator_id:propSent.curator_id}).then((data)=>{
+                setPosts(data.items)
+                setheader("All")
+            })
             // console.log('Tag with no all')
           ):
           (
@@ -94,8 +101,11 @@ function Curator(props){
             //   console.log(data.tag[0]['item_tags'])
             //   var temp = data.tag[0]['item_tags'].map(item=>item.item)
             //   temp = props.posts.map(item=>item.item)
-              setPosts(data.tag[0]['item_tags'])
-            // setPosts(temp)
+                if(data.tag.length>0){
+                    setPosts(data.tag[0]['item_tags'])
+                    setheader(data.tag[0]['name'])
+                    // setPosts(temp)
+                }
             })
             
           )):
@@ -115,10 +125,10 @@ function Curator(props){
         <div id="content" className="ui">
             <Grid stackable columns={3} >
                 <Grid.Column width={3}>
-                    <CurationList curator_id={user.curator_id} />
+                    <CurationList curator_id={user.curator_id} contentType={propSent.contentType}/>
                 </Grid.Column>
                 <Grid.Column width={9}>
-                    <ContentMiddleNoLoad propSent={propSent} posts={posts}/>
+                    <ContentMiddleNoLoad propSent={propSent} posts={posts} title={header}/>
                 </Grid.Column>
                 <Grid.Column width={4}>
                     <ContentRight curator_id={user.curator_id} propSent={propSent}/>

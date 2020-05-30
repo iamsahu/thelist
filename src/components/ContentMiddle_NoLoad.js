@@ -40,17 +40,14 @@ function ContentMiddleNoLoad(props){
   
   var activeItem = 'home';
 
-
-  //Loading data through props passed parameters
-  
-
   if(props.posts===null){
     return(<div>Loading</div>)
   }
 
   return(
     <>
-    <h1>{props.propSent.contentType==='lists'?content.currentList:content.currentTag}</h1>
+    {/* <h1>{props.propSent.contentType==='lists'?content.currentList:content.currentTag}</h1> */}
+    <h1>{props.title}</h1>
     {/* <!-- Open Graph / Facebook --> */}
     <MetaTags>
       <meta property="og:type" content="website"/>
