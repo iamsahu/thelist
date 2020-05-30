@@ -57,6 +57,7 @@ function App() {
   const { loading,isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
   const [userExists,SetExists] = useState(false)
   const [loadingT, setloading] = useState(true)
+  const [userCheckStatus, setuserCheckStatus] = useState(true)
   // mixpanel.identify(userC.loggedin_user_id)
   // mixpanel.track("Video play", {"genre": "hip-hop", "duration in seconds": 42});
 
@@ -83,17 +84,17 @@ function App() {
         SetExists(false)
         if(!userExists)
         {InsertUser({id:user_id,image_link:user.picture,username:user.name}).then((response)=>{
-          // console.log(response)
+          console.log(response)
         }).catch((error)=>{
           // console.log(error)
         })}
       }
       setloading(false)
     })
+    // console.log("UserCheck")
   }
   
-  if(!loading){
-    // console.log('here1')
+  if(!loading&&userCheckStatus){
     if(typeof(user)!=='undefined'){
       // console.log(user)
       var userID = user['sub'].split('|')[1]
@@ -101,20 +102,21 @@ function App() {
       userC['loggedin_user_id'] = userID
       userC['name'] =user['name']
       userC['nickname']=user['nickname']
+      // setuserCheckStatus(false)
       checkUser(userID)
       Mixpanel.identify(userID)
-      var props = {user:userID}
-      // console.log("here")
+      // var props = {user:userID}
+      console.log("here")
     }
   }
   // console.log(userID)
+  // console.log("App")
+  
   return (
     // <MixpanelProvider mixpanel={mixpanel}>
       <UserProvider value={userC}>
         <ContentProvider value={[content,contentChange]}>
-          
             <Router history={history}>
-              
               <MenuBar/>
               <div className="novscroll">
               <Container style={{ marginTop: '3em',height: '85vh' }} fluid>
@@ -125,13 +127,13 @@ function App() {
                   <Route exact path='/:user/:contenttype/:listid' component={Curator}/>
                   <Route exact path='/:user/tags/:tagid' component={Curator}/>
                   <Route exact path='/:user/tags/' component={Curator}/>
-                  {(isAuthenticated&&!(loading)&&!loadingT)?
+                  {
+                    (isAuthenticated&&!(loading)&&!loadingT)?
                     <Route
                       path='/'
                       render={(props) => <Curator user={userC['curator_id']} isAuthed={true} />}/>:
                     <Route exact path='/' component={HomeNoLogin}/> 
                   }
-                  
                 </Switch>
               </Container>
               </div>

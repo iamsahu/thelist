@@ -496,7 +496,7 @@ const GET_ITEMS_OF_TAG = gql`
 `
 
 const GET_ITEMS = gql`
-    query MyQuery($_in: [uuid!]!){
+    query MyQuery($_in: [uuid!]!,$user_id:String!){
         items(where: {id: {_in: $_in}}) {
             auto_description
             auto_image
@@ -515,12 +515,29 @@ const GET_ITEMS = gql`
             user {
                 id
             }
+            list {
+                description
+                list_name
+                like_lists_aggregate {
+                    aggregate {
+                    count
+                    }
+                }
+            }
+            like_items_aggregate {
+                aggregate {
+                    count
+                }
+            }
+            like_items(where: {user_id: {_eq: $user_id}}) {
+                user_id
+            }
         }
     }
 `
 
 const GetItemsofTag=(values)=>{
-    // console.log(values)
+    console.log(values)
     return client.query({
         query:GET_ITEMS_OF_TAG,
         variables:{
@@ -535,7 +552,8 @@ const GetItemsofTag=(values)=>{
         return client.query({
             query:GET_ITEMS,
             variables:{
-                _in:tags
+                _in:tags,
+                user_id:values.user_id
             }
         })
         .then((response)=>response.data).catch((error)=>{console.log(error)})
@@ -562,12 +580,22 @@ const GET_ITEMS_USER=gql`
             }
             share_count
             view_count
+            like_items(where: {user_id: {_eq: $userid}}) {
+                user_id
+            }
             list {
                 description
                 list_name
+                like_lists_aggregate {
+                    aggregate {
+                    count
+                    }
+                }
             }
-            like_items(where: {user_id: {_eq: $userid}}) {
-                user_id
+            like_items_aggregate {
+                aggregate {
+                    count
+                }
             }
         }
     }

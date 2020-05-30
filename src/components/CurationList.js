@@ -39,14 +39,18 @@ function CurationList(props){
             value:item.id,
             id:item.id,
             list_name:item.list_name,
-            description:item.description,
+            // description:item.description,
             curator_id:item.curator_id
         }))
         // console.log(tagData)
         if(lists.length>0){
             // console.log('This was executed')
             // console.log(tagData)
-            contentChange(content=>({...content,tags:tempArr,lists:tempArr2,currentList:lists[0].list_name,currentListID:lists[0].id}))
+            contentChange(content=>({...content,tags:tempArr,lists:tempArr2}))
+            if(content.contentType==='lists'&&content.currentListID===''){
+                console.log("Auto setting list name")
+                contentChange(content=>({...content,currentList:lists[0].list_name,currentListID:lists[0].id}))
+            }
         }
         // curationLists()
     }

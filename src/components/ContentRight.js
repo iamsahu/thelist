@@ -16,7 +16,8 @@ function ContentRight(props){
         {content.contentType==="lists"?(
         <>
         <CurationReasonCard listid={content.currentListID}/>
-        <ListStats/>
+        {/* TODO: The list stats should be visible only to the user who is creator */}
+        <ListStats userid={props.userid} listid={content.currentListID}/>
         </>
         )
         :(<div></div>)}

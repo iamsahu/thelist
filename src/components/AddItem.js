@@ -9,7 +9,6 @@ import ContentContext from '../context/ContentContext';
 import {createItem} from '../util/graphqlExecutor';
 import Tap from 'react-interactions'
 import Reward from "react-rewards"
-import {MixpanelConsumer } from 'react-mixpanel';
 import ReactGA from 'react-ga';
 import Mixpanel from '../util/mix'
 
@@ -117,12 +116,12 @@ function AddItem(){
                 errors=true
             }
         }
-        if(values.description===""){
-            setErrorDescription(true)
-            errors=true
-        }else{
-            setErrorDescription(false)
-        }
+        // if(values.description===""){
+        //     setErrorDescription(true)
+        //     errors=true
+        // }else{
+        //     setErrorDescription(false)
+        // }
 
         if(content.contentType==='tags'){
             //If the added tag to article also has the tag with which the current content is being displayed
@@ -150,6 +149,7 @@ function AddItem(){
                 action: 'Create',
                 transport: 'beacon'
             });
+            Mixpanel.track('Item Created')
         }
     }
 
@@ -208,27 +208,18 @@ function AddItem(){
     
     return(
         <>
-        <MixpanelConsumer>
-        {mixpanel=>
         <Reward ref={(ref) => { setreward(ref) }} type='confetti'>
-        <Modal open={showModal} closeOnDimmerClick={false} onClose={OnClose} closeIcon trigger={<Button onClick={()=>{
+        <Modal size='small' open={showModal} closeOnDimmerClick={false} onClose={OnClose} closeIcon trigger={<Button onClick={()=>{
             SetModal(true)
             SetDropTag(content.tags)
             SetDropList(content.lists)
             }}>Add Item<Tap scale fade waves /></Button>} >
             <Modal.Header>
                 Add Item
-                {/* <Button icon position="right" onClick={()=>{
-                    setErrorList(false)
-                    setErrorDescription(false)
-                    setErrorLink(false)
-                    setErrorName(false)
-                    SetModal(false)}}>
-                    <Icon name='close' />
-                </Button> */}
             </Modal.Header>
             <Modal.Content image scrolling>
-                <Form onSubmit={onSubmit}>
+                <Form onSubmit={onSubmit} fluid size='large' widths='equal'>
+                    <Form.Group widths='equal'>
                     <Form.Field inline name="name">
                         <label>Title</label>
                         <Form.Input 
@@ -237,6 +228,7 @@ function AddItem(){
                             onChange={onChange}
                             value={values.name}
                             error={errorName?"Please Enter Name":false}
+                            fluid
                         />
                     </Form.Field>
                     <Form.Field inline name="link">
@@ -247,59 +239,67 @@ function AddItem(){
                             onChange={onChange}
                             value={values.link}
                             error={errorLink?"Please add a link":false}
+                            fluid
                         />
                     </Form.Field>
+                    </Form.Group>
                     <Form.Field inline name="description">
-                        <label>Description</label>
+                        {/* <label>Description</label> */}
                         <Form.TextArea 
+                            label='Description'
                             name='description' 
-                            placeholder='Description'
+                            placeholder='Write about your takeaway from this content'
                             style={{ minHeight: 100 }} 
                             onChange={onChange}
                             value={values.description}
                             error={errorDescription?"Please add a description":false}
                         />
                     </Form.Field>
-                    <Form.Field inline name="tag">
-                        <label>Tags</label>
-                        <Form.Input>
-                            <Dropdown
-                                name='tag'
-                                options={Object.values(dropTag)}
-                                placeholder='Tags'
-                                search
-                                selection
-                                fluid
-                                multiple
-                                allowAdditions
-                                // value={currentValues}
-                                onAddItem={handleAddition}
-                                onChange={handleChange}
-                            />
-                        </Form.Input>
-                    </Form.Field>
-                    <label>List Name</label>
-                    <Form.Input>
-                        <Dropdown
-                            name='list_name'
-                            options={Object.values(dropList)}
-                            placeholder='Choose list name'
-                            search
-                            selection
-                            fluid
-                            allowAdditions
-                            onAddItem={handleChangeListAddition}
-                            onChange={handleChangeList}
-                            error={errorList}//?"Please choose a list":false}
-                            />
-                    </Form.Input>
+                    <Form.Group >
+                        <Form.Field inline name="tag">
+                            <label>Tags</label>
+                            <Form.Input>
+                                <Dropdown
+                                    name='tag'
+                                    options={Object.values(dropTag)}
+                                    placeholder='Tags'
+                                    search
+                                    selection
+                                    fluid
+                                    multiple
+                                    allowAdditions
+                                    // value={currentValues}
+                                    onAddItem={handleAddition}
+                                    onChange={handleChange}
+                                    upward
+                                />
+                            </Form.Input>
+                        </Form.Field>
+                        <Form.Field inline name="listname">
+                            <label>List Name</label>
+                            <Form.Input >
+                                <Dropdown
+                                    label='List Name'
+                                    name='list_name'
+                                    options={Object.values(dropList)}
+                                    placeholder='Choose list name'
+                                    search
+                                    selection
+                                    upward
+                                    allowAdditions
+                                    onAddItem={handleChangeListAddition}
+                                    onChange={handleChangeList}
+                                    error={errorList}//?"Please choose a list":false}
+                                    />
+                            </Form.Input>
+                        </Form.Field>
+                    </Form.Group>
                     {listDescription?
-                        
                         <Form.Field inline name="listDescription">
                         <label>List Description</label>
                         <Form.TextArea 
                             name='listDescription' 
-                            placeholder='Description'
+                            placeholder='Write about why are you creating this list'
                             style={{ minHeight: 100 }} 
                             onChange={onChange}
                             value={values.listDescription}
@@ -309,17 +309,13 @@ function AddItem(){
                         :<div></div>
                     }
                     <br/>
-                    
-                        <Button primary type='submit' >
-                            Submit
-                        </Button>
-                    
+                    <Button primary type='submit' >
+                        Submit
+                    </Button>
                 </Form>
             </Modal.Content>
         </Modal>
         </Reward>
-        }
-        </MixpanelConsumer>
         </>
     )
 }
