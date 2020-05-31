@@ -20,8 +20,12 @@ function Curator(props){
     var userid;
     var propSent = {}
     
-    // console.log(props.match.params)
-    if(typeof(props.match.params)!=='undefined'){
+    // console.log(props)
+    if(typeof(props.user)!=='undefined'){
+      user.curator_id = props.user
+      propSent = {curator_id:props.user,contentType:'lists',contentID:''}
+    }
+    else if(typeof(props.match.params)!=='undefined'){
             // console.log("here undefined")
             // console.log(props.match.params.contenttype)
             userid = props.match.params.user
