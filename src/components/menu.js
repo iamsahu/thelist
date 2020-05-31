@@ -81,14 +81,17 @@ function MenuBar(){
         {isAuthenticated && (
           <>
           <Menu.Item position='right' fitted='vertically'>
-          <Button>
-          <Link to='/explore'> Explore</Link>
-          </Button>
-          <AddItem/>
+            <Button>
+              <Link to='/explore'> Explore</Link>
+            </Button>
+            </Menu.Item>
+            <Menu.Item position='right' fitted='vertically'>
+            <AddItem/>
           </Menu.Item>
             <Menu.Item position='right'>
               <Dropdown
-                trigger={<span><Image avatar src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'> {user.name}</Image></span>}
+                fluid
+                trigger={<Image avatar src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'/> }
                 options={options}
                 pointing='top right'
                 icon={null}

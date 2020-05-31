@@ -26,7 +26,7 @@ import Mixpanel from '../util/mix'
 import Tap from 'react-interactions'
 
 function ContentMiddleNoLoad(props){
-  console.log(props)
+  // console.log(props)
   // console.log(process.env)
   // console.log(process.env.REACT_APP_BASE_URL)
   const [content] = useContext(ContentContext)
@@ -40,7 +40,7 @@ function ContentMiddleNoLoad(props){
   
   var activeItem = 'home';
   // console.log(props.propSent)
-  console.log(props.propSent.description)
+  // console.log(props.propSent.description)
   if(props.posts===null){
     return(<div>Loading</div>)
   }
