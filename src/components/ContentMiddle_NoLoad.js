@@ -185,7 +185,7 @@ function ContentMiddleNoLoad(props){
                   (
                     
                    <div className='imageFix'>
-                     <Image centered src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9.png`} size='large' verticalAlign='middle' />
+                     <Image centered src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47.png`} size='large' verticalAlign='middle' />
                   </div> 
                   )):
               (<div>No mojo as of now</div>)

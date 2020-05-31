@@ -197,10 +197,10 @@ function ContentCard(postdata){
                         <Tap waves />
                     </Button>
                 )}
-                <Button icon floated='right'>
+                {/* <Button icon floated='right'>
                     <Icon name='bookmark outline' />
                     <Tap waves />
-                </Button>
+                </Button> */}
                 <CopyToClipboard text={postdata.postdata.link} onCopy={(e)=>{
                     notify()
                     copyItem()
