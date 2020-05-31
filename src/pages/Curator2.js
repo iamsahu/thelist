@@ -52,10 +52,7 @@ function Curator(props){
             
             // console.log(propSent)
     }
-    else if(typeof(props.user)!=='undefined'){
-        user.curator_id = props.user
-        propSent = {curator_id:props.user,contentType:'lists',contentID:''}
-    }
+  
     const [listlike, setlistlike] = useState(-1)
     const [loadState, setloadState] = useState(-1)
     const [posts,setPosts] = useState(null)

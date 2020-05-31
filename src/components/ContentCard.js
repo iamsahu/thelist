@@ -257,7 +257,7 @@ function ContentCard(postdata){
                 {/* </Reward> */}
                 <Item.Description>
                 <p>
-                    {postdata.postdata.description!==""?postdata.postdata.description:(postdata.postdata.auto_description==='none')?"":postdata.postdata.auto_description}
+                    {postdata.postdata.description!==""?postdata.postdata.description:(postdata.postdata.auto_description==='none')?"":((postdata.postdata.auto_description).substring(0,336))}
                 </p>
                 </Item.Description>
             </Item.Content>

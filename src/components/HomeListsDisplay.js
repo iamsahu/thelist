@@ -21,7 +21,7 @@ function HomeListsDisplay(){
             (loading)?
             (<div>Loading</div>):
             (
-            <div className="scrolly">
+            <div className="scrollyExplore">
             <Item.Group divided>{
             (searchResult.lists.map(result=><SearchResultItem key={result.id} props={result}/>))
             }</Item.Group>

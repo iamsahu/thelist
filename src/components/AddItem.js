@@ -235,28 +235,28 @@ function AddItem(){
                 Add Item
             </Modal.Header>
             <Modal.Content image scrolling>
-                <Form onSubmit={onSubmit} size='large' widths='equal'>
+                <Form onSubmit={onSubmit} size='large' >
                     <Form.Group widths='equal'>
                     <Form.Field inline name="name">
-                        <label>Title</label>
+                        <label>Title for item</label>
                         <Form.Input 
                             name='name'
                             placeholder='name' 
                             onChange={onChange}
                             value={values.name}
                             error={errorName?"Please Enter Name":false}
-                            fluid
+                            
                         />
                     </Form.Field>
                     <Form.Field inline name="link">
-                        <label>Link</label>
+                        <label>Link of the item</label>
                         <Form.Input 
                             name='link'
                             placeholder='Link' 
                             onChange={onChange}
                             value={values.link}
                             error={errorLink?"Please add a link":false}
-                            fluid
+                            
                         />
                     </Form.Field>
                     </Form.Group>
@@ -292,6 +292,10 @@ function AddItem(){
                                 />
                             </Form.Input>
                         </Form.Field>
+                        
+                    </Form.Group>
+                    <Divider/>
+                    <Form.Group>
                         <Form.Field inline name="listname">
                             <label>List Name</label>
                             <Form.Input >
@@ -310,8 +314,7 @@ function AddItem(){
                                     />
                             </Form.Input>
                         </Form.Field>
-                    </Form.Group>
-                    {listDescription?
+                        {listDescription?
                         <Form.Field inline name="listDescription">
                         <label>List Description</label>
                         <Form.TextArea 
@@ -325,6 +328,8 @@ function AddItem(){
                         </Form.Field>
                         :<div></div>
                     }
+                    </Form.Group>
+                    
                     <br/>
                     <Button primary type='submit' >
                         Submit

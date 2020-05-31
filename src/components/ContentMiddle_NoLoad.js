@@ -187,14 +187,14 @@ function ContentMiddleNoLoad(props){
                     
                    <div className='imageFix'>
                      <Image centered src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47.png`} size='large' verticalAlign='middle' />
-                     There is nothing here! Click on the add item button on the top right side to add an item to your list!
+                     <br/>There is nothing here! Click on the add item button on the top right side to add an item to your list!
                   </div> 
                   )):
               (<div>No mojo as of now</div>)
             )
           }
         </Item.Group>
-      </div>
+       </div>
     }
   </>
   )
