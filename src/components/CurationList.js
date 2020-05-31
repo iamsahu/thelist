@@ -102,8 +102,7 @@ function CurationList(props){
                     </List.Item>
                 {
                     posts = tagData['data']['tag'],
-                    
-                    // content.tags = posts.map(post=>(post.name)),
+                    (posts.length>0)?
                     posts && posts.map(post=>(
                         
                         <List.Item key={post.id}>
@@ -124,7 +123,11 @@ function CurationList(props){
                             {/* }
                             </MixpanelConsumer> */}
                         </List.Item>
-                    ))
+                    )):(
+                        <div>
+                            You have not created any tags. Use add item on the top right side to add an item and tag it!
+                        </div>
+                    )
                 }
             </List>
         )
@@ -138,7 +141,7 @@ function CurationList(props){
                 {
                     (typeof(tagData['data'])!=='undefined')?
                     (lists = tagData['data']['lists'],
-                    // content.tags = lists.map(post=>(post.name)),
+                    (lists.length>0)?
                     lists && lists.map(post=>(
                         <List.Item key={post.id}>
                             {/* <MixpanelConsumer>
@@ -158,7 +161,13 @@ function CurationList(props){
                          {/* }
                              </MixpanelConsumer> */}
                         </List.Item>
-                    ))):(<div>No data</div>)
+                    )):(
+                        <div>
+                            You have not created any lists. Use add item on the top right side to add an item and create a list.
+                        </div>
+                    )
+                    
+                    ):(<div>No data</div>)
                 }
                 
             </List>
