@@ -58,7 +58,7 @@ function HomeNoLogin(){
             </Grid.Column>
             <Grid.Column width={4}>
                 {/* <Card style={{'height':'431px'}} className='ui fluid card'> */}
-                <Card className=' fluid card'>
+                <Card style={{'height':'431px'}} className='ui fluid card'>
                     <Image src={`${process.env.REACT_APP_BASE_URL}/undraw_location_search_bqps_ F5DD47.png`} wrapped ui={false} />
                     {/* <Image src={`${process.env.REACT_APP_BASE_URL}/pablo-searching.png`} wrapped ui={false} /> */}
                     <Card.Content header='Discover' />

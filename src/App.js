@@ -53,7 +53,7 @@ function App() {
 //     }
 //  });
 
-  const userC = {curator_id:'',loggedin_user_id:''}
+  const userC = {curator_id:'',loggedin_user_id:'',image_link:''}
   const [content,contentChange] = useState({currentTag:'None',contentType:'lists',lists:{},tags:{},currentList:'',currentTagID:'',currentListID:''})//Passing a function so that the consumer can change the content
   const { loading,isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
   const [userExists,SetExists] = useState(false)
@@ -103,6 +103,7 @@ function App() {
       userC['loggedin_user_id'] = userID
       userC['name'] =user['name']
       userC['nickname']=user['nickname']
+      userC['image_link']=user['picture']
       // setuserCheckStatus(false)
       checkUser(userID)
       Mixpanel.identify(userID)

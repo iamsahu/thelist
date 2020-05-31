@@ -10,19 +10,14 @@ import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 
 function MenuBar(){
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const { user,isAuthenticated,loading, loginWithRedirect, logout } = useAuth0();
   const [activeItem,setActiveItem] = useState('');
   const handleItemClick = (e, { name }) => setActiveItem(name);
   const [name, setname] = useState('Find')
-  const user = useContext(UserContext)
+  const [image, setimage] = useState(1)
+  
   const history = useHistory();
-  // console.log(user)
-  // const mixpanel = useContext(MixpanelConsumer)
-  // const DEFAULT_REDIRECT_CALLBACK = () =>
-  // window.history.replaceState({}, document.title, window.location.pathname);
-  // const authHandler = (err, data) => {
-  //       console.log(err, data);
-  //     };
+  
   const options = [
     { key: 'user', text: 'Account', icon: 'user' ,value:'user'},
     { key: 'settings', text: 'Settings', icon: 'settings' ,value:'settings'},
@@ -33,7 +28,7 @@ function MenuBar(){
     // console.log(value)
     switch (value) {
       case 'user':
-
+        history.push('/'+user['sub'].split('|')[1])
         break;
       case 'settings':
 
@@ -78,7 +73,7 @@ function MenuBar(){
           />
           </>
         )}
-        {isAuthenticated && (
+        {isAuthenticated &&!loading&& (
           <>
           <Menu.Item position='right' fitted='vertically'>
             <Button>
@@ -91,7 +86,8 @@ function MenuBar(){
             <Menu.Item position='right'>
               <Dropdown
                 fluid
-                trigger={<Image avatar src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'/> }
+                // trigger={<><Image avatar src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'/>{user.name}</>}
+                trigger={<><Image avatar src={user.picture}/>{user.name}</>}
                 options={options}
                 pointing='top right'
                 icon={null}
