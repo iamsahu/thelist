@@ -70,6 +70,7 @@ function Curator(props){
             if(data.items.length>0){
                 setheader(data.items[0]['list']['list_name'])
                 setdescription(data.items[0]['list']['description'])
+                propSent['description'] = data.items[0]['list']['description']
             }
           })):
           (GetList({userid:propSent.curator_id,listid:propSent.contentID}).then((data)=>{
@@ -80,6 +81,7 @@ function Curator(props){
               if(data.items.length>0){
                 setheader(data.items[0]['list']['list_name'])
                 setdescription(data.items[0]['list']['description'])
+                propSent['description'] = data.items[0]['list']['description']
                 // console.log(data.items[0]['list']['description'])
               }
             }
@@ -96,6 +98,7 @@ function Curator(props){
             GetItemsUsers({curator_id:propSent.curator_id}).then((data)=>{
                 setPosts(data.items)
                 setheader("All")
+                propSent['description'] = ''
             })
             // console.log('Tag with no all')
           ):
@@ -108,6 +111,7 @@ function Curator(props){
                 if(data.tag.length>0){
                     setPosts(data.tag[0]['item_tags'])
                     setheader(data.tag[0]['name'])
+                    propSent['description'] = ''
                     // setPosts(temp)
                 }
             })

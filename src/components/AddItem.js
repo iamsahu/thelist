@@ -22,6 +22,11 @@ function validURL(str) {
     return !!pattern.test(str);
 }
 
+function isValidURL(string) {
+    var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    return (res !== null)
+  };
+
 function AddItem(){
     const [content,contentChange] = useContext(ContentContext)
     const user = useContext(UserContext)
@@ -109,7 +114,7 @@ function AddItem(){
             setErrorLink(true)
             errors=true
         }else{
-            if(validURL(values.link)){
+            if(isValidURL(values.link)){
                 setErrorLink(false)
             }else{
                 setErrorLink(true)
@@ -175,6 +180,12 @@ function AddItem(){
     const handleChangeList = (e, { value }) => {
         // console.log(e)
         // console.log(value)
+        if(!(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(value))){
+            setlistDescription(true)
+        }else{
+            setlistDescription(false)
+            values.listDescription =''
+        }
         contentChange(content=>({...content,list_id:value}))
         // console.log(dropList)
     };

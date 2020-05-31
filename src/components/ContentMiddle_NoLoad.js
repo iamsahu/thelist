@@ -26,7 +26,7 @@ import Mixpanel from '../util/mix'
 import Tap from 'react-interactions'
 
 function ContentMiddleNoLoad(props){
-  // console.log(props)
+  console.log(props)
   // console.log(process.env)
   // console.log(process.env.REACT_APP_BASE_URL)
   const [content] = useContext(ContentContext)
@@ -39,7 +39,8 @@ function ContentMiddleNoLoad(props){
   const [loadState, setloadState] = useState(-1)
   
   var activeItem = 'home';
-
+  // console.log(props.propSent)
+  console.log(props.propSent.description)
   if(props.posts===null){
     return(<div>Loading</div>)
   }
@@ -53,14 +54,14 @@ function ContentMiddleNoLoad(props){
       <meta property="og:type" content="website"/>
       <meta property="og:url" content={shareUrl}/>
       <meta property="og:title" content={props.propSent.contentType==='tags'?content.currentTag:content.currentList}/>
-      <meta property="og:description" content={props.propSent.contentType==='lists'?{description}:"A place for all your curations!"}/>
+      <meta property="og:description" content={props.propSent.contentType==='lists'?props.propSent.description:"A place for all your curations!"}/>
       <meta property="og:image" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
 
       {/* <!-- Twitter --/> */}
       <meta property="twitter:card" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
       <meta property="twitter:url" content={shareUrl}/>
       <meta property="twitter:title" content={props.propSent.contentType==='tags'?content.currentTag:content.currentList}/>
-      <meta property="twitter:description" content={props.propSent.contentType==='lists'?{description}:"A place for all your curations!"}/>
+      <meta property="twitter:description" content={props.propSent.contentType==='lists'?props.propSent.description:"A place for all your curations!"}/>
       <meta property="twitter:image" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
     </MetaTags>
     <Menu pointing secondary>
@@ -131,28 +132,28 @@ function ContentMiddleNoLoad(props){
             )
           )
         }
-        <Button icon >
+        {/* <Button icon >
             <Icon name='bell' />
-        </Button>
+        </Button> */}
         <Modal closeIcon trigger={<Button icon><Icon name='share alternate' /></Button>} centered={false}>
           <Modal.Header>Share on Social Media</Modal.Header>
           <Modal.Content >
             <div>
-            <FacebookShareButton url={shareUrl} quote={content.contentDescription}>
+            <FacebookShareButton url={shareUrl} quote={props.propSent.description}>
               <FacebookIcon size={32} round />
             </FacebookShareButton>
             {/* </div>
             <div> */}
             <TwitterShareButton
               url={shareUrl}
-              title='Title'>
+              title={props.propSent.description}>
               <TwitterIcon size={32} round />
             </TwitterShareButton>
             {/* </div>
             <div> */}
             <WhatsappShareButton
               url={shareUrl}
-              title={content.contentDescription}
+              title={props.propSent.description}
               separator=":: "
               className="Demo__some-network__share-button"
             >
