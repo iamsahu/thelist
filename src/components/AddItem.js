@@ -150,6 +150,12 @@ function AddItem(){
                 transport: 'beacon'
             });
             Mixpanel.track('Item Created')
+
+            values.reason='';
+            values.name='';
+            values.link='';
+            values.description='';
+            setlistDescription(false)
         }
     }
 

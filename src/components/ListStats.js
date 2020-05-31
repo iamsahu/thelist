@@ -44,7 +44,7 @@ function ListStats(props){
                         <Statistic.Label>List Likes</Statistic.Label>
                     </Statistic>
                     <Statistic>
-                        <Statistic.Value>3,322</Statistic.Value>
+                        <Statistic.Value>0</Statistic.Value>
                         <Statistic.Label>Copy</Statistic.Label>
                     </Statistic>
                     <Statistic>

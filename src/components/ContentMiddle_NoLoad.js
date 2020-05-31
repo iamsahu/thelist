@@ -169,7 +169,7 @@ function ContentMiddleNoLoad(props){
     </Menu>
     {
       <div className="scrolly">
-        <Item.Group >
+        <Item.Group divided>
           {
             props.posts===null?
             (<Placeholder>
