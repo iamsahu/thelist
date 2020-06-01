@@ -6,6 +6,7 @@ import {CREATE_LIST,FETCH_LISTS,COMBINED_FETCH,FETCH_ALL} from '../util/graphql'
 import UserContext from '../context/UserContext';
 import ContentContext from '../context/ContentContext';
 
+
 function AddList(){
     const [content,contentChange] = useContext(ContentContext)
     const [listName,SetListName] = useState('')
@@ -47,21 +48,31 @@ function AddList(){
         variables:values,update:updateCache,
         onError:(error,variables)=>{
             console.log(error)
-        }
+        },refetchQueries:[{
+            query:COMBINED_FETCH,
+            variables:{
+                user_id:user.loggedin_user_id
+            }
+        }]
     });
 
     function createPostCallback(){
+        // console.log(values)
+        // console.log(user.loggedin_user_id)
         createList()
         SetModal(false)
     }
+
+    function OnClose(){
+        
+        SetModal(false)
+    }
+
     return(
         <>
-        <Modal open={showModal} trigger={<div className='icobutton'><Button onClick={()=>SetModal(true)}>Add List</Button></div>} >
+        <Modal open={showModal} closeOnDimmerClick={false} onClose={OnClose} closeIcon trigger={<div className='icobutton'><Button onClick={()=>SetModal(true)}>Add List</Button></div>} >
             <Modal.Header>
                 Add List
-                <Button icon position="right" onClick={()=>SetModal(false)}>
-                    <Icon name='close' />
-                </Button>
                 {/* <Button right >
                     Close
                 </Button> */}

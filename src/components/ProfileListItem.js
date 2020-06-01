@@ -7,7 +7,7 @@ function ProfileListItem(props){
         <Item key={props.id}>
             <Item.Image avatar size='tiny' src={props.image_link} />
             <Item.Content verticalAlign='middle'>
-                <Item.Header as='a'>{props.username}</Item.Header>
+                <Item.Header as='a' href={`${process.env.REACT_APP_BASE_URL}/${props.id}`}>{props.username}</Item.Header>
                 <Item.Description>{props.description}</Item.Description>
             </Item.Content>
         </Item>

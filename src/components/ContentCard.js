@@ -16,6 +16,7 @@ import Mixpanel from '../util/mix'
 import {DeleteItem,LikeItem,UnlikeItem} from '../util/graphqlExecutor'
 import {client} from '../ApolloProvider'
 import gql from 'graphql-tag'
+import ContentContext from '../context/ContentContext';
 import { useQuery } from "@apollo/react-hooks";
 
 // const LIKE_ITEM=gql`
@@ -86,6 +87,7 @@ mutation MyMutation($id:uuid) {
 function ContentCard(postdata){
     // console.log(postdata)
     // console.log(postdata.postdata['like_items'].length)
+    const [content,contentChange] = useContext(ContentContext)
     const { isAuthenticated,user, loginWithRedirect, logout } = useAuth0();
     const userC = useContext(UserContext)
     var post = postdata.postdata
@@ -117,8 +119,9 @@ function ContentCard(postdata){
     })
 
     const deleteitem = (id)=>{
-        DeleteItem({id:id}).then((response)=>{
+        DeleteItem({id:id,curator:userC.loggedin_user_id,contentType:postdata.contentType,contentID:postdata.contentID}).then((response)=>{
             console.log(response)
+            contentChange(content=>({...content,add:'ad'}))
         })
     }
 

@@ -34,7 +34,7 @@ function CentralList(props){
         temp=props.posts
 
     return(
-        temp.map(post=>(<ContentCard key={post.id} postdata={post}/>))
+        temp.map(post=>(<ContentCard key={post.id} postdata={post} contentType={props.contentType} contentID={props.contentID}/>))
     )
 }
 

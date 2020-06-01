@@ -13,7 +13,7 @@ function ProfileCard(){
     const loadUser= ()=>{
         DoesUserExists({user_id:user.curator_id})
         .then((response)=>{
-            console.log(response)
+            // console.log(response)
             if(typeof(response)!=='undefined'){
                 if(typeof(response.user[0])!=='undefined'){
                     // console.log(response.user[0]['image_link'])

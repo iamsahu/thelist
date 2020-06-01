@@ -119,7 +119,7 @@ function App() {
       <UserProvider value={userC}>
         <ContentProvider value={[content,contentChange]}>
             <Router history={history}>
-              <MenuBar/>
+              <MenuBar user={user}/>
               <div className="novscroll">
               <Container style={{ marginTop: '3em',height: '85vh' }} fluid>
                 <Switch>

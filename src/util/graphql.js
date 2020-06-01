@@ -173,7 +173,7 @@ export const CREATE_ITEM=gql`
 `
 
 export const CREATE_LIST =gql`
-    mutation ($list_name:String!,$description:String!,$curator:uuid!) {
+    mutation ($list_name:String!,$description:String!,$curator:String!) {
         insert_lists(objects: {list_name: $list_name,description:$description, curator_id: $curator}) {
             returning {
                 id

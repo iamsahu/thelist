@@ -138,7 +138,7 @@ function AddItem(){
             createItem({...values,
                 list_id:content.list_id,
                 selTags:content.selTags,
-                curator_id:user.curator_id,
+                curator_id:user.loggedin_user_id,
                 tags:content.tags,
                 contentType:content.contentType,
                 currentListID:content.currentListID,
@@ -146,6 +146,7 @@ function AddItem(){
             .then((response,response2)=>{
                 // console.log(response)
                 // console.log(response2)
+                contentChange(content=>({...content,add:'ad'}))
             })
             SetModal(false)
             reward.rewardMe();
@@ -226,11 +227,13 @@ function AddItem(){
     return(
         <>
         <Reward ref={(ref) => { setreward(ref) }} type='confetti'>
-        <Modal size='small' open={showModal} closeOnDimmerClick={false} onClose={OnClose} closeIcon trigger={<Button onClick={()=>{
+        <Modal size='small' open={showModal} closeOnDimmerClick={false} onClose={OnClose} closeIcon trigger={<Button  floated='right' onClick={()=>{
             SetModal(true)
             SetDropTag(content.tags)
             SetDropList(content.lists)
-            }}>Add Item<Tap scale fade waves /></Button>} >
+            }}>
+            <Tap scale fade waves />Add Item</Button>
+            } >
             <Modal.Header>
                 Add Item
             </Modal.Header>

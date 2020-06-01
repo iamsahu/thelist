@@ -1,6 +1,7 @@
 import React, { useState,useContext } from 'react'
 import {  Menu,Dropdown,Image, Button } from 'semantic-ui-react'
 import AddItem from './AddItem';
+import AddList from './AddList'
 import TopSearch from './TopSearch'
 import { useAuth0 } from '../react-auth0-spa'
 // import {MixpanelConsumer } from 'react-mixpanel';
@@ -81,8 +82,11 @@ function MenuBar(){
             </Button>
             </Menu.Item>
             <Menu.Item position='right' fitted='vertically'>
-            <AddItem/>
-          </Menu.Item>
+              <AddList/>
+            </Menu.Item>
+            {/* <Menu.Item position='right' fitted='vertically'>
+              <AddItem/>
+            </Menu.Item> */}
             <Menu.Item position='right'>
               <Dropdown
                 fluid

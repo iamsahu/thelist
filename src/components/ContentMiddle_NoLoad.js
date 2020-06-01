@@ -1,6 +1,6 @@
 import React,{useContext,useState,useEffect} from 'react';
 // import { useQuery } from '@apollo/react-hooks';
-import {Menu,Button,Icon,Item,Placeholder,Modal,Image} from 'semantic-ui-react';
+import {Menu,Button,Icon,Item,Placeholder,Modal,Image,Grid} from 'semantic-ui-react';
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -17,6 +17,7 @@ import {
 import ContentContext from '../context/ContentContext';
 // import ContentCard from './ContentCard'
 import CentralList from './CentralList'
+import AddItem from './AddItem'
 // import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
 import UserContext from '../context/UserContext';
 import {GetList,GetItemsUsers,GetItemsofTag,LikeList,UnlikeList,GetTagItems} from '../util/graphqlExecutor'
@@ -48,7 +49,18 @@ function ContentMiddleNoLoad(props){
   return(
     <>
     {/* <h1>{props.propSent.contentType==='lists'?content.currentList:content.currentTag}</h1> */}
-    <h1>{props.title}</h1>
+    <Grid>
+        <Grid.Column floated='left' width={6}>
+        <h1>{props.title}</h1>
+        </Grid.Column>
+        <Grid.Column floated='right' width={6}>
+          {
+            props.propSent.contentType==='lists'&&(user.loggedin_user_id===props.propSent.curator_id)&&<AddItem/>
+            // <Button circular icon='add' floated='right'/>
+          }
+        </Grid.Column>
+    </Grid>
+
     {/* <!-- Open Graph / Facebook --> */}
     <MetaTags>
       <meta property="og:type" content="website"/>
@@ -182,7 +194,7 @@ function ContentMiddleNoLoad(props){
             (
               (typeof(props.posts)!=='undefined')?
                 (props.posts.length>0?
-                  (<CentralList posts={props.posts} contentType={props.propSent.contentType}/>):
+                  (<CentralList posts={props.posts} contentType={props.propSent.contentType} contentID={props.propSent.contentID}/>):
                   (
                     
                    <div className='imageFix'>

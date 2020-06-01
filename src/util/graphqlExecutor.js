@@ -112,26 +112,33 @@ function InsertNewList(curator_id,list_name,listDescription){
             curator_id:curator_id,
             list_name:list_name,
             description:listDescription
-        },update:(cache,{data})=>{
-            const existingItems = cache.readQuery({
-                query:COMBINED_FETCH,
-                variables:{
-                    user_id:curator_id
-                },
-            })
-            // console.log(existingItems)
-            const newItem = data.insert_lists.returning[0];
-            // console.log(newItem)
-            existingItems.lists.push(newItem)
-            // console.log(existingItems)
-            cache.writeQuery({
-                query: COMBINED_FETCH,
-                variables:{
-                    user_id:curator_id
-                },
-                data: existingItems
-            });
-        }
+        },
+        // update:(cache,{data})=>{
+        //     const existingItems = cache.readQuery({
+        //         query:COMBINED_FETCH,
+        //         variables:{
+        //             user_id:curator_id
+        //         },
+        //     })
+        //     // console.log(existingItems)
+        //     const newItem = data.insert_lists.returning[0];
+        //     // console.log(newItem)
+        //     existingItems.lists.push(newItem)
+        //     // console.log(existingItems)
+        //     cache.writeQuery({
+        //         query: COMBINED_FETCH,
+        //         variables:{
+        //             user_id:curator_id
+        //         },
+        //         data: existingItems
+        //     });
+        // }
+        refetchQueries:[{
+            query:COMBINED_FETCH,
+            variables:{
+                user_id:curator_id
+            }
+        }]
     }).catch((error)=>{console.log(error)})
     // .then((response)=>({
     //     response   
@@ -144,37 +151,91 @@ function InsertNewTags(tags,curator_id){
         mutation:INSERT_TAGS,
         variables:{
             objects:tags
-        },update:(cache,{data})=>{
-            const existingItems = cache.readQuery({
-                query:COMBINED_FETCH,
-                variables:{
-                    user_id:curator_id
-                },
-            })
-            const newItem = data.insert_tag.returning[0];
-            existingItems.tag.push(newItem)
-            cache.writeQuery({
-                query: COMBINED_FETCH,
-                variables:{
-                    user_id:curator_id
-                },
-                data: existingItems
-            });
-        }
+        },
+        // update:(cache,{data})=>{
+        //     const existingItems = cache.readQuery({
+        //         query:COMBINED_FETCH,
+        //         variables:{
+        //             user_id:curator_id
+        //         },
+        //     })
+        //     const newItem = data.insert_tag.returning[0];
+        //     existingItems.tag.push(newItem)
+        //     cache.writeQuery({
+        //         query: COMBINED_FETCH,
+        //         variables:{
+        //             user_id:curator_id
+        //         },
+        //         data: existingItems
+        //     });
+        // },
+        refetchQueries:[{
+            query:COMBINED_FETCH,
+            variables:{
+                user_id:curator_id
+            }
+        }]
+
     }).catch((error)=>{
         console.log(error)
     })
 }
 
 function InsertItem(link,name,description,curator_id,list_id,contentType,currentListID,currentTagID){
-    console.log(contentType)
-    console.log(currentListID)
-    console.log(currentTagID)
+    // console.log(contentType)
+    // console.log(currentListID)
+    // console.log(currentTagID)
     // console.log(link)
     // console.log(name)
     // console.log(description)
     // console.log(curator_id)
     // console.log(list_id)
+    var q;
+    if(contentType==='lists'){
+        if(currentListID===''){
+            q=[
+                {
+                    query:GET_ITEMS_USER,
+                            variables:{
+                                userid:curator_id
+                            }
+                }
+            ]
+        }else{
+            console.log('Here list')
+            q =[
+                {
+                    query: GET_LIST,
+                    variables:{
+                        userid:curator_id,
+                        listid:currentListID
+                    }
+                }
+            ]
+        }
+    }else{
+        if(currentTagID===''){
+q =[
+    {
+                    query:GET_ITEMS_USER,
+                    variables:{
+                        userid:curator_id
+                    }
+                }
+]
+        }else{
+q=[
+    {       
+        query:GTI,
+        variables:{
+            id:currentTagID,
+            user_id:curator_id
+        }
+    }
+]
+        }
+    }
+
     return client.mutate({
         mutation:INSERT_ITEM,
         variables:{
@@ -184,150 +245,95 @@ function InsertItem(link,name,description,curator_id,list_id,contentType,current
             curator:curator_id,
             list_id:list_id
         },
-        // update:(cache,{data})=>{
-        //     if(contentType==='lists'){
-        //         if(currentListID===''){
-        //             const existingItems = cache.readQuery({
-        //                 query:GET_ITEMS_USER,
-        //                 variables:{
-        //                     userid:curator_id
-        //                 },
-        //             })
-        //             // console.log(existingItems)
-        //             const newItem = data.insert_items.returning[0];
-        //             cache.writeQuery({
-        //                 query: GET_ITEMS_USER,
-        //                 variables:{
-        //                     userid:curator_id
-        //                 },
-        //                 data: {items: [newItem, ...existingItems.items]}
-        //             });
-        //         }else{
-        //             // console.log('here')
-        //             const existingItems = cache.readQuery({
-        //                 query:GET_LIST,
-        //                     variables:{
-        //                         userid:curator_id,
-        //                         listid:currentListID
-        //                     },
-        //             })
-        //             const newItem = data.insert_items.returning[0];
-        //             // console.log(newItem)
-        //             cache.writeQuery({
-        //                 query: GET_LIST,
-        //                 variables:{
-        //                     userid:curator_id,
-        //                     listid:currentListID
-        //                 },
-        //                 data: {items: [newItem, ...existingItems.items]}
-        //             });
-        //         }
-        //     }else if(contentType==='tags'){
-        //         if(currentTagID===''){
-        //             const existingItems = cache.readQuery({
-        //                 query:GET_ITEMS_USER,
-        //                 variables:{
-        //                     userid:curator_id
-        //                 },
-        //             })
-        //             // console.log(existingItems)
-        //             const newItem = data.insert_items.returning[0];
-        //             cache.writeQuery({
-        //                 query: GET_ITEMS_USER,
-        //                 variables:{
-        //                     userid:curator_id
-        //                 },
-        //                 data: {items: [newItem, ...existingItems.items]}
-        //             });
-        //         }else{
-        //             //TODO: Tag based cache update
-        //             console.log('Here in tag')
-        //             const itemidsoftag = cache.readQuery({
-        //                 query:GET_ITEMS_OF_TAG,
-        //                 variables:{
-        //                     tag_id:currentTagID,
-        //                     user_id:curator_id
-        //                 }
-        //             })
-        //             console.log(itemidsoftag)
-        //             const itemids = itemidsoftag.item_tag.map(tag=>tag.item_id)
-        //             const itemsoftag = cache.readQuery({
-        //                 query:GET_ITEMS,
-        //                 variables:{
-        //                     _in:itemids,
-        //                     user_id:curator_id
-        //                 }
-        //             })
-        //             console.log(data.insert_items.returning[0])
-        //             console.log(itemsoftag)
-        //             client.writeQuery({
-        //                 query:GET_ITEMS,
-        //                 variables:{
-        //                     _in:itemids,
-        //                     user_id:curator_id
-        //                 },
-        //                 data: {items: [data.insert_items.returning[0], ...itemsoftag.items]}
-        //             });
-        //         }
-        //     }
-        //     // console.log(data)
-        //     // const existingItems = cache.readQuery({
-        //     //     query:GET_ITEMS_USER,
-        //     //     variables:{
-        //     //         userid:curator_id
-        //     //     },
-        //     // })
-        //     // // console.log(existingItems)
-        //     // const newItem = data.insert_items.returning[0];
-        //     // cache.writeQuery({
-        //     //     query: GET_ITEMS_USER,
-        //     //     variables:{
-        //     //         userid:curator_id
-        //     //     },
-        //     //     data: {items: [newItem, ...existingItems.items]}
-        //     // });
-        // },
-        refetchQueries:(contentType,currentListID,currentTagID)=>
-            (contentType==='lists')?((currentListID==='')?[{
-                query:GET_ITEMS_USER,
+        update:(cache,{data})=>{
+            if(contentType==='lists'){
+                if(currentListID===''){
+                    const existingItems = cache.readQuery({
+                        query:GET_ITEMS_USER,
                         variables:{
                             userid:curator_id
                         },
-            }]:[
-                {
-                    query: GET_LIST,
+                    })
+                    // console.log(existingItems)
+                    const newItem = data.insert_items.returning[0];
+                    cache.writeQuery({
+                        query: GET_ITEMS_USER,
+                        variables:{
+                            userid:curator_id
+                        },
+                        data: {items: [newItem, ...existingItems.items]}
+                    });
+                }else{
+                    console.log('here')
+                    const existingItems = cache.readQuery({
+                        query:GET_LIST,
+                            variables:{
+                                userid:curator_id,
+                                listid:currentListID
+                            },
+                    })
+                    const newItem = data.insert_items.returning[0];
+                    // console.log(newItem)
+                    cache.writeQuery({
+                        query: GET_LIST,
                         variables:{
                             userid:curator_id,
                             listid:currentListID
+                        },
+                        data: {items: [newItem, ...existingItems.items]}
+                    });
+                }
+            }else if(contentType==='tags'){
+                if(currentTagID===''){
+                    const existingItems = cache.readQuery({
+                        query:GET_ITEMS_USER,
+                        variables:{
+                            userid:curator_id
+                        },
+                    })
+                    // console.log(existingItems)
+                    const newItem = data.insert_items.returning[0];
+                    cache.writeQuery({
+                        query: GET_ITEMS_USER,
+                        variables:{
+                            userid:curator_id
+                        },
+                        data: {items: [newItem, ...existingItems.items]}
+                    });
+                }else{
+                    //TODO: Tag based cache update
+                    console.log('Here in tag')
+                    const itemidsoftag = cache.readQuery({
+                        query:GET_ITEMS_OF_TAG,
+                        variables:{
+                            tag_id:currentTagID,
+                            user_id:curator_id
                         }
+                    })
+                    console.log(itemidsoftag)
+                    const itemids = itemidsoftag.item_tag.map(tag=>tag.item_id)
+                    const itemsoftag = cache.readQuery({
+                        query:GET_ITEMS,
+                        variables:{
+                            _in:itemids,
+                            user_id:curator_id
+                        }
+                    })
+                    console.log(data.insert_items.returning[0])
+                    console.log(itemsoftag)
+                    cache.writeQuery({
+                        query:GET_ITEMS,
+                        variables:{
+                            _in:itemids,
+                            user_id:curator_id
+                        },
+                        data: {items: [data.insert_items.returning[0], ...itemsoftag.items]}
+                    });
                 }
-            ]):((currentTagID==='')?[
-                {
-                    query:GET_ITEMS_USER,
-                            variables:{
-                                userid:curator_id
-                            },
-                }
-            ]:[
-                {       
-                    query:GTI,
-                    variables:{
-                        id:currentTagID,
-                        user_id:curator_id
-                    }
-                }
-            ])
+            }
+        }
+        // refetchQueries:q
         // ,fetchPolicy:"cache-and-network"
-        
-        
-        
-        // {
-        //     query:GET_ITEMS,
-        //                 variables:{
-        //                     // _in:,
-        //                     user_id:curator_id
-        //                 }
-        // }
     }).catch((error)=>{console.log(error)})
 }
 
@@ -541,11 +547,11 @@ export const GET_LIST = gql`
                 user_id
             }
         }
-        like_list(where: {list_id: {_eq: $listid}, user_id: {_eq: $userid}}) {
-            list_id
-            user_id
-            id
-        }
+        # like_list(where: {list_id: {_eq: $listid}, user_id: {_eq: $userid}}) {
+        #     list_id
+        #     user_id
+        #     id
+        # }
     }
 `
 
@@ -722,7 +728,7 @@ const COMBINED_FETCH = gql`
 
 
 const GetTagsListsUsers = (values)=>{
-    // console.log(values)
+    console.log(values)
     return client.query({
         query:COMBINED_FETCH,
         variables:{
@@ -887,11 +893,36 @@ const DELETE_ITEM = gql`
 `
 
 const DeleteItem = (id)=>{
+    // console.log(id)
+    // return "0"
+    var q;
+    if(id.contentType==='lists'){
+        if(id.contentID===''){
+
+        }else{
+            console.log('This one')
+            q = [
+                {
+                    query:GET_LIST,
+                    variables:{
+                        userid:id.curator,
+                        listid:id.contentID
+                    }
+                }
+            ]
+        }
+    }else{
+        if(id.contentID===''){
+
+        }else{
+
+        }
+    }
     return client.mutate({
         mutation:DELETE_ITEM,
         variables:{
             id:id.id
-        }
+        },refetchQueries:q
     }).then((response)=>response.data).catch((error)=>console.log(error))
 }
 

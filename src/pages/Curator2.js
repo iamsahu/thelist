@@ -69,7 +69,8 @@ function Curator(props){
                 setdescription(data.items[0]['list']['description'])
                 propSent['description'] = data.items[0]['list']['description']
             }
-          })):
+          }).catch((error)=>console.log(error))
+          ):
           (GetList({userid:propSent.curator_id,listid:propSent.contentID}).then((data)=>{
             // console.log(data)
             setPosts(data.items)
@@ -82,12 +83,12 @@ function Curator(props){
                 // console.log(data.items[0]['list']['description'])
               }
             }
-            if(data.like_list.length>0){//Change this to take value from latest data
-              // console.log("setting likes")
-              setlistlike(true)
-            }else{
-              setlistlike(false)
-            }
+            // if(data.like_list.length>0){//Change this to take value from latest data
+            //   // console.log("setting likes")
+            //   setlistlike(true)
+            // }else{
+            //   setlistlike(false)
+            // }
           }).catch((error)=>console.log(error)))):
         (
           (propSent.contentType==='tags')?
@@ -96,7 +97,7 @@ function Curator(props){
                 setPosts(data.items)
                 setheader("All")
                 propSent['description'] = ''
-            })
+            }).catch((error)=>console.log(error))
             // console.log('Tag with no all')
           ):
           (
@@ -111,7 +112,7 @@ function Curator(props){
                     propSent['description'] = ''
                     // setPosts(temp)
                 }
-            })
+            }).catch((error)=>console.log(error))
             
           )):
           (console.log("Not a valid content"))
