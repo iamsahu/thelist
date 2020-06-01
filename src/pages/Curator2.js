@@ -72,7 +72,7 @@ function Curator(props){
           }).catch((error)=>console.log(error))
           ):
           (GetList({userid:propSent.curator_id,listid:propSent.contentID}).then((data)=>{
-            // console.log(data)
+            console.log(data)
             setPosts(data.items)
             setloadState(1)
             if(typeof(data)!=='undefined'){

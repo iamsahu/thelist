@@ -215,24 +215,24 @@ function InsertItem(link,name,description,curator_id,list_id,contentType,current
         }
     }else{
         if(currentTagID===''){
-q =[
-    {
+            q =[
+                {
                     query:GET_ITEMS_USER,
                     variables:{
                         userid:curator_id
                     }
                 }
-]
+            ]
         }else{
-q=[
-    {       
-        query:GTI,
-        variables:{
-            id:currentTagID,
-            user_id:curator_id
-        }
-    }
-]
+            q=[
+                {       
+                    query:GTI,
+                    variables:{
+                        id:currentTagID,
+                        user_id:curator_id
+                    }
+                }
+            ]
         }
     }
 
@@ -264,7 +264,7 @@ q=[
                         data: {items: [newItem, ...existingItems.items]}
                     });
                 }else{
-                    console.log('here')
+                    // console.log('here')
                     const existingItems = cache.readQuery({
                         query:GET_LIST,
                             variables:{
@@ -302,7 +302,7 @@ q=[
                     });
                 }else{
                     //TODO: Tag based cache update
-                    console.log('Here in tag')
+                    // console.log('Here in tag')
                     const itemidsoftag = cache.readQuery({
                         query:GET_ITEMS_OF_TAG,
                         variables:{
@@ -310,7 +310,7 @@ q=[
                             user_id:curator_id
                         }
                     })
-                    console.log(itemidsoftag)
+                    // console.log(itemidsoftag)
                     const itemids = itemidsoftag.item_tag.map(tag=>tag.item_id)
                     const itemsoftag = cache.readQuery({
                         query:GET_ITEMS,
@@ -319,8 +319,8 @@ q=[
                             user_id:curator_id
                         }
                     })
-                    console.log(data.insert_items.returning[0])
-                    console.log(itemsoftag)
+                    // console.log(data.insert_items.returning[0])
+                    // console.log(itemsoftag)
                     cache.writeQuery({
                         query:GET_ITEMS,
                         variables:{
@@ -547,11 +547,11 @@ export const GET_LIST = gql`
                 user_id
             }
         }
-        # like_list(where: {list_id: {_eq: $listid}, user_id: {_eq: $userid}}) {
-        #     list_id
-        #     user_id
-        #     id
-        # }
+        like_list(where: {list_id: {_eq: $listid}, user_id: {_eq: $userid}}) {
+            list_id
+            user_id
+            id
+        }
     }
 `
 
@@ -895,10 +895,18 @@ const DELETE_ITEM = gql`
 const DeleteItem = (id)=>{
     // console.log(id)
     // return "0"
+    
     var q;
     if(id.contentType==='lists'){
         if(id.contentID===''){
-
+            q=[
+                {
+                    query:GET_ITEMS_USER,
+                    variables:{
+                        userid:id.curator
+                    }
+                }
+            ]
         }else{
             console.log('This one')
             q = [
@@ -913,11 +921,27 @@ const DeleteItem = (id)=>{
         }
     }else{
         if(id.contentID===''){
-
+            q =[
+                {
+                    query:GET_ITEMS_USER,
+                    variables:{
+                        userid:id.curator
+                    }
+                }
+            ]
         }else{
-
+            q=[
+                {       
+                    query:GTI,
+                    variables:{
+                        id:id.contentID,
+                        user_id:id.curator
+                    }
+                }
+            ]
         }
     }
+
     return client.mutate({
         mutation:DELETE_ITEM,
         variables:{
@@ -1116,6 +1140,25 @@ const GetTagItems=(values)=>{
     }).then((response)=>response.data).catch((error)=>console.log(error))
 }
 
+const DOILIKE = gql`
+  query DOILIKE($list_id:uuid,$user_id:String) {
+    like_list(where: {list_id: {_eq: $list_id}, user_id: {_eq: $user_id}}) {
+      id
+    }
+  }
+`
+
+const DoILike=(values)=>{
+    return client.query({
+        query:DOILIKE,
+        variables:{
+            list_id:values.list_id,
+            user_id:values.user_id
+        }
+    }).then((response)=>response.data)
+    .catch((error)=>{console.log(error)})
+}
+
 export {createItem,GetList,GetListDescription,GetItemsofTag,
         GetItemsUsers,GetTagsListsUsers,DoesUserExists,InsertUser,
-        Search,GetAllLists,GetAllTags,GetAllUsers,DeleteItem,LikeList,UnlikeList,LikeItem,UnlikeItem,GetTagItems};
+        Search,GetAllLists,GetAllTags,GetAllUsers,DeleteItem,LikeList,UnlikeList,LikeItem,UnlikeItem,GetTagItems,DoILike};

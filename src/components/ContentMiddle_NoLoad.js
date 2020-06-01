@@ -20,14 +20,14 @@ import CentralList from './CentralList'
 import AddItem from './AddItem'
 // import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
 import UserContext from '../context/UserContext';
-import {GetList,GetItemsUsers,GetItemsofTag,LikeList,UnlikeList,GetTagItems} from '../util/graphqlExecutor'
+import {GetList,GetItemsUsers,GetItemsofTag,LikeList,UnlikeList,DoILike} from '../util/graphqlExecutor'
 import MetaTags from 'react-meta-tags';
 import ReactGA from 'react-ga';
 import Mixpanel from '../util/mix'
 import Tap from 'react-interactions'
 
 function ContentMiddleNoLoad(props){
-  // console.log(props)
+  console.log(props)
   // console.log(process.env)
   // console.log(process.env.REACT_APP_BASE_URL)
   const [content] = useContext(ContentContext)
@@ -36,14 +36,33 @@ function ContentMiddleNoLoad(props){
   const [shareUrl, setshareUrl] = useState(window.location.href)
   const [header, setheader] = useState('')
   const [description, setdescription] = useState('')
-  const [listlike, setlistlike] = useState(-1)
+  const [listlike, setlistlike] = useState(false)
   const [loadState, setloadState] = useState(-1)
   
   var activeItem = 'home';
   // console.log(props.propSent)
   // console.log(props.propSent.description)
+
   if(props.posts===null){
     return(<div>Loading</div>)
+  }
+
+  if(props.propSent.contentType==='lists'){
+    if(user.loggedin_user_id!==''){
+      // if(listlike===1){
+        DoILike({list_id:props.propSent.contentID,user_id:user.loggedin_user_id}).then((response)=>{
+          if(response.like_list.length>0){
+            setlistlike(true)
+          }else{
+            setlistlike(false)
+          }
+        })
+      // }
+    }
+  }
+
+  if(props.posts.length>0){
+    // props.posts[0][]
   }
 
   return(
@@ -110,23 +129,25 @@ function ContentMiddleNoLoad(props){
       <Menu.Menu position='right'>
         <div className='icobutton'>
         {
-          (props.propSent.contentType==='lists')&&(
-            (listlike)?
-            (<Button icon  floated='right' onClick={(e)=>{
-              Mixpanel.track('Appreciate List',{"link":{shareUrl},"curator":props.propSent.curator_id,"name":content.currentList})
-              ReactGA.event({
-                  category: 'List',
-                  action: 'Like',
-                  transport: 'beacon'
-              });
-              setlistlike(false)
-              // console.log('unlike')
-              UnlikeList(props.propSent.contentID,user.loggedin_user_id)
-              }}>
-              <Icon color='red' name='like' />
-              {/* <Tap waves /> */}
-            </Button>):
-            (
+          (listlike)?
+          ((props.propSent.contentType==='lists')?(<Button icon  floated='right' onClick={(e)=>{
+            Mixpanel.track('Appreciate List',{"link":{shareUrl},"curator":props.propSent.curator_id,"name":content.currentList})
+            ReactGA.event({
+                category: 'List',
+                action: 'Like',
+                transport: 'beacon'
+            });
+            setlistlike(false)
+            // console.log('unlike')
+            UnlikeList(props.propSent.contentID,user.loggedin_user_id)
+            }}>
+            <Icon color='red' name='like' />
+            {/* <Tap waves /> */}
+          </Button>):(
+            <></>
+          )
+          ):(
+            (props.propSent.contentType==='lists')?(
               <Button icon floated='right' onClick={(e)=>{
                 Mixpanel.track('Appreciate List',{"link":{shareUrl},"curator":props.propSent.curator_id,"name":content.currentList})
                 ReactGA.event({
@@ -141,8 +162,41 @@ function ContentMiddleNoLoad(props){
                 <Icon name='like' />
                 {/* <Tap waves /> */}
               </Button>
-            )
+            ):(<></>)
           )
+          // (props.propSent.contentType==='lists')&&(
+          //   (listlike)?
+          //   (<Button icon  floated='right' onClick={(e)=>{
+          //     Mixpanel.track('Appreciate List',{"link":{shareUrl},"curator":props.propSent.curator_id,"name":content.currentList})
+          //     ReactGA.event({
+          //         category: 'List',
+          //         action: 'Like',
+          //         transport: 'beacon'
+          //     });
+          //     setlistlike(false)
+          //     // console.log('unlike')
+          //     UnlikeList(props.propSent.contentID,user.loggedin_user_id)
+          //     }}>
+          //     <Icon color='red' name='like' />
+          //     {/* <Tap waves /> */}
+          //   </Button>):
+          //   (
+          //     <Button icon floated='right' onClick={(e)=>{
+          //       Mixpanel.track('Appreciate List',{"link":{shareUrl},"curator":props.propSent.curator_id,"name":content.currentList})
+          //       ReactGA.event({
+          //           category: 'List',
+          //           action: 'Unlike',
+          //           transport: 'beacon'
+          //       });
+          //       setlistlike(true)
+          //       LikeList(props.propSent.contentID,user.loggedin_user_id)
+          //       // console.log('unlike')
+          //       }}>
+          //       <Icon name='like' />
+          //       {/* <Tap waves /> */}
+          //     </Button>
+          //   )
+          // )
         }
         {/* <Button icon >
             <Icon name='bell' />

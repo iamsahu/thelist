@@ -74,14 +74,12 @@ import { useQuery } from "@apollo/react-hooks";
 //     }
 // `
 
-
 const COPY_COUNT=gql`
-
-mutation MyMutation($id:uuid) {
-  update_items(where: {id: {_eq: $id}}, _inc: {copy_count: 1}) {
-    affected_rows
-  }
-}
+    mutation MyMutation($id:uuid) {
+        update_items(where: {id: {_eq: $id}}, _inc: {copy_count: 1}) {
+            affected_rows
+        }
+    }
 `
 
 function ContentCard(postdata){
