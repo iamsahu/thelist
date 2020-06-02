@@ -25,6 +25,7 @@ function HomeTagsDisplay(){
             (loading)?
             (<div>Loading</div>):
             (
+                <div className="scrollyExplore">
                 <List animated verticalAlign='middle'>
             {
                 searchResult.tag.map(result=>(
@@ -38,6 +39,7 @@ function HomeTagsDisplay(){
                 ))
             }
             </List>
+            </div>
             )
             
             // <SearchResultItem key={result.id} props={result}/>))

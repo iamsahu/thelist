@@ -1,7 +1,7 @@
 import React,{useContext, useState} from 'react';
 import {Modal,Button,Form,Dropdown,Divider,Segment, Grid,Icon} from 'semantic-ui-react';
 import useForm from '../util/hook';
-import {useMutation } from '@apollo/react-hooks';
+import {useMutation, useQuery } from '@apollo/react-hooks';
 import {CREATE_ITEM,INSERT_TAG_MULTI} from '../util/graphql';
 import {FETCH_FEED_ITEMS,INSERT_TAG,INSERT_ITEM_OLD_TAG_MULTI} from '../util/graphql';
 import UserContext from '../context/UserContext';
@@ -12,7 +12,16 @@ import Reward from "react-rewards"
 import ReactGA from 'react-ga';
 import Mixpanel from '../util/mix'
 import useClippy from 'use-clippy';
+import gql from 'graphql-tag'
 
+const ALL_TAGS=gql`
+    query MyQuery {
+        tag {
+            id
+            name
+        }
+    }
+`
 
 function validURL(str) {
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
@@ -41,6 +50,7 @@ function AddItem(){
     const [dropList,SetDropList] = useState(content.lists)
     const [listDescription, setlistDescription] = useState(false)
     const [reward, setreward] = useState(null)
+    const [refetch, setRefetch] = useState(false)
     //Figure out how to add content to thte dropTag
     
 
@@ -57,6 +67,17 @@ function AddItem(){
         description:'',
         curator:user.loggedin_user_id
     })
+
+    // const { loading, error, data } = useQuery(ALL_TAGS,{ fetchPolicy: "network-only" })
+
+    // if(!loading){
+    //     // console.log(data)
+    //     const tempArr = data.tag.map(post=>({
+    //         text:post.name,
+    //         key:post.name,
+    //         value:post.id}))
+    //     console.log(tempArr)
+    // }
 
     function MultiTagMutation(taged_data){
         const [createTag,{errorTag}] = useMutation(INSERT_TAG_MULTI,{
@@ -147,8 +168,8 @@ function AddItem(){
                 currentListID:content.currentListID,
                 currentTagID:content.currentTagID})
             .then((response,response2)=>{
-                // console.log(response)
-                // console.log(response2)
+                console.log(response)
+                console.log(response2)
                 contentChange(content=>({...content,add:'ad'}))
             })
             SetModal(false)
@@ -228,18 +249,29 @@ function AddItem(){
     }
 
     function onClick(event){
-        console.log(clipboard)
-        if(clipboard!==''){
+        // console.log(clipboard)
+        // if(clipboard!==''){
             
 
-            if(isValidURL(clipboard)){
-                alert({clipboard})
-            }
-        }
+        //     if(isValidURL(clipboard)){
+        //         alert({clipboard})
+        //     }
+        // }
         SetModal(true)
         SetDropTag(content.tags)
+        // if(!loading){
+        //     // console.log(data)
+        //     const tempArr = data.tag.map(post=>({
+        //         text:post.name,
+        //         key:post.name,
+        //         value:post.id}))
+        //     SetDropTag(tempArr)
+        // }
+
         SetDropList(content.lists)
     }
+
+    
     
     return(
         <>
@@ -292,6 +324,7 @@ function AddItem(){
                         <Form.Field inline name="tag">
                             <label>Tags</label>
                             <Form.Input>
+                                {/* {loading?<Dropdown text='Dropdown' loading />: */}
                                 <Dropdown
                                     name='tag'
                                     options={Object.values(dropTag)}
@@ -306,6 +339,7 @@ function AddItem(){
                                     onChange={handleChange}
                                     upward
                                 />
+                                {/* } */}
                             </Form.Input>
                         </Form.Field>
                         

@@ -97,6 +97,7 @@ function Curator(props){
             GetItemsUsers({curator_id:propSent.curator_id}).then((data)=>{
                 setPosts(data.items)
                 setheader("All")
+                setdescription('A place for all your curations!')
                 propSent['description'] = ''
             }).catch((error)=>console.log(error))
             // console.log('Tag with no all')
@@ -110,6 +111,7 @@ function Curator(props){
                 if(data.tag.length>0){
                     setPosts(data.tag[0]['item_tags'])
                     setheader(data.tag[0]['name'])
+                    setdescription('A place for all your curations!')
                     propSent['description'] = ''
                     // setPosts(temp)
                 }
@@ -139,7 +141,7 @@ function Curator(props){
                     content.contentType==='lists'?
                     <ContentMiddleLists propSent={propSent} posts={posts} title={header}/>:
                   } */}
-                  <ContentMiddleNoLoad propSent={propSent} posts={posts} title={header}/>
+                  <ContentMiddleNoLoad propSent={propSent} posts={posts} title={header} desc={description}/>
                     
                 </Grid.Column>
                 <Grid.Column width={4}>

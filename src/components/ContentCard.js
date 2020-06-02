@@ -220,7 +220,7 @@ function ContentCard(postdata){
                     </Button>
                 </CopyToClipboard>
                 {/* <Reward ref={(ref) => { setreward(ref) }} type='confetti' config={{springAnimation:false}}> */}
-                {isAuthenticated&&(
+                {isAuthenticated&&(postdata.postdata.user.id!==userC.loggedin_user_id)&&(
                     (liked)?
                     (
                         <Button icon floated='right' onClick={(e)=>{
@@ -255,6 +255,23 @@ function ContentCard(postdata){
                         <Tap waves />
                     </Button>)
                     )
+                }
+                {
+                    isAuthenticated&&(postdata.postdata.user.id===userC.loggedin_user_id)&&(
+                        <Button icon floated='right' onClick={(e)=>{
+                            
+                            Mixpanel.track('Edit Item',{"link":postdata.postdata.link,"curator":postdata.postdata.user.id,"name":postdata.postdata.name})
+                            ReactGA.event({
+                                category: 'Item',
+                                action: 'Edit',
+                                label:postdata.postdata.name,
+                                transport: 'beacon'
+                            });
+                        }}>
+                            <Icon name='edit' />
+                            <Tap waves />
+                        </Button>)
+                    
                 }
                 {/* </Reward> */}
                 <Item.Description>

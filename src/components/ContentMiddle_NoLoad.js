@@ -48,9 +48,16 @@ function ContentMiddleNoLoad(props){
   }
 
   if(props.propSent.contentType==='lists'){
+    if(description===''){
+      console.log(props.propSent.description)
+      if(props.propSent.description!==undefined)
+      setdescription(props.propSent.description)
+    }
     if(user.loggedin_user_id!==''){
       // if(listlike===1){
         DoILike({list_id:props.propSent.contentID,user_id:user.loggedin_user_id}).then((response)=>{
+          if(typeof(response)!=='undefined')
+          if(typeof(response.like_list)!=='undefined')
           if(response.like_list.length>0){
             setlistlike(true)
           }else{
@@ -70,7 +77,7 @@ function ContentMiddleNoLoad(props){
     {/* <h1>{props.propSent.contentType==='lists'?content.currentList:content.currentTag}</h1> */}
     <Grid>
         <Grid.Column floated='left' width={6}>
-        <h1>{props.title}</h1>
+        <h1>{props.propSent.contentType==='lists'?"List":"Tag"} : {props.title}</h1>
         </Grid.Column>
         <Grid.Column floated='right' width={6}>
           {
@@ -84,15 +91,15 @@ function ContentMiddleNoLoad(props){
     <MetaTags>
       <meta property="og:type" content="website"/>
       <meta property="og:url" content={shareUrl}/>
-      <meta property="og:title" content={props.propSent.contentType==='tags'?content.currentTag:content.currentList}/>
-      <meta property="og:description" content={props.propSent.contentType==='lists'?props.propSent.description:"A place for all your curations!"}/>
+      <meta property="og:title" content={props.propSent.contentType==='tags'?content.currentTag:props.title}/>
+      <meta property="og:description" content={props.propSent.contentType==='lists'?props.desc:"A place for all your curations!"}/>
       <meta property="og:image" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
 
       {/* <!-- Twitter --/> */}
       <meta property="twitter:card" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
       <meta property="twitter:url" content={shareUrl}/>
-      <meta property="twitter:title" content={props.propSent.contentType==='tags'?content.currentTag:content.currentList}/>
-      <meta property="twitter:description" content={props.propSent.contentType==='lists'?props.propSent.description:"A place for all your curations!"}/>
+      <meta property="twitter:title" content={props.propSent.contentType==='tags'?content.currentTag:props.title}/>
+      <meta property="twitter:description" content={props.propSent.contentType==='lists'?props.desc:"A place for all your curations!"}/>
       <meta property="twitter:image" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
     </MetaTags>
     <Menu pointing secondary>
@@ -205,21 +212,21 @@ function ContentMiddleNoLoad(props){
           <Modal.Header>Share on Social Media</Modal.Header>
           <Modal.Content >
             <div>
-            <FacebookShareButton url={shareUrl} quote={props.propSent.description}>
+            <FacebookShareButton url={shareUrl} quote={props.desc}>
               <FacebookIcon size={32} round />
             </FacebookShareButton>
             {/* </div>
             <div> */}
             <TwitterShareButton
               url={shareUrl}
-              title={props.propSent.description}>
+              title={props.desc}>
               <TwitterIcon size={32} round />
             </TwitterShareButton>
             {/* </div>
             <div> */}
             <WhatsappShareButton
               url={shareUrl}
-              title={props.propSent.description}
+              title={props.desc}
               separator=":: "
               className="Demo__some-network__share-button"
             >
