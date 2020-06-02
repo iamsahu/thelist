@@ -96,11 +96,11 @@ function ContentMiddleNoLoad(props){
       <meta property="og:image" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
 
       {/* <!-- Twitter --/> */}
-      <meta property="twitter:card" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
-      <meta property="twitter:url" content={shareUrl}/>
-      <meta property="twitter:title" content={props.propSent.contentType==='tags'?content.currentTag:props.title}/>
-      <meta property="twitter:description" content={props.propSent.contentType==='lists'?props.desc:"A place for all your curations!"}/>
-      <meta property="twitter:image" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
+      <meta name="twitter:card" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
+      <meta name="twitter:url" content={shareUrl}/>
+      <meta name="twitter:title" content={props.propSent.contentType==='tags'?content.currentTag:props.title}/>
+      <meta name="twitter:description" content={props.propSent.contentType==='lists'?props.desc:"A place for all your curations!"}/>
+      <meta name="twitter:image" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
     </MetaTags>
     <Menu pointing secondary>
       <Menu.Item
