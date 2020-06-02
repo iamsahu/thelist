@@ -167,6 +167,7 @@ function ContentCard(postdata){
 
     if(liked===-1){
         // console.log(postdata)
+        if(typeof(postdata.postdata)!=='undefined')
         if(postdata.postdata['like_items'].length>0){
             setLiked(true)
         }else{

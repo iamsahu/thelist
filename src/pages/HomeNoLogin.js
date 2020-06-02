@@ -21,7 +21,7 @@ function HomeNoLogin(){
             />
             <Header
                 as='h2'
-                content='Curate. Share. Discover.'                
+                content='Save any content in one place!'                
                 style={{
                 fontSize:  '1.7em',
                 fontWeight: 'normal',

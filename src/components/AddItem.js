@@ -11,6 +11,8 @@ import Tap from 'react-interactions'
 import Reward from "react-rewards"
 import ReactGA from 'react-ga';
 import Mixpanel from '../util/mix'
+import useClippy from 'use-clippy';
+
 
 function validURL(str) {
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
@@ -29,6 +31,7 @@ function isValidURL(string) {
 
 function AddItem(){
     const [content,contentChange] = useContext(ContentContext)
+    const [clipboard, setClipboard] = useClippy();
     const user = useContext(UserContext)
     const [multiTag,SetMultiTag] = useState([])
     const [showModal,SetModal] = useState(false)
@@ -223,15 +226,25 @@ function AddItem(){
         setErrorName(false)
         SetModal(false)
     }
+
+    function onClick(event){
+        console.log(clipboard)
+        if(clipboard!==''){
+            
+
+            if(isValidURL(clipboard)){
+                alert({clipboard})
+            }
+        }
+        SetModal(true)
+        SetDropTag(content.tags)
+        SetDropList(content.lists)
+    }
     
     return(
         <>
         <Reward ref={(ref) => { setreward(ref) }} type='confetti'>
-        <Modal size='small' open={showModal} closeOnDimmerClick={false} onClose={OnClose} closeIcon trigger={<Button  floated='right' onClick={()=>{
-            SetModal(true)
-            SetDropTag(content.tags)
-            SetDropList(content.lists)
-            }}>
+        <Modal size='small' open={showModal} closeOnDimmerClick={false} onClose={OnClose} closeIcon trigger={<Button  floated='right' onClick={onClick}>
             <Tap scale fade waves />Add Item</Button>
             } >
             <Modal.Header>

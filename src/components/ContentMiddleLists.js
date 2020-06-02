@@ -26,8 +26,8 @@ import ReactGA from 'react-ga';
 import Mixpanel from '../util/mix'
 import Tap from 'react-interactions'
 
-function ContentMiddleNoLoad(props){
-  // console.log(props)
+function ContentMiddleLists(props){
+  console.log(props)
   // console.log(process.env)
   // console.log(process.env.REACT_APP_BASE_URL)
   const [content] = useContext(ContentContext)
@@ -51,6 +51,7 @@ function ContentMiddleNoLoad(props){
     if(user.loggedin_user_id!==''){
       // if(listlike===1){
         DoILike({list_id:props.propSent.contentID,user_id:user.loggedin_user_id}).then((response)=>{
+          if(typeof(response)!=='undefined')
           if(response.like_list.length>0){
             setlistlike(true)
           }else{
@@ -130,40 +131,38 @@ function ContentMiddleNoLoad(props){
         <div className='icobutton'>
         {
           (listlike)?
-          ((content.contentType==='lists')?(<Button icon  floated='right' onClick={(e)=>{
-            Mixpanel.track('Appreciate List',{"link":{shareUrl},"curator":props.propSent.curator_id,"name":content.currentList})
-            ReactGA.event({
-                category: 'List',
-                action: 'Like',
-                transport: 'beacon'
-            });
-            setlistlike(false)
-            // console.log('unlike')
-            UnlikeList(props.propSent.contentID,user.loggedin_user_id)
-            }}>
-            <Icon color='red' name='like' />
-            {/* <Tap waves /> */}
-          </Button>):(
-            <></>
-          )
+          (
+            <Button icon  floated='right' onClick={(e)=>{
+              Mixpanel.track('Appreciate List',{"link":{shareUrl},"curator":props.propSent.curator_id,"name":content.currentList})
+              ReactGA.event({
+                  category: 'List',
+                  action: 'Like',
+                  transport: 'beacon'
+              });
+              setlistlike(false)
+              // console.log('unlike')
+              UnlikeList(props.propSent.contentID,user.loggedin_user_id)
+              }}>
+              <Icon color='red' name='like' />
+              {/* <Tap waves /> */}
+            </Button>
           ):(
-            (content.contentType==='lists')?(
-              <Button icon floated='right' onClick={(e)=>{
-                Mixpanel.track('Appreciate List',{"link":{shareUrl},"curator":props.propSent.curator_id,"name":content.currentList})
-                ReactGA.event({
-                    category: 'List',
-                    action: 'Unlike',
-                    transport: 'beacon'
-                });
-                setlistlike(true)
-                LikeList(props.propSent.contentID,user.loggedin_user_id)
-                // console.log('unlike')
-                }}>
-                <Icon name='like' />
-                {/* <Tap waves /> */}
+            <Button icon floated='right' onClick={(e)=>{
+              Mixpanel.track('Appreciate List',{"link":{shareUrl},"curator":props.propSent.curator_id,"name":content.currentList})
+              ReactGA.event({
+                  category: 'List',
+                  action: 'Unlike',
+                  transport: 'beacon'
+              });
+              setlistlike(true)
+              LikeList(props.propSent.contentID,user.loggedin_user_id)
+              // console.log('unlike')
+              }}>
+              <Icon name='like' />
+              {/* <Tap waves /> */}
               </Button>
-            ):(<></>)
           )
+          
           // (props.propSent.contentType==='lists')&&(
           //   (listlike)?
           //   (<Button icon  floated='right' onClick={(e)=>{
@@ -266,4 +265,4 @@ function ContentMiddleNoLoad(props){
   )
 }
 
-export default ContentMiddleNoLoad;
+export default ContentMiddleLists;

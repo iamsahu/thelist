@@ -3,6 +3,7 @@ import React,{useContext,useState, useEffect} from 'react';
 import {Grid} from 'semantic-ui-react';
 
 import ContentMiddleNoLoad from '../components/ContentMiddle_NoLoad'
+import ContentMiddleLists from '../components/ContentMiddleLists'
 import ContentRight from '../components/ContentRight'
 import CurationList from '../components/CurationList'
 
@@ -72,7 +73,7 @@ function Curator(props){
           }).catch((error)=>console.log(error))
           ):
           (GetList({userid:propSent.curator_id,listid:propSent.contentID}).then((data)=>{
-            console.log(data)
+            // console.log(data)
             setPosts(data.items)
             setloadState(1)
             if(typeof(data)!=='undefined'){
@@ -134,7 +135,12 @@ function Curator(props){
                     <CurationList curator_id={user.curator_id} contentType={propSent.contentType}/>
                 </Grid.Column>
                 <Grid.Column width={9}>
-                    <ContentMiddleNoLoad propSent={propSent} posts={posts} title={header}/>
+                  {/* {
+                    content.contentType==='lists'?
+                    <ContentMiddleLists propSent={propSent} posts={posts} title={header}/>:
+                  } */}
+                  <ContentMiddleNoLoad propSent={propSent} posts={posts} title={header}/>
+                    
                 </Grid.Column>
                 <Grid.Column width={4}>
                     <ContentRight curator_id={user.curator_id} propSent={propSent}/>
