@@ -71,18 +71,11 @@ function CurationReasonCard(props){
     });
 
     function createPostCallback(){
-        // console.log(values)
-        // // console.log(user.loggedin_user_id)
-        // console.log(id)
-        setDescription(values.description)
         modifyList()
         SetModal(false)
     }
-    // function onChange(event,value){
 
-    // }
     function OnClose(){
-        // values.description=''
         SetModal(false)
     }
 

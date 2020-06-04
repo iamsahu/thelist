@@ -871,21 +871,38 @@ const DELETE_ITEM = gql`
         }
         delete_items(where: {id: {_eq: $id}}) {
             returning {
-            appreciation_count
-            bookmarks_count
-            copy_count
-            created_at
-            curator
-            description
-            id
-            link
-            list_id
-            name
-            share_count
-            view_count
+                auto_description
+                auto_image
+                appreciation_count
+                copy_count
+                bookmarks_count
+                curator
+                description
+                id
+                link
+                list_id
+                name
                 user {
                     id
                 }
+                share_count
+                view_count
+                list {
+                    description
+                    list_name
+                    like_lists_aggregate {
+                        aggregate {
+                        count
+                        }
+                    }
+                }
+                like_items_aggregate {
+                    aggregate {
+                        count
+                    }
+                }
+
+            
             }
             affected_rows
         }
@@ -896,7 +913,7 @@ const DeleteItem = (id)=>{
     // console.log(id)
     // return "0"
     
-    var q;
+    var q,q2;
     if(id.contentType==='lists'){
         if(id.contentID===''){
             q=[
@@ -907,6 +924,12 @@ const DeleteItem = (id)=>{
                     }
                 }
             ]
+            q2={
+                query:GET_ITEMS_USER,
+                variables:{
+                    userid:id.curator
+                }
+            }
         }else{
             console.log('This one')
             q = [
@@ -918,6 +941,13 @@ const DeleteItem = (id)=>{
                     }
                 }
             ]
+            q2={
+                query:GET_LIST,
+                variables:{
+                    userid:id.curator,
+                    listid:id.contentID
+                }
+            }
         }
     }else{
         if(id.contentID===''){
@@ -929,6 +959,12 @@ const DeleteItem = (id)=>{
                     }
                 }
             ]
+            q2={
+                query:GET_ITEMS_USER,
+                variables:{
+                    userid:id.curator
+                }
+            }
         }else{
             q=[
                 {       
@@ -939,6 +975,13 @@ const DeleteItem = (id)=>{
                     }
                 }
             ]
+            q2={       
+                query:GTI,
+                variables:{
+                    id:id.contentID,
+                    user_id:id.curator
+                }
+            }
         }
     }
 
@@ -946,7 +989,27 @@ const DeleteItem = (id)=>{
         mutation:DELETE_ITEM,
         variables:{
             id:id.id
-        },refetchQueries:q
+        },
+        update:(cache,{data})=>{
+            const existingItems = cache.readQuery(q2);
+            // console.log(existingItems)
+            // console.log(data.delete_items.returning[0])
+            var id = data.delete_items.returning[0].id
+            existingItems.items = existingItems.items.filter(
+                function(e){
+                    return e.id!==id
+                }
+            )
+            // console.log(existingItems)
+            q2['data'] = existingItems
+            // console.log(q2)
+            //Don't know why this is not needed
+            // cache.writeQuery({
+            //     q2
+            // })
+        },
+
+        refetchQueries:q
     }).then((response)=>response.data).catch((error)=>console.log(error))
 }
 
