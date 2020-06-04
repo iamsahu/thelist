@@ -1159,6 +1159,31 @@ const DoILike=(values)=>{
     .catch((error)=>{console.log(error)})
 }
 
+export const CHANGE_LIST_DESCRIPTION=gql`
+    mutation MyMutation($id:uuid,$description:String) {
+        update_lists(where: {id: {_eq: $id}}, _set: {description: $description}) {
+            affected_rows
+            returning {
+                id
+                description
+                list_name
+                curator_id
+            }
+        }
+    }
+`
+
+const ChangeListDescription=(id,description)=>{
+    return client.mutate({
+        mutation:CHANGE_LIST_DESCRIPTION,
+        variables:{
+            id:id,
+            description:description
+        }
+    })
+}
+
 export {createItem,GetList,GetListDescription,GetItemsofTag,
         GetItemsUsers,GetTagsListsUsers,DoesUserExists,InsertUser,
-        Search,GetAllLists,GetAllTags,GetAllUsers,DeleteItem,LikeList,UnlikeList,LikeItem,UnlikeItem,GetTagItems,DoILike};
+        Search,GetAllLists,GetAllTags,GetAllUsers,DeleteItem,LikeList,UnlikeList,LikeItem,UnlikeItem,GetTagItems,DoILike,
+        ChangeListDescription};

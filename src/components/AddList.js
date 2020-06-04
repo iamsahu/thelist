@@ -39,7 +39,7 @@ function AddList(){
         values.list_name='';
         // // values.curator='';
         values.description='';
-        contentChange(content=>({...content,currentList:newItem.list_name,currentListID:newItem.id}))
+        // contentChange(content=>({...content,currentList:newItem.list_name,currentListID:newItem.id}))
         // contentChange({currentList:newItem.list_name,tags:content.tags,lists:content.lists})
         // console.log(content)
     };
@@ -73,9 +73,6 @@ function AddList(){
         <Modal open={showModal} closeOnDimmerClick={false} onClose={OnClose} closeIcon trigger={<div className='icobutton'><Button onClick={()=>SetModal(true)}>Add List</Button></div>} >
             <Modal.Header>
                 Add List
-                {/* <Button right >
-                    Close
-                </Button> */}
             </Modal.Header>
             <Modal.Content image scrolling>
                 <Form onSubmit={onSubmit}>

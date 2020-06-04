@@ -49,9 +49,9 @@ function ContentMiddleNoLoad(props){
 
   if(props.propSent.contentType==='lists'){
     if(description===''){
-      console.log(props.propSent.description)
+      // console.log(props.propSent.description)
       if(props.propSent.description!==undefined)
-      setdescription(props.propSent.description)
+        setdescription(props.propSent.description)
     }
     if(user.loggedin_user_id!==''){
       // if(listlike===1){

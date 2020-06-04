@@ -174,7 +174,7 @@ function ContentCard(postdata){
             setLiked(false)
         }
     }
-    var postName = (postdata.postdata.name).substring(0,80)
+    var postName = (postdata.postdata.name).substring(0,70)
     return(
         <>
         {/* <MixpanelConsumer>
