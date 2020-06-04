@@ -95,6 +95,12 @@ function ContentMiddleNoLoad(props){
       <meta property="og:description" content={props.propSent.contentType==='lists'?props.desc:"A place for all your curations!"}/>
       <meta property="og:image" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
 
+      <meta name="og:type" content="website"/>
+      <meta name="og:url" content={shareUrl}/>
+      <meta name="og:title" content={props.propSent.contentType==='tags'?content.currentTag:props.title}/>
+      <meta name="og:description" content={props.propSent.contentType==='lists'?props.desc:"A place for all your curations!"}/>
+      <meta name="og:image" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
+
       {/* <!-- Twitter --/> */}
       <meta name="twitter:card" content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}/>
       <meta name="twitter:url" content={shareUrl}/>

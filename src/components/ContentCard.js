@@ -174,7 +174,7 @@ function ContentCard(postdata){
             setLiked(false)
         }
     }
-
+    var postName = (postdata.postdata.name).substring(0,80)
     return(
         <>
         {/* <MixpanelConsumer>
@@ -182,7 +182,7 @@ function ContentCard(postdata){
         <Item>
             <Item.Image size='tiny' src={(postdata.postdata.auto_image!=='none')?postdata.postdata.auto_image:thumbImage}/>
             <Item.Content>
-                <Item.Header as='a' target='_blank' href={postdata.postdata.link} >{postdata.postdata.name}</Item.Header>
+                <Item.Header as='a' target='_blank' href={postdata.postdata.link} >{postName}</Item.Header>
                 {isAuthenticated&&(postdata.postdata.user.id===userC.loggedin_user_id)&&(
                     <Button icon floated='right' onClick={(e)=>{
                         deleteitem(postdata.postdata.id)

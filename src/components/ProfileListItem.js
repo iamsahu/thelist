@@ -10,7 +10,7 @@ function ProfileListItem(props){
                 <Item.Header as='a' href={`${process.env.REACT_APP_BASE_URL}/${props.id}`}>{props.username}</Item.Header>
                 <Item.Description>{props.description}</Item.Description>
             </Item.Content>
-            <Item.Extra position='right' floated='right'>
+            {/* <Item.Extra position='right' floated='right'>
                 <Statistic.Group size='mini'>
                     <Statistic>
                         <Statistic.Value>22</Statistic.Value>
@@ -25,7 +25,7 @@ function ProfileListItem(props){
                         <Statistic.Label>Members</Statistic.Label>
                     </Statistic>
                 </Statistic.Group>
-            </Item.Extra>
+            </Item.Extra> */}
         </Item>
         {/* <List.Item key={props.id}>
             <Image avatar src={props.image_link} />

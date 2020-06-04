@@ -138,7 +138,7 @@ function AddItem(){
             setErrorLink(true)
             errors=true
         }else{
-            if(isValidURL(values.link)){
+            if(isValidURL(values.link)||validURL(values.link)){
                 setErrorLink(false)
             }else{
                 setErrorLink(true)
@@ -285,28 +285,28 @@ function AddItem(){
             <Modal.Content image scrolling>
                 <Form onSubmit={onSubmit} size='large' >
                     <Form.Group widths='equal'>
-                    <Form.Field inline name="name">
-                        <label>Title for item</label>
-                        <Form.Input 
-                            name='name'
-                            placeholder='name' 
-                            onChange={onChange}
-                            value={values.name}
-                            error={errorName?"Please Enter Name":false}
-                            
-                        />
-                    </Form.Field>
-                    <Form.Field inline name="link">
-                        <label>Link of the item</label>
-                        <Form.Input 
-                            name='link'
-                            placeholder='Link' 
-                            onChange={onChange}
-                            value={values.link}
-                            error={errorLink?"Please add a link":false}
-                            
-                        />
-                    </Form.Field>
+                        <Form.Field inline name="name">
+                            <label>Title for item</label>
+                            <Form.Input 
+                                name='name'
+                                placeholder='name' 
+                                onChange={onChange}
+                                value={values.name}
+                                error={errorName?"Please Enter Name":false}
+                                
+                            />
+                        </Form.Field>
+                        <Form.Field inline name="link">
+                            <label>Link of the item</label>
+                            <Form.Input 
+                                name='link'
+                                placeholder='Link' 
+                                onChange={onChange}
+                                value={values.link}
+                                error={errorLink?"Please add a link":false}
+                                
+                            />
+                        </Form.Field>
                     </Form.Group>
                     <Form.Field inline name="description">
                         {/* <label>Description</label> */}
