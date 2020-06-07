@@ -91,6 +91,15 @@
   height: 100vh;
 }
 
+.scrollEntry{
+  /* width: 0 !important; */
+  overflow: auto;
+  height: 100vh;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .overflow-auto::-webkit-scrollbar,
 .overflow-y-auto::-webkit-scrollbar,
 .overflow-x-auto::-webkit-scrollbar {

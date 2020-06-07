@@ -17,6 +17,7 @@ import HomeNoLogin from './pages/HomeNoLogin'
 import Curator from './pages/Curator'
 import Curator2 from './pages/Curator2'
 import SearchResults from './pages/SearchResults'
+import DataEntry from './pages/DataEntry'
 // import SignUpComplete from './pages/SignUpComplete'
 // import ListDisplay from './pages/ListDisplay'
 // import TagDisplay from './pages/TagDisplay'
@@ -123,6 +124,7 @@ function App() {
               <div className="novscroll">
               <Container style={{ marginTop: '3em',height: '85vh' }} fluid>
                 <Switch>
+                  <Route exact path='/dataentry' component={DataEntry}/>
                   <Route exact path='/explore' component={Home2}/>
                   <Route exact path='/search' component={SearchResults}/>
                   <Route exact path='/:user/:contenttype/:contentid' component={Curator2}/>

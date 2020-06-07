@@ -3,7 +3,7 @@ import { client } from '../ApolloProvider';
 import gql from 'graphql-tag'
 import UserContext from '../context/UserContext';
 import ContentContext from '../context/ContentContext';
-import {FETCH_FEED_ITEMS} from './graphql' 
+import {FETCH_FEED_ITEMS,COMBINED_FETCH} from './graphql' 
 
 const tagTemplate ={
     posts_tags: {
@@ -213,7 +213,7 @@ function InsertItem(link,name,description,curator_id,list_id,contentType,current
                 }
             ]
         }
-    }else{
+    }else if(contentType==='tags'){
         if(currentTagID===''){
             q =[
                 {
@@ -234,6 +234,17 @@ function InsertItem(link,name,description,curator_id,list_id,contentType,current
                 }
             ]
         }
+    }else{
+        return client.mutate({
+            mutation:INSERT_ITEM,
+            variables:{
+                link:link,
+                name:name,
+                description:description,
+                curator:curator_id,
+                list_id:list_id
+            },
+        }).catch((error)=>{console.log(error)})
     }
 
     return client.mutate({
@@ -718,21 +729,21 @@ const GetItemsUsers=(values)=>{
     .then((response)=>response.data).catch((error)=>{console.log(error)})
 }
 
-const COMBINED_FETCH = gql`
-    query  ($user_id:String!){
-        lists(where: {curator_id: {_eq: $user_id}}) {
-            list_name
-            id
-            description
-            curator_id
-        }
-        tag(where: {user_id: {_eq: $user_id}}) {
-            id
-            name
-            user_id
-        }
-    }
-`
+// const COMBINED_FETCH = gql`
+//     query  ($user_id:String!){
+//         lists(where: {curator_id: {_eq: $user_id}}) {
+//             list_name
+//             id
+//             description
+//             curator_id
+//         }
+//         tag(where: {user_id: {_eq: $user_id}}) {
+//             id
+//             name
+//             user_id
+//         }
+//     }
+// `
 
 
 
