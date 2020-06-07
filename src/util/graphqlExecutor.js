@@ -757,7 +757,20 @@ const GetTagsListsUsers = (values)=>{
     }).then((response)=>response.data).catch((error)=>console.log(error))
 }
 
-const GET_USER = gql`
+export const MODIFY_USER=gql`
+    mutation MyMutation($user_id:String,$description:String) {
+        update_user(where: {id: {_eq: $user_id}}, _set: {description: $description}) {
+            returning {
+                id
+                description
+                image_link
+                username
+            }
+        }
+  }
+`
+
+export const GET_USER = gql`
     query MyQuery ($user_id:String){
         user(where: {id: {_eq: $user_id}}) {
             id

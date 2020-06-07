@@ -1,5 +1,5 @@
 import React,{useState,useContext,useEffect} from 'react'
-import {Item,Button,Icon,Placeholder} from 'semantic-ui-react'
+import {Item,Button,Icon,Placeholder,Popup} from 'semantic-ui-react'
 import { useAuth0 } from '../react-auth0-spa'
 import {FETCH_FEED_ITEMS,INSERT_TAG,DELETE_ITEM} from '../util/graphql';
 import {useMutation} from '@apollo/react-hooks';
@@ -18,7 +18,7 @@ import {client} from '../ApolloProvider'
 import gql from 'graphql-tag'
 import ContentContext from '../context/ContentContext';
 import { useQuery } from "@apollo/react-hooks";
-
+import Linkify from 'react-linkify';
 // const LIKE_ITEM=gql`
 //     mutation MyMutation ($item_id:uuid!,$user_id:String!){
 //         insert_like_item(objects: {item_id: $item_id, user_id: $user_id}) {
@@ -314,11 +314,21 @@ function ContentCard(postdata){
                     
                 }
                 {/* </Reward> */}
-                <Item.Description>
-                <p>
-                    {postdata.postdata.description!==""?postdata.postdata.description:(postdata.postdata.auto_description==='none')?"":((postdata.postdata.auto_description).substring(0,336))}
-                </p>
+                <Popup
+                trigger={
+                    <Item.Description>
+                        <Linkify>
+                        <p>
+                            {postdata.postdata.description!==""?postdata.postdata.description:(postdata.postdata.auto_description==='none')?"":((postdata.postdata.auto_description).substring(0,336))}
+                        </p>
+                        </Linkify>
                 </Item.Description>
+                }
+                mouseEnterDelay={500}
+                content={postdata.postdata.description!==""?postdata.postdata.description:(postdata.postdata.auto_description==='none')?"":((postdata.postdata.auto_description))}
+                hideOnScroll
+                />
+                
             </Item.Content>
         </Item>
         {/* }

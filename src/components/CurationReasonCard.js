@@ -62,12 +62,7 @@ function CurationReasonCard(props){
         onError:(error)=>{
             console.log(error)
         }
-        // ,refetchQueries:[{
-        //     query:GET_LIST_DESCRIPTION,
-        //     variables:{
-        //         listid:id
-        //     }
-        // }]
+        
     });
 
     function createPostCallback(){
