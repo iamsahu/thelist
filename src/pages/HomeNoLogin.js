@@ -19,11 +19,20 @@ function HomeNoLogin(){
                 marginTop:  '1em',
                 }}
             />
+            {/* <Header
+                as='h4'
+                content='The coolest curations on the internet!'                
+                style={{
+                
+                marginBottom: 0,
+                marginTop:  '1em',
+                }}
+            /> */}
             <Header
-                as='h2'
+                as='h1'
                 content='Save any content in one place!'                
                 style={{
-                fontSize:  '1.7em',
+                fontSize:  '3em',
                 fontWeight: 'normal',
                 marginTop:  '1.5em',
                 }}

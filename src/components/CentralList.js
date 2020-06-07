@@ -30,6 +30,11 @@ function CentralList(props){
         
         // console.log(temp)
     }
+    else if(props.contentType==='bookmark'){
+        // console.log('Bookmark central list')
+        temp = props.posts.map(item=>item.item)
+        // console.log(temp)
+    }
     else
         temp=props.posts
 

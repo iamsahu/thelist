@@ -4,7 +4,7 @@ import ContentContext from '../context/ContentContext';
 import UserContext from '../context/UserContext';
 import {useQuery} from '@apollo/react-hooks'
 import {COMBINED_FETCH} from '../util/graphql'
-import {GetTagsListsUsers} from '../util/graphqlExecutor'
+import {GetTagsListsUsers,GetBookmarksOfUser} from '../util/graphqlExecutor'
 import { Link } from 'react-router-dom';
 import {MixpanelConsumer } from 'react-mixpanel';
 import ReactGA from 'react-ga';
@@ -72,6 +72,14 @@ function CurationList(props){
         // console.log(user.curator_id)
         GetTagsListsUsers({curator_id:user.curator_id})
         .then((data)=>{
+        })
+    }
+
+    const loadBookmarks = ()=>{
+        GetBookmarksOfUser(props.curator_id).then((data)=>{
+
+        }).catch((error)=>{
+            console.log(error)
         })
     }
     
@@ -175,6 +183,48 @@ function CurationList(props){
         )
     }
 
+    function RenderBookmarks(){
+        return(
+            // <div className="scrolly">
+            <List animated verticalAlign='middle'>
+                
+                {
+                    (typeof(tagData['data'])!=='undefined')?
+                    (lists = tagData['data']['item_bookmark'],
+                    (lists.length>0)?
+                    lists && lists.map(post=>(
+                        <List.Item key={post.id}>
+                            {/* <MixpanelConsumer>
+                        {mixpanel=> */}
+                            <List.Content onClick={(e)=>{
+                                contentChange(content=>({...content,currentList:post.list_name,currentListID:post.id,currentTagID:'',contentType:'bookmark'}))
+                                Mixpanel.track("Bookmark Click",{"bookmark":post.list_name,"listID":post.id})
+                                ReactGA.event({
+                                    category: 'Bookmark',
+                                    action: 'Click',
+                                    // value:post.list_name,
+                                    transport: 'beacon'
+                                });
+                                }}>
+                                    <Link to={`/${user.curator_id}/bookmark/${post.curator}`}>{post.user.username}</Link>
+                            </List.Content>
+                         {/* }
+                             </MixpanelConsumer> */}
+                        </List.Item>
+                    )):(
+                        <div>
+                            You have not created any Bookmarks. Explore your fellow curator's feed and bookmark something that you like
+                        </div>
+                    )
+                    
+                    ):(<div>No data</div>)
+                }
+                
+            </List>
+            // </div>
+        )
+    }
+
     return(
         <>
         {            
@@ -185,7 +235,7 @@ function CurationList(props){
                 <Tab menu={{ secondary: true, pointing: true }} panes={[
                     {menuItem: 'Lists',render: () => <Tab.Pane>{RenderLists()} </Tab.Pane>},
                     {menuItem: 'Tags', render: () => <Tab.Pane>{RenderTags()}</Tab.Pane> },
-                    { menuItem: 'Bookmarks', render: () => <Tab.Pane loading> Bookmarks</Tab.Pane> },
+                { menuItem: 'Bookmarks', render: () => <Tab.Pane> {RenderBookmarks()}</Tab.Pane> },
                 ]}/>
             )
         }

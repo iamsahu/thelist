@@ -109,6 +109,14 @@ export const COMBINED_FETCH = gql`
             name
             user_id
         }
+        item_bookmark(where: {user_id: {_eq: $user_id}}, order_by: {created_at: desc_nulls_last}) {
+            curator
+            id
+            user {
+                id
+                username
+            }
+        }
     }
 `
 

@@ -23,6 +23,24 @@ const ALL_TAGS=gql`
     }
 `
 
+function GetDetails(link,signal){
+    var data = {key: 'c167314d71c0ad6e8af2da5aea93779f', q: link}
+    console.log(data)
+    // return fetch('https://api.linkpreview.net', {
+    //   method: 'POST',
+    //   mode: 'cors',
+    //   body: JSON.stringify(data),
+    // })
+
+    return fetch('https://api.linkpreview.net', {
+        method: 'POST',
+        signal: signal,
+        mode: 'cors',
+        body: JSON.stringify(data),
+    })
+    
+}
+
 function validURL(str) {
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
       '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
@@ -37,6 +55,10 @@ function isValidURL(string) {
     var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
     return (res !== null)
   };
+
+let controller;
+controller = new AbortController();
+const signal = controller.signal;
 
 function AddItem(){
     const [content,contentChange] = useContext(ContentContext)
@@ -68,6 +90,9 @@ function AddItem(){
         curator:user.loggedin_user_id
     })
 
+
+    
+
     // const { loading, error, data } = useQuery(ALL_TAGS,{ fetchPolicy: "network-only" })
 
     // if(!loading){
@@ -78,19 +103,6 @@ function AddItem(){
     //         value:post.id}))
     //     console.log(tempArr)
     // }
-
-    function MultiTagMutation(taged_data){
-        const [createTag,{errorTag}] = useMutation(INSERT_TAG_MULTI,{
-            variables:taged_data,
-            onError:(error,variables)=>{
-                console.log(error)
-                console.log(multiTag)
-                console.log(variables)
-            }
-        });
-        // console.log("Multitagmutation")
-        createTag();
-    }
 
     const updateCache = (cache, {data}) => {
         // Fetch the items from the cache
@@ -271,7 +283,19 @@ function AddItem(){
         SetDropList(content.lists)
     }
 
-    
+    function linkCheck(event,{value}){
+        // if(isValidURL(value)||validURL(value)){
+            //TODO Realtime fetch and display
+            // controller.abort()
+            // GetDetails(value,signal).then(function(response) {
+            //     return response.text();
+            //   }).then(function(data) {
+            //     console.log(data); // this will be a string
+            //     values.name=data['title']
+            //     values.description=data['description']
+            //   });
+        // }
+    }
     
     return(
         <>
@@ -301,7 +325,9 @@ function AddItem(){
                             <Form.Input 
                                 name='link'
                                 placeholder='Link' 
-                                onChange={onChange}
+                                onChange={(e,{value})=>{
+                                    onChange(e)
+                                    linkCheck(e,{value})}}
                                 value={values.link}
                                 error={errorLink?"Please add a link":false}
                                 
@@ -313,7 +339,7 @@ function AddItem(){
                         <Form.TextArea 
                             label='Description'
                             name='description' 
-                            placeholder='Describe what your consumers should expect from this content'
+                            placeholder='Describe what your consumers should expect from this content. (If you are feeling lazy leave this upto us)'
                             style={{ minHeight: 100 }} 
                             onChange={onChange}
                             value={values.description}

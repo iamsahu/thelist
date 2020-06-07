@@ -10,7 +10,7 @@ import CurationList from '../components/CurationList'
 import UserContext from '../context/UserContext';
 import ContentContext from '../context/ContentContext'
 
-import {GetList,GetItemsUsers,GetItemsofTag,LikeList,UnlikeList,GetTagItems} from '../util/graphqlExecutor' 
+import {GetList,GetItemsUsers,GetTagItems,GetAllBookmarkItems,GetBookmarkItemsOfCurator} from '../util/graphqlExecutor' 
 
 function Curator(props){
     // console.log(props)
@@ -47,7 +47,14 @@ function Curator(props){
                     propSent = {curator_id:userid,contentType:props.match.params.contenttype,contentID:''}
                 else
                     propSent = {curator_id:userid,contentType:props.match.params.contenttype,contentID:props.match.params.contentid}
-            }else if(typeof(props.match.params.contentType)==='undefined'){
+            }else if(props.match.params.contenttype=="bookmark"){
+              content.contentType='bookmark'
+              content.currentListID = props.match.params.contentid
+              if(typeof(props.match.params.contentid)==='undefined')
+                propSent = {curator_id:userid,contentType:props.match.params.contenttype,contentID:''}
+              else
+                propSent = {curator_id:userid,contentType:props.match.params.contenttype,contentID:props.match.params.contentid}
+            } else if(typeof(props.match.params.contentType)==='undefined'){//This is the default loading case
                 propSent = {curator_id:userid,contentType:'lists',contentID:''}
             }
             
@@ -116,12 +123,37 @@ function Curator(props){
                     // setPosts(temp)
                 }
             }).catch((error)=>console.log(error))
-            
           )):
-          (console.log("Not a valid content"))
+          (
+            (propSent.contentType==='bookmark')?
+            ((propSent.contentID==="")?
+            (
+              GetAllBookmarkItems(propSent.curator_id).then((data)=>{
+                console.log(data.item_bookmark.item)
+              }).catch((error)=>{
+                console.log(error)
+              })
+            ):
+            (
+              GetBookmarkItemsOfCurator(propSent.curator_id,propSent.contentID).then((data)=>{
+                // console.log(data)
+                // setheader()
+                setPosts(data.item_bookmark)
+                if(typeof(data.item_bookmark)!=='undefined')
+                if(data.item_bookmark.length>0){
+                  // console.log(data.item_bookmark[0].item)
+                  setheader(data.item_bookmark[0].item.item_bookmarks[0].user.username)
+                }
+              }).catch((error)=>{
+                console.log(error)
+              })
+            )
+            ):
+            (console.log("Not a valid content"))
+          
+          )
         )
-      }
-    
+    }
     // useEffect(()=>{
     //     loadData2()
     // })

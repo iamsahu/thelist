@@ -546,6 +546,9 @@ export const GET_LIST = gql`
             like_items(where: {user_id: {_eq: $userid}}) {
                 user_id
             }
+            item_bookmarks(where: {user_id: {_eq: $userid}}) {
+                item_id
+            }
         }
         like_list(where: {list_id: {_eq: $listid}, user_id: {_eq: $userid}}) {
             list_id
@@ -629,6 +632,9 @@ const GET_ITEMS = gql`
             like_items(where: {user_id: {_eq: $user_id}}) {
                 user_id
             }
+            item_bookmarks(where: {user_id: {_eq: $user_id}}) {
+                item_id
+            }
         }
     }
 `
@@ -694,12 +700,15 @@ const GET_ITEMS_USER=gql`
                     count
                 }
             }
+            item_bookmarks(where: {user_id: {_eq: $user_id}}) {
+                item_id
+            }
         }
     }
 `
 
 const GetItemsUsers=(values)=>{
-    // console.log(values)
+    console.log(values)
     return client.query({
         query:GET_ITEMS_USER,
         variables:{
@@ -855,7 +864,6 @@ const GET_ALL_USERS=gql`
             username
         }
     }
-
 `
 
 const GetAllUsers=()=>{
@@ -1152,42 +1160,45 @@ const GTI=gql`
             id
             name
             item_tags {
-            item {
-                appreciation_count
-                auto_description
-                auto_image
-                bookmarks_count
-                copy_count
-                created_at
-                curator
-                description
-                id
-                link
-                list_id
-                name
-                share_count
-                view_count
-                user {
-                    id
-                }
-                list {
+                item {
+                    appreciation_count
+                    auto_description
+                    auto_image
+                    bookmarks_count
+                    copy_count
+                    created_at
+                    curator
                     description
-                    list_name
-                    like_lists_aggregate {
+                    id
+                    link
+                    list_id
+                    name
+                    share_count
+                    view_count
+                    user {
+                        id
+                    }
+                    list {
+                        description
+                        list_name
+                        like_lists_aggregate {
+                            aggregate {
+                                count
+                            }
+                        }
+                    }
+                    like_items_aggregate {
                         aggregate {
                             count
                         }
                     }
-                }
-                like_items_aggregate {
-                    aggregate {
-                        count
+                    like_items(where: {user_id: {_eq: $user_id}}) {
+                        user_id
+                    }
+                    item_bookmarks(where: {user_id: {_eq: $user_id}}) {
+                        item_id
                     }
                 }
-                like_items(where: {user_id: {_eq: $user_id}}) {
-                    user_id
-                }
-            }
             }
         }
     }
@@ -1246,7 +1257,187 @@ const ChangeListDescription=(id,description)=>{
     })
 }
 
+const INSERT_BOOKMARK=gql`
+    mutation MyMutation($curator:String,$item_id:uuid,$user_id:String,$list_id:uuid) {
+        insert_item_bookmark(objects: {curator: $curator, item_id: $item_id, user_id: $user_id, list_id:$list_id}) {
+            affected_rows
+            returning {
+                item_id
+                user_id
+                curator
+                id
+            }
+        }
+    }
+`
+
+const InsertBookmark=(item_id,user_id,curator,list_id)=>{
+    return client.mutate({
+        mutation:INSERT_BOOKMARK,
+        variables:{
+            item_id:item_id,
+            user_id:user_id,
+            curator:curator,
+            list_id:list_id
+        }
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
+const DELETE_BOOKMARK=gql`
+    mutation MyMutation($curator:String,$item_id:uuid,$user_id:String){
+        delete_item_bookmark(where: {item_id: {_eq: $item_id}, curator: {_eq: $curator}, user_id: {_eq: $user_id}}) {
+            affected_rows
+        }
+    }
+`
+
+
+const DeleteBookmark=(item_id,user_id,curator)=>{
+    return client.mutate({
+        mutation:DELETE_BOOKMARK,
+        variables:{
+            item_id:item_id,
+            user_id:user_id,
+            curator:curator
+        }
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
+const GETALL_BOOKMARK_ITEMS=gql`
+    query MyQuery($user_id:String) {
+        item_bookmark(where: {user_id: {_eq: $user_id}}) {
+            item {
+                auto_description
+                auto_image
+                appreciation_count
+                bookmarks_count
+                copy_count
+                created_at
+                curator
+                description
+                id
+                link
+                list_id
+                name
+                share_count
+                view_count
+                user {
+                    id
+                }
+                list {
+                    description
+                    list_name
+                    like_lists_aggregate {
+                        aggregate {
+                        count
+                        }
+                    }
+                }
+                like_items_aggregate {
+                    aggregate {
+                        count
+                    }
+                }
+                like_items(where: {user_id: {_eq: $user_id}}) {
+                        user_id
+                }
+            }
+        }
+    }
+`
+
+const GetAllBookmarkItems=(user_id)=>{
+    return client.query({
+        query:GETALL_BOOKMARK_ITEMS,
+        variables:{
+            user_id:user_id
+        }
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
+const GETBOOKMARKSOFCURATOR = gql`
+    query MyQuery($user_id:String,$curator:String) {
+        item_bookmark(where: {user_id: {_eq: $user_id}, curator: {_eq: $curator}}, order_by: {created_at: desc_nulls_last}) {
+            item {
+                auto_description
+                auto_image
+                appreciation_count
+                bookmarks_count
+                copy_count
+                created_at
+                curator
+                description
+                id
+                link
+                list_id
+                name
+                share_count
+                view_count
+                user {
+                    id
+                }
+                list {
+                    description
+                    list_name
+                    like_lists_aggregate {
+                            aggregate {
+                                count
+                            }
+                        }
+                }
+                like_items_aggregate {
+                    aggregate {
+                        count
+                    }
+                }
+                like_items(where: {user_id: {_eq: $user_id}}) {
+                    user_id
+                }
+                item_bookmarks(where: {user_id: {_eq: $user_id}}) {
+                    item_id
+                    user {
+                        username
+                    }
+                }                
+            }
+        }
+    }
+`
+
+const GetBookmarkItemsOfCurator=(user_id,curator)=>{
+    return client.query({
+        query:GETBOOKMARKSOFCURATOR,
+        variables:{
+            user_id:user_id,
+            curator:curator
+        }
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
+const BOOKMARKS=gql`
+    query MyQuery($user_id:String) {
+        item_bookmark(where: {user_id: {_eq: $user_id}}, order_by: {created_at: desc_nulls_last}) {
+            curator
+            id
+            user {
+                id
+                username
+            }
+        }
+    }
+`
+
+const GetBookmarksOfUser=(user_id)=>{
+    return client.query({
+        query:BOOKMARKS,
+        variables:{
+            user_id:user_id
+        }
+    }).then((response)=>response.data).catch((error)=>console.log(error))
+}
+
+
 export {createItem,GetList,GetListDescription,GetItemsofTag,
         GetItemsUsers,GetTagsListsUsers,DoesUserExists,InsertUser,
         Search,GetAllLists,GetAllTags,GetAllUsers,DeleteItem,LikeList,UnlikeList,LikeItem,UnlikeItem,GetTagItems,DoILike,
-        ChangeListDescription};
+        ChangeListDescription,InsertBookmark,DeleteBookmark,GetAllBookmarkItems,GetBookmarkItemsOfCurator,GetBookmarksOfUser};

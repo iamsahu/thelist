@@ -20,7 +20,7 @@ import CentralList from './CentralList'
 import AddItem from './AddItem'
 // import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
 import UserContext from '../context/UserContext';
-import {GetList,GetItemsUsers,GetItemsofTag,LikeList,UnlikeList,DoILike} from '../util/graphqlExecutor'
+import {LikeList,UnlikeList,DoILike} from '../util/graphqlExecutor'
 import MetaTags from 'react-meta-tags';
 import ReactGA from 'react-ga';
 import Mixpanel from '../util/mix'

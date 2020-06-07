@@ -7,7 +7,7 @@ function useForm (callback, initialState = {}) {
   function onChange  (event) {
     
     setValues({ ...values, [event.target.name]: event.target.value });
-    
+    // console.log(values)
   };
 
   function onSubmit  (event)  {

@@ -13,7 +13,7 @@ import Reward from "react-rewards"
 import {MixpanelConsumer } from 'react-mixpanel';
 import ReactGA from 'react-ga';
 import Mixpanel from '../util/mix'
-import {DeleteItem,LikeItem,UnlikeItem} from '../util/graphqlExecutor'
+import {DeleteItem,LikeItem,UnlikeItem,InsertBookmark,DeleteBookmark} from '../util/graphqlExecutor'
 import {client} from '../ApolloProvider'
 import gql from 'graphql-tag'
 import ContentContext from '../context/ContentContext';
@@ -92,6 +92,7 @@ function ContentCard(postdata){
     const [reward, setreward] = useState(null)
     const notify = () => toast("Link Copied!");
     const [liked, setLiked] = useState(-1)
+    const [bookmark, setbookmark] = useState(-1)
     // if(user){
     //     console.log(user['sub'])
     // }
@@ -174,6 +175,17 @@ function ContentCard(postdata){
             setLiked(false)
         }
     }
+
+    if(bookmark===-1){
+        if(typeof(postdata.postdata)!=='undefined'){
+            // console.log(postdata)
+            if(postdata.postdata['item_bookmarks'].length>0){
+                setbookmark(true)
+            }else{
+                setbookmark(false)
+            }
+        }
+    }
     var postName = (postdata.postdata.name).substring(0,70)
     return(
         <>
@@ -199,10 +211,39 @@ function ContentCard(postdata){
                         <Tap waves />
                     </Button>
                 )}
-                {/* <Button icon floated='right'>
-                    <Icon name='bookmark outline' />
-                    <Tap waves />
-                </Button> */}
+                {isAuthenticated&&(postdata.postdata.user.id!==userC.loggedin_user_id)&&(
+                    (bookmark)?
+                    (
+                        <Button icon floated='right' onClick={(e)=>{
+                            DeleteBookmark(postdata.postdata.id,userC.loggedin_user_id,postdata.postdata.user.id)
+                            setbookmark(false)
+                            Mixpanel.track('Bookmark Item',{"link":postdata.postdata.link,"curator":postdata.postdata.user.id,"name":postdata.postdata.name})
+                            ReactGA.event({
+                                category: 'Item',
+                                action: 'Bookmark',
+                                label:postdata.postdata.name,
+                                transport: 'beacon'
+                            });
+                        }}>
+                            <Icon color='red' name='bookmark outline' />
+                            <Tap waves />
+                        </Button>
+                    ):
+                    (<Button icon floated='right' onClick={(e)=>{
+                        InsertBookmark(postdata.postdata.id,userC.loggedin_user_id,postdata.postdata.user.id,postdata.postdata.list_id)
+                        setbookmark(true)
+                        Mixpanel.track('Bookmark Item',{"link":postdata.postdata.link,"curator":postdata.postdata.user.id,"name":postdata.postdata.name})
+                        ReactGA.event({
+                            category: 'Item',
+                            action: 'Bookmark',
+                            label:postdata.postdata.name,
+                            transport: 'beacon'
+                        });
+                    }}>
+                        <Icon name='bookmark outline' />
+                        <Tap waves />
+                    </Button>)
+                )}
                 <CopyToClipboard text={postdata.postdata.link} onCopy={(e)=>{
                     notify()
                     copyItem()
@@ -259,7 +300,6 @@ function ContentCard(postdata){
                 {
                     isAuthenticated&&(postdata.postdata.user.id===userC.loggedin_user_id)&&(
                         <Button icon floated='right' onClick={(e)=>{
-                            
                             Mixpanel.track('Edit Item',{"link":postdata.postdata.link,"curator":postdata.postdata.user.id,"name":postdata.postdata.name})
                             ReactGA.event({
                                 category: 'Item',

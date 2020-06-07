@@ -56,13 +56,13 @@ function ContentMiddleNoLoad(props){
     if(user.loggedin_user_id!==''){
       // if(listlike===1){
         DoILike({list_id:props.propSent.contentID,user_id:user.loggedin_user_id}).then((response)=>{
-          if(typeof(response)!=='undefined')
-          if(typeof(response.like_list)!=='undefined')
-          if(response.like_list.length>0){
-            setlistlike(true)
-          }else{
-            setlistlike(false)
-          }
+          // if(typeof(response)!=='undefined')
+          // if(typeof(response.like_list)!=='undefined')
+          // if(response.like_list.length>0){
+          //   setlistlike(true)
+          // }else{
+          //   setlistlike(false)
+          // }
         })
       // }
     }
@@ -77,7 +77,7 @@ function ContentMiddleNoLoad(props){
     {/* <h1>{props.propSent.contentType==='lists'?content.currentList:content.currentTag}</h1> */}
     <Grid>
         <Grid.Column floated='left' width={6}>
-        <h1>{props.propSent.contentType==='lists'?"List":"Tag"} : {props.title}</h1>
+        <h1>{props.propSent.contentType==='lists'?"List":(props.propSent.contentType==='tags'?"Tag":"Bookmark")} : {props.title}</h1>
         </Grid.Column>
         <Grid.Column floated='right' width={6}>
           {
