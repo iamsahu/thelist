@@ -22,20 +22,33 @@ function Curator(props) {
 	// console.log(props)
 
 	// const listid = props.match.params.listid
-	const user = useContext(UserContext);
+	const [userC, userChange] = useContext(UserContext);
 	const [content, contentChange] = useContext(ContentContext);
+	const [lastCurator, setlastCurator] = useState("");
 	var userid;
 	var propSent = {};
 
-	// console.log(props)
+	// console.log(props);
 	if (typeof props.user !== "undefined") {
-		user.curator_id = props.user;
+		// userC.curator_id = props.user;
+		if (userC.curator_id !== props.user) {
+			userChange((userC) => {
+				return { ...userC, curator_id: props.use };
+			});
+			setlastCurator(userid);
+		}
 		propSent = { curator_id: props.user, contentType: "lists", contentID: "" };
 	} else if (typeof props.match.params !== "undefined") {
 		// console.log("here undefined")
 		// console.log(props.match.params.contenttype)
 		userid = props.match.params.user;
-		user.curator_id = userid;
+		userC.curator_id = userid;
+		if (userC.curator_id !== userid) {
+			userChange((userC) => {
+				return { ...userC, curator_id: userid };
+			});
+			setlastCurator(userid);
+		}
 		if (props.match.params.contenttype === "lists") {
 			content.contentType = "lists";
 			content.currentListID = props.match.params.contentid;
@@ -214,7 +227,7 @@ function Curator(props) {
 					<Grid stackable columns={3}>
 						<Grid.Column width={3}>
 							<CurationList
-								curator_id={user.curator_id}
+								curator_id={userC.curator_id}
 								contentType={propSent.contentType}
 							/>
 						</Grid.Column>
@@ -231,7 +244,7 @@ function Curator(props) {
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<ContentRight curator_id={user.curator_id} propSent={propSent} />
+							<ContentRight curator_id={userC.curator_id} propSent={propSent} />
 						</Grid.Column>
 					</Grid>
 				</div>

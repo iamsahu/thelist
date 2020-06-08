@@ -18,26 +18,19 @@ import {
 import { UserProvider } from "./context/UserContext";
 import { ContentProvider } from "./context/ContentContext";
 import MenuBar from "./components/menu";
-import BottomBar from "./components/BottomBar";
 import AddList from "./components/AddList";
 import Home2 from "./pages/Home2";
-import Home from "./pages/Home";
 import HomeNoLogin from "./pages/HomeNoLogin";
-import Curator from "./pages/Curator";
 import Curator2 from "./pages/Curator2";
-import ExploreMobile from "./pages/ExploreMobile";
 import SearchResults from "./pages/SearchResults";
 import DataEntry from "./pages/DataEntry";
-// import SignUpComplete from './pages/SignUpComplete'
-// import ListDisplay from './pages/ListDisplay'
-// import TagDisplay from './pages/TagDisplay'
 import history from "./util/history";
 import { useAuth0 } from "./react-auth0-spa";
 import { toast } from "react-toastify";
 import { DoesUserExists, InsertUser } from "./util/graphqlExecutor";
 import { Container, Responsive } from "semantic-ui-react";
 import Mixpanel from "./util/mix";
-
+import { GetTagsListsUsers } from "./util/graphqlExecutor";
 import ReactGA from "react-ga";
 
 toast.configure();
@@ -62,7 +55,11 @@ function App() {
 	//     }
 	//  });
 
-	const userC = { curator_id: "", loggedin_user_id: "", image_link: "" };
+	const [userC, userChange] = useState({
+		curator_id: "",
+		loggedin_user_id: "",
+		image_link: "",
+	});
 	const [content, contentChange] = useState({
 		currentTag: "None",
 		contentType: "lists",
@@ -127,18 +124,20 @@ function App() {
 
 	if (!loading && userCheckStatus) {
 		if (typeof user !== "undefined") {
-			// console.log(user)
+			// console.log(user);
 			var userID = user["sub"].split("|")[1];
-			userC["curator_id"] = userID;
-			userC["loggedin_user_id"] = userID;
-			userC["name"] = user["name"];
-			userC["nickname"] = user["nickname"];
-			userC["image_link"] = user["picture"];
-			// setuserCheckStatus(false)
-			checkUser(userID);
-			Mixpanel.identify(userID);
-			// var props = {user:userID}
-			// console.log("here")
+
+			if (userC.loggedin_user_id === "") {
+				userChange({
+					curator_id: userID,
+					loggedin_user_id: userID,
+					name: user["name"],
+					nickname: user["nickname"],
+					image_link: user["picture"],
+				});
+				checkUser(userID);
+				Mixpanel.identify(userID);
+			}
 		}
 	}
 	// console.log(userID)
@@ -173,12 +172,15 @@ function App() {
 		}
 	};
 
-	if (content.tags.length > 0 && tags === null && userC.curator_id !== "") {
-		// console.log('here')
-		// console.log(userC)
-		// console.log(content.tags)
-		if (lastCurator === "" || lastCurator !== userC.curator_id) {
-			// console.log('New Fetch')
+	if (lastCurator === "" || lastCurator !== userC.curator_id) {
+		// console.log("here");
+		// console.log(content);
+		if (content.tags.length > 0 && userC.curator_id !== "") {
+			// console.log("here");
+			// console.log(userC)
+			// console.log(content.tags)
+
+			console.log("New Fetch");
 			var tagsTemp = content.tags.map((tag) => ({
 				as: "a",
 				content: tag.text,
@@ -195,11 +197,85 @@ function App() {
 					href: `/${userC.curator_id}/lists/${list.id}`,
 				}));
 			}
+
 			setlastCurator(userC.curator_id);
 			setTags(tagsTemp);
 			setLists(listsTemp);
+			// console.log(tagsTemp)
+		} else if (content.tags === {} && userC.curator_id !== "") {
+			console.log("no log");
+		} else if (lastCurator !== userC.curator_id) {
+			console.log("New Curator");
+			// console.log(lastCurator);
+			console.log(userC.curator_id);
+			setlastCurator(userC.curator_id);
+			//Sync code
+			fetchTagsLists(userC.curator_id);
 		}
-		// console.log(tagsTemp)
+	}
+
+	async function fetchTagsLists(id) {
+		await GetTagsListsUsers({ curator_id: id }).then((data) => {
+			// console.log(data);
+			curationTags(data);
+		});
+	}
+
+	function curationTags(tagData) {
+		var posts = tagData["tag"];
+		const tempArr = posts.map((post) => ({
+			text: post.name,
+			key: post.name,
+			value: post.id,
+		}));
+
+		// lists = tagData["lists"];
+		const tempArr2 = tagData["lists"].map((item) => ({
+			text: item.list_name,
+			key: item.list_name,
+			value: item.id,
+			id: item.id,
+			list_name: item.list_name,
+			// description:item.description,
+			curator_id: item.curator_id,
+		}));
+		var tagsTemp = tagData["tag"].map((tag) => ({
+			as: "a",
+			content: tag.name,
+			key: tag.id,
+			href: `/${userC.curator_id}/tags/${tag.name}`,
+		}));
+		var listsTemp = tagData["lists"].map((list) => ({
+			as: "a",
+			content: list.list_name,
+			key: list.id,
+			href: `/${userC.curator_id}/lists/${list.id}`,
+		}));
+		// console.log(tagData)
+		// console.log("hereeee");
+		if (tagData["lists"].length > 0) {
+			// console.log('This was executed')
+			// console.log(tagData)
+			contentChange((content) => ({
+				...content,
+				tags: tempArr,
+				lists: tempArr2,
+			}));
+			// console.log(tagsTemp);
+			// console.log(listsTemp);
+			setTags(tagsTemp);
+			setLists(listsTemp);
+			// console.log("fetched");
+			// if (content.contentType === "lists" && content.currentListID === "") {
+			// 	console.log("Auto setting list name");
+			// 	contentChange((content) => ({
+			// 		...content,
+			// 		currentList: lists[0].list_name,
+			// 		currentListID: lists[0].id,
+			// 	}));
+			// }
+		}
+		// curationLists()
 	}
 
 	function onToggle() {
@@ -221,7 +297,7 @@ function App() {
 
 	return (
 		// <MixpanelProvider mixpanel={mixpanel}>
-		<UserProvider value={userC}>
+		<UserProvider value={[userC, userChange]}>
 			<ContentProvider value={[content, contentChange]}>
 				<Router history={history}>
 					<Responsive {...Responsive.onlyMobile}>
@@ -314,7 +390,6 @@ function App() {
 													<Menu.Item position="right" fitted="vertically">
 														<AddList />
 													</Menu.Item>
-
 													<Menu.Item position="right">
 														<Dropdown
 															fluid

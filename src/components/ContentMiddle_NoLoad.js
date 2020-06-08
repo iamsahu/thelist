@@ -49,7 +49,7 @@ function ContentMiddleNoLoad(props) {
 	// console.log(process.env.REACT_APP_BASE_URL)
 	const [content] = useContext(ContentContext);
 	const [posts, setPosts] = useState(null);
-	const user = useContext(UserContext);
+	const [userC, userChange] = useContext(UserContext);
 	const [shareUrl, setshareUrl] = useState(window.location.href);
 	const [header, setheader] = useState("");
 	const [description, setdescription] = useState("");
@@ -70,11 +70,11 @@ function ContentMiddleNoLoad(props) {
 			if (props.propSent.description !== undefined)
 				setdescription(props.propSent.description);
 		}
-		if (user.loggedin_user_id !== "") {
+		if (userC.loggedin_user_id !== "") {
 			// if(listlike===1){
 			DoILike({
 				list_id: props.propSent.contentID,
-				user_id: user.loggedin_user_id,
+				user_id: userC.loggedin_user_id,
 			}).then((response) => {
 				// if(typeof(response)!=='undefined')
 				// if(typeof(response.like_list)!=='undefined')
@@ -110,7 +110,9 @@ function ContentMiddleNoLoad(props) {
 				<Grid.Column floated="right" width={6}>
 					{
 						props.propSent.contentType === "lists" &&
-							user.loggedin_user_id === props.propSent.curator_id && <AddItem />
+							userC.loggedin_user_id === props.propSent.curator_id && (
+								<AddItem />
+							)
 						// <Button circular icon='add' floated='right'/>
 					}
 				</Grid.Column>
@@ -166,7 +168,7 @@ function ContentMiddleNoLoad(props) {
 											// console.log('unlike')
 											UnlikeList(
 												props.propSent.contentID,
-												user.loggedin_user_id
+												userC.loggedin_user_id
 											);
 										}}
 									>
@@ -192,7 +194,7 @@ function ContentMiddleNoLoad(props) {
 											transport: "beacon",
 										});
 										setlistlike(true);
-										LikeList(props.propSent.contentID, user.loggedin_user_id);
+										LikeList(props.propSent.contentID, userC.loggedin_user_id);
 										// console.log('unlike')
 									}}
 								>
