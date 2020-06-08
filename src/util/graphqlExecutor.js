@@ -711,7 +711,7 @@ const GET_ITEMS_USER=gql`
                     count
                 }
             }
-            item_bookmarks(where: {user_id: {_eq: $user_id}}) {
+            item_bookmarks(where: {user_id: {_eq: $userid}}) {
                 item_id
             }
         }
@@ -1465,3 +1465,33 @@ export {createItem,GetList,GetListDescription,GetItemsofTag,
         GetItemsUsers,GetTagsListsUsers,DoesUserExists,InsertUser,
         Search,GetAllLists,GetAllTags,GetAllUsers,DeleteItem,LikeList,UnlikeList,LikeItem,UnlikeItem,GetTagItems,DoILike,
         ChangeListDescription,InsertBookmark,DeleteBookmark,GetAllBookmarkItems,GetBookmarkItemsOfCurator,GetBookmarksOfUser};
+
+
+export const DELETE_LIST=gql`
+    mutation MyMutation($list_id:uuid) {
+        delete_item_tag(where: {item: {list_id: {_eq: $list_id}}}) {
+            affected_rows
+        }
+        delete_like_item(where: {item: {list_id: {_eq: $list_id}}}) {
+            affected_rows
+        }
+        delete_items(where: {list_id: {_eq: $list_id}}) {
+            affected_rows
+        }
+        delete_like_list(where: {list_id: {_eq: $list_id}}) {
+            affected_rows
+        }
+        delete_item_bookmark(where: {list_id: {_eq: $list_id}}) {
+            affected_rows
+        }
+        delete_lists(where: {id: {_eq: $list_id}}) {
+            returning {
+                curator_id
+                description
+                id
+                list_name
+            }
+            affected_rows
+        }
+    }
+`

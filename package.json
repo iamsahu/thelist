@@ -19,6 +19,7 @@
     "mixpanel-browser": "^2.36.0",
     "moment": "^2.25.3",
     "react": "^16.13.1",
+    "react-burger-menu": "^2.6.15",
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
     "react-ga": "^2.7.0",
@@ -57,5 +58,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "prettier": "2.0.5"
   }
 }
