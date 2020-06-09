@@ -97,17 +97,19 @@ function ContentMiddleNoLoad(props) {
 			{/* <h1>{props.propSent.contentType==='lists'?content.currentList:content.currentTag}</h1> */}
 
 			<Grid>
-				<Grid.Column floated="left" width={6}>
+				<Grid.Column floated="left" width={9}>
 					<h1>
-						{props.propSent.contentType === "lists"
+						{/* {props.propSent.contentType === "lists"
 							? "List"
 							: props.propSent.contentType === "tags"
 							? "Tag"
 							: "Bookmark"}{" "}
-						: {props.title}
+						: */}
+						{props.title} by <a>{userC.name}</a>
 					</h1>
+					{props.desc}
 				</Grid.Column>
-				<Grid.Column floated="right" width={6}>
+				<Grid.Column floated="right" width={3}>
 					{
 						props.propSent.contentType === "lists" &&
 							userC.loggedin_user_id === props.propSent.curator_id && (
@@ -145,40 +147,86 @@ function ContentMiddleNoLoad(props) {
         active={activeItem === 'Bookmarked'}
         onClick={handleItemClick}
       /> */}
+				{/* <!-- Open Graph / Facebook --> */}
+				<MetaTags>
+					<meta property="og:type" content="website" />
+					<meta property="og:url" content={shareUrl} />
+					<meta
+						property="og:title"
+						content={
+							props.propSent.contentType === "tags"
+								? content.currentTag
+								: props.title
+						}
+					/>
+					<meta
+						property="og:description"
+						content={
+							props.propSent.contentType === "lists"
+								? props.desc
+								: "A place for all your curations!"
+						}
+					/>
+					<meta
+						property="og:image"
+						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
+					/>
+
+					<meta name="og:type" content="website" />
+					<meta name="og:url" content={shareUrl} />
+					<meta
+						name="og:title"
+						content={
+							props.propSent.contentType === "tags"
+								? content.currentTag
+								: props.title
+						}
+					/>
+					<meta
+						name="og:description"
+						content={
+							props.propSent.contentType === "lists"
+								? props.desc
+								: "A place for all your curations!"
+						}
+					/>
+					<meta
+						name="og:image"
+						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
+					/>
+
+					{/* <!-- Twitter --/> */}
+
+					<meta
+						name="twitter:card"
+						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
+					/>
+					<meta name="twitter:url" content={shareUrl} />
+					<meta
+						name="twitter:title"
+						content={
+							props.propSent.contentType === "tags"
+								? content.currentTag
+								: props.title
+						}
+					/>
+					<meta
+						name="twitter:description"
+						content={
+							props.propSent.contentType === "lists"
+								? props.desc
+								: "A place for all your curations!"
+						}
+					/>
+					<meta
+						name="twitter:image"
+						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
+					/>
+				</MetaTags>
 				<Menu.Menu position="right">
 					<div className="icobutton">
-						{
-							listlike ? (
-								content.contentType === "lists" ? (
-									<Button
-										icon
-										floated="right"
-										onClick={(e) => {
-											Mixpanel.track("Appreciate List", {
-												link: { shareUrl },
-												curator: props.propSent.curator_id,
-												name: content.currentList,
-											});
-											ReactGA.event({
-												category: "List",
-												action: "Like",
-												transport: "beacon",
-											});
-											setlistlike(false);
-											// console.log('unlike')
-											UnlikeList(
-												props.propSent.contentID,
-												userC.loggedin_user_id
-											);
-										}}
-									>
-										<Icon color="red" name="like" />
-										{/* <Tap waves /> */}
-									</Button>
-								) : (
-									<></>
-								)
-							) : content.contentType === "lists" ? (
+						{listlike ? (
+							content.contentType === "lists" ? (
 								<Button
 									icon
 									floated="right"
@@ -190,54 +238,53 @@ function ContentMiddleNoLoad(props) {
 										});
 										ReactGA.event({
 											category: "List",
-											action: "Unlike",
+											action: "Like",
 											transport: "beacon",
 										});
-										setlistlike(true);
-										LikeList(props.propSent.contentID, userC.loggedin_user_id);
+										setlistlike(false);
 										// console.log('unlike')
+										UnlikeList(
+											props.propSent.contentID,
+											userC.loggedin_user_id
+										);
 									}}
 								>
-									<Icon name="like" />
+									<Icon color="red" name="like" />
 									{/* <Tap waves /> */}
 								</Button>
 							) : (
 								<></>
 							)
-							// (props.propSent.contentType==='lists')&&(
-							//   (listlike)?
-							//   (<Button icon  floated='right' onClick={(e)=>{
-							//     Mixpanel.track('Appreciate List',{"link":{shareUrl},"curator":props.propSent.curator_id,"name":content.currentList})
-							//     ReactGA.event({
-							//         category: 'List',
-							//         action: 'Like',
-							//         transport: 'beacon'
-							//     });
-							//     setlistlike(false)
-							//     // console.log('unlike')
-							//     UnlikeList(props.propSent.contentID,user.loggedin_user_id)
-							//     }}>
-							//     <Icon color='red' name='like' />
-							//     {/* <Tap waves /> */}
-							//   </Button>):
-							//   (
-							//     <Button icon floated='right' onClick={(e)=>{
-							//       Mixpanel.track('Appreciate List',{"link":{shareUrl},"curator":props.propSent.curator_id,"name":content.currentList})
-							//       ReactGA.event({
-							//           category: 'List',
-							//           action: 'Unlike',
-							//           transport: 'beacon'
-							//       });
-							//       setlistlike(true)
-							//       LikeList(props.propSent.contentID,user.loggedin_user_id)
-							//       // console.log('unlike')
-							//       }}>
-							//       <Icon name='like' />
-							//       {/* <Tap waves /> */}
-							//     </Button>
-							//   )
-							// )
-						}
+						) : content.contentType === "lists" ? (
+							<Button
+								icon
+								floated="right"
+								onClick={(e) => {
+									Mixpanel.track("Appreciate List", {
+										link: { shareUrl },
+										curator: props.propSent.curator_id,
+										name: content.currentList,
+									});
+									ReactGA.event({
+										category: "List",
+										action: "Unlike",
+										transport: "beacon",
+									});
+									setlistlike(true);
+									LikeList(props.propSent.contentID, userC.loggedin_user_id);
+									// console.log('unlike')
+								}}
+							>
+								<Icon name="like" />
+								{/* <Tap waves /> */}
+							</Button>
+						) : (
+							<></>
+						)}
+						{/* {content.contentType === "lists" &&
+							userC.loggedin_user_id === props.propSent.curator_id && (
+								<AddItem />
+							)} */}
 						{/* <Button icon >
             <Icon name='bell' />
         </Button> */}
@@ -256,13 +303,9 @@ function ContentMiddleNoLoad(props) {
 									<FacebookShareButton url={shareUrl} quote={props.desc}>
 										<FacebookIcon size={32} round />
 									</FacebookShareButton>
-									{/* </div>
-            <div> */}
 									<TwitterShareButton url={shareUrl} title={props.desc}>
 										<TwitterIcon size={32} round />
 									</TwitterShareButton>
-									{/* </div>
-            <div> */}
 									<WhatsappShareButton
 										url={shareUrl}
 										title={props.desc}

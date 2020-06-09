@@ -41,7 +41,8 @@ function HomeNoLogin() {
             /> */}
 						<Header
 							as="h1"
-							content="Save any content in one place!"
+							// content="Save any content in one place!"
+							content="Fastest way to create and share listicles!"
 							style={{
 								fontSize: "3em",
 								fontWeight: "normal",

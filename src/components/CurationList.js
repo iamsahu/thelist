@@ -131,36 +131,37 @@ function CurationList(props) {
                     </MixpanelConsumer> */}
 				</List.Item>
 				{
-					((posts = tagData["data"]["tag"]),
-					posts.length > 0 ? (
-						posts &&
-						posts.map((post) => (
-							<List.Item key={post.id}>
+					// (
+					// posts = tagData["data"]["tag"]),
+					content.tags.length > 0 ? (
+						content.tags &&
+						content.tags.map((post) => (
+							<List.Item key={post.value}>
 								{/* <MixpanelConsumer>
                         {mixpanel=> */}
 								<List.Content
 									onClick={(e) => {
 										contentChange((content) => ({
 											...content,
-											currentTag: post.name,
-											currentTagID: post.id,
+											currentTag: post.text,
+											currentTagID: post.value,
 											currentListID: "",
 											contentType: "tags",
 										}));
 										Mixpanel.track("Tag Click", {
-											tag: post.name,
-											tagID: post.id,
+											tag: post.text,
+											tagID: post.value,
 										});
 										ReactGA.event({
 											category: "Tag",
 											action: "Click",
-											// value:post.name,
+											// value:post.text,
 											transport: "beacon",
 										});
 									}}
 								>
-									<Link to={`/${userC.curator_id}/tags/${post.id}`}>
-										# {post.name}
+									<Link to={`/${userC.curator_id}/tags/${post.value}`}>
+										# {post.text}
 									</Link>
 								</List.Content>
 								{/* }
@@ -172,7 +173,7 @@ function CurationList(props) {
 							You have not created any tags. Use add item on the top right side
 							to add an item and tag it!
 						</div>
-					))
+					)
 				}
 			</List>
 		);
