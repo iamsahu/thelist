@@ -147,6 +147,7 @@ function App() {
 	const [visible, setvisible] = useState(false);
 	const [tags, setTags] = useState(null);
 	const [lists, setLists] = useState(null);
+	const [bookmark, setbookmark] = useState(null);
 	const [activeItem, setActiveItem] = useState("");
 
 	const options = [
@@ -251,6 +252,12 @@ function App() {
 			key: list.id,
 			href: `/${userC.curator_id}/lists/${list.id}`,
 		}));
+		const bookmarkTemp = tagData["item_bookmark"].map((bookmark) => ({
+			name: bookmark.name,
+			curator: bookmark.curator,
+			id: bookmark.id,
+			username: bookmark.user.username,
+		}));
 		// console.log(tagData)
 		// console.log("hereeee");
 		if (tagData["lists"].length > 0) {
@@ -260,11 +267,13 @@ function App() {
 				...content,
 				tags: tempArr,
 				lists: tempArr2,
+				bookmarks: bookmarkTemp,
 			}));
 			// console.log(tagsTemp);
 			// console.log(listsTemp);
 			setTags(tagsTemp);
 			setLists(listsTemp);
+			setbookmark(bookmarkTemp);
 			// console.log("fetched");
 			// if (content.contentType === "lists" && content.currentListID === "") {
 			// 	console.log("Auto setting list name");

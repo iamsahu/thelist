@@ -13,13 +13,12 @@ import Mixpanel from "../util/mix";
 function CurationList(props) {
 	const [content, contentChange] = useContext(ContentContext);
 	const [userC, userChange] = useContext(UserContext);
-	const tagData = useQuery(COMBINED_FETCH, {
-		variables: { user_id: userC.curator_id },
-		onCompleted: curationTags,
-	});
-	const loading = tagData["loading"];
-	// const loadingList =listData['loading']
-	// console.log(listData)
+	// const tagData = useQuery(COMBINED_FETCH, {
+	// 	variables: { user_id: userC.curator_id },
+	// 	onCompleted: curationTags,
+	// });
+	// const loading = tagData["loading"];
+
 	var posts;
 	var lists;
 	const panes = [
@@ -31,54 +30,54 @@ function CurationList(props) {
 		},
 	];
 
-	function curationTags() {
-		posts = tagData["data"]["tag"];
-		const tempArr = posts.map((post) => ({
-			text: post.name,
-			key: post.name,
-			value: post.id,
-		}));
+	// function curationTags() {
+	// 	posts = tagData["data"]["tag"];
+	// 	const tempArr = posts.map((post) => ({
+	// 		text: post.name,
+	// 		key: post.name,
+	// 		value: post.id,
+	// 	}));
 
-		lists = tagData["data"]["lists"];
-		const tempArr2 = lists.map((item) => ({
-			text: item.list_name,
-			key: item.list_name,
-			value: item.id,
-			id: item.id,
-			list_name: item.list_name,
-			// description:item.description,
-			curator_id: item.curator_id,
-		}));
-		// console.log(tagData)
-		if (lists.length > 0) {
-			// console.log('This was executed')
-			// console.log(tagData)
-			contentChange((content) => ({
-				...content,
-				tags: tempArr,
-				lists: tempArr2,
-			}));
-			if (content.contentType === "lists" && content.currentListID === "") {
-				console.log("Auto setting list name");
-				contentChange((content) => ({
-					...content,
-					currentList: lists[0].list_name,
-					currentListID: lists[0].id,
-				}));
-			}
-		}
-		// curationLists()
-	}
+	// 	lists = tagData["data"]["lists"];
+	// 	const tempArr2 = lists.map((item) => ({
+	// 		text: item.list_name,
+	// 		key: item.list_name,
+	// 		value: item.id,
+	// 		id: item.id,
+	// 		list_name: item.list_name,
+	// 		// description:item.description,
+	// 		curator_id: item.curator_id,
+	// 	}));
+	// 	// console.log(tagData)
+	// 	if (lists.length > 0) {
+	// 		// console.log('This was executed')
+	// 		// console.log(tagData)
+	// 		contentChange((content) => ({
+	// 			...content,
+	// 			tags: tempArr,
+	// 			lists: tempArr2,
+	// 		}));
+	// 		if (content.contentType === "lists" && content.currentListID === "") {
+	// 			console.log("Auto setting list name");
+	// 			contentChange((content) => ({
+	// 				...content,
+	// 				currentList: lists[0].list_name,
+	// 				currentListID: lists[0].id,
+	// 			}));
+	// 		}
+	// 	}
+	// 	// curationLists()
+	// }
 
 	function curationLists() {
-		lists = tagData["data"]["lists"];
-		const tempArr = lists.map((item) => ({
-			id: item.id,
-			list_name: item.list_name,
-			description: item.description,
-			curator_id: item.curator_id,
-		}));
-		contentChange({ lists: tempArr });
+		// lists = tagData["data"]["lists"];
+		// const tempArr = lists.map((item) => ({
+		// 	id: item.id,
+		// 	list_name: item.list_name,
+		// 	description: item.description,
+		// 	curator_id: item.curator_id,
+		// }));
+		// contentChange({ lists: tempArr });
 		// console.log("lists loaded")
 	}
 
@@ -183,11 +182,11 @@ function CurationList(props) {
 		return (
 			// <div className="scrolly">
 			<List animated verticalAlign="middle">
-				{typeof tagData["data"] !== "undefined" ? (
-					((lists = tagData["data"]["lists"]),
-					lists.length > 0 ? (
-						lists &&
-						lists.map((post) => (
+				{content.lists.length > 0 ? (
+					// (lists = tagData["data"]["lists"]),
+					content.lists.length > 0 ? (
+						content.lists &&
+						content.lists.map((post) => (
 							<List.Item key={post.id}>
 								{/* <MixpanelConsumer>
                         {mixpanel=> */}
@@ -225,7 +224,7 @@ function CurationList(props) {
 							You have not created any lists. Use add item on the top right side
 							to add an item and create a list.
 						</div>
-					))
+					)
 				) : (
 					<div>No data</div>
 				)}
@@ -238,11 +237,11 @@ function CurationList(props) {
 		return (
 			// <div className="scrolly">
 			<List animated verticalAlign="middle">
-				{typeof tagData["data"] !== "undefined" ? (
-					((lists = tagData["data"]["item_bookmark"]),
-					lists.length > 0 ? (
-						lists &&
-						lists.map((post) => (
+				{content.bookmarks.length > 0 ? (
+					// (lists = tagData["data"]["item_bookmark"]),
+					content.bookmarks.length > 0 ? (
+						content.bookmarks &&
+						content.bookmarks.map((post) => (
 							<List.Item key={post.id}>
 								{/* <MixpanelConsumer>
                         {mixpanel=> */}
@@ -250,13 +249,13 @@ function CurationList(props) {
 									onClick={(e) => {
 										contentChange((content) => ({
 											...content,
-											currentList: post.list_name,
+											currentList: post.name,
 											currentListID: post.id,
 											currentTagID: "",
 											contentType: "bookmark",
 										}));
 										Mixpanel.track("Bookmark Click", {
-											bookmark: post.list_name,
+											bookmark: post.name,
 											listID: post.id,
 										});
 										ReactGA.event({
@@ -268,7 +267,7 @@ function CurationList(props) {
 									}}
 								>
 									<Link to={`/${userC.curator_id}/bookmark/${post.curator}`}>
-										{post.user.username}
+										{post.username}
 									</Link>
 								</List.Content>
 								{/* }
@@ -280,7 +279,7 @@ function CurationList(props) {
 							You have not created any Bookmarks. Explore your fellow curator's
 							feed and bookmark something that you like
 						</div>
-					))
+					)
 				) : (
 					<div>No data</div>
 				)}
@@ -291,28 +290,28 @@ function CurationList(props) {
 
 	return (
 		<>
-			{loading ? (
+			{/* {loading ? (
 				<Tab menu={{ secondary: true, pointing: true }} panes={panes} />
 			) : (
-				// console.log(tagData['data']),
-				<Tab
-					menu={{ secondary: true, pointing: true }}
-					panes={[
-						{
-							menuItem: "Lists",
-							render: () => <Tab.Pane>{RenderLists()} </Tab.Pane>,
-						},
-						{
-							menuItem: "Tags",
-							render: () => <Tab.Pane>{RenderTags()}</Tab.Pane>,
-						},
-						{
-							menuItem: "Bookmarks",
-							render: () => <Tab.Pane> {RenderBookmarks()}</Tab.Pane>,
-						},
-					]}
-				/>
-			)}
+				// console.log(tagData['data']), */}
+			<Tab
+				menu={{ secondary: true, pointing: true }}
+				panes={[
+					{
+						menuItem: "Lists",
+						render: () => <Tab.Pane>{RenderLists()} </Tab.Pane>,
+					},
+					{
+						menuItem: "Tags",
+						render: () => <Tab.Pane>{RenderTags()}</Tab.Pane>,
+					},
+					{
+						menuItem: "Bookmarks",
+						render: () => <Tab.Pane> {RenderBookmarks()}</Tab.Pane>,
+					},
+				]}
+			/>
+			{/* )} */}
 		</>
 	);
 }

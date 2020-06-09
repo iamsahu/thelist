@@ -190,9 +190,8 @@ function AddItem() {
 				contentType: content.contentType,
 				currentListID: content.currentListID,
 				currentTagID: content.currentTagID,
-			}).then((response, response2) => {
+			}).then((response) => {
 				console.log(response);
-				console.log(response2);
 				contentChange((content) => ({ ...content, add: "ad" }));
 			});
 			SetModal(false);
@@ -315,6 +314,12 @@ function AddItem() {
 		// }
 	}
 
+	function OpenHandle() {
+		SetDropList(content.lists);
+		SetDropTag(content.tags);
+		console.log("Open Modal");
+	}
+
 	return (
 		<>
 			<Reward
@@ -329,6 +334,7 @@ function AddItem() {
 					closeOnDimmerClick={false}
 					onClose={OnClose}
 					closeIcon
+					onOpen={OpenHandle}
 					trigger={
 						<Button floated="right" onClick={onClick}>
 							<Tap scale fade waves />

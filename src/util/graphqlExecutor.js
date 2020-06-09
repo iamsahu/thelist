@@ -175,23 +175,23 @@ function InsertNewTags(tags, curator_id) {
 			variables: {
 				objects: tags,
 			},
-			// update:(cache,{data})=>{
-			//     const existingItems = cache.readQuery({
-			//         query:COMBINED_FETCH,
-			//         variables:{
-			//             user_id:curator_id
-			//         },
-			//     })
-			//     const newItem = data.insert_tag.returning[0];
-			//     existingItems.tag.push(newItem)
-			//     cache.writeQuery({
-			//         query: COMBINED_FETCH,
-			//         variables:{
-			//             user_id:curator_id
-			//         },
-			//         data: existingItems
-			//     });
-			// },
+			update: (cache, { data }) => {
+				const existingItems = cache.readQuery({
+					query: COMBINED_FETCH,
+					variables: {
+						user_id: curator_id,
+					},
+				});
+				const newItem = data.insert_tag.returning[0];
+				existingItems.tag.push(newItem);
+				cache.writeQuery({
+					query: COMBINED_FETCH,
+					variables: {
+						user_id: curator_id,
+					},
+					data: existingItems,
+				});
+			},
 			refetchQueries: [
 				{
 					query: COMBINED_FETCH,
@@ -384,6 +384,14 @@ function InsertItem(
 					}
 				}
 			},
+			refetchQueries: [
+				{
+					query: COMBINED_FETCH,
+					variables: {
+						user_id: curator_id,
+					},
+				},
+			],
 			// refetchQueries:q
 			// ,fetchPolicy:"cache-and-network"
 		})

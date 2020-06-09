@@ -203,6 +203,7 @@ function ContentCard(postdata) {
 		}
 	}
 	// console.log(postdata);
+	//Fix for list->tag->list crash bug
 	if (typeof postdata === "undefined") return <></>;
 	if (typeof postdata.postdata === "undefined") return <></>;
 	if (typeof postdata.postdata.name === "undefined") return <></>;
