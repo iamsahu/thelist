@@ -202,7 +202,10 @@ function ContentCard(postdata) {
 				}
 		}
 	}
-	console.log(postdata);
+	// console.log(postdata);
+	if (typeof postdata === "undefined") return <></>;
+	if (typeof postdata.postdata === "undefined") return <></>;
+	if (typeof postdata.postdata.name === "undefined") return <></>;
 	var postName = postdata.postdata.name.substring(0, 70);
 	return (
 		<>

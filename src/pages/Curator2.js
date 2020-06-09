@@ -115,6 +115,7 @@ function Curator(props) {
 			? propSent.contentID === ""
 				? GetItemsUsers({ curator_id: propSent.curator_id })
 						.then((data) => {
+							console.log("loading lists empty");
 							setPosts(data.items);
 							setloadState(1);
 							if (data.items.length > 0) {
@@ -126,6 +127,7 @@ function Curator(props) {
 						.catch((error) => console.log(error))
 				: GetList({ userid: propSent.curator_id, listid: propSent.contentID })
 						.then((data) => {
+							console.log("loading lists ");
 							// console.log(data)
 							setPosts(data.items);
 							setloadState(1);
@@ -150,6 +152,7 @@ function Curator(props) {
 			? propSent.contentID === ""
 				? GetItemsUsers({ curator_id: propSent.curator_id })
 						.then((data) => {
+							console.log("loading tags empty");
 							setPosts(data.items);
 							setheader("All");
 							setdescription("A place for all your curations!");
@@ -163,6 +166,7 @@ function Curator(props) {
 						tag_id: propSent.contentID,
 				  })
 						.then((data) => {
+							console.log("loading tags");
 							//   console.log(data.tag[0]['item_tags'])
 							//   var temp = data.tag[0]['item_tags'].map(item=>item.item)
 							//   temp = props.posts.map(item=>item.item)
@@ -179,6 +183,7 @@ function Curator(props) {
 			? propSent.contentID === ""
 				? GetAllBookmarkItems(propSent.curator_id)
 						.then((data) => {
+							console.log("loading bookmarks empty");
 							console.log(data.item_bookmark.item);
 						})
 						.catch((error) => {
@@ -186,6 +191,7 @@ function Curator(props) {
 						})
 				: GetBookmarkItemsOfCurator(propSent.curator_id, propSent.contentID)
 						.then((data) => {
+							console.log("loading bookmarks");
 							// console.log(data)
 							// setheader()
 							setPosts(data.item_bookmark);
