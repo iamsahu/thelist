@@ -212,7 +212,7 @@ function ContentCard(postdata) {
 		<>
 			{/* <MixpanelConsumer>
                         {mixpanel=> */}
-			<Item>
+			<Item background="#FDF2A8">
 				<Item.Image
 					size="tiny"
 					src={

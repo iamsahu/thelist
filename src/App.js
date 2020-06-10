@@ -420,7 +420,7 @@ function App() {
 									</Menu.Menu>
 								</Menu>
 								<div style={{ marginTop: "3em" }}>
-									<Container style={{ marginTop: "3em" }} fluid>
+									<Container style={{ marginTop: "7em" }} fluid>
 										<Switch>
 											<Route exact path="/explore" component={Home2} />
 											<Route exact path="/dataentry" component={DataEntry} />

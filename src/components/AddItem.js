@@ -317,143 +317,147 @@ function AddItem() {
 	function OpenHandle() {
 		SetDropList(content.lists);
 		SetDropTag(content.tags);
-		console.log("Open Modal");
+		// console.log("Open Modal");
 	}
 
 	return (
 		<>
-			<Reward
+			{/* <Reward
 				ref={(ref) => {
 					setreward(ref);
 				}}
 				type="confetti"
+			> */}
+			<Modal
+				size="small"
+				open={showModal}
+				closeOnDimmerClick={false}
+				onClose={OnClose}
+				closeIcon
+				onOpen={OpenHandle}
+				trigger={
+					<Button onClick={onClick}>
+						Add Item
+						{/* <Icon name="add" /> */}
+					</Button>
+					// <Button floated="right" onClick={onClick}>
+					// 	<Tap scale fade waves />
+					// 	{/* <Icon name="add" /> */}
+					// 	{/* <Button circular icon="add" floated="right" /> */}
+					// 	Add Item
+					// </Button>
+				}
 			>
-				<Modal
-					size="small"
-					open={showModal}
-					closeOnDimmerClick={false}
-					onClose={OnClose}
-					closeIcon
-					onOpen={OpenHandle}
-					trigger={
-						<Button floated="right" onClick={onClick}>
-							<Tap scale fade waves />
-							{/* <Icon name="add" /> */}
-							{/* <Button circular icon="add" floated="right" /> */}
-							Add Item
-						</Button>
-					}
-				>
-					<Modal.Header>Add Item</Modal.Header>
-					<Modal.Content image scrolling>
-						<Form onSubmit={onSubmit} size="large">
-							<Form.Group widths="equal">
-								<Form.Field inline name="name">
-									<label>Title for item</label>
-									<Form.Input
-										name="name"
-										placeholder="name"
-										onChange={onChange}
-										value={values.name}
-										error={errorName ? "Please Enter Name" : false}
-									/>
-								</Form.Field>
-								<Form.Field inline name="link">
-									<label>Link of the item</label>
-									<Form.Input
-										name="link"
-										placeholder="Link"
-										onChange={(e, { value }) => {
-											onChange(e);
-											linkCheck(e, { value });
-										}}
-										value={values.link}
-										error={errorLink ? "Please add a link" : false}
-									/>
-								</Form.Field>
-							</Form.Group>
-							<Form.Field inline name="description">
-								{/* <label>Description</label> */}
-								<Form.TextArea
-									label="Description"
-									name="description"
-									placeholder="Describe what your consumers should expect from this content. (If you are feeling lazy leave this upto us)"
-									style={{ minHeight: 100 }}
+				<Modal.Header>Add Item</Modal.Header>
+				<Modal.Content image scrolling>
+					<Form onSubmit={onSubmit} size="large">
+						<Form.Group widths="equal">
+							<Form.Field inline name="name">
+								<label>Title for item</label>
+								<Form.Input
+									name="name"
+									placeholder="name"
 									onChange={onChange}
-									value={values.description}
-									error={errorDescription ? "Please add a description" : false}
+									value={values.name}
+									error={errorName ? "Please Enter Name" : false}
 								/>
 							</Form.Field>
-							<Form.Group>
-								<Form.Field inline name="tag">
-									<label>Tags</label>
-									<Form.Input>
-										{/* {loading?<Dropdown text='Dropdown' loading />: */}
-										<Dropdown
-											name="tag"
-											options={Object.values(dropTag)}
-											placeholder="Tags"
-											search
-											selection
-											fluid
-											multiple
-											allowAdditions
-											// value={currentValues}
-											onAddItem={handleAddition}
-											onChange={handleChange}
-											upward
-										/>
-										{/* } */}
-									</Form.Input>
+							<Form.Field inline name="link">
+								<label>Link of the item</label>
+								<Form.Input
+									name="link"
+									placeholder="Link"
+									onChange={(e, { value }) => {
+										onChange(e);
+										linkCheck(e, { value });
+									}}
+									value={values.link}
+									error={errorLink ? "Please add a link" : false}
+								/>
+							</Form.Field>
+						</Form.Group>
+						<Form.Field inline name="description">
+							{/* <label>Description</label> */}
+							<Form.TextArea
+								label="Description"
+								name="description"
+								placeholder="Describe what your consumers should expect from this content. (If you are feeling lazy leave this upto us)"
+								style={{ minHeight: 100 }}
+								onChange={onChange}
+								value={values.description}
+								error={errorDescription ? "Please add a description" : false}
+							/>
+						</Form.Field>
+						<Form.Group>
+							<Form.Field inline name="tag">
+								<label>Tags</label>
+								<Form.Input>
+									{/* {loading?<Dropdown text='Dropdown' loading />: */}
+									<Dropdown
+										name="tag"
+										options={Object.values(dropTag)}
+										placeholder="Tags"
+										search
+										selection
+										fluid
+										multiple
+										allowAdditions
+										// value={currentValues}
+										onAddItem={handleAddition}
+										onChange={handleChange}
+										upward
+									/>
+									{/* } */}
+								</Form.Input>
+							</Form.Field>
+						</Form.Group>
+						<Divider />
+						<Form.Group>
+							<Form.Field inline name="listname">
+								<label>List Name</label>
+								<Form.Input>
+									<Dropdown
+										label="List Name"
+										name="list_name"
+										options={Object.values(dropList)}
+										placeholder="Choose list name"
+										search
+										selection
+										upward
+										allowAdditions
+										onAddItem={handleChangeListAddition}
+										onChange={handleChangeList}
+										error={errorList} //?"Please choose a list":false}
+									/>
+								</Form.Input>
+							</Form.Field>
+							{listDescription ? (
+								<Form.Field inline name="listDescription">
+									<label>List Description</label>
+									<Form.TextArea
+										name="listDescription"
+										placeholder="Write about why are you creating this list"
+										style={{ minHeight: 100 }}
+										onChange={onChange}
+										value={values.listDescription}
+										error={
+											errorDescription ? "Please add a description" : false
+										}
+									/>
 								</Form.Field>
-							</Form.Group>
-							<Divider />
-							<Form.Group>
-								<Form.Field inline name="listname">
-									<label>List Name</label>
-									<Form.Input>
-										<Dropdown
-											label="List Name"
-											name="list_name"
-											options={Object.values(dropList)}
-											placeholder="Choose list name"
-											search
-											selection
-											upward
-											allowAdditions
-											onAddItem={handleChangeListAddition}
-											onChange={handleChangeList}
-											error={errorList} //?"Please choose a list":false}
-										/>
-									</Form.Input>
-								</Form.Field>
-								{listDescription ? (
-									<Form.Field inline name="listDescription">
-										<label>List Description</label>
-										<Form.TextArea
-											name="listDescription"
-											placeholder="Write about why are you creating this list"
-											style={{ minHeight: 100 }}
-											onChange={onChange}
-											value={values.listDescription}
-											error={
-												errorDescription ? "Please add a description" : false
-											}
-										/>
-									</Form.Field>
-								) : (
-									<div></div>
-								)}
-							</Form.Group>
+							) : (
+								<div></div>
+							)}
+						</Form.Group>
 
-							<br />
-							<Button primary type="submit">
-								Submit
-							</Button>
-						</Form>
-					</Modal.Content>
-				</Modal>
-			</Reward>
+						<br />
+						<Button primary type="submit">
+							Submit
+						</Button>
+					</Form>
+				</Modal.Content>
+			</Modal>
+			{/* </Reward> */}
 		</>
 	);
 }

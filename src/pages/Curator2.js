@@ -16,6 +16,7 @@ import {
 	GetTagItems,
 	GetAllBookmarkItems,
 	GetBookmarkItemsOfCurator,
+	DoesUserExists,
 } from "../util/graphqlExecutor";
 
 function Curator(props) {
@@ -214,6 +215,40 @@ function Curator(props) {
 
 	loadData2();
 
+	const [userProfile, setuserProfile] = useState(
+		"https://react.semantic-ui.com/images/avatar/large/steve.jpg"
+	);
+	const [username, setusername] = useState("Mojo Jojo");
+	const [descriptionU, setdescriptionU] = useState(
+		"Something witty that tells how witty you are"
+	);
+	const [twitterNumber, setTwitterNumber] = useState("1");
+	const [editState, seteditState] = useState(false);
+
+	async function loadUser() {
+		await DoesUserExists({ user_id: userC.curator_id }).then((response) => {
+			// console.log(response)
+			if (typeof response !== "undefined") {
+				if (typeof response.user[0] !== "undefined") {
+					// console.log(response.user[0]['image_link'])
+					setuserProfile(response.user[0]["image_link"]);
+					setusername(response.user[0]["username"]);
+					setTwitterNumber(response.user[0]["id"]);
+					if (response.user[0]["description"] !== null) {
+						setdescriptionU(response.user[0]["description"]);
+						// values.description = response.user[0]["description"];
+					}
+					if (response.user[0].id === userC.loggedin_user_id) {
+						seteditState(true);
+					} else {
+						seteditState(false);
+					}
+				}
+			}
+		});
+	}
+
+	loadUser();
 	// console.log(content)
 	// return <div>loading</div>
 	return (
@@ -225,6 +260,8 @@ function Curator(props) {
 						posts={posts}
 						title={header}
 						desc={description}
+						userName={username}
+						userImage={userProfile}
 					/>
 				</div>
 			</Responsive>
@@ -247,6 +284,8 @@ function Curator(props) {
 								posts={posts}
 								title={header}
 								desc={description}
+								userName={username}
+								userImage={userProfile}
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>

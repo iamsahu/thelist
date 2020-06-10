@@ -10,6 +10,8 @@ import {
 	Image,
 	Grid,
 	Responsive,
+	Header,
+	Label,
 } from "semantic-ui-react";
 import {
 	EmailShareButton,
@@ -76,13 +78,13 @@ function ContentMiddleNoLoad(props) {
 				list_id: props.propSent.contentID,
 				user_id: userC.loggedin_user_id,
 			}).then((response) => {
-				// if(typeof(response)!=='undefined')
-				// if(typeof(response.like_list)!=='undefined')
-				// if(response.like_list.length>0){
-				//   setlistlike(true)
-				// }else{
-				//   setlistlike(false)
-				// }
+				// if (typeof response !== "undefined")
+				// 	if (typeof response.like_list !== "undefined")
+				// 		if (response.like_list.length > 0) {
+				// 			setlistlike(true);
+				// 		} else {
+				// 			setlistlike(false);
+				// 		}
 			});
 			// }
 		}
@@ -97,19 +99,26 @@ function ContentMiddleNoLoad(props) {
 			{/* <h1>{props.propSent.contentType==='lists'?content.currentList:content.currentTag}</h1> */}
 
 			<Grid>
-				<Grid.Column floated="left" width={9}>
-					<h1>
-						{/* {props.propSent.contentType === "lists"
+				<Grid.Column floated="left">
+					{/* <h1>
+						{props.propSent.contentType === "lists"
 							? "List"
 							: props.propSent.contentType === "tags"
 							? "Tag"
 							: "Bookmark"}{" "}
-						: */}
-						{props.title} by <a>{userC.name}</a>
-					</h1>
-					{props.desc}
+						:
+					</h1> */}
+					<Header as="h1">
+						{props.title} <b>by</b>{" "}
+						<Label as="a" image>
+							<img src={props.userImage} />
+							{props.userName}
+						</Label>
+					</Header>
+					{/* <p>by {props.userName}</p> */}
+					<p>{props.desc}</p>
 				</Grid.Column>
-				<Grid.Column floated="right" width={3}>
+				{/* <Grid.Column floated="right" width={3}>
 					{
 						props.propSent.contentType === "lists" &&
 							userC.loggedin_user_id === props.propSent.curator_id && (
@@ -117,7 +126,7 @@ function ContentMiddleNoLoad(props) {
 							)
 						// <Button circular icon='add' floated='right'/>
 					}
-				</Grid.Column>
+				</Grid.Column> */}
 			</Grid>
 
 			<Menu pointing secondary>
@@ -285,9 +294,16 @@ function ContentMiddleNoLoad(props) {
 							userC.loggedin_user_id === props.propSent.curator_id && (
 								<AddItem />
 							)} */}
-						{/* <Button icon >
-            <Icon name='bell' />
-        </Button> */}
+						{/* <Button icon>
+							<Icon name="bell" />
+						</Button> */}
+						{
+							props.propSent.contentType === "lists" &&
+								userC.loggedin_user_id === props.propSent.curator_id && (
+									<AddItem />
+								)
+							// <Button circular icon='add' floated='right'/>
+						}
 						<Modal
 							closeIcon
 							trigger={
@@ -325,8 +341,8 @@ function ContentMiddleNoLoad(props) {
 			</Menu>
 
 			<Responsive {...Responsive.onlyMobile}>
-				<div>
-					<Item.Group divided>
+				<div style={{ paddingTop: "20px" }}>
+					<Item.Group divided relaxed="very">
 						{props.posts === null ? (
 							<Placeholder>
 								<Placeholder.Header image>
@@ -362,7 +378,7 @@ function ContentMiddleNoLoad(props) {
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 				<div className="scrolly">
-					<Item.Group divided>
+					<Item.Group divided relaxed="very">
 						{props.posts === null ? (
 							<Placeholder>
 								<Placeholder.Header image>
