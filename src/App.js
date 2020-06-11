@@ -14,6 +14,7 @@ import {
 	Image,
 	Icon,
 	Dropdown,
+	Card,
 } from "semantic-ui-react";
 import { UserProvider } from "./context/UserContext";
 import { ContentProvider } from "./context/ContentContext";
@@ -24,6 +25,7 @@ import HomeNoLogin from "./pages/HomeNoLogin";
 import Curator2 from "./pages/Curator2";
 import SearchResults from "./pages/SearchResults";
 import DataEntry from "./pages/DataEntry";
+import LandingPage from "./pages/LandingPage";
 import history from "./util/history";
 import { useAuth0 } from "./react-auth0-spa";
 import { toast } from "react-toastify";
@@ -244,7 +246,7 @@ function App() {
 			as: "a",
 			content: tag.name,
 			key: tag.id,
-			href: `/${userC.curator_id}/tags/${tag.name}`,
+			href: `/${userC.curator_id}/tags/${tag.id}`,
 		}));
 		var listsTemp = tagData["lists"].map((list) => ({
 			as: "a",
@@ -444,7 +446,7 @@ function App() {
 													)}
 												/>
 											) : (
-												<Route exact path="/" component={HomeNoLogin} />
+												<Route exact path="/" component={LandingPage} />
 											)}
 										</Switch>
 									</Container>
@@ -479,7 +481,7 @@ function App() {
 											)}
 										/>
 									) : (
-										<Route exact path="/" component={HomeNoLogin} />
+										<Route exact path="/" component={LandingPage} />
 									)}
 								</Switch>
 							</Container>

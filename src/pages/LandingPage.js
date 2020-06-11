@@ -11,6 +11,7 @@ import {
 } from "semantic-ui-react";
 import Home from "./Home";
 import { Link } from "react-router-dom";
+import Explore from "../components/Explore2";
 
 function LandingPage() {
 	return (
@@ -95,6 +96,9 @@ function LandingPage() {
 								</Card>
 							</Grid.Column>
 						</Grid>
+					</Container>
+					<Container>
+						<Explore />
 					</Container>
 					{/* <Divider/>
         <Home/> */}
@@ -181,6 +185,7 @@ function LandingPage() {
 							</Grid.Column>
 						</Grid>
 					</Container>
+					<Explore />
 					{/* <Divider/>
         <Home/> */}
 				</div>

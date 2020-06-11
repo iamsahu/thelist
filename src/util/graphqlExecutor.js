@@ -1125,6 +1125,7 @@ const GET_ALL_LISTS = gql`
 			list_name
 			user {
 				username
+				image_link
 			}
 		}
 	}
