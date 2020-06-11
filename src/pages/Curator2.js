@@ -276,9 +276,9 @@ function Curator(props) {
 						</Grid.Column>
 						<Grid.Column width={9}>
 							{/* {
-                  content.contentType==='lists'?
-                  <ContentMiddleLists propSent={propSent} posts={posts} title={header}/>:
-                } */}
+							content.contentType==='lists'?
+							<ContentMiddleLists propSent={propSent} posts={posts} title={header}/>:
+							} */}
 							<ContentMiddleNoLoad
 								propSent={propSent}
 								posts={posts}

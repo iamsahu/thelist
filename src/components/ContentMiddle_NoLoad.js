@@ -12,6 +12,7 @@ import {
 	Responsive,
 	Header,
 	Label,
+	Card,
 } from "semantic-ui-react";
 import {
 	EmailShareButton,
@@ -116,7 +117,12 @@ function ContentMiddleNoLoad(props) {
 						</Label>
 					</Header>
 					{/* <p>by {props.userName}</p> */}
-					<p>{props.desc}</p>
+					<Card fluid>
+						<Card.Content>
+							<Card.Description>{props.desc}</Card.Description>
+						</Card.Content>
+					</Card>
+					{/* <p>{props.desc}</p> */}
 				</Grid.Column>
 				{/* <Grid.Column floated="right" width={3}>
 					{
