@@ -11,7 +11,7 @@ import {
 } from "semantic-ui-react";
 import Home from "./Home";
 import { Link } from "react-router-dom";
-import Explore from "../components/Explore2";
+import Explore3 from "../components/Explore3";
 
 function LandingPage() {
 	return (
@@ -98,7 +98,7 @@ function LandingPage() {
 						</Grid>
 					</Container>
 					<Container>
-						<Explore />
+						<Explore3 />
 					</Container>
 					{/* <Divider/>
         <Home/> */}
@@ -185,7 +185,13 @@ function LandingPage() {
 							</Grid.Column>
 						</Grid>
 					</Container>
-					<Explore />
+
+					<Container style={{ marginTop: "2rem" }}>
+						<Header textAlign="center" as="h1">
+							Explore!
+						</Header>
+						<Explore3 />
+					</Container>
 					{/* <Divider/>
         <Home/> */}
 				</div>
