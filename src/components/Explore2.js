@@ -13,6 +13,7 @@ import {
 	Image,
 	Container,
 	Button,
+	Header,
 } from "semantic-ui-react";
 
 function Explore() {
@@ -39,7 +40,15 @@ function Explore() {
 		history.push(t);
 	};
 
+	var clS = true;
 	function randomColor() {
+		// if (clS) {
+		// 	clS = !clS;
+		// 	return "#948FFF";
+		// } else {
+		// 	clS = !clS;
+		// 	return "#F5DD47";
+		// }
 		const t = [
 			"#FDF2A8",
 			"#FCE7C4",
@@ -54,7 +63,7 @@ function Explore() {
 			"#FDF2A8",
 		];
 		return t[Math.floor(Math.random() * t.length)];
-	}
+	} //F5DD47,#948FFF
 	var col;
 
 	return (
@@ -71,8 +80,8 @@ function Explore() {
 					<StackGrid
 						gutterWidth={10}
 						gutterHeight={10}
-						appearDelay={50}
-						columnWidth={250}
+						appearDelay={30}
+						columnWidth={300}
 					>
 						{searchResult.lists.map(
 							(result) => (
@@ -82,18 +91,20 @@ function Explore() {
 										fluid
 										raised
 										key={result.id}
-										color="yellow"
+										// color="yellow"
 										style={{ "background-color": col, "box-shadow": "none" }}
 									>
 										{/* <Card.Content> */}
-										<Card.Content header={result.list_name} />
+										<Card.Content color={col}>
+											<Card.Header>
+												<Header as="h2">{result.list_name}</Header>
+											</Card.Header>
+										</Card.Content>
 										{/* <Link to={`/${result.curator_id}/lists/${result.id}`}> */}
-
 										{/* </Link> */}
 										{/* </Card.Content> */}
 										{/* <Card.Meta>
 											by{" "}
-
 										</Card.Meta> */}
 
 										<Card.Content
@@ -104,13 +115,12 @@ function Explore() {
 											}}
 										/>
 										<Card.Content
-											extra
 											style={{
 												border: "none",
 												"border-top": "none",
 											}}
 										>
-											<Label
+											{/* <Label
 												image
 												size="tiny"
 												floated="left"
@@ -119,10 +129,14 @@ function Explore() {
 												href={`/${result.curator_id}`}
 											>
 												<img src={result.user.image_link} />
-												{/* <Link to={`/${result.curator_id}`}> */}
 												{result.user.username}
-												{/* </Link> */}
-											</Label>
+											</Label> */}
+											<Image src={result.user.image_link} avatar />
+											<span>
+												<Link to={`/${result.curator_id}`}>
+													{result.user.username}
+												</Link>
+											</span>
 											<Button
 												size="tiny"
 												floated="right"

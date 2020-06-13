@@ -101,13 +101,16 @@ export const FETCH_FEED_ITEMS_OFCURATOR_LISTID = gql`
 
 export const COMBINED_FETCH = gql`
 	query($user_id: String!) {
-		lists(where: { curator_id: { _eq: $user_id } }) {
+		lists(
+			where: { curator_id: { _eq: $user_id } }
+			order_by: { list_name: asc }
+		) {
 			list_name
 			id
 			description
 			curator_id
 		}
-		tag {
+		tag(order_by: { name: asc }) {
 			id
 			name
 			user_id

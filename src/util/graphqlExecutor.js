@@ -1142,7 +1142,7 @@ const GetAllLists = () => {
 
 const GET_ALL_TAGS = gql`
 	query MyQuery {
-		tag {
+		tag(order_by: { name: asc }) {
 			id
 			name
 			user_id
@@ -1483,7 +1483,7 @@ const FETCH_ITEM_LIKES = gql`
 
 const GTI = gql`
 	query MyQuery($id: uuid, $user_id: String) {
-		tag(where: { id: { _eq: $id } }) {
+		tag(where: { id: { _eq: $id } }, order_by: { name: asc }) {
 			id
 			name
 			item_tags {
@@ -1814,6 +1814,73 @@ const GetBookmarksOfUser = (user_id) => {
 		.catch((error) => console.log(error));
 };
 
+const CURRENTCONSUMPTION = gql`
+	query MyQuery($user_id: String) {
+		items_youtube(
+			where: { user_id: { _eq: $user_id } }
+			order_by: { created_at: desc_nulls_last }
+		) {
+			auto_description
+			created_at
+			description
+			embed
+			id
+			link
+			title
+			user_id
+		}
+		items_twitter(
+			where: { user_id: { _eq: $user_id } }
+			order_by: { created_at: desc_nulls_last }
+		) {
+			user_name
+			user_id
+			link
+			id
+			embed
+			description
+			created_at
+		}
+		items_pocket(
+			where: { user_id: { _eq: $user_id } }
+			order_by: { created_at: desc_nulls_last }
+		) {
+			user_id
+			title
+			link
+			id
+			description
+			created_at
+			auto_image
+			auto_description
+		}
+		items_medium(
+			order_by: { created_at: desc_nulls_last }
+			where: { user_id: { _eq: $user_id } }
+		) {
+			user_id
+			title
+			link
+			id
+			description
+			created_at
+			auto_description
+		}
+	}
+`;
+
+const GetConsumptionOfUser = (user_id) => {
+	return client
+		.query({
+			query: CURRENTCONSUMPTION,
+			variables: {
+				user_id: user_id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -1840,6 +1907,7 @@ export {
 	GetAllBookmarkItems,
 	GetBookmarkItemsOfCurator,
 	GetBookmarksOfUser,
+	GetConsumptionOfUser,
 };
 
 export const DELETE_LIST = gql`

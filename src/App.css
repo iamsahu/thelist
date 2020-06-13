@@ -1,132 +1,137 @@
 .App {
-  text-align: center;
+	text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+	height: 40vmin;
+	pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+	.App-logo {
+		animation: App-logo-spin infinite 20s linear;
+	}
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+	background-color: #282c34;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
 }
 
 .App-link {
-  color: #61dafb;
+	color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 
-.ui#content{
-  
-  padding-top: 20px;
-  padding-left: 10px;
-  padding-right: 10px;
+.ui#content {
+	padding-top: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
-.profilecard{
-  background: #F0F0F3;
-  box-shadow: 10px 10px 30px rgba(174, 174, 192, 0.4), -10px -10px 30px #FFFFFF;
-  border-radius: 5px;
+.profilecard {
+	background: #f0f0f3;
+	box-shadow: 10px 10px 30px rgba(174, 174, 192, 0.4), -10px -10px 30px #ffffff;
+	border-radius: 5px;
 }
 
-.icobutton{
-  padding-top: 3px;
-  padding-bottom: 3px;
-  
+.icobutton {
+	padding-top: 3px;
+	padding-bottom: 3px;
 }
 
-.scrolly
-{
-  overflow-y: auto;
-  scrollbar-width: 2px;
-  height: 80vh; 
+.scrolly {
+	overflow-y: auto;
+	scrollbar-width: 2px;
+	height: 80vh;
 }
 
-.scrollyExplore
-{
-  overflow-y: auto;
-  scrollbar-width: 2px;
-  height: 85vh; 
+.scrollyExplore {
+	overflow-y: auto;
+	scrollbar-width: 2px;
+	height: 90vh;
 }
 
-.borderless{
-  border: none;
+.scrollyConsump {
+	padding-top: 20px;
+	overflow-y: auto;
+	scrollbar-width: 2px;
+	height: 95vh;
 }
 
-.novscroll{
-  overflow: hidden;
-  height: 100vh;
+.borderless {
+	border: none;
 }
 
-.usp{
-  padding-top: 20px;
-  padding-left: 10px;
-  padding-right: 10px;
+.novscroll {
+	overflow: hidden;
+	height: 100vh;
 }
 
-.scroll{
-  /* width: 0 !important; */
-  overflow: auto;
-  height: 100vh;
+.usp {
+	padding-top: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
-.scrollEntry{
-  /* width: 0 !important; */
-  overflow: auto;
-  height: 100vh;
-  padding-top: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
+.scroll {
+	/* width: 0 !important; */
+	overflow: auto;
+	height: 100vh;
+}
+
+.scrollEntry {
+	/* width: 0 !important; */
+	overflow: auto;
+	height: 100vh;
+	padding-top: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 .overflow-auto::-webkit-scrollbar,
 .overflow-y-auto::-webkit-scrollbar,
 .overflow-x-auto::-webkit-scrollbar {
-  width: 7px;
-  height: 85vh;
+	width: 7px;
+	height: 85vh;
 }
 
-.xyz{
-  display: flex; 
-align-items: stretch; 
+.xyz {
+	display: flex;
+	align-items: stretch;
 }
 
-.zxc{
-  background-size: contain;
-  height: 300;
-  width: 300;
+.zxc {
+	background-size: contain;
+	height: 300;
+	width: 300;
 }
 
-.landingBG{
-  background-color: #fdfd96;
+.landingBG {
+	background-color: #fdfd96;
 }
 
-.card{
-  flex: 1; /* Shrink and grow according to available height */
-  flex-basis: 0;
+.card {
+	flex: 1; /* Shrink and grow according to available height */
+	flex-basis: 0;
 }
 
-.imageFix{
-  display:table-cell; vertical-align:middle; text-align:center
+.imageFix {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
 }

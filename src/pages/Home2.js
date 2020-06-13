@@ -13,10 +13,11 @@ import {
 import PopularProfile from "../components/PopularProfile";
 import HomeListsDisplay from "../components/HomeListsDisplay";
 import HomeTagsDisplay from "../components/HomeTagsDisplay";
+import Explore2 from "../components/Explore2";
 
 function Home2(props) {
 	const [welcomeBox, setwelcomeBox] = useState(true);
-	const [activeItem, setactiveItem] = useState(<HomeListsDisplay />);
+	const [activeItem, setactiveItem] = useState(<Explore2 />);
 	const [activeTab, setactiveTab] = useState("lists");
 
 	// function reducer(state, action) {
@@ -51,7 +52,7 @@ function Home2(props) {
 		// dispatch({ activeItem:name })
 		switch (name) {
 			case "lists":
-				setactiveItem(<HomeListsDisplay />);
+				setactiveItem(<Explore2 />);
 				setactiveTab("lists");
 				break;
 			case "tags":
@@ -73,14 +74,14 @@ function Home2(props) {
 		<>
 			<Responsive {...Responsive.onlyMobile}>
 				<div>
-					{welcomeBox ? (
+					{/* {welcomeBox ? (
 						<Message onDismiss={handleDismiss}>
 							<Message.Header>Welcome to List Space</Message.Header>
 							<Message.List items={items} />
 						</Message>
 					) : (
 						<div></div>
-					)}
+					)} */}
 
 					<Menu pointing secondary>
 						<Menu.Item
@@ -104,51 +105,50 @@ function Home2(props) {
 				</div>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
-				<div id="content" className="ui">
-					{welcomeBox ? (
-						<Message onDismiss={handleDismiss}>
-							<Message.Header>Welcome to List Space</Message.Header>
-							<Message.List items={items} />
-						</Message>
-					) : (
-						<div></div>
-					)}
-					<Grid columns={3}>
-						<Grid.Column width={3}>
-							{/* <Header as='h3'>Tags</Header>
+				{/* {welcomeBox ? (
+					<Message onDismiss={handleDismiss}>
+						<Message.Header>Welcome to List Space</Message.Header>
+						<Message.List items={items} />
+					</Message>
+				) : (
+					<div></div>
+				)} */}
+				<Grid>
+					{/* <Grid.Column width={3}>
+						{/* <Header as='h3'>Tags</Header>
                     <Divider/>
                     <HomeTagsDisplay/> */}
-						</Grid.Column>
-						<Grid.Column width={9}>
-							<Menu pointing secondary>
-								<Menu.Item
-									name="lists"
-									active={activeTab === "lists"}
-									onClick={handleItemClick}
-								/>
-								<Menu.Item
-									name="tags"
-									active={activeTab === "tags"}
-									onClick={handleItemClick}
-								/>
-								<Menu.Item
-									name="curators"
-									active={activeTab === "curators"}
-									onClick={handleItemClick}
-								/>
-							</Menu>
-							{/* <Header as='h3'>Lists</Header>
+					{/* </Grid.Column> */}
+					<Grid.Column>
+						<Menu pointing secondary>
+							<Menu.Item
+								name="lists"
+								active={activeTab === "lists"}
+								onClick={handleItemClick}
+							/>
+							<Menu.Item
+								name="tags"
+								active={activeTab === "tags"}
+								onClick={handleItemClick}
+							/>
+							<Menu.Item
+								name="curators"
+								active={activeTab === "curators"}
+								onClick={handleItemClick}
+							/>
+						</Menu>
+						{/* <Header as='h3'>Lists</Header>
                     <Divider/>
                     <HomeListsDisplay/> */}
-							{activeItem}
-						</Grid.Column>
-						<Grid.Column width={4}>
-							{/* <Header as='h3'>Curators</Header>
+						<div className="scrollyExplore">{activeItem}</div>
+					</Grid.Column>
+					{/* <Grid.Column width={4}> */}
+					{/* <Header as='h3'>Curators</Header>
                     <Divider/>
                     <PopularProfile/> */}
-						</Grid.Column>
-					</Grid>
-				</div>
+					{/* </Grid.Column> */}
+				</Grid>
+				{/* </div> */}
 			</Responsive>
 		</>
 	);

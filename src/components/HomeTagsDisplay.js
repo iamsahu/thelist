@@ -3,6 +3,7 @@ import { GetAllTags } from "../util/graphqlExecutor";
 import SearchResultItem from "./SearchResultItem";
 import { List, Responsive } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import StackGrid from "react-stack-grid";
 
 import ContentContext from "../context/ContentContext";
 
@@ -53,7 +54,13 @@ function HomeTagsDisplay() {
 						</Responsive>
 						<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 							<div className="scrollyExplore">
-								<List animated verticalAlign="middle">
+								{/* <List animated verticalAlign="middle"> */}
+								<StackGrid
+									gutterWidth={10}
+									gutterHeight={10}
+									appearDelay={5}
+									columnWidth={200}
+								>
 									{searchResult.tag.map((result) => (
 										<List.Item key={result.id}>
 											<List.Content
@@ -73,7 +80,8 @@ function HomeTagsDisplay() {
 											</List.Content>
 										</List.Item>
 									))}
-								</List>
+									{/* </List> */}
+								</StackGrid>
 							</div>
 						</Responsive>
 					</>

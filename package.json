@@ -35,11 +35,14 @@
     "react-share": "^4.1.0",
     "react-stack-grid": "^0.7.1",
     "react-toastify": "^6.0.4",
+    "react-twitter-embed": "^3.0.3",
     "react-twitter-login": "^1.1.2",
+    "react-youtube": "^7.11.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-forest-themes": "^1.0.3",
     "semantic-ui-react": "^0.88.2",
-    "use-clippy": "^1.0.6"
+    "use-clippy": "^1.0.6",
+    "youtube-id": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
