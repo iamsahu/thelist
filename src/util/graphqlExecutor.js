@@ -1881,6 +1881,89 @@ const GetConsumptionOfUser = (user_id) => {
 		.catch((error) => console.log(error));
 };
 
+const GETCONTENTBETWEEN = gql`
+	query MyQuery($start: timestamptz, $end: timestamptz, $user_id: String) {
+		items_medium(
+			where: {
+				created_at: { _gte: $start, _lte: $end }
+				user_id: { _eq: $user_id }
+			}
+			order_by: { created_at: desc_nulls_last }
+		) {
+			user_id
+			title
+			link
+			id
+			description
+			created_at
+			auto_description
+			image
+		}
+		items_youtube(
+			where: {
+				created_at: { _gte: $start, _lte: $end }
+				user_id: { _eq: $user_id }
+			}
+			order_by: { created_at: desc_nulls_last }
+		) {
+			auto_description
+			created_at
+			description
+			embed
+			id
+			link
+			title
+			user_id
+			image
+		}
+		items_twitter(
+			where: {
+				created_at: { _gte: $start, _lte: $end }
+				user_id: { _eq: $user_id }
+			}
+			order_by: { created_at: desc_nulls_last }
+		) {
+			user_name
+			user_id
+			link
+			id
+			embed
+			description
+			created_at
+		}
+		items_pocket(
+			where: {
+				user_id: { _eq: $user_id }
+				created_at: { _gte: $start, _lte: $end }
+			}
+			order_by: { created_at: desc_nulls_last }
+		) {
+			user_id
+			title
+			link
+			id
+			description
+			created_at
+			auto_image
+			auto_description
+		}
+	}
+`;
+
+const GetConsumptionOfUserBetween = (start, end, user_id) => {
+	return client
+		.query({
+			query: GETCONTENTBETWEEN,
+			variables: {
+				start: start,
+				end: end,
+				user_id: user_id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -1908,6 +1991,7 @@ export {
 	GetBookmarkItemsOfCurator,
 	GetBookmarksOfUser,
 	GetConsumptionOfUser,
+	GetConsumptionOfUserBetween,
 };
 
 export const DELETE_LIST = gql`

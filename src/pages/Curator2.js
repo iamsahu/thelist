@@ -128,7 +128,7 @@ function Curator(props) {
 						.catch((error) => console.log(error))
 				: GetList({ userid: propSent.curator_id, listid: propSent.contentID })
 						.then((data) => {
-							console.log("loading lists ");
+							// console.log("loading lists ");s
 							// console.log(data)
 							setPosts(data.items);
 							setloadState(1);

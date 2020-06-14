@@ -195,7 +195,7 @@ function AddItem() {
 				contentChange((content) => ({ ...content, add: "ad" }));
 			});
 			SetModal(false);
-			reward.rewardMe();
+			// reward.rewardMe();
 			ReactGA.event({
 				category: "Item",
 				action: "Create",

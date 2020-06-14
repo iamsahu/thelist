@@ -57,7 +57,7 @@
 .scrolly {
 	overflow-y: auto;
 	scrollbar-width: 2px;
-	height: 80vh;
+	height: 75vh;
 }
 
 .scrollyExplore {
