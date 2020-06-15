@@ -17,6 +17,7 @@ import {
 	GetAllBookmarkItems,
 	GetBookmarkItemsOfCurator,
 	DoesUserExists,
+	GetTagsListsUsers,
 } from "../util/graphqlExecutor";
 
 function Curator(props) {
@@ -26,28 +27,46 @@ function Curator(props) {
 	const [userC, userChange] = useContext(UserContext);
 	const [content, contentChange] = useContext(ContentContext);
 	const [lastCurator, setlastCurator] = useState("");
+	const [reload, setreload] = useState(false);
 	var userid;
 	var propSent = {};
 
 	// console.log(props);
+	// console.log(userC);
 	if (typeof props.user !== "undefined") {
 		// userC.curator_id = props.user;
 		if (userC.curator_id !== props.user) {
+			// if (userC.lastCurator !== props.user) {
+			setreload(true);
+			// 	userChange((userC) => {
+			// 		return { ...userC, curator_id: userid, lastCurator: userid };
+			// 	});
+			// } else {
 			userChange((userC) => {
-				return { ...userC, curator_id: props.use };
+				return { ...userC, curator_id: props.user };
 			});
+			// }
 			setlastCurator(userid);
 		}
 		propSent = { curator_id: props.user, contentType: "lists", contentID: "" };
 	} else if (typeof props.match.params !== "undefined") {
-		// console.log("here undefined")
+		// console.log("here undefined");
 		// console.log(props.match.params.contenttype)
 		userid = props.match.params.user;
-		userC.curator_id = userid;
+		// userC.curator_id = userid;
 		if (userC.curator_id !== userid) {
+			userC.curator_id = userid;
+			console.log("assign");
+			// if (userC.lastCurator !== userid) {
+			setreload(true);
+			// 	userChange((userC) => {
+			// 		return { ...userC, curator_id: userid, lastCurator: userid };
+			// 	});
+			// } else {
 			userChange((userC) => {
 				return { ...userC, curator_id: userid };
 			});
+			// }
 			setlastCurator(userid);
 		}
 		if (props.match.params.contenttype === "lists") {
@@ -116,7 +135,7 @@ function Curator(props) {
 			? propSent.contentID === ""
 				? GetItemsUsers({ curator_id: propSent.curator_id })
 						.then((data) => {
-							console.log("loading lists empty");
+							// console.log("loading lists empty");
 							setPosts(data.items);
 							setloadState(1);
 							if (data.items.length > 0) {
@@ -249,6 +268,67 @@ function Curator(props) {
 	}
 
 	loadUser();
+
+	async function fetchTagsLists(id) {
+		await GetTagsListsUsers({ curator_id: id }).then((data) => {
+			// console.log(data);
+			curationTags(data);
+		});
+	}
+
+	function curationTags(tagData) {
+		var posts = tagData["tag"];
+		const tempArr = posts.map((post) => ({
+			text: post.name,
+			key: post.name,
+			value: post.id,
+		}));
+
+		// lists = tagData["lists"];
+		const tempArr2 = tagData["lists"].map((item) => ({
+			text: item.list_name,
+			key: item.list_name,
+			value: item.id,
+			id: item.id,
+			list_name: item.list_name,
+			// description:item.description,
+			curator_id: item.curator_id,
+		}));
+
+		const bookmarkTemp = tagData["item_bookmark"].map((bookmark) => ({
+			name: bookmark.name,
+			curator: bookmark.curator,
+			id: bookmark.id,
+			username: bookmark.user.username,
+		}));
+		// console.log(tagData)
+		// console.log("hereeee");
+		if (tagData["lists"].length > 0) {
+			contentChange((content) => ({
+				...content,
+				tags: tempArr,
+				lists: tempArr2,
+				bookmarks: bookmarkTemp,
+			}));
+
+			// setTags(tagsTemp);
+			// setLists(listsTemp);
+			// setbookmark(bookmarkTemp);
+		}
+		// curationLists()
+	}
+
+	if (reload) {
+		setreload(false);
+		if (typeof props.user !== "undefined") {
+			console.log("Fetching1");
+			// fetchTagsLists(props.user);
+		}
+		if (typeof props.match.params !== "undefined") {
+			// console.log("Fetching");
+			fetchTagsLists(props.match.params.user);
+		}
+	}
 	// console.log(content)
 	// return <div>loading</div>
 	return (

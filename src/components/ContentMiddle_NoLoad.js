@@ -306,7 +306,7 @@ function ContentMiddleNoLoad(props) {
 						{
 							props.propSent.contentType === "lists" &&
 								userC.loggedin_user_id === props.propSent.curator_id && (
-									<AddItem />
+									<AddItem listID={props.propSent.curator_id} />
 								)
 							// <Button circular icon='add' floated='right'/>
 						}

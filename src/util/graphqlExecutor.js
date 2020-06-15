@@ -1118,7 +1118,7 @@ const Search = (values) => {
 
 const GET_ALL_LISTS = gql`
 	query MyQuery {
-		lists {
+		lists(order_by: { created_at: desc_nulls_first }) {
 			description
 			id
 			curator_id
@@ -1555,7 +1555,7 @@ const DOILIKE = gql`
 `;
 
 const DoILike = (values) => {
-	console.log(values);
+	// console.log(values);
 	return client
 		.query({
 			query: DOILIKE,

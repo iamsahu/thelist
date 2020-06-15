@@ -65,7 +65,6 @@ function Explore3() {
 				<>
 					{/* <Responsive {...Responsive.onlyMobile}>Hell</Responsive>
 					<Responsive minWidth={Responsive.onlyTablet.minWidth}> */}
-
 					{/* <Card.Group stackable={true} doubling={true}> */}
 					<Container text>
 						{/* <StackGrid
