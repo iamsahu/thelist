@@ -311,12 +311,13 @@ function Curator(props) {
 			id: bookmark.id,
 			username: bookmark.user.username,
 		}));
-		// console.log(tagData)
+		// console.log(tagData);
 		// console.log("hereeee");
 		if (tagData["lists"].length > 0) {
 			contentChange((content) => ({
 				...content,
 				tags: tp,
+				alltags: tempArr,
 				lists: tempArr2,
 				bookmarks: bookmarkTemp,
 			}));
