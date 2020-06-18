@@ -60,6 +60,12 @@
 	height: 75vh;
 }
 
+.scrollyCuration {
+	overflow-y: auto;
+	scrollbar-width: 2px;
+	height: 80vh;
+}
+
 .scrollyExplore {
 	overflow-y: auto;
 	scrollbar-width: 2px;
@@ -134,4 +140,11 @@
 	display: table-cell;
 	vertical-align: middle;
 	text-align: center;
+}
+
+.ui#culanding {
+	/* padding-bottom: 40px; */
+	padding-top: 40px;
+	padding-left: 10px;
+	padding-right: 10px;
 }

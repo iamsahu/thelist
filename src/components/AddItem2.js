@@ -77,7 +77,7 @@ let controller;
 controller = new AbortController();
 const signal = controller.signal;
 
-function AddItem(props) {
+function AddItem2(props) {
 	const [content, contentChange] = useContext(ContentContext);
 	const [clipboard, setClipboard] = useClippy();
 	const [userC, userChange] = useContext(UserContext);
@@ -85,7 +85,7 @@ function AddItem(props) {
 	const [showModal, SetModal] = useState(false);
 	const [listID, SetListID] = useState("");
 	const [newItemID, SetItemID] = useState("");
-	const [dropTag, SetDropTag] = useState(content.alltags);
+	const [dropTag, SetDropTag] = useState(content.tags);
 	const [dropList, SetDropList] = useState(content.lists);
 	const [listDescription, setlistDescription] = useState(false);
 	const [reward, setreward] = useState(null);
@@ -287,7 +287,7 @@ function AddItem(props) {
 		//     }
 		// }
 		SetModal(true);
-		SetDropTag(content.alltags);
+		SetDropTag(content.tags);
 		// if(!loading){
 		//     // console.log(data)
 		//     const tempArr = data.tag.map(post=>({
@@ -316,7 +316,7 @@ function AddItem(props) {
 
 	function OpenHandle() {
 		SetDropList(content.lists);
-		SetDropTag(content.alltags);
+		SetDropTag(content.tags);
 		console.log("Open Modal");
 	}
 
@@ -462,4 +462,4 @@ function AddItem(props) {
 	);
 }
 
-export default AddItem;
+export default AddItem2;

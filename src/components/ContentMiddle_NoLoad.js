@@ -45,6 +45,7 @@ import MetaTags from "react-meta-tags";
 import ReactGA from "react-ga";
 import Mixpanel from "../util/mix";
 import Tap from "react-interactions";
+import { Loader } from "semantic-ui-react";
 
 function ContentMiddleNoLoad(props) {
 	// console.log(props)
@@ -64,7 +65,11 @@ function ContentMiddleNoLoad(props) {
 	// console.log(props.propSent.description)
 
 	if (props.posts === null) {
-		return <div>Loading</div>;
+		return (
+			<div>
+				<Loader active inline="centered" />
+			</div>
+		);
 	}
 
 	if (props.propSent.contentType === "lists") {

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { GetAllTags } from "../util/graphqlExecutor";
 import SearchResultItem from "./SearchResultItem";
-import { List, Responsive } from "semantic-ui-react";
+import { List, Responsive, Loader } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import StackGrid from "react-stack-grid";
 
@@ -24,7 +24,9 @@ function HomeTagsDisplay() {
 		<>
 			{
 				loading ? (
-					<div>Loading</div>
+					<div>
+						<Loader active inline="centered" />
+					</div>
 				) : (
 					<>
 						<Responsive {...Responsive.onlyMobile}>

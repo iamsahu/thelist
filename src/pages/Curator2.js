@@ -135,7 +135,7 @@ function Curator(props) {
 			? propSent.contentID === ""
 				? GetItemsUsers({ curator_id: propSent.curator_id })
 						.then((data) => {
-							// console.log("loading lists empty");
+							console.log("loading lists empty");
 							setPosts(data.items);
 							setloadState(1);
 							if (data.items.length > 0) {
@@ -284,6 +284,16 @@ function Curator(props) {
 			value: post.id,
 		}));
 
+		var tp = [];
+		posts.forEach(function (element, index, array) {
+			if (element.user_id === props.match.params.user)
+				tp.push({
+					text: element.name,
+					key: element.name,
+					value: element.id,
+				});
+		});
+
 		// lists = tagData["lists"];
 		const tempArr2 = tagData["lists"].map((item) => ({
 			text: item.list_name,
@@ -306,7 +316,7 @@ function Curator(props) {
 		if (tagData["lists"].length > 0) {
 			contentChange((content) => ({
 				...content,
-				tags: tempArr,
+				tags: tp,
 				lists: tempArr2,
 				bookmarks: bookmarkTemp,
 			}));

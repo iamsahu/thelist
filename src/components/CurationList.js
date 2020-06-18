@@ -103,133 +103,135 @@ function CurationList(props) {
 	function RenderTags() {
 		return (
 			<List animated verticalAlign="middle">
-				<List.Item key="all">
-					{/* <MixpanelConsumer>
+				<div className="scrollyCuration">
+					<List.Item key="all">
+						{/* <MixpanelConsumer>
                         {mixpanel=> */}
-					<List.Content
-						onClick={(e) => {
-							contentChange((content) => ({
-								...content,
-								currentTag: "all",
-								currentTagID: "",
-								contentType: "tags",
-								currentListID: "",
-							}));
-							Mixpanel.track("Tag Click", { tag: "all", tagID: "" });
-							ReactGA.event({
-								category: "Tag",
-								action: "Click",
-								// value:'all',
-								transport: "beacon",
-							});
-						}}
-					>
-						<Link to={`/${userC.curator_id}/tags/`}># All</Link>
-					</List.Content>
-					{/* }
+						<List.Content
+							onClick={(e) => {
+								contentChange((content) => ({
+									...content,
+									currentTag: "all",
+									currentTagID: "",
+									contentType: "tags",
+									currentListID: "",
+								}));
+								Mixpanel.track("Tag Click", { tag: "all", tagID: "" });
+								ReactGA.event({
+									category: "Tag",
+									action: "Click",
+									// value:'all',
+									transport: "beacon",
+								});
+							}}
+						>
+							<Link to={`/${userC.curator_id}/tags/`}># All</Link>
+						</List.Content>
+						{/* }
                     </MixpanelConsumer> */}
-				</List.Item>
-				{
-					// (
-					// posts = tagData["data"]["tag"]),
-					content.tags.length > 0 ? (
-						content.tags &&
-						content.tags.map((post) => (
-							<List.Item key={post.value}>
-								{/* <MixpanelConsumer>
+					</List.Item>
+					{
+						// (
+						// posts = tagData["data"]["tag"]),
+						content.tags.length > 0 ? (
+							content.tags &&
+							content.tags.map((post) => (
+								<List.Item key={post.value}>
+									{/* <MixpanelConsumer>
                         {mixpanel=> */}
-								<List.Content
-									onClick={(e) => {
-										contentChange((content) => ({
-											...content,
-											currentTag: post.text,
-											currentTagID: post.value,
-											currentListID: "",
-											contentType: "tags",
-										}));
-										Mixpanel.track("Tag Click", {
-											tag: post.text,
-											tagID: post.value,
-										});
-										ReactGA.event({
-											category: "Tag",
-											action: "Click",
-											// value:post.text,
-											transport: "beacon",
-										});
-									}}
-								>
-									<Link to={`/${userC.curator_id}/tags/${post.value}`}>
-										# {post.text}
-									</Link>
-								</List.Content>
-								{/* }
+									<List.Content
+										onClick={(e) => {
+											contentChange((content) => ({
+												...content,
+												currentTag: post.text,
+												currentTagID: post.value,
+												currentListID: "",
+												contentType: "tags",
+											}));
+											Mixpanel.track("Tag Click", {
+												tag: post.text,
+												tagID: post.value,
+											});
+											ReactGA.event({
+												category: "Tag",
+												action: "Click",
+												// value:post.text,
+												transport: "beacon",
+											});
+										}}
+									>
+										<Link to={`/${userC.curator_id}/tags/${post.value}`}>
+											# {post.text}
+										</Link>
+									</List.Content>
+									{/* }
                             </MixpanelConsumer> */}
-							</List.Item>
-						))
-					) : (
-						<div>
-							You have not created any tags. Use add item on the top right side
-							to add an item and tag it!
-						</div>
-					)
-				}
+								</List.Item>
+							))
+						) : (
+							<div>
+								You have not created any tags. Use add item on the top right
+								side to add an item and tag it!
+							</div>
+						)
+					}
+				</div>
 			</List>
 		);
 	}
 
 	function RenderLists() {
 		return (
-			// <div className="scrolly">
 			<List animated verticalAlign="middle">
-				{content.lists.length > 0 ? (
-					// (lists = tagData["data"]["lists"]),
-					content.lists.length > 0 ? (
-						content.lists &&
-						content.lists.map((post) => (
-							<List.Item key={post.id}>
-								{/* <MixpanelConsumer>
+				<div className="scrollyCuration">
+					{content.lists.length > 0 ? (
+						// (lists = tagData["data"]["lists"]),
+						content.lists.length > 0 ? (
+							content.lists &&
+							content.lists.map((post) => (
+								<List.Item key={post.id}>
+									{/* <MixpanelConsumer>
                         {mixpanel=> */}
-								<List.Content
-									onClick={(e) => {
-										contentChange((content) => ({
-											...content,
-											currentList: post.list_name,
-											currentListID: post.id,
-											currentTagID: "",
-											contentType: "lists",
-										}));
-										Mixpanel.track("List Click", {
-											list: post.list_name,
-											listID: post.id,
-										});
-										ReactGA.event({
-											category: "List",
-											action: "Click",
-											// value:post.list_name,
-											transport: "beacon",
-										});
-									}}
-								>
-									<Link to={`/${userC.curator_id}/lists/${post.id}`}>
-										{post.list_name}
-									</Link>
-								</List.Content>
-								{/* }
+									<List.Content
+										onClick={(e) => {
+											contentChange((content) => ({
+												...content,
+												currentList: post.list_name,
+												currentListID: post.id,
+												currentTagID: "",
+												contentType: "lists",
+											}));
+											Mixpanel.track("List Click", {
+												list: post.list_name,
+												listID: post.id,
+											});
+											ReactGA.event({
+												category: "List",
+												action: "Click",
+												// value:post.list_name,
+												transport: "beacon",
+											});
+										}}
+									>
+										<Link to={`/${userC.curator_id}/lists/${post.id}`}>
+											{post.list_name}
+										</Link>
+									</List.Content>
+									{/* }
                              </MixpanelConsumer> */}
-							</List.Item>
-						))
+								</List.Item>
+							))
+						) : (
+							<div>
+								You have not created any lists. Use add item on the top right
+								side to add an item and create a list.
+							</div>
+						)
 					) : (
-						<div>
-							You have not created any lists. Use add item on the top right side
-							to add an item and create a list.
-						</div>
-					)
-				) : (
-					<div>No data</div>
-				)}
+						<div>No data</div>
+					)}
+				</div>
 			</List>
-			// </div>
 		);
 	}
 
@@ -237,54 +239,55 @@ function CurationList(props) {
 		return (
 			// <div className="scrolly">
 			<List animated verticalAlign="middle">
-				{content.bookmarks.length > 0 ? (
-					// (lists = tagData["data"]["item_bookmark"]),
-					content.bookmarks.length > 0 ? (
-						content.bookmarks &&
-						content.bookmarks.map((post) => (
-							<List.Item key={post.id}>
-								{/* <MixpanelConsumer>
+				<div className="scrollyCuration">
+					{content.bookmarks.length > 0 ? (
+						// (lists = tagData["data"]["item_bookmark"]),
+						content.bookmarks.length > 0 ? (
+							content.bookmarks &&
+							content.bookmarks.map((post) => (
+								<List.Item key={post.id}>
+									{/* <MixpanelConsumer>
                         {mixpanel=> */}
-								<List.Content
-									onClick={(e) => {
-										contentChange((content) => ({
-											...content,
-											currentList: post.name,
-											currentListID: post.id,
-											currentTagID: "",
-											contentType: "bookmark",
-										}));
-										Mixpanel.track("Bookmark Click", {
-											bookmark: post.name,
-											listID: post.id,
-										});
-										ReactGA.event({
-											category: "Bookmark",
-											action: "Click",
-											// value:post.list_name,
-											transport: "beacon",
-										});
-									}}
-								>
-									<Link to={`/${userC.curator_id}/bookmark/${post.curator}`}>
-										{post.username}
-									</Link>
-								</List.Content>
-								{/* }
+									<List.Content
+										onClick={(e) => {
+											contentChange((content) => ({
+												...content,
+												currentList: post.name,
+												currentListID: post.id,
+												currentTagID: "",
+												contentType: "bookmark",
+											}));
+											Mixpanel.track("Bookmark Click", {
+												bookmark: post.name,
+												listID: post.id,
+											});
+											ReactGA.event({
+												category: "Bookmark",
+												action: "Click",
+												// value:post.list_name,
+												transport: "beacon",
+											});
+										}}
+									>
+										<Link to={`/${userC.curator_id}/bookmark/${post.curator}`}>
+											{post.username}
+										</Link>
+									</List.Content>
+									{/* }
                              </MixpanelConsumer> */}
-							</List.Item>
-						))
+								</List.Item>
+							))
+						) : (
+							<div>
+								You have not created any Bookmarks. Explore your fellow
+								curator's feed and bookmark something that you like
+							</div>
+						)
 					) : (
-						<div>
-							You have not created any Bookmarks. Explore your fellow curator's
-							feed and bookmark something that you like
-						</div>
-					)
-				) : (
-					<div>No data</div>
-				)}
+						<div>No data</div>
+					)}
+				</div>
 			</List>
-			// </div>
 		);
 	}
 

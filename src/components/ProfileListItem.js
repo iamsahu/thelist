@@ -1,6 +1,7 @@
 import React from "react";
 import { List, Image, Item, Statistic } from "semantic-ui-react";
 
+import Linkify from "react-linkify";
 function ProfileListItem(props) {
 	return (
 		<>
@@ -13,7 +14,9 @@ function ProfileListItem(props) {
 					>
 						{props.username}
 					</Item.Header>
-					<Item.Description>{props.description}</Item.Description>
+					<Item.Description>
+						<Linkify>{props.description}</Linkify>
+					</Item.Description>
 				</Item.Content>
 				{/* <Item.Extra position='right' floated='right'>
                 <Statistic.Group size='mini'>

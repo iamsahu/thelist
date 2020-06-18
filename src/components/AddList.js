@@ -24,22 +24,41 @@ function AddList() {
 	});
 
 	const updateCache = (cache, { data }) => {
+		const existingItems = cache.readQuery({
+			query: COMBINED_FETCH,
+			variables: {
+				user_id: userC.loggedin_user_id,
+			},
+		});
+		// console.log(existingItems)
+		const newItem = data.insert_lists.returning[0];
+		// console.log(newItem)
+		existingItems.lists.push(newItem);
+		// console.log(existingItems)
+		cache.writeQuery({
+			query: COMBINED_FETCH,
+			variables: {
+				user_id: userC.loggedin_user_id,
+			},
+			data: existingItems,
+		});
+
 		// Fetch the items from the cache
 		// const existingItems = cache.readQuery({
-		//   query: FETCH_ALL,
-		// //   variables: {
-		// //     where: { curator_id: user.loggedin_user_id}
-		// //   }
+		//   query: COMBINED_FETCH,
+		//   variables: {
+		//     where: { curator_id: user.loggedin_user_id}
+		//   }
 		// });
 		// Add the new item to the cache
 		// console.log(data)
 		// console.log("List Insert")
-		const newItem = data.insert_lists.returning[0];
+		// const newItem = data.insert_lists.returning[0];
 		// cache.writeQuery({
 		//   query: FETCH_ALL,
 		//   data: {lists: [newItem, ...existingItems.lists]}
 		// });
-		// values.id='';
+		values.id = "";
 		values.list_name = "";
 		// // values.curator='';
 		values.description = "";
@@ -51,7 +70,7 @@ function AddList() {
 	const [createList, { error }] = useMutation(CREATE_LIST, {
 		variables: values,
 		update: updateCache,
-		onError: (error, variables) => {
+		onError: (error) => {
 			console.log(error);
 		},
 		refetchQueries: [

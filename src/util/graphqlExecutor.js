@@ -130,26 +130,26 @@ function InsertNewList(curator_id, list_name, listDescription) {
 				list_name: list_name,
 				description: listDescription,
 			},
-			// update:(cache,{data})=>{
-			//     const existingItems = cache.readQuery({
-			//         query:COMBINED_FETCH,
-			//         variables:{
-			//             user_id:curator_id
-			//         },
-			//     })
-			//     // console.log(existingItems)
-			//     const newItem = data.insert_lists.returning[0];
-			//     // console.log(newItem)
-			//     existingItems.lists.push(newItem)
-			//     // console.log(existingItems)
-			//     cache.writeQuery({
-			//         query: COMBINED_FETCH,
-			//         variables:{
-			//             user_id:curator_id
-			//         },
-			//         data: existingItems
-			//     });
-			// }
+			update: (cache, { data }) => {
+				const existingItems = cache.readQuery({
+					query: COMBINED_FETCH,
+					variables: {
+						user_id: curator_id,
+					},
+				});
+				// console.log(existingItems)
+				const newItem = data.insert_lists.returning[0];
+				// console.log(newItem)
+				existingItems.lists.push(newItem);
+				// console.log(existingItems)
+				cache.writeQuery({
+					query: COMBINED_FETCH,
+					variables: {
+						user_id: curator_id,
+					},
+					data: existingItems,
+				});
+			},
 			refetchQueries: [
 				{
 					query: COMBINED_FETCH,
@@ -1964,6 +1964,45 @@ const GetConsumptionOfUserBetween = (start, end, user_id) => {
 		.catch((error) => console.log(error));
 };
 
+const GETLISTSOFUSER = gql`
+	query MyQuery($user_id: String) {
+		lists(
+			order_by: { created_at: desc_nulls_last }
+			where: { user: { id: { _eq: $user_id } } }
+		) {
+			created_at
+			curator_id
+			description
+			id
+			list_name
+			like_lists_aggregate {
+				aggregate {
+					count
+				}
+			}
+			items {
+				like_items_aggregate {
+					aggregate {
+						count
+					}
+				}
+			}
+		}
+	}
+`;
+
+const GetListsOfUser = (user_id) => {
+	return client
+		.query({
+			query: GETLISTSOFUSER,
+			variables: {
+				user_id: user_id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -1992,6 +2031,7 @@ export {
 	GetBookmarksOfUser,
 	GetConsumptionOfUser,
 	GetConsumptionOfUserBetween,
+	GetListsOfUser,
 };
 
 export const DELETE_LIST = gql`

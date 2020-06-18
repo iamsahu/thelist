@@ -15,6 +15,7 @@ import {
 	Icon,
 	Dropdown,
 	Card,
+	Loader,
 } from "semantic-ui-react";
 import { UserProvider } from "./context/UserContext";
 import { ContentProvider } from "./context/ContentContext";
@@ -23,9 +24,11 @@ import AddList from "./components/AddList";
 import Home2 from "./pages/Home2";
 import HomeNoLogin from "./pages/HomeNoLogin";
 import Curator2 from "./pages/Curator2";
+import CuratorLanding from "./pages/CuratorLanding";
 import SearchResults from "./pages/SearchResults";
 import DataEntry from "./pages/DataEntry";
 import LandingPage from "./pages/LandingPage";
+import CurrentConsumption from "./pages/CurrentConsumption";
 import history from "./util/history";
 import { useAuth0 } from "./react-auth0-spa";
 import { toast } from "react-toastify";
@@ -61,6 +64,7 @@ function App() {
 		curator_id: "",
 		loggedin_user_id: "",
 		image_link: "",
+		lastCurator: "",
 	});
 	const [content, contentChange] = useState({
 		currentTag: "None",
@@ -81,6 +85,7 @@ function App() {
 	const [userExists, SetExists] = useState(false);
 	const [loadingT, setloading] = useState(true);
 	const [userCheckStatus, setuserCheckStatus] = useState(true);
+
 	// mixpanel.identify(userC.loggedin_user_id)
 	// mixpanel.track("Video play", {"genre": "hip-hop", "duration in seconds": 42});
 
@@ -117,6 +122,8 @@ function App() {
 						.catch((error) => {
 							// console.log(error)
 						});
+				} else {
+					//Picture update
 				}
 			}
 			setloading(false);
@@ -131,7 +138,7 @@ function App() {
 
 			if (userC.loggedin_user_id === "") {
 				userChange({
-					curator_id: userID,
+					curator_id: "",
 					loggedin_user_id: userID,
 					name: user["name"],
 					nickname: user["nickname"],
@@ -142,6 +149,7 @@ function App() {
 			}
 		}
 	}
+
 	// console.log(userID)
 	// console.log("App")
 	const [accState, setaccState] = useState(0);
@@ -179,11 +187,11 @@ function App() {
 		// console.log("here");
 		// console.log(content);
 		if (content.tags.length > 0 && userC.curator_id !== "") {
-			// console.log("here");
+			// console.log("/here");
 			// console.log(userC)
 			// console.log(content.tags)
 
-			console.log("New Fetch");
+			// console.log("New Fetch");
 			var tagsTemp = content.tags.map((tag) => ({
 				as: "a",
 				content: tag.text,
@@ -208,9 +216,9 @@ function App() {
 		} else if (content.tags === {} && userC.curator_id !== "") {
 			console.log("no log");
 		} else if (lastCurator !== userC.curator_id) {
-			console.log("New Curator");
+			// console.log("New Curator");
 			// console.log(lastCurator);
-			console.log(userC.curator_id);
+			// console.log(userC.curator_id);
 			setlastCurator(userC.curator_id);
 			//Sync code
 			fetchTagsLists(userC.curator_id);
@@ -232,6 +240,15 @@ function App() {
 			value: post.id,
 		}));
 
+		var tp = [];
+		posts.forEach(function (element, index, array) {
+			if (element.user_id === userC.curator_id)
+				tp.push({
+					text: element.name,
+					key: element.name,
+					value: element.id,
+				});
+		});
 		// lists = tagData["lists"];
 		const tempArr2 = tagData["lists"].map((item) => ({
 			text: item.list_name,
@@ -263,28 +280,17 @@ function App() {
 		// console.log(tagData)
 		// console.log("hereeee");
 		if (tagData["lists"].length > 0) {
-			// console.log('This was executed')
-			// console.log(tagData)
 			contentChange((content) => ({
 				...content,
-				tags: tempArr,
+				alltags: tempArr,
+				tags: tp,
 				lists: tempArr2,
 				bookmarks: bookmarkTemp,
 			}));
-			// console.log(tagsTemp);
-			// console.log(listsTemp);
+
 			setTags(tagsTemp);
 			setLists(listsTemp);
 			setbookmark(bookmarkTemp);
-			// console.log("fetched");
-			// if (content.contentType === "lists" && content.currentListID === "") {
-			// 	console.log("Auto setting list name");
-			// 	contentChange((content) => ({
-			// 		...content,
-			// 		currentList: lists[0].list_name,
-			// 		currentListID: lists[0].id,
-			// 	}));
-			// }
 		}
 		// curationLists()
 	}
@@ -305,6 +311,13 @@ function App() {
 		setaccState(newIndex);
 		// this.setState({ activeIndex: newIndex })
 	};
+
+	if (loading)
+		return (
+			<div>
+				<Loader active inline="centered" />
+			</div>
+		);
 
 	return (
 		// <MixpanelProvider mixpanel={mixpanel}>
@@ -459,6 +472,11 @@ function App() {
 						<div className="novscroll">
 							<Container style={{ marginTop: "3em", height: "85vh" }} fluid>
 								<Switch>
+									<Route
+										exact
+										path="/consumption/:user"
+										component={CurrentConsumption}
+									/>
 									<Route exact path="/explore" component={Home2} />
 									<Route exact path="/dataentry" component={DataEntry} />
 									<Route exact path="/search" component={SearchResults} />

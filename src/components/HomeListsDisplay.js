@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { GetAllLists } from "../util/graphqlExecutor";
 import SearchResultItem from "./SearchResultItem";
-import { Item, Responsive } from "semantic-ui-react";
+import { Item, Responsive, Loader } from "semantic-ui-react";
 
 function HomeListsDisplay() {
 	const [loading, setloading] = useState(true);
@@ -18,7 +18,9 @@ function HomeListsDisplay() {
 	return (
 		<>
 			{loading ? (
-				<div>Loading</div>
+				<div>
+					<Loader active inline="centered" />
+				</div>
 			) : (
 				<>
 					<Responsive {...Responsive.onlyMobile}>

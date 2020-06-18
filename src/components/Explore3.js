@@ -13,6 +13,7 @@ import {
 	Image,
 	Container,
 	Button,
+	Loader,
 } from "semantic-ui-react";
 
 function Explore3() {
@@ -60,7 +61,9 @@ function Explore3() {
 	return (
 		<>
 			{loading ? (
-				<div>Loading</div>
+				<div>
+					<Loader active inline="centered" />
+				</div>
 			) : (
 				<>
 					{/* <Responsive {...Responsive.onlyMobile}>Hell</Responsive>

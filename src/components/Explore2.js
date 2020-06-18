@@ -14,6 +14,7 @@ import {
 	Container,
 	Button,
 	Header,
+	Loader,
 } from "semantic-ui-react";
 
 function Explore() {
@@ -69,7 +70,9 @@ function Explore() {
 	return (
 		<>
 			{loading ? (
-				<div>Loading</div>
+				<div>
+					<Loader active inline="centered" />
+				</div>
 			) : (
 				<>
 					{/* <Responsive {...Responsive.onlyMobile}>Hell</Responsive>
