@@ -319,6 +319,7 @@ function AddItem(props) {
 		SetDropTag(content.alltags);
 		console.log("Open Modal");
 	}
+	if (typeof dropTag === "undefined") return <></>;
 
 	return (
 		<>
