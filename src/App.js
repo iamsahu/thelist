@@ -74,6 +74,7 @@ function App() {
 		currentList: "",
 		currentTagID: "",
 		currentListID: "",
+		alltags: {},
 	}); //Passing a function so that the consumer can change the content
 	const {
 		loading,
@@ -278,7 +279,7 @@ function App() {
 			username: bookmark.user.username,
 		}));
 		// console.log(tagData)
-		// console.log("hereeee");
+		console.log("Loaded tagging data");
 		if (tagData["lists"].length > 0) {
 			contentChange((content) => ({
 				...content,
