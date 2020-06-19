@@ -96,7 +96,7 @@ function Explore() {
 										key={result.id}
 										// color="yellow"
 										// style={{ "background-color": col, boxShadow: "none" }}
-										style={{ boxShadow: "none" }}
+										// style={{ boxShadow: "none" }}
 									>
 										{/* <Card.Content> */}
 										<Card.Content>

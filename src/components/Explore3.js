@@ -83,7 +83,7 @@ function Explore3() {
 									<Card.Group stackable={true} doubling={true}>
 										<Card
 											key={result.id}
-											style={{ "box-shadow": "none" }}
+											// style={{ "box-shadow": "none" }}
 											// style={{ "background-color": col, "box-shadow": "none" }}
 										>
 											{/* <Card.Content> */}
