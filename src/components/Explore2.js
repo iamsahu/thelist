@@ -95,10 +95,11 @@ function Explore() {
 										raised
 										key={result.id}
 										// color="yellow"
-										style={{ "background-color": col, boxShadow: "none" }}
+										// style={{ "background-color": col, boxShadow: "none" }}
+										style={{ boxShadow: "none" }}
 									>
 										{/* <Card.Content> */}
-										<Card.Content color={col}>
+										<Card.Content>
 											<Card.Header>
 												<Header as="h2">{result.list_name}</Header>
 											</Card.Header>

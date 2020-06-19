@@ -104,31 +104,33 @@ function App() {
 	observer.observe({ entryTypes: ["navigation"] });
 
 	const checkUser = (user_id) => {
-		DoesUserExists({ user_id: user_id }).then((response) => {
-			if (response.user.length > 0) {
-				// console.log("more")
-				SetExists(true);
-				// mixpanel.identify(userC.loggedin_user_id)
-			} else {
-				SetExists(false);
-				if (!userExists) {
-					InsertUser({
-						id: user_id,
-						image_link: user.picture,
-						username: user.name,
-					})
-						.then((response) => {
-							console.log(response);
-						})
-						.catch((error) => {
-							// console.log(error)
-						});
+		DoesUserExists({ user_id: user_id })
+			.then((response) => {
+				if (response.user.length > 0) {
+					// console.log("more")
+					SetExists(true);
+					// mixpanel.identify(userC.loggedin_user_id)
 				} else {
-					//Picture update
+					SetExists(false);
+					if (!userExists) {
+						InsertUser({
+							id: user_id,
+							image_link: user.picture,
+							username: user.name,
+						})
+							.then((response) => {
+								console.log(response);
+							})
+							.catch((error) => {
+								// console.log(error)
+							});
+					} else {
+						//Picture update
+					}
 				}
-			}
-			setloading(false);
-		});
+				setloading(false);
+			})
+			.catch((error) => console.log(error));
 		// console.log("UserCheck")
 	};
 

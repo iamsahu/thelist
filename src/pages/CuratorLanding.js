@@ -14,10 +14,12 @@ import UserContext from "../context/UserContext";
 import { DoesUserExists, GetListsOfUser } from "../util/graphqlExecutor";
 import { Link } from "react-router-dom";
 import ReactLinkify from "react-linkify";
+import ContentContext from "../context/ContentContext";
 
 function CuratorLanding(props) {
 	console.log(props);
 	const [userC, userChange] = useContext(UserContext);
+	const [content, contentChange] = useContext(ContentContext);
 	const [userProfile, setuserProfile] = useState(
 		"https://react.semantic-ui.com/images/avatar/large/steve.jpg"
 	);
@@ -33,29 +35,33 @@ function CuratorLanding(props) {
 
 	const loadUser = (user) => {
 		// if(tyuser)
-		DoesUserExists({ user_id: user }).then((response) => {
-			// console.log(response)
-			if (typeof response !== "undefined") {
-				if (typeof response.user[0] !== "undefined") {
-					// console.log(response.user[0]['image_link'])
-					setuserProfile(response.user[0]["image_link"]);
-					setusername(response.user[0]["username"]);
-					setTwitterNumber(response.user[0]["id"]);
-					if (response.user[0]["description"] !== null) {
-						setdescription(response.user[0]["description"]);
-					}
-					if (response.user[0].id === userC.loggedin_user_id) {
-						seteditState(true);
-					} else {
-						seteditState(false);
+		DoesUserExists({ user_id: user })
+			.then((response) => {
+				// console.log(response)
+				if (typeof response !== "undefined") {
+					if (typeof response.user[0] !== "undefined") {
+						// console.log(response.user[0]['image_link'])
+						setuserProfile(response.user[0]["image_link"]);
+						setusername(response.user[0]["username"]);
+						setTwitterNumber(response.user[0]["id"]);
+						if (response.user[0]["description"] !== null) {
+							setdescription(response.user[0]["description"]);
+						}
+						if (response.user[0].id === userC.loggedin_user_id) {
+							seteditState(true);
+						} else {
+							seteditState(false);
+						}
 					}
 				}
-			}
-		});
-		GetListsOfUser(user).then((response) => {
-			console.log(response);
-			setlistData(response);
-		});
+			})
+			.catch((error) => console.log(error));
+		GetListsOfUser(user)
+			.then((response) => {
+				// console.log(response);
+				setlistData(response);
+			})
+			.catch((error) => console.log(error));
 	};
 
 	// useEffect(() => {
@@ -179,12 +185,13 @@ function CuratorLanding(props) {
 						<Grid.Column width={3}>
 							I CURATE ABOUT
 							<Divider />
-							#blockchain
+							{/* {content.tags && content.tags.map((item) => item.text)} */}
+							{/* #blockchain
 							<br />
 							#startups
 							<br />
 							#AI
-							<br />
+							<br /> */}
 						</Grid.Column>
 					</Grid>
 				</Container>

@@ -10,6 +10,7 @@ import {
 } from "../util/graphql";
 import UserContext from "../context/UserContext";
 import ContentContext from "../context/ContentContext";
+import history from "../util/history";
 
 function AddList() {
 	const [content, contentChange] = useContext(ContentContext);
@@ -65,6 +66,8 @@ function AddList() {
 		// contentChange(content=>({...content,currentList:newItem.list_name,currentListID:newItem.id}))
 		// contentChange({currentList:newItem.list_name,tags:content.tags,lists:content.lists})
 		// console.log(content)
+
+		history.push("/" + userC.loggedin_user_id + "/lists/" + newItem.id);
 	};
 
 	const [createList, { error }] = useMutation(CREATE_LIST, {
