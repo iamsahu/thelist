@@ -348,30 +348,30 @@ function App() {
 									<Menu.Item>
 										<Accordion.Title
 											active={accState === 0}
-											content="Tags"
+											content="Lists"
 											index={0}
 											onClick={handleClick}
 										/>
 										<Accordion.Content
 											active={accState === 0}
 											content={
-												tags !== null &&
-												tags.map((item) => <Menu.Item {...item} />)
+												lists !== null &&
+												lists.map((item) => <Menu.Item {...item} />)
 											}
 										/>
 									</Menu.Item>
 									<Menu.Item>
 										<Accordion.Title
 											active={accState === 1}
-											content="Lists"
+											content="Tags"
 											index={1}
 											onClick={handleClick}
 										/>
 										<Accordion.Content
 											active={accState === 1}
 											content={
-												lists !== null &&
-												lists.map((item) => <Menu.Item {...item} />)
+												tags !== null &&
+												tags.map((item) => <Menu.Item {...item} />)
 											}
 										/>
 									</Menu.Item>
