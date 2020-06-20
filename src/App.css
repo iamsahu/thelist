@@ -74,8 +74,9 @@
 
 .scrollyCuratorLanding {
 	overflow-y: auto;
+	overflow-x: hidden;
 	/* scrollbar-width: 2px; */
-	height: 100vh;
+	height: 95vh;
 }
 
 .scrollyConsump {

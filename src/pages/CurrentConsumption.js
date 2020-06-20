@@ -9,6 +9,7 @@ import {
 	Modal,
 	Image,
 	Icon,
+	Label,
 } from "semantic-ui-react";
 import {
 	GetConsumptionOfUser,
@@ -111,7 +112,7 @@ function CurrentConsumption(props) {
 	return (
 		<div style={{ marginTop: "3em", paddingTop: "10px" }}>
 			<Header>This week's consumption!</Header>
-			<Modal trigger={<Button>Long Modal</Button>}>
+			{/* <Modal trigger={<Button>Long Modal</Button>}>
 				<Modal.Header>Profile Picture</Modal.Header>
 				<Modal.Content image>
 					<Image
@@ -140,10 +141,13 @@ function CurrentConsumption(props) {
 						Proceed <Icon name="right chevron" />
 					</Button>
 				</Modal.Actions>
-			</Modal>
+			</Modal> */}
 			<div className="scrollyConsump">
 				<Grid divided>
 					<Grid.Column width={4}>
+						<Label as="a" color="teal" tag>
+							Pocket
+						</Label>
 						<Item.Group divided relaxed="very">
 							{/* <PocketConsumption content={consumption["items_pocket"]} /> */}
 							{consumption["items_pocket"].map((item) => (
@@ -170,6 +174,9 @@ function CurrentConsumption(props) {
 						</Item.Group>
 					</Grid.Column>
 					<Grid.Column width={4}>
+						<Label as="a" color="blue" tag>
+							Twitter
+						</Label>
 						<Item.Group divided relaxed="very">
 							{/* <TwitterConsumption content={consumption["items_twitter"]} /> */}
 							{consumption["items_twitter"].map(
@@ -200,6 +207,9 @@ function CurrentConsumption(props) {
 					</Grid.Column>
 
 					<Grid.Column width={4}>
+						<Label as="a" color="red" tag>
+							YouTube
+						</Label>
 						<Item.Group divided relaxed="very">
 							{/* <YouTubeConsumption content={consumption["items_youtube"]} /> */}
 							{consumption["items_youtube"].map(
@@ -240,6 +250,9 @@ function CurrentConsumption(props) {
 					</Grid.Column>
 
 					<Grid.Column width={4}>
+						<Label as="a" color="black" tag>
+							Medium
+						</Label>
 						<Item.Group>
 							{/* <MediumConsumption content={consumption["items_medium"]} /> */}
 							{consumption["items_medium"].map((item) => (

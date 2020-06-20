@@ -10,15 +10,21 @@ import {
 	Loader,
 	Button,
 	Label,
+	Responsive,
 } from "semantic-ui-react";
 import UserContext from "../context/UserContext";
-import { DoesUserExists, GetListsOfUser } from "../util/graphqlExecutor";
+import {
+	DoesUserExists,
+	GetListsOfUser,
+	GetTagsOfUser,
+} from "../util/graphqlExecutor";
 import { Link } from "react-router-dom";
 import ReactLinkify from "react-linkify";
 import ContentContext from "../context/ContentContext";
+import history from "../util/history";
 
 function CuratorLanding(props) {
-	console.log(props);
+	// console.log(props);
 	const [userC, userChange] = useContext(UserContext);
 	const [content, contentChange] = useContext(ContentContext);
 	const [userProfile, setuserProfile] = useState(
@@ -33,6 +39,7 @@ function CuratorLanding(props) {
 	const [id, setid] = useState("");
 	const [editState, seteditState] = useState(false);
 	const [listData, setlistData] = useState("");
+	const [tagData, settagData] = useState("");
 
 	const loadUser = (user) => {
 		// if(tyuser)
@@ -63,6 +70,12 @@ function CuratorLanding(props) {
 				setlistData(response);
 			})
 			.catch((error) => console.log(error));
+		GetTagsOfUser(user)
+			.then((response) => {
+				// console.log(response);
+				settagData(response);
+			})
+			.catch((error) => console.log(error));
 	};
 
 	// useEffect(() => {
@@ -72,141 +85,261 @@ function CuratorLanding(props) {
 	loadUser(props.match.params.user);
 
 	const routeChange = (t) => {
-		// history.push(t);
+		history.push(t);
 	};
 
 	return (
 		<>
-			<div className="scrollyCuratorLanding">
-				<div id="content" className="ui">
-					<Container fluid>
-						<Grid>
-							<Grid.Column width={4} color="teal"></Grid.Column>
-							<Grid.Column width={10} color="teal">
-								<div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
-									<Item.Group>
-										<Item>
-											<Item.Image avatar size="small" src={userProfile} />
-											<Item.Content verticalAlign="middle">
-												{/* <Header as="h1"> */}
-												<Item.Header>{username}</Item.Header>
-												{/* </Header> */}
-												<Item.Meta></Item.Meta>
-												<Item.Description>
-													<ReactLinkify>{description}</ReactLinkify>
-												</Item.Description>
-												<Item.Extra>Have added x unique items</Item.Extra>
-											</Item.Content>
-										</Item>
-									</Item.Group>
-								</div>
-							</Grid.Column>
-							<Grid.Column color="teal" width={2}></Grid.Column>
-						</Grid>
-					</Container>
-				</div>
-				<div id="content" className="ui">
-					<Container>
-						<Grid>
-							<Grid.Column width={3}></Grid.Column>
-							<Grid.Column width={8}>
-								<div>
-									MY LISTS
-									{/* <span>
+			<Responsive {...Responsive.onlyMobile}>
+				<div>
+					<div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
+						<Item.Group>
+							<Item>
+								<Item.Image avatar size="small" src={userProfile} />
+								<Item.Content verticalAlign="middle">
+									{/* <Header as="h1"> */}
+									<Item.Header>{username}</Item.Header>
+									{/* </Header> */}
+									<Item.Meta></Item.Meta>
+									<Item.Description>
+										<ReactLinkify>{description}</ReactLinkify>
+									</Item.Description>
+									{/* <Item.Extra>Have added x unique items</Item.Extra> */}
+								</Item.Content>
+							</Item>
+						</Item.Group>
+					</div>
+					<div>
+						MY LISTS
+						{/* <span>
 									<Button floated="right">Manage Content</Button>
 								</span> */}
-									<Divider />
-								</div>
+						<Divider />
+					</div>
 
-								<Item.Group divided relaxed="very">
-									{listData === "" ? (
-										<div>
-											<Loader active inline="centered" />
-										</div>
-									) : (
-										listData.lists.map((item) => (
-											// <Item key={item.id}>
-											// 	<Item.Content>
-											// 		<Item.Header as="a">{item.list_name}<Label as="a" color="orange" ribbon="right">
-											// 					Specs
-											// 					</Label></Item.Header>
-											//  		<Item.Description>
-											//  			{item.description}
-											//  		</Item.Description>
-											//  	</Item.Content>
-											//  </Item>
-											<Card
-												fluid
-												key={item.id}
-												color="yellow"
-												style={{
-													"background-color": "#F5DD47",
-													boxShadow: "none",
-												}}
-											>
-												{/* <Label color="red" floating icon="heart" /> */}
-												<Card.Content color="yellow">
-													<Card.Header>
-														<Header as="h2">{item.list_name}</Header>
-														{/* <span>
+					<Item.Group divided relaxed="very">
+						{listData === "" ? (
+							<div>
+								<Loader active inline="centered" />
+							</div>
+						) : (
+							listData.lists.map((item) => (
+								// <Item key={item.id}>
+								// 	<Item.Content>
+								// 		<Item.Header as="a">{item.list_name}<Label as="a" color="orange" ribbon="right">
+								// 					Specs
+								// 					</Label></Item.Header>
+								//  		<Item.Description>
+								//  			{item.description}
+								//  		</Item.Description>
+								//  	</Item.Content>
+								//  </Item>
+								<Card
+									fluid
+									key={item.id}
+									// color="yellow"
+									style={
+										{
+											// "background-color": "#F5DD47",
+											// boxShadow: "none",
+										}
+									}
+								>
+									{/* <Label color="red" floating icon="heart" /> */}
+									<Card.Content>
+										<Card.Header>
+											<Header as="h2">{item.list_name}</Header>
+											{/* <span>
 														<Label as="a" color="orange" ribbon="right">
 															Specs
 														</Label>
 													</span> */}
-													</Card.Header>
-												</Card.Content>
+										</Card.Header>
+									</Card.Content>
 
-												<Card.Content
-													description={item.description}
-													style={{
-														border: "none",
-														"border-top": "none",
-													}}
-												/>
-												<Card.Content
-													style={{
-														border: "none",
-														"border-top": "none",
-													}}
-												>
-													{/* <Image src={item.user.image_link} avatar />
+									<Card.Content
+										description={item.description}
+										style={{
+											border: "none",
+											"border-top": "none",
+										}}
+									/>
+									<Card.Content
+										style={{
+											border: "none",
+											"border-top": "none",
+										}}
+									>
+										{/* <Image src={item.user.image_link} avatar />
 													<span>
 														<Link to={`/${item.curator_id}`}>
 															{item.user.username}
 														</Link>
 													</span> */}
-													<Button
-														size="tiny"
-														floated="right"
-														basic
-														onClick={() => {
-															var t = `/${item.curator_id}/lists/${item.id}`;
-															routeChange(t);
+										<Button
+											size="tiny"
+											floated="right"
+											basic
+											// onClick={() => {
+											// 	var t = `/${item.curator_id}/lists/${item.id}`;
+											// 	routeChange(t);
+											// }}
+										>
+											<Link to={`/${item.curator_id}/lists/${item.id}`}>
+												Read
+											</Link>
+										</Button>
+									</Card.Content>
+								</Card>
+							))
+						)}
+					</Item.Group>
+				</div>
+			</Responsive>
+			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
+				<div className="scrollyCuratorLanding">
+					<div id="content" className="ui">
+						<Container fluid>
+							<Grid>
+								<Grid.Column width={4} inverted></Grid.Column>
+								<Grid.Column width={10} inverted>
+									<div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
+										<Item.Group>
+											<Item>
+												<Item.Image avatar size="small" src={userProfile} />
+												<Item.Content verticalAlign="middle">
+													{/* <Header as="h1"> */}
+													<Item.Header>{username}</Item.Header>
+													{/* </Header> */}
+													<Item.Meta></Item.Meta>
+													<Item.Description>
+														<ReactLinkify>{description}</ReactLinkify>
+													</Item.Description>
+													{/* <Item.Extra>Have added x unique items</Item.Extra> */}
+												</Item.Content>
+											</Item>
+										</Item.Group>
+									</div>
+								</Grid.Column>
+								<Grid.Column inverted width={2}></Grid.Column>
+							</Grid>
+						</Container>
+					</div>
+					<div id="content" className="ui">
+						<Container>
+							<Grid>
+								<Grid.Column width={3}></Grid.Column>
+								<Grid.Column width={8}>
+									<div>
+										MY LISTS
+										{/* <span>
+									<Button floated="right">Manage Content</Button>
+								</span> */}
+										<Divider />
+									</div>
+
+									<Item.Group divided relaxed="very">
+										{listData === "" ? (
+											<div>
+												<Loader active inline="centered" />
+											</div>
+										) : (
+											listData.lists.map((item) => (
+												// <Item key={item.id}>
+												// 	<Item.Content>
+												// 		<Item.Header as="a">{item.list_name}<Label as="a" color="orange" ribbon="right">
+												// 					Specs
+												// 					</Label></Item.Header>
+												//  		<Item.Description>
+												//  			{item.description}
+												//  		</Item.Description>
+												//  	</Item.Content>
+												//  </Item>
+												<Card
+													fluid
+													key={item.id}
+													// color="yellow"
+													style={
+														{
+															// "background-color": "#F5DD47",
+															// boxShadow: "none",
+														}
+													}
+												>
+													{/* <Label color="red" floating icon="heart" /> */}
+													<Card.Content>
+														<Card.Header>
+															<Header as="h2">{item.list_name}</Header>
+															{/* <span>
+														<Label as="a" color="orange" ribbon="right">
+															Specs
+														</Label>
+													</span> */}
+														</Card.Header>
+													</Card.Content>
+
+													<Card.Content
+														description={item.description}
+														style={{
+															border: "none",
+															"border-top": "none",
+														}}
+													/>
+													<Card.Content
+														style={{
+															border: "none",
+															"border-top": "none",
 														}}
 													>
-														Read
-													</Button>
-												</Card.Content>
-											</Card>
-										))
-									)}
-								</Item.Group>
-							</Grid.Column>
-							<Grid.Column width={3}>
-								I CURATE ABOUT
-								<Divider />
-								{/* {content.tags && content.tags.map((item) => item.text)} */}
-								{/* #blockchain
+														{/* <Image src={item.user.image_link} avatar />
+													<span>
+														<Link to={`/${item.curator_id}`}>
+															{item.user.username}
+														</Link>
+													</span> */}
+														<Button
+															size="tiny"
+															floated="right"
+															basic
+															// onClick={() => {
+															// 	var t = `/${item.curator_id}/lists/${item.id}`;
+															// 	routeChange(t);
+															// }}
+														>
+															<Link to={`/${item.curator_id}/lists/${item.id}`}>
+																Read
+															</Link>
+														</Button>
+													</Card.Content>
+												</Card>
+											))
+										)}
+									</Item.Group>
+								</Grid.Column>
+								<Grid.Column width={3}>
+									I CURATE ABOUT
+									<Divider />
+									{tagData !== "" &&
+										tagData.tag.map((item) => (
+											<>
+												<Link to={`/${twitterNumber}/tags/${item.id}`}>
+													# {item.name}
+												</Link>
+												<br />
+											</>
+										))}
+									{/* #blockchain
 							<br />
 							#startups
 							<br />
 							#AI
 							<br /> */}
-							</Grid.Column>
-						</Grid>
-					</Container>
+								</Grid.Column>
+							</Grid>
+						</Container>
+					</div>
 				</div>
-			</div>
+			</Responsive>
 		</>
 	);
 }

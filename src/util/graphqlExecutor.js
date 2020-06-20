@@ -2003,6 +2003,27 @@ const GetListsOfUser = (user_id) => {
 		.catch((error) => console.log(error));
 };
 
+const TAGSBYUSER = gql`
+	query MyQuery($user_id: String) {
+		tag(where: { user_id: { _eq: $user_id } }) {
+			name
+			id
+		}
+	}
+`;
+
+const GetTagsOfUser = (user_id) => {
+	return client
+		.query({
+			query: TAGSBYUSER,
+			variables: {
+				user_id: user_id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -2032,6 +2053,7 @@ export {
 	GetConsumptionOfUser,
 	GetConsumptionOfUserBetween,
 	GetListsOfUser,
+	GetTagsOfUser,
 };
 
 export const DELETE_LIST = gql`

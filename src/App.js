@@ -453,7 +453,7 @@ function App() {
 												path="/:user/:contenttype"
 												component={Curator2}
 											/>
-											<Route exact path="/:user" component={Curator2} />
+											<Route exact path="/:user" component={CuratorLanding} />
 											{isAuthenticated && !loading && !loadingT ? (
 												<Route
 													path="/"
@@ -493,7 +493,7 @@ function App() {
 										path="/:user/:contenttype"
 										component={Curator2}
 									/>
-									<Route exact path="/:user" component={Curator2} />
+									<Route exact path="/:user" component={CuratorLanding} />
 									{isAuthenticated && !loading && !loadingT ? (
 										<Route
 											path="/"
