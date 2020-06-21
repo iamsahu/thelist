@@ -1,72 +1,75 @@
 {
-  "name": "thelist",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@apollo/react-hooks": "^3.1.5",
-    "@auth0/auth0-spa-js": "^1.8.1",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "apollo-cache-inmemory": "^1.6.5",
-    "apollo-client": "^2.6.8",
-    "apollo-link-http": "^1.5.17",
-    "bootstrap": "^4.5.0",
-    "dotenv": "^8.2.0",
-    "faker": "^4.1.0",
-    "grabity": "^1.0.5",
-    "graphql": "^15.0.0",
-    "graphql-tag": "^2.10.3",
-    "mixpanel-browser": "^2.36.0",
-    "moment": "^2.25.3",
-    "react": "^16.13.1",
-    "react-bootstrap": "^1.0.1",
-    "react-burger-menu": "^2.6.15",
-    "react-copy-to-clipboard": "^5.0.2",
-    "react-dom": "^16.13.1",
-    "react-ga": "^2.7.0",
-    "react-interactions": "0.0.8",
-    "react-linkify": "^1.0.0-alpha",
-    "react-meta-tags": "^0.7.4",
-    "react-mixpanel": "^1.0.5",
-    "react-monocle": "^0.1.6",
-    "react-rewards": "^1.1.1",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1",
-    "react-share": "^4.1.0",
-    "react-stack-grid": "^0.7.1",
-    "react-toastify": "^6.0.4",
-    "react-twitter-embed": "^3.0.3",
-    "react-twitter-login": "^1.1.2",
-    "react-youtube": "^7.11.2",
-    "semantic-ui-css": "^2.4.1",
-    "semantic-ui-forest-themes": "^1.0.3",
-    "semantic-ui-react": "^0.88.2",
-    "use-clippy": "^1.0.6",
-    "youtube-id": "^1.0.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "prettier": "2.0.5"
-  }
+	"name": "thelist",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@apollo/react-hooks": "^3.1.5",
+		"@auth0/auth0-spa-js": "^1.8.1",
+		"@material-ui/core": "^4.10.2",
+		"@testing-library/jest-dom": "^4.2.4",
+		"@testing-library/react": "^9.5.0",
+		"@testing-library/user-event": "^7.2.1",
+		"apollo-cache-inmemory": "^1.6.5",
+		"apollo-client": "^2.6.8",
+		"apollo-link-http": "^1.5.17",
+		"bootstrap": "^4.5.0",
+		"dotenv": "^8.2.0",
+		"faker": "^4.1.0",
+		"grabity": "^1.0.5",
+		"graphql": "^15.0.0",
+		"graphql-tag": "^2.10.3",
+		"mixpanel-browser": "^2.36.0",
+		"moment": "^2.25.3",
+		"react": "^16.13.1",
+		"react-absolute-grid": "^3.0.1",
+		"react-bootstrap": "^1.0.1",
+		"react-burger-menu": "^2.6.15",
+		"react-copy-to-clipboard": "^5.0.2",
+		"react-dom": "^16.13.1",
+		"react-ga": "^2.7.0",
+		"react-infinite-grid": "^0.4.0",
+		"react-interactions": "0.0.8",
+		"react-linkify": "^1.0.0-alpha",
+		"react-meta-tags": "^0.7.4",
+		"react-mixpanel": "^1.0.5",
+		"react-monocle": "^0.1.6",
+		"react-rewards": "^1.1.1",
+		"react-router-dom": "^5.1.2",
+		"react-scripts": "3.4.1",
+		"react-share": "^4.1.0",
+		"react-stack-grid": "^0.7.1",
+		"react-toastify": "^6.0.4",
+		"react-twitter-embed": "^3.0.3",
+		"react-twitter-login": "^1.1.2",
+		"react-youtube": "^7.11.2",
+		"semantic-ui-css": "^2.4.1",
+		"semantic-ui-forest-themes": "^1.0.3",
+		"semantic-ui-react": "^0.88.2",
+		"use-clippy": "^1.0.6",
+		"youtube-id": "^1.0.0"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"prettier": "2.0.5"
+	}
 }
