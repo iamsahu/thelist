@@ -11,6 +11,7 @@ import {
 	Button,
 	Label,
 	Responsive,
+	Icon,
 } from "semantic-ui-react";
 import UserContext from "../context/UserContext";
 import {
@@ -22,6 +23,7 @@ import { Link } from "react-router-dom";
 import ReactLinkify from "react-linkify";
 import ContentContext from "../context/ContentContext";
 import history from "../util/history";
+import StackGrid from "react-stack-grid";
 
 function CuratorLanding(props) {
 	// console.log(props);
@@ -81,13 +83,16 @@ function CuratorLanding(props) {
 	// useEffect(() => {
 	// 	loadUser(props.match.params.user);
 	// }, []);
-
-	loadUser(props.match.params.user);
+	var u;
+	if (typeof props.user !== "undefined") u = props.user;
+	else u = props.match.params.user;
+	loadUser(u);
 
 	const routeChange = (t) => {
 		history.push(t);
 	};
 
+	if (typeof tagData.tag === "undefined") return <div>Loading</div>;
 	return (
 		<>
 			<Responsive {...Responsive.onlyMobile}>
@@ -176,6 +181,9 @@ function CuratorLanding(props) {
 															{item.user.username}
 														</Link>
 													</span> */}
+										{/* <Button floated="right" basic icon>
+											<Icon name="twitter" />
+										</Button> */}
 										<Button
 											size="tiny"
 											floated="right"
@@ -226,117 +234,123 @@ function CuratorLanding(props) {
 						</Container>
 					</div>
 					<div id="content" className="ui">
-						<Container>
-							<Grid>
-								<Grid.Column width={3}></Grid.Column>
-								<Grid.Column width={8}>
-									<div>
-										MY LISTS
-										{/* <span>
+						{/* <Container> */}
+						<Grid fluid>
+							<Grid.Column width={3}></Grid.Column>
+							<Grid.Column width={10}>
+								<div>
+									MY LISTS
+									{/* <span>
 									<Button floated="right">Manage Content</Button>
 								</span> */}
-										<Divider />
-									</div>
+									<Divider />
+								</div>
 
-									<Item.Group divided relaxed="very">
-										{listData === "" ? (
-											<div>
-												<Loader active inline="centered" />
-											</div>
-										) : (
-											listData.lists.map((item) => (
-												// <Item key={item.id}>
-												// 	<Item.Content>
-												// 		<Item.Header as="a">{item.list_name}<Label as="a" color="orange" ribbon="right">
-												// 					Specs
-												// 					</Label></Item.Header>
-												//  		<Item.Description>
-												//  			{item.description}
-												//  		</Item.Description>
-												//  	</Item.Content>
-												//  </Item>
-												<Card
-													fluid
-													key={item.id}
-													// color="yellow"
-													style={
-														{
-															// "background-color": "#F5DD47",
-															// boxShadow: "none",
-														}
+								{/* <Item.Group divided relaxed="very"> */}
+								<StackGrid
+									gutterWidth={20}
+									gutterHeight={20}
+									appearDelay={10}
+									columnWidth={300}
+									columnHeight={255}
+								>
+									{listData === "" ? (
+										<div>
+											<Loader active inline="centered" />
+										</div>
+									) : (
+										listData.lists.map((item) => (
+											// <Item key={item.id}>
+											// 	<Item.Content>
+											// 		<Item.Header as="a">{item.list_name}<Label as="a" color="orange" ribbon="right">
+											// 					Specs
+											// 					</Label></Item.Header>
+											//  		<Item.Description>
+											//  			{item.description}
+											//  		</Item.Description>
+											//  	</Item.Content>
+											//  </Item>
+											<Card
+												fluid
+												key={item.id}
+												// color="yellow"
+												style={
+													{
+														// "background-color": "#F5DD47",
+														// boxShadow: "none",
 													}
-												>
-													{/* <Label color="red" floating icon="heart" /> */}
-													<Card.Content>
-														<Card.Header>
-															<Header as="h2">{item.list_name}</Header>
-															{/* <span>
+												}
+											>
+												{/* <Label color="red" floating icon="heart" /> */}
+												<Card.Content>
+													<Card.Header>
+														<Header as="h2">{item.list_name}</Header>
+														{/* <span>
 														<Label as="a" color="orange" ribbon="right">
 															Specs
 														</Label>
 													</span> */}
-														</Card.Header>
-													</Card.Content>
+													</Card.Header>
+												</Card.Content>
 
-													<Card.Content
-														description={item.description}
-														style={{
-															border: "none",
-															"border-top": "none",
-														}}
-													/>
-													<Card.Content
-														style={{
-															border: "none",
-															"border-top": "none",
-														}}
-													>
-														{/* <Image src={item.user.image_link} avatar />
+												<Card.Content
+													description={item.description}
+													style={{
+														border: "none",
+														"border-top": "none",
+													}}
+												/>
+												<Card.Content
+													style={{
+														border: "none",
+														"border-top": "none",
+													}}
+												>
+													{/* <Image src={item.user.image_link} avatar />
 													<span>
 														<Link to={`/${item.curator_id}`}>
 															{item.user.username}
 														</Link>
 													</span> */}
-														<Button
-															size="tiny"
-															floated="right"
-															basic
-															// onClick={() => {
-															// 	var t = `/${item.curator_id}/lists/${item.id}`;
-															// 	routeChange(t);
-															// }}
-														>
-															<Link to={`/${item.curator_id}/lists/${item.id}`}>
-																Read
-															</Link>
-														</Button>
-													</Card.Content>
-												</Card>
-											))
-										)}
-									</Item.Group>
-								</Grid.Column>
-								<Grid.Column width={3}>
-									I CURATE ABOUT
-									<Divider />
-									{tagData !== "" &&
-										tagData.tag.map((item) => (
-											<>
-												<Link to={`/${twitterNumber}/tags/${item.id}`}>
-													# {item.name}
-												</Link>
-												<br />
-											</>
-										))}
-									{/* #blockchain
-							<br />
-							#startups
-							<br />
-							#AI
-							<br /> */}
-								</Grid.Column>
-							</Grid>
-						</Container>
+
+													<Button
+														size="tiny"
+														floated="right"
+														basic
+														// onClick={() => {
+														// 	var t = `/${item.curator_id}/lists/${item.id}`;
+														// 	routeChange(t);
+														// }}
+													>
+														<Link to={`/${item.curator_id}/lists/${item.id}`}>
+															Read
+														</Link>
+													</Button>
+													{/* <Button size="tiny" floated="right" basic icon>
+														<Icon color="blue" name="twitter" />
+													</Button> */}
+												</Card.Content>
+											</Card>
+										))
+									)}
+								</StackGrid>
+								{/* </Item.Group> */}
+							</Grid.Column>
+							<Grid.Column width={3}>
+								I CURATE ABOUT
+								<Divider />
+								{tagData !== "" &&
+									tagData.tag.map((item) => (
+										<>
+											<Link to={`/${twitterNumber}/tags/${item.id}`}>
+												# {item.name}
+											</Link>
+											<br />
+										</>
+									))}
+							</Grid.Column>
+						</Grid>
+						{/* </Container> */}
 					</div>
 				</div>
 			</Responsive>

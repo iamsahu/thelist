@@ -186,7 +186,7 @@ function AddItem(props) {
 				list_id: content.list_id,
 				selTags: content.selTags,
 				curator_id: userC.loggedin_user_id,
-				tags: content.tags,
+				tags: content.alltags,
 				contentType: content.contentType,
 				currentListID: content.currentListID,
 				currentTagID: content.currentTagID,

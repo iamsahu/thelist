@@ -498,7 +498,10 @@ function App() {
 										<Route
 											path="/"
 											render={(props) => (
-												<Curator2 user={userC["curator_id"]} isAuthed={true} />
+												<CuratorLanding
+													user={userC["loggedin_user_id"]}
+													isAuthed={true}
+												/>
 											)}
 										/>
 									) : (
