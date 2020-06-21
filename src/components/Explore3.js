@@ -15,7 +15,7 @@ import {
 	Button,
 	Loader,
 } from "semantic-ui-react";
-
+import { Grid as GG, Card as CC } from "@material-ui/core";
 function Explore3() {
 	const [loading, setloading] = useState(true);
 	const [searchResult, setsearchResult] = useState(null);
@@ -69,85 +69,89 @@ function Explore3() {
 					{/* <Responsive {...Responsive.onlyMobile}>Hell</Responsive>
 					<Responsive minWidth={Responsive.onlyTablet.minWidth}> */}
 					{/* <Card.Group stackable={true} doubling={true}> */}
-					<Container text>
+					<Container>
 						{/* <StackGrid
 						gutterWidth={10}
 						gutterHeight={10}
 						appearDelay={50}
 						columnWidth={250}
 					> */}
-						{searchResult.lists.map(
-							(result) => (
-								(col = randomColor()),
-								(
-									<Card.Group stackable={true} doubling={true}>
-										<Card
-											key={result.id}
-											// style={{ "box-shadow": "none" }}
-											// style={{ "background-color": col, "box-shadow": "none" }}
-										>
-											{/* <Card.Content> */}
-											<Card.Content header={result.list_name} />
-											{/* <Link to={`/${result.curator_id}/lists/${result.id}`}> */}
+						<GG container spacing={3}>
+							{searchResult.lists.map(
+								(result) => (
+									(col = randomColor()),
+									(
+										<GG item xs={4}>
+											<Card.Group stackable={true} doubling={true}>
+												<Card
+													key={result.id}
+													// style={{ "box-shadow": "none" }}
+													// style={{ "background-color": col, "box-shadow": "none" }}
+												>
+													{/* <Card.Content> */}
+													<Card.Content header={result.list_name} />
+													{/* <Link to={`/${result.curator_id}/lists/${result.id}`}> */}
 
-											{/* </Link> */}
-											{/* </Card.Content> */}
-											{/* <Card.Meta>
+													{/* </Link> */}
+													{/* </Card.Content> */}
+													{/* <Card.Meta>
 											by{" "}
 
 										</Card.Meta> */}
 
-											<Card.Content
-												description={result.description}
-												style={{
-													border: "none",
-													"border-top": "none",
-												}}
-											/>
-											<Card.Content
-												style={{
-													border: "none",
-													"border-top": "none",
-												}}
-												extra
-											>
-												<Label
-													image
-													size="tiny"
-													floated="left"
-													basic
-													as="a"
-													href={`/${result.curator_id}`}
-												>
-													<img src={result.user.image_link} />
-													{/* <Link to={`/${result.curator_id}`}> */}
-													{result.user.username}
-													{/* </Link> */}
-												</Label>
-												{/* <Icon floated="right" name="twitter" color="black" /> */}
-												<Button
-													size="tiny"
-													floated="right"
-													basic
-													color="black"
-													onClick={() => {
-														var t = `/${result.curator_id}/lists/${result.id}`;
-														routeChange(t);
-													}}
-												>
-													{/* <Link to={`/${result.curator_id}/lists/${result.id}`}> */}
-													Read
-													{/* </Link> */}
-												</Button>
-											</Card.Content>
-											{/* </Card.Content> */}
-										</Card>
-									</Card.Group>
-								)
+													<Card.Content
+														description={result.description}
+														style={{
+															border: "none",
+															"border-top": "none",
+														}}
+													/>
+													<Card.Content
+														style={{
+															border: "none",
+															"border-top": "none",
+														}}
+														extra
+													>
+														<Label
+															image
+															size="tiny"
+															floated="left"
+															basic
+															as="a"
+															href={`/${result.curator_id}`}
+														>
+															<img src={result.user.image_link} />
+															{/* <Link to={`/${result.curator_id}`}> */}
+															{result.user.username}
+															{/* </Link> */}
+														</Label>
+														{/* <Icon floated="right" name="twitter" color="black" /> */}
+														<Button
+															size="tiny"
+															floated="right"
+															basic
+															color="black"
+															onClick={() => {
+																var t = `/${result.curator_id}/lists/${result.id}`;
+																routeChange(t);
+															}}
+														>
+															{/* <Link to={`/${result.curator_id}/lists/${result.id}`}> */}
+															Read
+															{/* </Link> */}
+														</Button>
+													</Card.Content>
+													{/* </Card.Content> */}
+												</Card>
+											</Card.Group>
+										</GG>
+									)
 
-								//  <SearchResultItem key={result.id} props={result} />
-							)
-						)}
+									//  <SearchResultItem key={result.id} props={result} />
+								)
+							)}
+						</GG>
 						{/* </StackGrid> */}
 					</Container>
 					{/* </Card.Group> */}
