@@ -143,12 +143,14 @@ function Curator(props) {
 						.then((data) => {
 							console.log("loading lists empty");
 							// console.log(data);
-							setPosts(data.lists[0]["items"]);
-							setloadState(1);
+							if (data.lists.length > 0) {
+								setPosts(data.lists[0]["items"]);
+								setloadState(1);
 
-							setheader(data.lists[0]["list_name"]);
-							setdescription(data.lists[0]["description"]);
-							propSent["description"] = data.lists[0]["description"];
+								setheader(data.lists[0]["list_name"]);
+								setdescription(data.lists[0]["description"]);
+								propSent["description"] = data.lists[0]["description"];
+							}
 						})
 						.catch((error) => console.log(error))
 				: // GetItemsUsers({ curator_id: propSent.curator_id })
