@@ -453,7 +453,8 @@ function App() {
 												path="/:user/:contenttype"
 												component={Curator2}
 											/>
-											<Route exact path="/:user" component={CuratorLanding} />
+											{/* <Route exact path="/:user" component={CuratorLanding} /> */}
+											<Route exact path="/manage/:user" component={Curator2} />
 											{isAuthenticated && !loading && !loadingT ? (
 												<Route
 													path="/"
@@ -462,8 +463,9 @@ function App() {
 													)}
 												/>
 											) : (
-												<Route exact path="/" component={LandingPage} />
+												<Route exact path="/:user" component={CuratorLanding} />
 											)}
+											<Route exact path="/" component={LandingPage} />
 										</Switch>
 									</Container>
 								</div>

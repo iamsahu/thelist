@@ -21,7 +21,7 @@ import {
 } from "../util/graphqlExecutor";
 
 function Curator(props) {
-	// console.log(props)
+	// console.log(props);
 
 	// const listid = props.match.params.listid
 	const [userC, userChange] = useContext(UserContext);
@@ -52,7 +52,9 @@ function Curator(props) {
 	} else if (typeof props.match.params !== "undefined") {
 		// console.log("here undefined");
 		// console.log(props.match.params.contenttype)
-		userid = props.match.params.user;
+		if (props.match.params.user === "manage") {
+			userid = props.match.params.contenttype;
+		} else userid = props.match.params.user;
 		// userC.curator_id = userid;
 		if (userC.curator_id !== userid) {
 			userC.curator_id = userid;
@@ -117,6 +119,9 @@ function Curator(props) {
 					contentID: props.match.params.contentid,
 				};
 		} else if (typeof props.match.params.contentType === "undefined") {
+			//This is the default loading case
+			propSent = { curator_id: userid, contentType: "lists", contentID: "" };
+		} else {
 			//This is the default loading case
 			propSent = { curator_id: userid, contentType: "lists", contentID: "" };
 		}

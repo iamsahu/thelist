@@ -24,12 +24,9 @@ import ReactLinkify from "react-linkify";
 import ContentContext from "../context/ContentContext";
 import history from "../util/history";
 import StackGrid from "react-stack-grid";
-import { Grid as GG, Card as CC } from "@material-ui/core";
-import { useAuth0 } from "../react-auth0-spa";
 
 function CuratorLanding(props) {
 	// console.log(props);
-	const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
 	const [userC, userChange] = useContext(UserContext);
 	const [content, contentChange] = useContext(ContentContext);
 	const [userProfile, setuserProfile] = useState(
@@ -132,6 +129,16 @@ function CuratorLanding(props) {
 							</div>
 						) : (
 							listData.lists.map((item) => (
+								// <Item key={item.id}>
+								// 	<Item.Content>
+								// 		<Item.Header as="a">{item.list_name}<Label as="a" color="orange" ribbon="right">
+								// 					Specs
+								// 					</Label></Item.Header>
+								//  		<Item.Description>
+								//  			{item.description}
+								//  		</Item.Description>
+								//  	</Item.Content>
+								//  </Item>
 								<Card
 									fluid
 									key={item.id}
@@ -143,9 +150,15 @@ function CuratorLanding(props) {
 										}
 									}
 								>
+									{/* <Label color="red" floating icon="heart" /> */}
 									<Card.Content>
 										<Card.Header>
 											<Header as="h2">{item.list_name}</Header>
+											{/* <span>
+														<Label as="a" color="orange" ribbon="right">
+															Specs
+														</Label>
+													</span> */}
 										</Card.Header>
 									</Card.Content>
 
@@ -162,10 +175,24 @@ function CuratorLanding(props) {
 											"border-top": "none",
 										}}
 									>
+										{/* <Image src={item.user.image_link} avatar />
+													<span>
+														<Link to={`/${item.curator_id}`}>
+															{item.user.username}
+														</Link>
+													</span> */}
 										{/* <Button floated="right" basic icon>
 											<Icon name="twitter" />
 										</Button> */}
-										<Button size="tiny" floated="right" basic>
+										<Button
+											size="tiny"
+											floated="right"
+											basic
+											// onClick={() => {
+											// 	var t = `/${item.curator_id}/lists/${item.id}`;
+											// 	routeChange(t);
+											// }}
+										>
 											<Link to={`/${item.curator_id}/lists/${item.id}`}>
 												Read
 											</Link>
@@ -216,88 +243,97 @@ function CuratorLanding(props) {
 									{/* <span>
 									<Button floated="right">Manage Content</Button>
 								</span> */}
-									{isAuthenticated && u === userC.loggedin_user_id && (
-										<span>
-											<Button floated="right">
-												<Link to={`/manage/${userC.loggedin_user_id}`}>
-													Manage Content
-												</Link>
-											</Button>
-										</span>
-									)}
 									<Divider />
 								</div>
 
 								{/* <Item.Group divided relaxed="very"> */}
-								{/* <StackGrid
+								<StackGrid
 									gutterWidth={20}
 									gutterHeight={20}
 									appearDelay={10}
 									columnWidth={300}
 									columnHeight={255}
-								> */}
-								<GG container spacing={3}>
+								>
 									{listData === "" ? (
 										<div>
 											<Loader active inline="centered" />
 										</div>
 									) : (
 										listData.lists.map((item) => (
-											<GG item xs={4} height="100%">
-												<Card
-													className="eq-card"
-													fluid
-													key={item.id}
-													// color="yellow"
-													style={
-														{
-															// "background-color": "#F5DD47",
-															// boxShadow: "none",
-														}
+											// <Item key={item.id}>
+											// 	<Item.Content>
+											// 		<Item.Header as="a">{item.list_name}<Label as="a" color="orange" ribbon="right">
+											// 					Specs
+											// 					</Label></Item.Header>
+											//  		<Item.Description>
+											//  			{item.description}
+											//  		</Item.Description>
+											//  	</Item.Content>
+											//  </Item>
+											<Card
+												fluid
+												key={item.id}
+												// color="yellow"
+												style={
+													{
+														// "background-color": "#F5DD47",
+														// boxShadow: "none",
 													}
-												>
-													<Card.Content>
-														<Card.Header>
-															<Header as="h2">{item.list_name}</Header>
-														</Card.Header>
-													</Card.Content>
+												}
+											>
+												{/* <Label color="red" floating icon="heart" /> */}
+												<Card.Content>
+													<Card.Header>
+														<Header as="h2">{item.list_name}</Header>
+														{/* <span>
+														<Label as="a" color="orange" ribbon="right">
+															Specs
+														</Label>
+													</span> */}
+													</Card.Header>
+												</Card.Content>
 
-													<Card.Content
-														description={item.description}
-														style={{
-															border: "none",
-															"border-top": "none",
-														}}
-													/>
-													<Card.Content
-														style={{
-															border: "none",
-															"border-top": "none",
-														}}
+												<Card.Content
+													description={item.description}
+													style={{
+														border: "none",
+														"border-top": "none",
+													}}
+												/>
+												<Card.Content
+													style={{
+														border: "none",
+														"border-top": "none",
+													}}
+												>
+													{/* <Image src={item.user.image_link} avatar />
+													<span>
+														<Link to={`/${item.curator_id}`}>
+															{item.user.username}
+														</Link>
+													</span> */}
+
+													<Button
+														size="tiny"
+														floated="right"
+														basic
+														// onClick={() => {
+														// 	var t = `/${item.curator_id}/lists/${item.id}`;
+														// 	routeChange(t);
+														// }}
 													>
-														<Button
-															size="tiny"
-															floated="right"
-															basic
-															// onClick={() => {
-															// 	var t = `/${item.curator_id}/lists/${item.id}`;
-															// 	routeChange(t);
-															// }}
-														>
-															<Link to={`/${item.curator_id}/lists/${item.id}`}>
-																Read
-															</Link>
-														</Button>
-														{/* <Button size="tiny" floated="right" basic icon>
+														<Link to={`/${item.curator_id}/lists/${item.id}`}>
+															Read
+														</Link>
+													</Button>
+													{/* <Button size="tiny" floated="right" basic icon>
 														<Icon color="blue" name="twitter" />
 													</Button> */}
-													</Card.Content>
-												</Card>
-											</GG>
+												</Card.Content>
+											</Card>
 										))
 									)}
-								</GG>
-								{/* </StackGrid> */}
+								</StackGrid>
 								{/* </Item.Group> */}
 							</Grid.Column>
 							<Grid.Column width={3}>

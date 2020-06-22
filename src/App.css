@@ -155,3 +155,8 @@
 	padding-left: 10px;
 	padding-right: 10px;
 }
+
+.eq-card.ui.card {
+	flex: 1; /* Shrink and grow according to available height */
+	flex-basis: 0;
+}

@@ -44,7 +44,7 @@ function MenuBar(props) {
 
 	const options = [
 		{ key: "user", text: "Account", icon: "user", value: "user" },
-		{ key: "settings", text: "Settings", icon: "settings", value: "settings" },
+		{ key: "manage", text: "Manage", icon: "clipboard list", value: "manage" },
 		{ key: "sign-out", text: "Sign Out", icon: "sign out", value: "logout" },
 	];
 
@@ -54,7 +54,8 @@ function MenuBar(props) {
 			case "user":
 				history.push("/" + user["sub"].split("|")[1]);
 				break;
-			case "settings":
+			case "manage":
+				history.push("/manage/" + user["sub"].split("|")[1]);
 				break;
 			case "logout":
 				//TODO: in the future write code here to handle the proper redirect
