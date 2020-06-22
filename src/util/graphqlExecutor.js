@@ -809,6 +809,15 @@ export const GET_LIST = gql`
 			user_id
 			id
 		}
+		lists(where: { id: { _eq: $listid } }) {
+			description
+			list_name
+			like_lists_aggregate {
+				aggregate {
+					count
+				}
+			}
+		}
 	}
 `;
 
@@ -2024,6 +2033,53 @@ const GetTagsOfUser = (user_id) => {
 		.catch((error) => console.log(error));
 };
 
+const GETONELIST = gql`
+	query MyQuery($curator_id: String!) {
+		lists(
+			limit: 1
+			where: { curator_id: { _eq: $curator_id } }
+			order_by: { created_at: desc_nulls_last }
+		) {
+			created_at
+			curator_id
+			description
+			id
+			list_name
+			view_count
+			items(order_by: { created_at: desc_nulls_last }) {
+				appreciation_count
+				auto_description
+				auto_image
+				bookmarks_count
+				copy_count
+				created_at
+				curator
+				description
+				id
+				link
+				name
+				share_count
+				view_count
+				user {
+					id
+				}
+			}
+		}
+	}
+`;
+
+const GetOneListOfUser = (curator_id) => {
+	return client
+		.query({
+			query: GETONELIST,
+			variables: {
+				curator_id: curator_id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -2054,6 +2110,7 @@ export {
 	GetConsumptionOfUserBetween,
 	GetListsOfUser,
 	GetTagsOfUser,
+	GetOneListOfUser,
 };
 
 export const DELETE_LIST = gql`

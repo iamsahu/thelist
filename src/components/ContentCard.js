@@ -89,7 +89,7 @@ const COPY_COUNT = gql`
 `;
 
 function ContentCard(postdata) {
-	// console.log(postdata)
+	// console.log(postdata);
 	// console.log(postdata.postdata['like_items'].length)
 	const [content, contentChange] = useContext(ContentContext);
 	const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();

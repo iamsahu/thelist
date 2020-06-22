@@ -6,7 +6,7 @@ import ContentContext from "../context/ContentContext";
 function CentralList(props) {
 	const [content, contentChange] = useContext(ContentContext);
 	// contentChange(content=>({...content,listdescription:props.posts[0].description}))
-	// console.log(props);
+	console.log(props);
 	var temp = {};
 
 	if (typeof props.posts === "undefined") return <div></div>;

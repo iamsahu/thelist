@@ -18,6 +18,7 @@ import {
 	GetBookmarkItemsOfCurator,
 	DoesUserExists,
 	GetTagsListsUsers,
+	GetOneListOfUser,
 } from "../util/graphqlExecutor";
 
 function Curator(props) {
@@ -138,30 +139,41 @@ function Curator(props) {
 	const loadData2 = () => {
 		propSent.contentType === "lists"
 			? propSent.contentID === ""
-				? GetItemsUsers({ curator_id: propSent.curator_id })
+				? GetOneListOfUser(propSent.curator_id)
 						.then((data) => {
 							console.log("loading lists empty");
-							setPosts(data.items);
+							// console.log(data);
+							setPosts(data.lists[0]["items"]);
 							setloadState(1);
-							if (data.items.length > 0) {
-								setheader(data.items[0]["list"]["list_name"]);
-								setdescription(data.items[0]["list"]["description"]);
-								propSent["description"] = data.items[0]["list"]["description"];
-							}
+
+							setheader(data.lists[0]["list_name"]);
+							setdescription(data.lists[0]["description"]);
+							propSent["description"] = data.lists[0]["description"];
 						})
 						.catch((error) => console.log(error))
-				: GetList({ userid: propSent.curator_id, listid: propSent.contentID })
+				: // GetItemsUsers({ curator_id: propSent.curator_id })
+				  // 		.then((data) => {
+				  // 			console.log("loading lists empty");
+				  // 			setPosts(data.items);
+				  // 			setloadState(1);
+				  // 			if (data.items.length > 0) {
+				  // 				setheader(data.items[0]["list"]["list_name"]);
+				  // 				setdescription(data.items[0]["list"]["description"]);
+				  // 				propSent["description"] = data.items[0]["list"]["description"];
+				  // 			}
+				  // 		})
+				  // 		.catch((error) => console.log(error))
+				  GetList({ userid: propSent.curator_id, listid: propSent.contentID })
 						.then((data) => {
 							// console.log("loading lists ");s
-							// console.log(data)
+							// console.log(data);
 							setPosts(data.items);
 							setloadState(1);
 							if (typeof data !== "undefined") {
-								if (data.items.length > 0) {
-									setheader(data.items[0]["list"]["list_name"]);
-									setdescription(data.items[0]["list"]["description"]);
-									propSent["description"] =
-										data.items[0]["list"]["description"];
+								if (data.lists.length > 0) {
+									setheader(data.lists[0]["list_name"]);
+									setdescription(data.lists[0]["description"]);
+									propSent["description"] = data.lists[0]["description"];
 									// console.log(data.items[0]['list']['description'])
 								}
 							}
