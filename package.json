@@ -9,6 +9,7 @@
 		"@testing-library/jest-dom": "^4.2.4",
 		"@testing-library/react": "^9.5.0",
 		"@testing-library/user-event": "^7.2.1",
+		"apollo-boost": "^0.4.9",
 		"apollo-cache-inmemory": "^1.6.5",
 		"apollo-client": "^2.6.8",
 		"apollo-link-http": "^1.5.17",
@@ -45,6 +46,7 @@
 		"semantic-ui-css": "^2.4.1",
 		"semantic-ui-forest-themes": "^1.0.3",
 		"semantic-ui-react": "^0.88.2",
+		"styled-components": "^5.1.1",
 		"use-clippy": "^1.0.6",
 		"youtube-id": "^1.0.0"
 	},
