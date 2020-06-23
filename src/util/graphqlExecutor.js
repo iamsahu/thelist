@@ -1173,7 +1173,10 @@ const GetAllTags = () => {
 
 const GET_ALL_USERS = gql`
 	query MyQuery {
-		user {
+		user(
+			order_by: { created_at: desc_nulls_last }
+			where: { delete_status: { _eq: false } }
+		) {
 			description
 			id
 			image_link
