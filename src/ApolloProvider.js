@@ -19,8 +19,8 @@ export const client = new ApolloClient({
 	cache: new InMemoryCache(),
 	fetch,
 	headers: {
-		"x-hasura-admin-secret": "veryverysecret",
-		"x-hasura-access-key": "veryverysecret",
+		"x-hasura-admin-secret": process.env.REACT_APP_HASURA_ADMIN_SECRET,
+		"x-hasura-access-key": process.env.REACT_APP_HASURA_ADMIN_SECRET,
 		"Content-Type": "application/json",
 	},
 });
