@@ -256,11 +256,14 @@ function ContentMiddleNoLoad(props) {
 											curator: props.propSent.curator_id,
 											name: content.currentList,
 										});
-										ReactGA.event({
-											category: "List",
-											action: "Like",
-											transport: "beacon",
-										});
+										if (
+											process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+										)
+											ReactGA.event({
+												category: "List",
+												action: "Like",
+												transport: "beacon",
+											});
 										setlistlike(false);
 										// console.log('unlike')
 										UnlikeList(
@@ -285,11 +288,14 @@ function ContentMiddleNoLoad(props) {
 										curator: props.propSent.curator_id,
 										name: content.currentList,
 									});
-									ReactGA.event({
-										category: "List",
-										action: "Unlike",
-										transport: "beacon",
-									});
+									if (
+										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+									)
+										ReactGA.event({
+											category: "List",
+											action: "Unlike",
+											transport: "beacon",
+										});
 									setlistlike(true);
 									LikeList(props.propSent.contentID, userC.loggedin_user_id);
 									// console.log('unlike')

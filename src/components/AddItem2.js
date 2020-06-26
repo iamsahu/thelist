@@ -196,11 +196,12 @@ function AddItem2(props) {
 			});
 			SetModal(false);
 			// reward.rewardMe();
-			ReactGA.event({
-				category: "Item",
-				action: "Create",
-				transport: "beacon",
-			});
+			if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000")
+				ReactGA.event({
+					category: "Item",
+					action: "Create",
+					transport: "beacon",
+				});
 			Mixpanel.track("Item Created");
 
 			values.reason = "";

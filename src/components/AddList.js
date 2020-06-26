@@ -63,6 +63,23 @@ function AddList() {
 		values.list_name = "";
 		// // values.curator='';
 		values.description = "";
+
+		var newList = {
+			text: newItem.list_name,
+			key: newItem.list_name,
+			value: newItem.id,
+			id: newItem.id,
+			list_name: newItem.list_name,
+			// description:newItem.description,
+			curator_id: newItem.curator_id,
+		};
+		var temp = content.lists;
+		temp.push(newList);
+		// console.log(temp);
+		contentChange((content) => ({
+			...content,
+			lists: temp,
+		}));
 		// contentChange(content=>({...content,currentList:newItem.list_name,currentListID:newItem.id}))
 		// contentChange({currentList:newItem.list_name,tags:content.tags,lists:content.lists})
 		// console.log(content)

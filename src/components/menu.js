@@ -1,15 +1,6 @@
 import React, { useState, useContext } from "react";
-import {
-	Menu,
-	Dropdown,
-	Image,
-	Button,
-	Responsive,
-	Sidebar,
-	Icon,
-	Accordion,
-} from "semantic-ui-react";
-import AddItem from "./AddItem";
+import { Menu, Dropdown, Image, Button, Responsive } from "semantic-ui-react";
+
 import AddList from "./AddList";
 import TopSearch from "./TopSearch";
 import { useAuth0 } from "../react-auth0-spa";
@@ -19,7 +10,6 @@ import ContentContext from "../context/ContentContext";
 import Mixpanel from "../util/mix";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { slide } from "react-burger-menu";
 
 function MenuBar(props) {
 	const {

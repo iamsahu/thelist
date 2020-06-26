@@ -10,18 +10,18 @@ import {
 	Icon,
 } from "semantic-ui-react";
 import useForm from "../util/hook";
-import { useMutation, useQuery } from "@apollo/react-hooks";
-import { CREATE_ITEM, INSERT_TAG_MULTI } from "../util/graphql";
+// import { useMutation, useQuery } from "@apollo/react-hooks";
+// import { CREATE_ITEM, INSERT_TAG_MULTI } from "../util/graphql";
 import {
 	FETCH_FEED_ITEMS,
-	INSERT_TAG,
-	INSERT_ITEM_OLD_TAG_MULTI,
+	// INSERT_TAG,
+	// INSERT_ITEM_OLD_TAG_MULTI,
 } from "../util/graphql";
 import UserContext from "../context/UserContext";
 import ContentContext from "../context/ContentContext";
 import { createItem } from "../util/graphqlExecutor";
-import Tap from "react-interactions";
-import Reward from "react-rewards";
+// import Tap from "react-interactions";
+// import Reward from "react-rewards";
 import ReactGA from "react-ga";
 import Mixpanel from "../util/mix";
 import useClippy from "use-clippy";
@@ -196,11 +196,12 @@ function AddItem(props) {
 			});
 			SetModal(false);
 			// reward.rewardMe();
-			ReactGA.event({
-				category: "Item",
-				action: "Create",
-				transport: "beacon",
-			});
+			if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000")
+				ReactGA.event({
+					category: "Item",
+					action: "Create",
+					transport: "beacon",
+				});
 			Mixpanel.track("Item Created");
 
 			values.reason = "";
@@ -335,6 +336,7 @@ function AddItem(props) {
 				closeOnDimmerClick={false}
 				onClose={OnClose}
 				closeIcon
+				centered={false}
 				onOpen={OpenHandle}
 				trigger={
 					<Button onClick={onClick}>

@@ -237,12 +237,15 @@ function ContentCard(postdata) {
 										curator: postdata.postdata.user.id,
 										name: postdata.postdata.name,
 									});
-									ReactGA.event({
-										category: "Item",
-										action: "Delete",
-										label: postdata.postdata.name,
-										transport: "beacon",
-									});
+									if (
+										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+									)
+										ReactGA.event({
+											category: "Item",
+											action: "Delete",
+											label: postdata.postdata.name,
+											transport: "beacon",
+										});
 								}}
 							>
 								<Icon name="delete" />
@@ -267,12 +270,15 @@ function ContentCard(postdata) {
 										curator: postdata.postdata.user.id,
 										name: postdata.postdata.name,
 									});
-									ReactGA.event({
-										category: "Item",
-										action: "Bookmark",
-										label: postdata.postdata.name,
-										transport: "beacon",
-									});
+									if (
+										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+									)
+										ReactGA.event({
+											category: "Item",
+											action: "Bookmark",
+											label: postdata.postdata.name,
+											transport: "beacon",
+										});
 								}}
 							>
 								<Icon color="red" name="bookmark outline" />
@@ -295,12 +301,15 @@ function ContentCard(postdata) {
 										curator: postdata.postdata.user.id,
 										name: postdata.postdata.name,
 									});
-									ReactGA.event({
-										category: "Item",
-										action: "Bookmark",
-										label: postdata.postdata.name,
-										transport: "beacon",
-									});
+									if (
+										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+									)
+										ReactGA.event({
+											category: "Item",
+											action: "Bookmark",
+											label: postdata.postdata.name,
+											transport: "beacon",
+										});
 								}}
 							>
 								<Icon name="bookmark outline" />
@@ -317,12 +326,13 @@ function ContentCard(postdata) {
 								curator: postdata.postdata.user.id,
 								name: postdata.postdata.name,
 							});
-							ReactGA.event({
-								category: "Item",
-								action: "Copy",
-								label: postdata.postdata.name,
-								transport: "beacon",
-							});
+							if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000")
+								ReactGA.event({
+									category: "Item",
+									action: "Copy",
+									label: postdata.postdata.name,
+									transport: "beacon",
+								});
 						}}
 					>
 						<Button icon floated="right">
@@ -346,12 +356,15 @@ function ContentCard(postdata) {
 										curator: postdata.postdata.user.id,
 										name: postdata.postdata.name,
 									});
-									ReactGA.event({
-										category: "Item",
-										action: "Appreciate",
-										label: postdata.postdata.name,
-										transport: "beacon",
-									});
+									if (
+										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+									)
+										ReactGA.event({
+											category: "Item",
+											action: "Appreciate",
+											label: postdata.postdata.name,
+											transport: "beacon",
+										});
 								}}
 							>
 								<Icon color="red" name="like" />
@@ -370,12 +383,15 @@ function ContentCard(postdata) {
 										curator: postdata.postdata.user.id,
 										name: postdata.postdata.name,
 									});
-									ReactGA.event({
-										category: "Item",
-										action: "Appreciate",
-										label: postdata.postdata.name,
-										transport: "beacon",
-									});
+									if (
+										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+									)
+										ReactGA.event({
+											category: "Item",
+											action: "Appreciate",
+											label: postdata.postdata.name,
+											transport: "beacon",
+										});
 								}}
 							>
 								<Icon name="like" />
@@ -393,12 +409,15 @@ function ContentCard(postdata) {
 										curator: postdata.postdata.user.id,
 										name: postdata.postdata.name,
 									});
-									ReactGA.event({
-										category: "Item",
-										action: "Edit",
-										label: postdata.postdata.name,
-										transport: "beacon",
-									});
+									if (
+										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+									)
+										ReactGA.event({
+											category: "Item",
+											action: "Edit",
+											label: postdata.postdata.name,
+											transport: "beacon",
+										});
 								}}
 							>
 								<Icon name="edit" />

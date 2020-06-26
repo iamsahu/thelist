@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-// import 'semantic-ui-forest-themes/semantic.lumen.min.css'
+// import "semantic-ui-forest-themes/semantic.flatly.min.css";
 import "semantic-ui-css/semantic.min.css"; //readable
 import "./App.css";
 import "react-interactions/dist/main.css";
@@ -41,11 +41,14 @@ import ReactGA from "react-ga";
 toast.configure();
 function App() {
 	// mixpanel.init("4521493075a15cf75d66df3581c5410e");
-	ReactGA.initialize("UA-166934260-1");
-	history.listen((location) => {
-		ReactGA.set({ page: location.pathname });
-		ReactGA.pageview(location.pathname);
-	});
+	if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000") {
+		ReactGA.initialize("UA-166934260-1");
+
+		history.listen((location) => {
+			ReactGA.set({ page: location.pathname });
+			ReactGA.pageview(location.pathname);
+		});
+	}
 
 	//   history.listen((location) => {
 	//     if(location.pathname.includes('/user')) {
@@ -92,11 +95,12 @@ function App() {
 
 	const callback = (list) => {
 		list.getEntries().forEach((entry) => {
-			ReactGA.timing({
-				category: "Load Performace",
-				variable: "Server Latency",
-				value: entry.responseStart - entry.requestStart,
-			});
+			if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000")
+				ReactGA.timing({
+					category: "Load Performace",
+					variable: "Server Latency",
+					value: entry.responseStart - entry.requestStart,
+				});
 		});
 	};
 

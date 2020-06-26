@@ -117,12 +117,13 @@ function CurationList(props) {
 									currentListID: "",
 								}));
 								Mixpanel.track("Tag Click", { tag: "all", tagID: "" });
-								ReactGA.event({
-									category: "Tag",
-									action: "Click",
-									// value:'all',
-									transport: "beacon",
-								});
+								if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000")
+									ReactGA.event({
+										category: "Tag",
+										action: "Click",
+										// value:'all',
+										transport: "beacon",
+									});
 							}}
 						>
 							<Link to={`/${userC.curator_id}/tags/`}># All</Link>
@@ -152,12 +153,16 @@ function CurationList(props) {
 												tag: post.text,
 												tagID: post.value,
 											});
-											ReactGA.event({
-												category: "Tag",
-												action: "Click",
-												// value:post.text,
-												transport: "beacon",
-											});
+											if (
+												process.env.REACT_APP_BASE_URL !==
+												"http://localhost:3000"
+											)
+												ReactGA.event({
+													category: "Tag",
+													action: "Click",
+													// value:post.text,
+													transport: "beacon",
+												});
 										}}
 									>
 										<Link to={`/${userC.curator_id}/tags/${post.value}`}>
@@ -205,12 +210,16 @@ function CurationList(props) {
 												list: post.list_name,
 												listID: post.id,
 											});
-											ReactGA.event({
-												category: "List",
-												action: "Click",
-												// value:post.list_name,
-												transport: "beacon",
-											});
+											if (
+												process.env.REACT_APP_BASE_URL !==
+												"http://localhost:3000"
+											)
+												ReactGA.event({
+													category: "List",
+													action: "Click",
+													// value:post.list_name,
+													transport: "beacon",
+												});
 										}}
 									>
 										<Link to={`/${userC.curator_id}/lists/${post.id}`}>
@@ -261,12 +270,16 @@ function CurationList(props) {
 												bookmark: post.name,
 												listID: post.id,
 											});
-											ReactGA.event({
-												category: "Bookmark",
-												action: "Click",
-												// value:post.list_name,
-												transport: "beacon",
-											});
+											if (
+												process.env.REACT_APP_BASE_URL !==
+												"http://localhost:3000"
+											)
+												ReactGA.event({
+													category: "Bookmark",
+													action: "Click",
+													// value:post.list_name,
+													transport: "beacon",
+												});
 										}}
 									>
 										<Link to={`/${userC.curator_id}/bookmark/${post.curator}`}>

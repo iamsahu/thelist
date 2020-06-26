@@ -182,8 +182,8 @@ function CuratorLanding(props) {
 					<div id="content" className="ui">
 						<Container fluid>
 							<Grid>
-								<Grid.Column width={4} inverted></Grid.Column>
-								<Grid.Column width={10} inverted>
+								<Grid.Column width={4}></Grid.Column>
+								<Grid.Column width={10}>
 									<div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
 										<Item.Group>
 											<Item>
@@ -202,7 +202,7 @@ function CuratorLanding(props) {
 										</Item.Group>
 									</div>
 								</Grid.Column>
-								<Grid.Column inverted width={2}></Grid.Column>
+								<Grid.Column width={2}></Grid.Column>
 							</Grid>
 						</Container>
 					</div>
