@@ -10,18 +10,18 @@ import {
 	Icon,
 } from "semantic-ui-react";
 import useForm from "../util/hook";
-import { useMutation, useQuery } from "@apollo/react-hooks";
-import { CREATE_ITEM, INSERT_TAG_MULTI } from "../util/graphql";
+// import { useMutation, useQuery } from "@apollo/react-hooks";
+// import { CREATE_ITEM, INSERT_TAG_MULTI } from "../util/graphql";
 import {
 	FETCH_FEED_ITEMS,
-	INSERT_TAG,
-	INSERT_ITEM_OLD_TAG_MULTI,
+	// INSERT_TAG,
+	// INSERT_ITEM_OLD_TAG_MULTI,
 } from "../util/graphql";
 import UserContext from "../context/UserContext";
 import ContentContext from "../context/ContentContext";
 import { createItem } from "../util/graphqlExecutor";
-import Tap from "react-interactions";
-import Reward from "react-rewards";
+// import Tap from "react-interactions";
+// import Reward from "react-rewards";
 import ReactGA from "react-ga";
 import Mixpanel from "../util/mix";
 import useClippy from "use-clippy";
@@ -78,6 +78,7 @@ controller = new AbortController();
 const signal = controller.signal;
 
 function AddItem2(props) {
+	console.log(props);
 	const [content, contentChange] = useContext(ContentContext);
 	const [clipboard, setClipboard] = useClippy();
 	const [userC, userChange] = useContext(UserContext);
@@ -85,7 +86,7 @@ function AddItem2(props) {
 	const [showModal, SetModal] = useState(false);
 	const [listID, SetListID] = useState("");
 	const [newItemID, SetItemID] = useState("");
-	const [dropTag, SetDropTag] = useState(content.tags);
+	const [dropTag, SetDropTag] = useState(content.alltags);
 	const [dropList, SetDropList] = useState(content.lists);
 	const [listDescription, setlistDescription] = useState(false);
 	const [reward, setreward] = useState(null);
@@ -144,12 +145,12 @@ function AddItem2(props) {
 	function createPostCallback() {
 		// console.log(content.list_id)
 		var errors = false;
-		if (typeof content.list_id === "undefined") {
-			setErrorList(true);
-			errors = true;
-		} else {
-			setErrorList(false);
-		}
+		// if (typeof content.list_id === "undefined") {
+		// 	setErrorList(true);
+		// 	errors = true;
+		// } else {
+		// 	setErrorList(false);
+		// }
 		if (values.name === "") {
 			setErrorName(true);
 			errors = true;
@@ -183,15 +184,42 @@ function AddItem2(props) {
 		if (!errors) {
 			createItem({
 				...values,
-				list_id: content.list_id,
+				list_id: props.listID,
 				selTags: content.selTags,
 				curator_id: userC.loggedin_user_id,
-				tags: content.tags,
+				tags: content.alltags,
 				contentType: content.contentType,
 				currentListID: content.currentListID,
 				currentTagID: content.currentTagID,
 			}).then((response) => {
-				console.log(response);
+				// console.log(response);
+				if (typeof response.data.insert_item_tag !== "undefined") {
+					if (response.data.insert_item_tag.returning.length > 0) {
+						var tempTag = content.tags;
+						var tempAllTags = content.alltags;
+						for (
+							let index = 0;
+							index < response.data.insert_item_tag.returning.length;
+							index++
+						) {
+							tempTag.push({
+								text: response.data.insert_item_tag.returning[index].tag.name,
+								key: response.data.insert_item_tag.returning[index].tag.name,
+								value: response.data.insert_item_tag.returning[index].id,
+							});
+							tempAllTags.push({
+								text: response.data.insert_item_tag.returning[index].tag.name,
+								key: response.data.insert_item_tag.returning[index].tag.name,
+								value: response.data.insert_item_tag.returning[index].id,
+							});
+						}
+						contentChange((content) => ({
+							...content,
+							tags: tempTag,
+							alltags: tempAllTags,
+						}));
+					}
+				}
 				contentChange((content) => ({ ...content, add: "ad" }));
 			});
 			SetModal(false);
@@ -288,7 +316,7 @@ function AddItem2(props) {
 		//     }
 		// }
 		SetModal(true);
-		SetDropTag(content.tags);
+		SetDropTag(content.alltags);
 		// if(!loading){
 		//     // console.log(data)
 		//     const tempArr = data.tag.map(post=>({
@@ -317,9 +345,10 @@ function AddItem2(props) {
 
 	function OpenHandle() {
 		SetDropList(content.lists);
-		SetDropTag(content.tags);
+		SetDropTag(content.alltags);
 		console.log("Open Modal");
 	}
+	// if (typeof dropTag === "undefined") return <></>;
 
 	return (
 		<>
@@ -335,6 +364,7 @@ function AddItem2(props) {
 				closeOnDimmerClick={false}
 				onClose={OnClose}
 				closeIcon
+				centered={false}
 				onOpen={OpenHandle}
 				trigger={
 					<Button onClick={onClick}>
@@ -412,8 +442,8 @@ function AddItem2(props) {
 								</Form.Input>
 							</Form.Field>
 						</Form.Group>
-						<Divider />
-						<Form.Group>
+						{/* <Divider /> */}
+						{/* <Form.Group>
 							<Form.Field inline name="listname">
 								<label>List Name</label>
 								<Form.Input>
@@ -449,7 +479,7 @@ function AddItem2(props) {
 							) : (
 								<div></div>
 							)}
-						</Form.Group>
+						</Form.Group> */}
 
 						<br />
 						<Button primary type="submit">

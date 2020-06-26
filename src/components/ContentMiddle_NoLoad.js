@@ -30,7 +30,7 @@ import {
 import ContentContext from "../context/ContentContext";
 // import ContentCard from './ContentCard'
 import CentralList from "./CentralList";
-import AddItem from "./AddItem";
+import AddItem2 from "./AddItem2";
 // import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
 import UserContext from "../context/UserContext";
 import {
@@ -133,7 +133,7 @@ function ContentMiddleNoLoad(props) {
 					{
 						props.propSent.contentType === "lists" &&
 							userC.loggedin_user_id === props.propSent.curator_id && (
-								<AddItem />
+								<AddItem2 />
 							)
 						// <Button circular icon='add' floated='right'/>
 					}
@@ -309,7 +309,7 @@ function ContentMiddleNoLoad(props) {
 						)}
 						{/* {content.contentType === "lists" &&
 							userC.loggedin_user_id === props.propSent.curator_id && (
-								<AddItem />
+								<AddItem2 />
 							)} */}
 						{/* <Button icon>
 							<Icon name="bell" />
@@ -317,7 +317,7 @@ function ContentMiddleNoLoad(props) {
 						{
 							props.propSent.contentType === "lists" &&
 								userC.loggedin_user_id === props.propSent.curator_id && (
-									<AddItem listID={props.propSent.curator_id} />
+									<AddItem2 listID={props.propSent.contentID} />
 								)
 							// <Button circular icon='add' floated='right'/>
 						}

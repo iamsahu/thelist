@@ -78,6 +78,7 @@ controller = new AbortController();
 const signal = controller.signal;
 
 function AddItem(props) {
+	console.log(props);
 	const [content, contentChange] = useContext(ContentContext);
 	const [clipboard, setClipboard] = useClippy();
 	const [userC, userChange] = useContext(UserContext);
