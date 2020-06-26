@@ -192,6 +192,33 @@ function AddItem(props) {
 				currentTagID: content.currentTagID,
 			}).then((response) => {
 				console.log(response);
+				if (typeof response.data.insert_item_tag !== "undefined") {
+					if (response.data.insert_item_tag.returning.length > 0) {
+						var tempTag = content.tags;
+						var tempAllTags = content.alltags;
+						for (
+							let index = 0;
+							index < response.data.insert_item_tag.returning.length;
+							index++
+						) {
+							tempTag.push({
+								text: response.data.insert_item_tag.returning[index].tag.name,
+								key: response.data.insert_item_tag.returning[index].tag.name,
+								value: response.data.insert_item_tag.returning[index].id,
+							});
+							tempAllTags.push({
+								text: response.data.insert_item_tag.returning[index].tag.name,
+								key: response.data.insert_item_tag.returning[index].tag.name,
+								value: response.data.insert_item_tag.returning[index].id,
+							});
+						}
+						contentChange((content) => ({
+							...content,
+							tags: tempTag,
+							alltags: tempAllTags,
+						}));
+					}
+				}
 				contentChange((content) => ({ ...content, add: "ad" }));
 			});
 			SetModal(false);

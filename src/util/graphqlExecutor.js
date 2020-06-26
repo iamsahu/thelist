@@ -23,6 +23,9 @@ const TAG_ITEM = gql`
 				tag_id
 				user_id
 				id
+				tag {
+					name
+				}
 			}
 		}
 	}
