@@ -2086,6 +2086,25 @@ const GetOneListOfUser = (curator_id) => {
 		.catch((error) => console.log(error));
 };
 
+const INCREMENT_LIST_VIEW = gql`
+	mutation INCREMENT_LIST_VIEW($list_id: uuid) {
+		update_lists(where: { id: { _eq: $list_id } }, _inc: { view_count: 1 }) {
+			affected_rows
+		}
+	}
+`;
+
+const IncrementListView = (list_id) => {
+	return client
+		.mutate({
+			mutation: INCREMENT_LIST_VIEW,
+			variables: {
+				list_id: list_id,
+			},
+		})
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -2117,6 +2136,7 @@ export {
 	GetListsOfUser,
 	GetTagsOfUser,
 	GetOneListOfUser,
+	IncrementListView,
 };
 
 export const DELETE_LIST = gql`

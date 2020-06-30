@@ -19,6 +19,7 @@ import {
 	DoesUserExists,
 	GetTagsListsUsers,
 	GetOneListOfUser,
+	IncrementListView,
 } from "../util/graphqlExecutor";
 
 function Curator(props) {
@@ -150,6 +151,13 @@ function Curator(props) {
 								setheader(data.lists[0]["list_name"]);
 								setdescription(data.lists[0]["description"]);
 								propSent["description"] = data.lists[0]["description"];
+								if (
+									process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+								) {
+									IncrementListView(data.lists[0]["id"]).then((data) =>
+										console.log("Incremented")
+									);
+								}
 							}
 						})
 						.catch((error) => console.log(error))
@@ -177,6 +185,13 @@ function Curator(props) {
 									setdescription(data.lists[0]["description"]);
 									propSent["description"] = data.lists[0]["description"];
 									// console.log(data.items[0]['list']['description'])
+									if (
+										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+									) {
+										IncrementListView(propSent.contentID).then((data) =>
+											console.log("Incremented")
+										);
+									}
 								}
 							}
 							// if(data.like_list.length>0){//Change this to take value from latest data
