@@ -25,24 +25,24 @@ function AddList() {
 	});
 
 	const updateCache = (cache, { data }) => {
-		const existingItems = cache.readQuery({
-			query: COMBINED_FETCH,
-			variables: {
-				user_id: userC.loggedin_user_id,
-			},
-		});
-		// console.log(existingItems)
+		// const existingItems = cache.readQuery({
+		// 	query: COMBINED_FETCH,
+		// 	variables: {
+		// 		user_id: userC.loggedin_user_id,
+		// 	},
+		// });
+		// console.log(existingItems);
 		const newItem = data.insert_lists.returning[0];
 		// console.log(newItem)
-		existingItems.lists.push(newItem);
-		// console.log(existingItems)
-		cache.writeQuery({
-			query: COMBINED_FETCH,
-			variables: {
-				user_id: userC.loggedin_user_id,
-			},
-			data: existingItems,
-		});
+		// existingItems.lists.push(newItem);
+		// console.log(existingItems);
+		// cache.writeQuery({
+		// 	query: COMBINED_FETCH,
+		// 	variables: {
+		// 		user_id: userC.loggedin_user_id,
+		// 	},
+		// 	data: existingItems,
+		// });
 
 		// Fetch the items from the cache
 		// const existingItems = cache.readQuery({
@@ -59,32 +59,34 @@ function AddList() {
 		//   query: FETCH_ALL,
 		//   data: {lists: [newItem, ...existingItems.lists]}
 		// });
-		values.id = "";
-		values.list_name = "";
+		// values.id = "";
+		// values.list_name = "";
 		// // values.curator='';
-		values.description = "";
+		// values.description = "";
 
-		var newList = {
-			text: newItem.list_name,
-			key: newItem.list_name,
-			value: newItem.id,
-			id: newItem.id,
-			list_name: newItem.list_name,
-			// description:newItem.description,
-			curator_id: newItem.curator_id,
-		};
-		var temp = content.lists;
-		temp.push(newList);
+		// var newList = {
+		// 	text: newItem.list_name,
+		// 	key: newItem.list_name,
+		// 	value: newItem.id,
+		// 	id: newItem.id,
+		// 	list_name: newItem.list_name,
+		// description:newItem.description,
+		// 	curator_id: newItem.curator_id,
+		// };
+		// var temp = content.lists;
 		// console.log(temp);
-		contentChange((content) => ({
-			...content,
-			lists: temp,
-		}));
+		// temp.push(newList);
+		// console.log(temp);
+		// contentChange((content) => ({
+		// 	...content,
+		// 	lists: temp,
+		// }));
 		// contentChange(content=>({...content,currentList:newItem.list_name,currentListID:newItem.id}))
 		// contentChange({currentList:newItem.list_name,tags:content.tags,lists:content.lists})
-		// console.log(content)
+		console.log("list creation!");
 
 		history.push("/" + userC.loggedin_user_id + "/lists/" + newItem.id);
+		window.location.href = window.location.href;
 	};
 
 	const [createList, { error }] = useMutation(CREATE_LIST, {
