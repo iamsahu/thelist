@@ -67,7 +67,7 @@ function BookMarkItem(postdata) {
 							);
 							console.log("book");
 							setLiked(false);
-							Mixpanel.track("Appreciate Item", {
+							Mixpanel.track("Unbookmark Item", {
 								link: postdata.postdata.postdata.link,
 								curator: postdata.postdata.postdata.user.id,
 								name: postdata.postdata.postdata.name,
@@ -97,7 +97,7 @@ function BookMarkItem(postdata) {
 							);
 							setLiked(true);
 							console.log("insert");
-							Mixpanel.track("Appreciate Item", {
+							Mixpanel.track("Bookmark Item", {
 								link: postdata.postdata.postdata.link,
 								curator: postdata.postdata.postdata.user.id,
 								name: postdata.postdata.postdata.name,

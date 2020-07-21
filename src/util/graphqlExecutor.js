@@ -2373,6 +2373,30 @@ const HaveIBookmarked = (item_id, user_id) => {
 		.catch((error) => console.log(error));
 };
 
+const GETLIKES = gql`
+	query MyQuery {
+		like_list_aggregate(
+			where: { list_id: { _eq: "c07f8859-a81a-48eb-8803-1c307bfeb81b" } }
+		) {
+			aggregate {
+				count
+			}
+		}
+		like_item_aggregate(
+			where: {
+				item: { list_id: { _eq: "c07f8859-a81a-48eb-8803-1c307bfeb81b" } }
+			}
+		) {
+			aggregate {
+				count
+			}
+		}
+		lists(where: { id: { _eq: "c07f8859-a81a-48eb-8803-1c307bfeb81b" } }) {
+			view_count
+		}
+	}
+`;
+
 export {
 	createItem,
 	GetList,
