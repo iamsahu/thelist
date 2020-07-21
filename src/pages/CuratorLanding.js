@@ -93,6 +93,7 @@ function CuratorLanding(props) {
 
 	const routeChange = (t) => {
 		history.push(t);
+		window.location.href = window.location.href;
 	};
 
 	if (typeof tagData.tag === "undefined") return <div>Loading</div>;
@@ -218,10 +219,16 @@ function CuratorLanding(props) {
 								</span> */}
 									{isAuthenticated && u === userC.loggedin_user_id && (
 										<span>
-											<Button floated="right">
-												<Link to={`/manage/${userC.loggedin_user_id}`}>
-													Manage Content
-												</Link>
+											<Button
+												floated="right"
+												onClick={() => {
+													var t = `/manage/${userC.loggedin_user_id}`;
+													routeChange(t);
+												}}
+											>
+												{/* <Link to={`/manage/${userC.loggedin_user_id}`}> */}
+												Manage Content
+												{/* </Link> */}
 											</Button>
 										</span>
 									)}
@@ -279,14 +286,14 @@ function CuratorLanding(props) {
 															size="tiny"
 															floated="right"
 															basic
-															// onClick={() => {
-															// 	var t = `/${item.curator_id}/lists/${item.id}`;
-															// 	routeChange(t);
-															// }}
+															onClick={() => {
+																var t = `/${item.curator_id}/lists/${item.id}`;
+																routeChange(t);
+															}}
 														>
-															<Link to={`/${item.curator_id}/lists/${item.id}`}>
-																Read
-															</Link>
+															{/* <Link to={`/${item.curator_id}/lists/${item.id}`}> */}
+															Read
+															{/* </Link> */}
 														</Button>
 														{/* <Button size="tiny" floated="right" basic icon>
 														<Icon color="blue" name="twitter" />

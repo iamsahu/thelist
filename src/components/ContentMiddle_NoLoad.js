@@ -87,13 +87,13 @@ function ContentMiddleNoLoad(props) {
 				list_id: props.propSent.contentID,
 				user_id: userC.loggedin_user_id,
 			}).then((response) => {
-				if (typeof response !== "undefined")
-					if (typeof response.like_list !== "undefined")
-						if (response.like_list.length > 0) {
-							setlistlike(true);
-						} else {
-							setlistlike(false);
-						}
+				// if (typeof response !== "undefined")
+				// 	if (typeof response.like_list !== "undefined")
+				// 		if (response.like_list.length > 0) {
+				// 			setlistlike(true);
+				// 		} else {
+				// 			setlistlike(false);
+				// 		}
 			});
 			// }
 		}
@@ -136,17 +136,19 @@ function ContentMiddleNoLoad(props) {
 		console.log(data);
 		console.log("---------------------------");
 	};
-
-	if (userC.loggedin_user_id !== "") {
-		DoIFollow(props.propSent.contentID, userC.loggedin_user_id).then(
-			(response) => {
-				// console.log(response.list_follow_aggregate.aggregate.count);
-				if (response.list_follow_aggregate.aggregate.count > 0) {
-					setfollow(1);
+	if (userC.loggedin_user_id !== props.propSent.curator_id)
+		if (userC.loggedin_user_id !== "") {
+			DoIFollow(props.propSent.contentID, userC.loggedin_user_id).then(
+				(response) => {
+					// console.log(response.list_follow_aggregate.aggregate.count);
+					if (typeof response !== "undefined")
+						if (typeof response.list_follow_aggregate !== "undefined")
+							if (response.list_follow_aggregate.aggregate.count > 0) {
+								setfollow(1);
+							}
 				}
-			}
-		);
-	}
+			);
+		}
 
 	return (
 		<>
@@ -375,7 +377,7 @@ function ContentMiddleNoLoad(props) {
 											setfollow(1);
 										}}
 									>
-										<Icon name="bell" />
+										<Icon name="feed" />
 									</Button>
 								) : (
 									//Unfollow
@@ -392,7 +394,7 @@ function ContentMiddleNoLoad(props) {
 											setfollow(0);
 										}}
 									>
-										<Icon color="red" name="bell" />
+										<Icon color="red" name="feed" />
 									</Button>
 								)
 							) : (
@@ -402,7 +404,7 @@ function ContentMiddleNoLoad(props) {
 										//Take user to signin/up
 									}}
 								>
-									<Icon name="bell" />
+									<Icon name="feed" />
 								</Button>
 							))}
 
