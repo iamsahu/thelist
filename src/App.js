@@ -30,7 +30,7 @@ import SearchResults from "./pages/SearchResults";
 import DataEntry from "./pages/DataEntry";
 import LandingPage from "./pages/LandingPage";
 import CurrentConsumption from "./pages/CurrentConsumption";
-import ReadFeed from "./pages/ReadFeed";
+// import ReadFeed from "./pages/ReadFeed";
 import NotesView from "./pages/NotesView";
 import history from "./util/history";
 import { useAuth0 } from "./react-auth0-spa";
@@ -542,7 +542,7 @@ function App() {
 											component={CurrentConsumption}
 										/>
 										<Route exact path="/notes/:user" component={NotesView} />
-										<Route exact path="/readfeed" component={ReadFeed} />
+										{/* <Route exact path="/readfeed" component={ReadFeed} /> */}
 										<Route exact path="/explore" component={Home2} />
 										<Route exact path="/dataentry" component={DataEntry} />
 										<Route exact path="/search" component={SearchResults} />
