@@ -25,6 +25,7 @@ import gql from "graphql-tag";
 import ContentContext from "../context/ContentContext";
 import { useQuery } from "@apollo/react-hooks";
 import Linkify from "react-linkify";
+import LikeArticle from "./LikeArticle";
 // const LIKE_ITEM=gql`
 //     mutation MyMutation ($item_id:uuid!,$user_id:String!){
 //         insert_like_item(objects: {item_id: $item_id, user_id: $user_id}) {
@@ -341,63 +342,7 @@ function ContentCard(postdata) {
 						</Button>
 					</CopyToClipboard>
 					{/* <Reward ref={(ref) => { setreward(ref) }} type='confetti' config={{springAnimation:false}}> */}
-					{isAuthenticated &&
-						postdata.postdata.user.id !== userC.loggedin_user_id &&
-						(liked ? (
-							<Button
-								icon
-								floated="right"
-								onClick={(e) => {
-									R();
-									UnlikeItem(postdata.postdata.id, userC.loggedin_user_id);
-									setLiked(false);
-									Mixpanel.track("Appreciate Item", {
-										link: postdata.postdata.link,
-										curator: postdata.postdata.user.id,
-										name: postdata.postdata.name,
-									});
-									if (
-										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
-									)
-										ReactGA.event({
-											category: "Item",
-											action: "Appreciate",
-											label: postdata.postdata.name,
-											transport: "beacon",
-										});
-								}}
-							>
-								<Icon color="red" name="like" />
-								<Tap waves />
-							</Button>
-						) : (
-							<Button
-								icon
-								floated="right"
-								onClick={(e) => {
-									R();
-									LikeItem(postdata.postdata.id, userC.loggedin_user_id);
-									setLiked(true);
-									Mixpanel.track("Appreciate Item", {
-										link: postdata.postdata.link,
-										curator: postdata.postdata.user.id,
-										name: postdata.postdata.name,
-									});
-									if (
-										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
-									)
-										ReactGA.event({
-											category: "Item",
-											action: "Appreciate",
-											label: postdata.postdata.name,
-											transport: "beacon",
-										});
-								}}
-							>
-								<Icon name="like" />
-								<Tap waves />
-							</Button>
-						))}
+					<LikeArticle postdata={postdata} />
 					{isAuthenticated &&
 						postdata.postdata.user.id === userC.loggedin_user_id && (
 							<Button

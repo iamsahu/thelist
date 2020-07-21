@@ -29,10 +29,11 @@ import ContentContext from "../context/ContentContext";
 // import ContentCard from './ContentCard'
 import CentralList from "./CentralList";
 import AddItem2 from "./AddItem2";
+import LikeList from "./LikeList";
 // import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
 import UserContext from "../context/UserContext";
 import {
-	LikeList,
+	// LikeList,
 	UnlikeList,
 	DoILike,
 	InsertMultiple,
@@ -89,22 +90,6 @@ function ContentMiddleNoLoad(props) {
 			// console.log(props.propSent.description)
 			if (props.propSent.description !== undefined)
 				setdescription(props.propSent.description);
-		}
-		if (userC.loggedin_user_id !== "") {
-			// if(listlike===1){
-			DoILike({
-				list_id: props.propSent.contentID,
-				user_id: userC.loggedin_user_id,
-			}).then((response) => {
-				// if (typeof response !== "undefined")
-				// 	if (typeof response.like_list !== "undefined")
-				// 		if (response.like_list.length > 0) {
-				// 			setlistlike(true);
-				// 		} else {
-				// 			setlistlike(false);
-				// 		}
-			});
-			// }
 		}
 	}
 
@@ -307,68 +292,12 @@ function ContentMiddleNoLoad(props) {
 				</MetaTags>
 				<Menu.Menu position="right">
 					<div className="icobutton">
-						{listlike ? (
-							content.contentType === "lists" ? (
-								<Button
-									icon
-									floated="right"
-									onClick={(e) => {
-										Mixpanel.track("Appreciate List", {
-											link: { shareUrl },
-											curator: props.propSent.curator_id,
-											name: content.currentList,
-										});
-										if (
-											process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
-										)
-											ReactGA.event({
-												category: "List",
-												action: "Like",
-												transport: "beacon",
-											});
-										setlistlike(false);
-										// console.log('unlike')
-										UnlikeList(
-											props.propSent.contentID,
-											userC.loggedin_user_id
-										);
-									}}
-								>
-									<Icon color="red" name="like" />
-									{/* <Tap waves /> */}
-								</Button>
-							) : (
-								<></>
-							)
-						) : content.contentType === "lists" ? (
-							<Button
-								icon
-								floated="right"
-								onClick={(e) => {
-									Mixpanel.track("Appreciate List", {
-										link: { shareUrl },
-										curator: props.propSent.curator_id,
-										name: content.currentList,
-									});
-									if (
-										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
-									)
-										ReactGA.event({
-											category: "List",
-											action: "Unlike",
-											transport: "beacon",
-										});
-									setlistlike(true);
-									LikeList(props.propSent.contentID, userC.loggedin_user_id);
-									// console.log('unlike')
-								}}
-							>
-								<Icon name="like" />
-								{/* <Tap waves /> */}
-							</Button>
+						{content.contentType === "lists" ? (
+							<LikeList props={props.propSent.contentID} />
 						) : (
 							<></>
 						)}
+
 						{/* {content.contentType === "lists" &&
 							userC.loggedin_user_id === props.propSent.curator_id && (
 								<AddItem2 />
