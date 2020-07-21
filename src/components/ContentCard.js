@@ -342,7 +342,10 @@ function ContentCard(postdata) {
 						</Button>
 					</CopyToClipboard>
 					{/* <Reward ref={(ref) => { setreward(ref) }} type='confetti' config={{springAnimation:false}}> */}
-					<LikeArticle postdata={postdata} />
+					{isAuthenticated &&
+						postdata.postdata.user.id !== userC.loggedin_user_id && (
+							<LikeArticle postdata={postdata} />
+						)}
 					{isAuthenticated &&
 						postdata.postdata.user.id === userC.loggedin_user_id && (
 							<Button
