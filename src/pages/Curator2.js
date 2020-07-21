@@ -131,11 +131,12 @@ function Curator(props) {
 		// console.log(propSent)
 	}
 
-	const [listlike, setlistlike] = useState(-1);
+	// const [listlike, setlistlike] = useState(-1);
 	const [loadState, setloadState] = useState(-1);
 	const [posts, setPosts] = useState(null);
 	const [header, setheader] = useState("");
 	const [description, setdescription] = useState("");
+	const [view, setview] = useState("");
 
 	const loadData2 = () => {
 		propSent.contentType === "lists"
@@ -154,9 +155,11 @@ function Curator(props) {
 								if (
 									process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
 								) {
-									IncrementListView(data.lists[0]["id"]).then((data) =>
-										console.log("Incremented")
-									);
+									(view === "" || view !== data.lists[0]["id"]) &&
+										IncrementListView(data.lists[0]["id"]).then((data) => {
+											setview(data.lists[0]["id"]);
+											console.log("Incremented");
+										});
 								}
 							}
 						})
