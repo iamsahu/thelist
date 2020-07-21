@@ -221,28 +221,22 @@ function CuratorLanding(props) {
 						<Grid>
 							<Grid.Column width={3}></Grid.Column>
 							<Grid.Column width={10}>
-								<div>
+								<div style={{ paddingBottom: "0.5em" }}>
 									MY LISTS
-									{/* <span>
-									<Button floated="right">Manage Content</Button>
-								</span> */}
 									{isAuthenticated && u === userC.loggedin_user_id && (
-										<span>
-											<Button
-												floated="right"
-												onClick={() => {
-													var t = `/manage/${userC.loggedin_user_id}`;
-													routeChange(t);
-												}}
-											>
-												{/* <Link to={`/manage/${userC.loggedin_user_id}`}> */}
-												Manage Content
-												{/* </Link> */}
-											</Button>
-										</span>
+										<Button
+											floated="right"
+											onClick={() => {
+												var t = `/manage/${userC.loggedin_user_id}`;
+												routeChange(t);
+											}}
+											// style={{ marginBottom: "50px" }}
+										>
+											Manage Content
+										</Button>
 									)}
-									<Divider />
 								</div>
+								<Divider />
 
 								{/* <Item.Group divided relaxed="very"> */}
 								{/* <StackGrid
@@ -259,7 +253,7 @@ function CuratorLanding(props) {
 										</div>
 									) : (
 										listData.lists.map((item) => (
-											<GG key={item.id} item xs={4} height="100%">
+											<GG key={item.id} item xs={4}>
 												<Card
 													className="eq-card"
 													fluid
