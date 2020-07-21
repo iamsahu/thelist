@@ -9,24 +9,24 @@ import Tap from "react-interactions";
 
 function LikeList(props) {
 	// console.log(props);
-	const [liked, setLiked] = useState(false);
+	const [liked, setLiked] = useState(-1);
 	const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
 	const [userC, userChange] = useContext(UserContext);
 
 	if (userC.loggedin_user_id !== "") {
-		// if (listlike === 1) {
-		DoILike({
-			list_id: props.props,
-			user_id: userC.loggedin_user_id,
-		}).then((response) => {
-			// console.log(response);
-			if (response.like_list.length > 0) {
-				setLiked(true);
-			} else {
-				setLiked(false);
-			}
-		});
-		// }
+		if (liked === -1) {
+			DoILike({
+				list_id: props.props,
+				user_id: userC.loggedin_user_id,
+			}).then((response) => {
+				// console.log(response);
+				if (response.like_list.length > 0) {
+					setLiked(true);
+				} else {
+					setLiked(false);
+				}
+			});
+		}
 	}
 
 	return (
@@ -61,7 +61,7 @@ function LikeList(props) {
 						icon
 						floated="right"
 						onClick={(e) => {
-							LikeList(props.props, userC.loggedin_user_id);
+							LL(props.props, userC.loggedin_user_id);
 							setLiked(true);
 							// Mixpanel.track("Appreciate List", {
 							// 	link: { shareUrl },

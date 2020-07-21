@@ -1667,6 +1667,38 @@ const InsertBookmark = (item_id, user_id, curator, list_id) => {
 				curator: curator,
 				list_id: list_id,
 			},
+			update: (cache, { data }) => {
+				const existingItems = cache.readQuery({
+					query: HAVEIBOOKMARKED,
+					variables: {
+						item_id: item_id,
+						user_id: user_id,
+					},
+				});
+				console.log(existingItems);
+				// const newItem = data.insert_lists.returning[0];
+				// console.log(newItem);
+				// existingItems.lists.push(newItem);
+				// console.log(existingItems)
+				// existingItems.item_bookmark_aggregate.aggregate.count = 1;
+				cache.writeQuery({
+					query: HAVEIBOOKMARKED,
+					variables: {
+						item_id: item_id,
+						user_id: user_id,
+					},
+					data: existingItems,
+				});
+			},
+			refetchQueries: [
+				{
+					query: HAVEIBOOKMARKED,
+					variables: {
+						item_id: item_id,
+						user_id: user_id,
+					},
+				},
+			],
 		})
 		.then((response) => response.data)
 		.catch((error) => console.log(error));
@@ -2283,6 +2315,64 @@ const DoIFollow = (list_id, user_id) => {
 		.catch((error) => console.log(error));
 };
 
+const HAVEIBOOKMARKED = gql`
+	query MyQuery($item_id: uuid, $user_id: String) {
+		item_bookmark_aggregate(
+			where: {
+				_and: { item_id: { _eq: $item_id }, user_id: { _eq: $user_id } }
+			}
+		) {
+			aggregate {
+				count
+			}
+		}
+	}
+`;
+
+const HaveIBookmarked = (item_id, user_id) => {
+	return client
+		.query({
+			query: HAVEIBOOKMARKED,
+			variables: {
+				item_id: item_id,
+				user_id: user_id,
+			},
+			update: (cache, { data }) => {
+				const existingItems = cache.readQuery({
+					query: HAVEIBOOKMARKED,
+					variables: {
+						item_id: item_id,
+						user_id: user_id,
+					},
+				});
+				console.log(existingItems);
+				const newItem = data.insert_lists.returning[0];
+				console.log(newItem);
+				// existingItems.lists.push(newItem);
+				// console.log(existingItems)
+				// cache.writeQuery({
+				// 	query: HAVEIBOOKMARKED,
+				// 	variables: {
+				// 		item_id: item_id,
+				// 		user_id: user_id,
+				// 	},
+				// 	data: existingItems,
+				// });
+			},
+			refetchQueries: [
+				{
+					query: HAVEIBOOKMARKED,
+					variables: {
+						item_id: item_id,
+						user_id: user_id,
+					},
+				},
+			],
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -2320,6 +2410,7 @@ export {
 	FollowThisList,
 	UnfollowThisList,
 	DoIFollow,
+	HaveIBookmarked,
 };
 
 export const DELETE_LIST = gql`

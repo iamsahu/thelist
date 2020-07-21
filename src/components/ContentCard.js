@@ -26,6 +26,7 @@ import ContentContext from "../context/ContentContext";
 import { useQuery } from "@apollo/react-hooks";
 import Linkify from "react-linkify";
 import LikeArticle from "./LikeArticle";
+import BookMarkItem from "./BookMarkItem";
 // const LIKE_ITEM=gql`
 //     mutation MyMutation ($item_id:uuid!,$user_id:String!){
 //         insert_like_item(objects: {item_id: $item_id, user_id: $user_id}) {
@@ -253,70 +254,74 @@ function ContentCard(postdata) {
 								<Tap waves />
 							</Button>
 						)}
-					{isAuthenticated &&
-						postdata.postdata.user.id !== userC.loggedin_user_id &&
-						(bookmark ? (
-							<Button
-								icon
-								floated="right"
-								onClick={(e) => {
-									DeleteBookmark(
-										postdata.postdata.id,
-										userC.loggedin_user_id,
-										postdata.postdata.user.id
-									);
-									setbookmark(false);
-									Mixpanel.track("Bookmark Item", {
-										link: postdata.postdata.link,
-										curator: postdata.postdata.user.id,
-										name: postdata.postdata.name,
-									});
-									if (
-										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
-									)
-										ReactGA.event({
-											category: "Item",
-											action: "Bookmark",
-											label: postdata.postdata.name,
-											transport: "beacon",
-										});
-								}}
-							>
-								<Icon color="red" name="bookmark outline" />
-								<Tap waves />
-							</Button>
-						) : (
-							<Button
-								icon
-								floated="right"
-								onClick={(e) => {
-									InsertBookmark(
-										postdata.postdata.id,
-										userC.loggedin_user_id,
-										postdata.postdata.user.id,
-										postdata.postdata.list_id
-									);
-									setbookmark(true);
-									Mixpanel.track("Bookmark Item", {
-										link: postdata.postdata.link,
-										curator: postdata.postdata.user.id,
-										name: postdata.postdata.name,
-									});
-									if (
-										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
-									)
-										ReactGA.event({
-											category: "Item",
-											action: "Bookmark",
-											label: postdata.postdata.name,
-											transport: "beacon",
-										});
-								}}
-							>
-								<Icon name="bookmark outline" />
-								<Tap waves />
-							</Button>
-						))}
+					{
+						isAuthenticated &&
+							postdata.postdata.user.id !== userC.loggedin_user_id && (
+								<BookMarkItem postdata={postdata} />
+							)
+						// (bookmark ? (
+						// 	<Button
+						// 		icon
+						// 		floated="right"
+						// 		onClick={(e) => {
+						// 			DeleteBookmark(
+						// 				postdata.postdata.id,
+						// 				userC.loggedin_user_id,
+						// 				postdata.postdata.user.id
+						// 			);
+						// 			setbookmark(false);
+						// 			Mixpanel.track("Bookmark Item", {
+						// 				link: postdata.postdata.link,
+						// 				curator: postdata.postdata.user.id,
+						// 				name: postdata.postdata.name,
+						// 			});
+						// 			if (
+						// 				process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+						// 			)
+						// 				ReactGA.event({
+						// 					category: "Item",
+						// 					action: "Bookmark",
+						// 					label: postdata.postdata.name,
+						// 					transport: "beacon",
+						// 				});
+						// 		}}
+						// 	>
+						// 		<Icon color="red" name="bookmark outline" />
+						// 		<Tap waves />
+						// 	</Button>
+						// ) : (
+						// 	<Button
+						// 		icon
+						// 		floated="right"
+						// 		onClick={(e) => {
+						// 			InsertBookmark(
+						// 				postdata.postdata.id,
+						// 				userC.loggedin_user_id,
+						// 				postdata.postdata.user.id,
+						// 				postdata.postdata.list_id
+						// 			);
+						// 			setbookmark(true);
+						// 			Mixpanel.track("Bookmark Item", {
+						// 				link: postdata.postdata.link,
+						// 				curator: postdata.postdata.user.id,
+						// 				name: postdata.postdata.name,
+						// 			});
+						// 			if (
+						// 				process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+						// 			)
+						// 				ReactGA.event({
+						// 					category: "Item",
+						// 					action: "Bookmark",
+						// 					label: postdata.postdata.name,
+						// 					transport: "beacon",
+						// 				});
+						// 		}}
+						// 	>
+						// 		<Icon name="bookmark outline" />
+						// 		<Tap waves />
+						// 	</Button>
+						// ))
+					}
 					<CopyToClipboard
 						text={postdata.postdata.link}
 						onCopy={(e) => {

@@ -54,13 +54,13 @@ function ContentMiddleNoLoad(props) {
 	// console.log(process.env)
 	// console.log(process.env.REACT_APP_BASE_URL)
 	const [content] = useContext(ContentContext);
-	const [posts, setPosts] = useState(null);
+	// const [posts, setPosts] = useState(null);
 	const [userC, userChange] = useContext(UserContext);
 	const [shareUrl, setshareUrl] = useState(window.location.href);
-	const [header, setheader] = useState("");
+	// const [header, setheader] = useState("");
 	const [description, setdescription] = useState("");
-	const [listlike, setlistlike] = useState(false);
-	const [loadState, setloadState] = useState(-1);
+	// const [listlike, setlistlike] = useState(false);
+	// const [loadState, setloadState] = useState(-1);
 	const [fileUpload, setfileUpload] = useState("0");
 	const [streamClient, streamuserFeed] = useContext(StreamContext);
 	const [follow, setfollow] = useState(0);
