@@ -26,12 +26,12 @@ function CurationReasonCard(props) {
 	const loadData = () => {
 		GetListDescription({ listid: content.currentListID })
 			.then((response) => {
-				// console.log(response)
+				// console.log(response);
 				if (typeof response !== "undefined") {
 					setDescription(response.lists[0].description);
 					setid(response.lists[0].id);
-					if (values.description === "")
-						values.description = response.lists[0].description;
+					// if (values.description === "")
+					values.description = response.lists[0].description;
 					if (response.lists[0].curator_id === userC.loggedin_user_id) {
 						seteditState(true);
 					} else {
@@ -89,20 +89,24 @@ function CurationReasonCard(props) {
 			trigger={
 				<Button icon="edit" floated="right" onClick={() => SetModal(true)} />
 			}
+			size="large"
 		>
 			<Modal.Header>Edit Reason</Modal.Header>
-			<Modal.Content image scrolling>
+			<Modal.Content fluid>
 				<Form onSubmit={onSubmit}>
-					<Form.Field inline name="description">
-						<label>Description</label>
-						<Form.TextArea
-							name="description"
-							style={{ minHeight: 100 }}
-							onChange={onChange}
-							value={values.description}
-							error={error ? true : false}
-						/>
-					</Form.Field>
+					<Form.Group>
+						<Form.Field inline name="description" width={10}>
+							<label>Description</label>
+							<Form.TextArea
+								fluid
+								name="description"
+								style={{ minHeight: 100 }}
+								onChange={onChange}
+								value={values.description}
+								error={error ? true : false}
+							/>
+						</Form.Field>
+					</Form.Group>
 					<Button primary type="submit">
 						Submit
 					</Button>
@@ -117,7 +121,7 @@ function CurationReasonCard(props) {
 	return (
 		<>
 			<Card fluid>
-				<Card.Content header="My Reason for this curation" />
+				{/* <Card.Content header="My Reason for this curation" /> */}
 				<Card.Content description={description} />
 				{editState && <Card.Content extra>{editform}</Card.Content>}
 			</Card>

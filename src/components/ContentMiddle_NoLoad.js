@@ -15,6 +15,7 @@ import {
 	Card,
 	Divider,
 	Loader,
+	Form,
 } from "semantic-ui-react";
 import {
 	FacebookShareButton,
@@ -40,6 +41,8 @@ import {
 	FollowThisList,
 	UnfollowThisList,
 	DoIFollow,
+	GET_LIST_DESCRIPTION,
+	CHANGE_LIST_DESCRIPTION,
 } from "../util/graphqlExecutor";
 import MetaTags from "react-meta-tags";
 import ReactGA from "react-ga";
@@ -48,6 +51,8 @@ import Mixpanel from "../util/mix";
 import { CSVReader } from "react-papaparse";
 import StreamContext from "../context/StreamContext";
 import { useAuth0 } from "../react-auth0-spa";
+import useForm from "../util/hook";
+import CurationReasonCard from "./CurationReasonCard";
 
 function ContentMiddleNoLoad(props) {
 	// console.log(props)
@@ -147,6 +152,81 @@ function ContentMiddleNoLoad(props) {
 	function OnClose() {
 		setopen(false);
 	}
+
+	//Description Edit
+	// const { values, onChange, onSubmit } = useForm(createPostCallback, {
+	// 	description: "",
+	// });
+
+	// const updateCache = (cache, { data }) => {
+	// 	// Fetch the items from the cache
+	// 	const existingItems = cache.readQuery({
+	// 		query: GET_LIST_DESCRIPTION,
+	// 		variables: {
+	// 			listid: props.propSent.contentID,
+	// 		},
+	// 	});
+	// 	// Add the new item to the cache
+	// 	const newItem = data.update_lists.returning[0];
+	// 	cache.writeQuery({
+	// 		query: GET_LIST_DESCRIPTION,
+	// 		data: { lists: [newItem] },
+	// 	});
+	// 	values.description = "";
+	// };
+
+	// const [modifyList, { error }] = useMutation(CHANGE_LIST_DESCRIPTION, {
+	// 	variables: {
+	// 		id: props.propSent.contentID,
+	// 		description: values.description,
+	// 	},
+	// 	update: updateCache,
+	// 	onError: (error) => {
+	// 		console.log(error);
+	// 	},
+	// });
+
+	// function OnCloseF() {
+	// 	SetModal(false);
+	// }
+
+	// function createPostCallback() {
+	// 	modifyList();
+	// 	SetModal(false);
+	// }
+
+	// const [showModal, SetModal] = useState(false);
+	// const editform = (
+	// 	<Modal
+	// 		open={showModal}
+	// 		closeOnDimmerClick={false}
+	// 		onClose={OnCloseF}
+	// 		closeIcon
+	// 		trigger={
+	// 			<Button icon="edit" floated="right" onClick={() => SetModal(true)} />
+	// 		}
+	// 	>
+	// 		<Modal.Header>Edit Reason</Modal.Header>
+	// 		<Modal.Content image scrolling>
+	// 			<Form onSubmit={onSubmit}>
+	// 				<Form.Field inline name="description">
+	// 					<label>Description</label>
+	// 					<Form.TextArea
+	// 						name="description"
+	// 						style={{ minHeight: 100 }}
+	// 						onChange={onChange}
+	// 						value={values.description}
+	// 						error={error ? true : false}
+	// 					/>
+	// 				</Form.Field>
+	// 				<Button primary type="submit">
+	// 					Submit
+	// 				</Button>
+	// 			</Form>
+	// 		</Modal.Content>
+	// 	</Modal>
+	// );
+
 	return (
 		<>
 			{/* <h1>{props.propSent.contentType==='lists'?content.currentList:content.currentTag}</h1> */}
@@ -169,11 +249,15 @@ function ContentMiddleNoLoad(props) {
 						</Label>
 					</Header>
 					{/* <p>by {props.userName}</p> */}
-					<Card fluid>
+					<CurationReasonCard />
+					{/* <Card fluid>
 						<Card.Content>
 							<Card.Description>{props.desc}</Card.Description>
+							{userC.loggedin_user_id !== props.propSent.curator_id && (
+								<Card.Content extra>{editform}</Card.Content>
+							)}
 						</Card.Content>
-					</Card>
+					</Card> */}
 					{/* <p>{props.desc}</p> */}
 				</Grid.Column>
 				{/* <Grid.Column floated="right" width={3}>
@@ -292,7 +376,8 @@ function ContentMiddleNoLoad(props) {
 				</MetaTags>
 				<Menu.Menu position="right">
 					<div className="icobutton">
-						{content.contentType === "lists" ? (
+						{userC.loggedin_user_id !== props.propSent.curator_id &&
+						content.contentType === "lists" ? (
 							<LikeList props={props.propSent.contentID} />
 						) : (
 							<></>

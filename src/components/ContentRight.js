@@ -9,20 +9,24 @@ import ListStats from "./ListStats";
 
 function ContentRight(props) {
 	const [content, contentChange] = useContext(ContentContext);
-	const user = useContext(UserContext);
-	const val = props.propSent.curator_id === user.loggedin_user_id;
+	const [userC, userChange] = useContext(UserContext);
+	const val = props.propSent.curator_id === userC.loggedin_user_id;
+	// console.log("Content right");
+	// console.log(props);
 	return (
 		<>
 			<ProfileCard userid={props.propSent.curator_id} />
 			{props.propSent.contentType === "lists" ? (
 				<>
 					{/* <CurationReasonCard listid={props.propSent.contentID}/> */}
-					{props.propSent.curator_id === user.loggedin_user_id && (
-						<ListStats
-							userid={props.propSent.curator_id}
-							listid={props.propSent.contentID}
-						/>
-					)}
+					{/* {props.propSent.curator_id === userC.loggedin_user_id &&
+						(console.log("here "),
+						( */}
+					<ListStats
+						userid={props.propSent.curator_id}
+						listid={props.propSent.contentID}
+					/>
+					{/* ))} */}
 				</>
 			) : (
 				<div></div>
