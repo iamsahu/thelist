@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-// import { useQuery } from '@apollo/react-hooks';
+// import { useQuery } from "@apollo/react-hooks";
 import {
 	Menu,
 	Button,
@@ -13,13 +13,11 @@ import {
 	Header,
 	Label,
 	Card,
+	Divider,
+	Loader,
 } from "semantic-ui-react";
 import {
-	EmailShareButton,
 	FacebookShareButton,
-	LinkedinShareButton,
-	PocketShareButton,
-	RedditShareButton,
 	TwitterShareButton,
 	WhatsappShareButton,
 	TwitterIcon,
@@ -34,18 +32,20 @@ import AddItem2 from "./AddItem2";
 // import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
 import UserContext from "../context/UserContext";
 import {
-	GetList,
-	GetItemsUsers,
-	GetItemsofTag,
 	LikeList,
 	UnlikeList,
 	DoILike,
+	InsertMultiple,
+	FollowThisList,
+	UnfollowThisList,
+	DoIFollow,
 } from "../util/graphqlExecutor";
 import MetaTags from "react-meta-tags";
 import ReactGA from "react-ga";
 import Mixpanel from "../util/mix";
-import Tap from "react-interactions";
-import { Loader } from "semantic-ui-react";
+// import Tap from "react-interactions";
+import { CSVReader } from "react-papaparse";
+import StreamContext from "../context/StreamContext";
 
 function ContentMiddleNoLoad(props) {
 	// console.log(props)
@@ -59,6 +59,9 @@ function ContentMiddleNoLoad(props) {
 	const [description, setdescription] = useState("");
 	const [listlike, setlistlike] = useState(false);
 	const [loadState, setloadState] = useState(-1);
+	const [fileUpload, setfileUpload] = useState("0");
+	const [streamClient, streamuserFeed] = useContext(StreamContext);
+	const [follow, setfollow] = useState(0);
 
 	var activeItem = "home";
 	// console.log(props.propSent)
@@ -84,13 +87,13 @@ function ContentMiddleNoLoad(props) {
 				list_id: props.propSent.contentID,
 				user_id: userC.loggedin_user_id,
 			}).then((response) => {
-				// if (typeof response !== "undefined")
-				// 	if (typeof response.like_list !== "undefined")
-				// 		if (response.like_list.length > 0) {
-				// 			setlistlike(true);
-				// 		} else {
-				// 			setlistlike(false);
-				// 		}
+				if (typeof response !== "undefined")
+					if (typeof response.like_list !== "undefined")
+						if (response.like_list.length > 0) {
+							setlistlike(true);
+						} else {
+							setlistlike(false);
+						}
 			});
 			// }
 		}
@@ -98,6 +101,51 @@ function ContentMiddleNoLoad(props) {
 
 	if (props.posts.length > 0) {
 		// props.posts[0][]
+	}
+
+	const handleOnDrop = (data) => {
+		// console.log("---------------------------");
+		// console.log(data);
+		// console.log("---------------------------");
+		var items = [];
+		for (let index = 1; index < data.length; index++) {
+			const element = data[index];
+			// console.log(element.data);
+			if (element.data !== "") {
+				items.push({
+					list_id: props.propSent.contentID,
+					link: element.data[2],
+					description: element.data[1],
+					name: element.data[0],
+					curator: props.propSent.curator_id,
+				});
+			}
+		}
+		setfileUpload("1");
+		InsertMultiple(items)
+			.then((response) => console.log(response))
+			.catch((error) => console.log(error));
+	};
+
+	const handleOnError = (err, file, inputElem, reason) => {
+		console.log(err);
+	};
+
+	const handleOnRemoveFile = (data) => {
+		console.log("---------------------------");
+		console.log(data);
+		console.log("---------------------------");
+	};
+
+	if (userC.loggedin_user_id !== "") {
+		DoIFollow(props.propSent.contentID, userC.loggedin_user_id).then(
+			(response) => {
+				// console.log(response.list_follow_aggregate.aggregate.count);
+				if (response.list_follow_aggregate.aggregate.count > 0) {
+					setfollow(1);
+				}
+			}
+		);
 	}
 
 	return (
@@ -311,13 +359,81 @@ function ContentMiddleNoLoad(props) {
 							userC.loggedin_user_id === props.propSent.curator_id && (
 								<AddItem2 />
 							)} */}
-						{/* <Button icon>
-							<Icon name="bell" />
-						</Button> */}
+						{userC.loggedin_user_id !== props.propSent.curator_id &&
+							(userC.loggedin_user_id !== "" ? (
+								follow === 0 ? (
+									<Button
+										icon
+										onClick={() => {
+											streamClient
+												.feed("timeline", userC.loggedin_user_id)
+												.follow("listfeed", props.propSent.contentID);
+											FollowThisList(
+												props.propSent.contentID,
+												userC.loggedin_user_id
+											);
+											setfollow(1);
+										}}
+									>
+										<Icon name="bell" />
+									</Button>
+								) : (
+									//Unfollow
+									<Button
+										icon
+										onClick={() => {
+											streamClient
+												.feed("timeline", userC.loggedin_user_id)
+												.unfollow("listfeed", props.propSent.contentID);
+											UnfollowThisList(
+												props.propSent.contentID,
+												userC.loggedin_user_id
+											);
+											setfollow(0);
+										}}
+									>
+										<Icon color="red" name="bell" />
+									</Button>
+								)
+							) : (
+								<Button
+									icon
+									onClick={() => {
+										//Take user to signin/up
+									}}
+								>
+									<Icon name="bell" />
+								</Button>
+							))}
+
 						{
 							props.propSent.contentType === "lists" &&
 								userC.loggedin_user_id === props.propSent.curator_id && (
-									<AddItem2 listID={props.propSent.contentID} />
+									<>
+										<AddItem2 listID={props.propSent.contentID} />
+										{/* */}
+										<Modal
+											closeIcon
+											trigger={<Button>Upload CSV</Button>}
+											centered={false}
+										>
+											<Modal.Header>Upload CSV</Modal.Header>
+											<Modal.Content>
+												<Button>Download Sample</Button>
+												<Divider />
+												<CSVReader
+													onDrop={handleOnDrop}
+													onError={handleOnError}
+													noDrag
+													onRemoveFile={handleOnRemoveFile}
+												>
+													<span>Drop the file here</span>
+												</CSVReader>
+												<br />
+												{fileUpload === "1" && <Button>Upload This</Button>}
+											</Modal.Content>
+										</Modal>
+									</>
 								)
 							// <Button circular icon='add' floated='right'/>
 						}

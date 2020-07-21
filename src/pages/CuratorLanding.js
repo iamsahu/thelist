@@ -127,7 +127,7 @@ function CuratorLanding(props) {
 
 					<Item.Group divided relaxed="very">
 						{listData === "" ? (
-							<div>
+							<div key="unique">
 								<Loader active inline="centered" />
 							</div>
 						) : (
@@ -243,7 +243,7 @@ function CuratorLanding(props) {
 										</div>
 									) : (
 										listData.lists.map((item) => (
-											<GG item xs={4} height="100%">
+											<GG key={item.id} item xs={4} height="100%">
 												<Card
 													className="eq-card"
 													fluid
@@ -306,7 +306,10 @@ function CuratorLanding(props) {
 								{tagData !== "" &&
 									tagData.tag.map((item) => (
 										<>
-											<Link to={`/${twitterNumber}/tags/${item.id}`}>
+											<Link
+												key={item.id}
+												to={`/${twitterNumber}/tags/${item.id}`}
+											>
 												# {item.name}
 											</Link>
 											<br />

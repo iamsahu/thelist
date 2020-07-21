@@ -20,6 +20,7 @@ import {
 import UserContext from "../context/UserContext";
 import ContentContext from "../context/ContentContext";
 import { createItem } from "../util/graphqlExecutor";
+import StreamContext from "../context/StreamContext";
 // import Tap from "react-interactions";
 // import Reward from "react-rewards";
 import ReactGA from "react-ga";
@@ -78,7 +79,7 @@ controller = new AbortController();
 const signal = controller.signal;
 
 function AddItem2(props) {
-	console.log(props);
+	// console.log(props);
 	const [content, contentChange] = useContext(ContentContext);
 	const [clipboard, setClipboard] = useClippy();
 	const [userC, userChange] = useContext(UserContext);
@@ -97,7 +98,7 @@ function AddItem2(props) {
 	const [errorLink, setErrorLink] = useState(false);
 	const [errorName, setErrorName] = useState(false);
 	const [errorDescription, setErrorDescription] = useState(false);
-
+	const [streamClient, streamuserFeed] = useContext(StreamContext);
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
 		name: "",
 		link: "",
@@ -151,12 +152,12 @@ function AddItem2(props) {
 		// } else {
 		// 	setErrorList(false);
 		// }
-		if (values.name === "") {
-			setErrorName(true);
-			errors = true;
-		} else {
-			setErrorName(false);
-		}
+		// if (values.name === "") {
+		// 	setErrorName(true);
+		// 	errors = true;
+		// } else {
+		// 	setErrorName(false);
+		// }
 		if (values.link === "") {
 			setErrorLink(true);
 			errors = true;
@@ -180,7 +181,8 @@ function AddItem2(props) {
 		} else if (content.contentType === "lists") {
 			//If current list is open is the list to which the new item is being added
 		}
-
+		var listfeed = streamuserFeed; //streamClient; //.feed("listfeed", props.listID);
+		console.log(props.listID);
 		if (!errors) {
 			createItem({
 				...values,
@@ -191,6 +193,7 @@ function AddItem2(props) {
 				contentType: content.contentType,
 				currentListID: content.currentListID,
 				currentTagID: content.currentTagID,
+				listfeed,
 			}).then((response) => {
 				// console.log(response);
 				if (typeof response.data.insert_item_tag !== "undefined") {

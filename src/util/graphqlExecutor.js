@@ -217,7 +217,8 @@ function InsertItem(
 	list_id,
 	contentType,
 	currentListID,
-	currentTagID
+	currentTagID,
+	listfeed
 ) {
 	// console.log(contentType)
 	// console.log(currentListID)
@@ -386,6 +387,16 @@ function InsertItem(
 						});
 					}
 				}
+				console.log(list_id);
+				console.log(listfeed);
+				// var temp = listfeed.feed("listfeed", list_id);
+				listfeed.addActivity({
+					// actor: listfeed.currentUser.client.currentUser.id,
+					actor: listfeed.client.id, //.currentUser,
+					verb: "additem",
+					object: data.insert_items.returning[0].id,
+					to: ["listfeed:" + list_id],
+				});
 			},
 			refetchQueries: [
 				{
@@ -478,7 +489,8 @@ const createItem = (values) => {
 							values.list_id,
 							values.contentType,
 							values.currentListID,
-							values.currentTagID
+							values.currentTagID,
+							values.listfeed
 						)
 							.then((response) => {
 								const item = response.data.insert_items.returning[0];
@@ -534,7 +546,8 @@ const createItem = (values) => {
 							values.list_id,
 							values.contentType,
 							values.currentListID,
-							values.currentTagID
+							values.currentTagID,
+							values.listfeed
 						)
 							.then((response) => {
 								const item = response.data.insert_items.returning[0];
@@ -586,7 +599,8 @@ const createItem = (values) => {
 							values.list_id,
 							values.contentType,
 							values.currentListID,
-							values.currentTagID
+							values.currentTagID,
+							values.listfeed
 						)
 							.then((response) => {
 								const item = response.data.insert_items.returning[0];
@@ -626,7 +640,8 @@ const createItem = (values) => {
 							values.list_id,
 							values.contentType,
 							values.currentListID,
-							values.currentTagID
+							values.currentTagID,
+							values.listfeed
 						).catch((error) => {
 							console.log(error);
 						});
@@ -647,7 +662,8 @@ const createItem = (values) => {
 					values.list_id,
 					values.contentType,
 					values.currentListID,
-					values.currentTagID
+					values.currentTagID,
+					values.listfeed
 				)
 					.then((response) => {
 						const item = response.data.insert_items.returning[0];
@@ -692,7 +708,8 @@ const createItem = (values) => {
 					values.list_id,
 					values.contentType,
 					values.currentListID,
-					values.currentTagID
+					values.currentTagID,
+					values.listfeed
 				)
 					.then((response) => {
 						const item = response.data.insert_items.returning[0];
@@ -730,7 +747,8 @@ const createItem = (values) => {
 					values.list_id,
 					values.contentType,
 					values.currentListID,
-					values.currentTagID
+					values.currentTagID,
+					values.listfeed
 				)
 					.then((response) => {
 						const item = response.data.insert_items.returning[0];
@@ -755,7 +773,8 @@ const createItem = (values) => {
 					values.list_id,
 					values.contentType,
 					values.currentListID,
-					values.currentTagID
+					values.currentTagID,
+					values.listfeed
 				).catch((error) => {
 					console.log(error);
 				});
@@ -1019,7 +1038,7 @@ const GetItemsUsers = (values) => {
 // `
 
 const GetTagsListsUsers = (values) => {
-	console.log(values);
+	// console.log(values);
 	return client
 		.query({
 			query: COMBINED_FETCH,
@@ -2104,6 +2123,165 @@ const IncrementListView = (list_id) => {
 		})
 		.catch((error) => console.log(error));
 };
+// = {list_id: "", link: "", description: "", name: ""}
+const INSERT_MULTIPLE_ITEMS = gql`
+	mutation MyMutation($objects: [items_insert_input!]!) {
+		insert_items(objects: $objects) {
+			returning {
+				id
+				appreciation_count
+				auto_description
+				auto_image
+				bookmarks_count
+				copy_count
+				created_at
+				curator
+				description
+				link
+				user {
+					id
+				}
+				name
+				list_id
+				share_count
+				view_count
+			}
+		}
+	}
+`;
+
+const InsertMultiple = (items) => {
+	return client
+		.mutate({
+			mutation: INSERT_MULTIPLE_ITEMS,
+			variables: {
+				objects: items,
+			},
+		})
+		.catch((error) => console.log(error));
+};
+
+const GETITEMNOTES = gql`
+	query MyQuery($curator: String) {
+		items(
+			where: { list_id: { _is_null: true }, curator: { _eq: $curator } }
+			order_by: { created_at: desc_nulls_last }
+		) {
+			curator
+			description
+			id
+			copy_count
+			created_at
+			bookmarks_count
+			auto_image
+			auto_description
+			appreciation_count
+			link
+			name
+			share_count
+			view_count
+			user {
+				id
+			}
+			notes(order_by: { created_at: desc_nulls_last }) {
+				comment
+				id
+				text
+				item {
+					link
+				}
+			}
+		}
+	}
+`;
+
+const GetItemNotesOfUser = (curator_id) => {
+	return client
+		.query({
+			query: GETITEMNOTES,
+			variables: {
+				curator: curator_id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
+const FOLLOWLIST = gql`
+	mutation MyMutation($list_id: uuid, $user_id: String) {
+		insert_list_follow(objects: { list_id: $list_id, user_id: $user_id }) {
+			returning {
+				id
+			}
+		}
+	}
+`;
+
+const FollowThisList = (list_id, user_id) => {
+	return client
+		.mutate({
+			mutation: FOLLOWLIST,
+			variables: {
+				list_id: list_id,
+				user_id: user_id,
+			},
+		})
+		.catch((error) => console.log(error));
+};
+
+const UNFOLLOWLIST = gql`
+	mutation MyMutation($list_id: uuid, $user_id: String) {
+		delete_list_follow(
+			where: {
+				_and: { list_id: { _eq: $list_id }, user_id: { _eq: $user_id } }
+			}
+		) {
+			affected_rows
+			returning {
+				id
+			}
+		}
+	}
+`;
+
+const UnfollowThisList = (list_id, user_id) => {
+	return client
+		.mutate({
+			mutation: UNFOLLOWLIST,
+			variables: {
+				list_id: list_id,
+				user_id: user_id,
+			},
+		})
+		.catch((error) => console.log(error));
+};
+
+const DOIFOLLOW = gql`
+	query MyQuery($list_id: uuid, $user_id: String) {
+		list_follow_aggregate(
+			where: {
+				_and: { list_id: { _eq: $list_id }, user_id: { _eq: $user_id } }
+			}
+		) {
+			aggregate {
+				count
+			}
+		}
+	}
+`;
+
+const DoIFollow = (list_id, user_id) => {
+	return client
+		.query({
+			query: DOIFOLLOW,
+			variables: {
+				list_id: list_id,
+				user_id: user_id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
 
 export {
 	createItem,
@@ -2137,6 +2315,11 @@ export {
 	GetTagsOfUser,
 	GetOneListOfUser,
 	IncrementListView,
+	InsertMultiple,
+	GetItemNotesOfUser,
+	FollowThisList,
+	UnfollowThisList,
+	DoIFollow,
 };
 
 export const DELETE_LIST = gql`
