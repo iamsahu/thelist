@@ -46,6 +46,7 @@ import Mixpanel from "../util/mix";
 // import Tap from "react-interactions";
 import { CSVReader } from "react-papaparse";
 import StreamContext from "../context/StreamContext";
+import { useAuth0 } from "../react-auth0-spa";
 
 function ContentMiddleNoLoad(props) {
 	// console.log(props)
@@ -62,10 +63,18 @@ function ContentMiddleNoLoad(props) {
 	const [fileUpload, setfileUpload] = useState("0");
 	const [streamClient, streamuserFeed] = useContext(StreamContext);
 	const [follow, setfollow] = useState(0);
-
+	const [open, setopen] = useState(false);
 	var activeItem = "home";
 	// console.log(props.propSent)
 	// console.log(props.propSent.description)
+
+	const {
+		user,
+		isAuthenticated,
+		loading,
+		loginWithRedirect,
+		logout,
+	} = useAuth0();
 
 	if (props.posts === null) {
 		return (
@@ -150,6 +159,9 @@ function ContentMiddleNoLoad(props) {
 			);
 		}
 
+	function OnClose() {
+		setopen(false);
+	}
 	return (
 		<>
 			{/* <h1>{props.propSent.contentType==='lists'?content.currentList:content.currentTag}</h1> */}
@@ -398,14 +410,45 @@ function ContentMiddleNoLoad(props) {
 									</Button>
 								)
 							) : (
-								<Button
-									icon
-									onClick={() => {
-										//Take user to signin/up
-									}}
+								<Modal
+									open={open}
+									onClose={OnClose}
+									trigger={
+										<Button icon onClick={() => setopen(true)}>
+											<Icon name="feed" />
+										</Button>
+									}
+									basic
+									size="small"
 								>
-									<Icon name="feed" />
-								</Button>
+									<Header icon="feed" content="Sign Up/Sign In" />
+									<Modal.Content>
+										<p>
+											To subscribe you will have to sign in. Do you want to
+											proceed to sign in?
+										</p>
+									</Modal.Content>
+									<Modal.Actions>
+										<Button basic color="red" inverted onClick={OnClose}>
+											<Icon name="remove" /> No
+										</Button>
+										<Button
+											color="green"
+											inverted
+											onClick={() => loginWithRedirect(window.location.href)}
+										>
+											<Icon name="checkmark" /> Yes
+										</Button>
+									</Modal.Actions>
+								</Modal>
+								// <Button
+								// 	icon
+								// 	onClick={() => {
+								// 		//Take user to signin/up
+								// 	}}
+								// >
+								// 	<Icon name="feed" />
+								// </Button>
 							))}
 
 						{
