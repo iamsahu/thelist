@@ -2397,6 +2397,22 @@ const GETLIKES = gql`
 	}
 `;
 
+export const CHANGEUSERDESCRIPTION = gql`
+	mutation MyMutation($id: String, $description: String) {
+		update_user(
+			where: { id: { _eq: $id } }
+			_set: { description: $description }
+		) {
+			returning {
+				description
+				id
+				image_link
+				username
+			}
+		}
+	}
+`;
+
 export {
 	createItem,
 	GetList,

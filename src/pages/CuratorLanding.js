@@ -26,6 +26,7 @@ import history from "../util/history";
 import StackGrid from "react-stack-grid";
 import { Grid as GG, Card as CC } from "@material-ui/core";
 import { useAuth0 } from "../react-auth0-spa";
+import UserProfileDisplay from "../components/UserProfileDisplay";
 
 function CuratorLanding(props) {
 	// console.log(props);
@@ -102,21 +103,22 @@ function CuratorLanding(props) {
 			<Responsive {...Responsive.onlyMobile}>
 				<div>
 					<div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
-						<Item.Group>
+						<UserProfileDisplay user={u} />
+						{/* <Item.Group>
 							<Item>
 								<Item.Image avatar size="small" src={userProfile} />
 								<Item.Content verticalAlign="middle">
-									{/* <Header as="h1"> */}
 									<Item.Header>{username}</Item.Header>
-									{/* </Header> */}
 									<Item.Meta></Item.Meta>
 									<Item.Description>
 										<ReactLinkify>{description}</ReactLinkify>
 									</Item.Description>
-									{/* <Item.Extra>Have added x unique items</Item.Extra> */}
+									<Item.Extra>
+										<Button icon="edit" floated="right"></Button>
+									</Item.Extra>
 								</Item.Content>
 							</Item>
-						</Item.Group>
+						</Item.Group> */}
 					</div>
 					<div>
 						MY LISTS
@@ -186,21 +188,28 @@ function CuratorLanding(props) {
 								<Grid.Column width={4}></Grid.Column>
 								<Grid.Column width={10}>
 									<div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
-										<Item.Group>
+										<UserProfileDisplay user={u} />
+										{/* <Item.Group>
 											<Item>
 												<Item.Image avatar size="small" src={userProfile} />
 												<Item.Content verticalAlign="middle">
-													{/* <Header as="h1"> */}
+													
 													<Item.Header>{username}</Item.Header>
-													{/* </Header> */}
+													
 													<Item.Meta></Item.Meta>
 													<Item.Description>
 														<ReactLinkify>{description}</ReactLinkify>
 													</Item.Description>
-													{/* <Item.Extra>Have added x unique items</Item.Extra> */}
+													{u === userC.loggedin_user_id && (
+														<Item.Extra>
+															<Button icon="edit" floated="left"></Button>
+														</Item.Extra>
+													)}
+
+													
 												</Item.Content>
 											</Item>
-										</Item.Group>
+										</Item.Group> */}
 									</div>
 								</Grid.Column>
 								<Grid.Column width={2}></Grid.Column>

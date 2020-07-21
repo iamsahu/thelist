@@ -92,13 +92,12 @@ function CurationReasonCard(props) {
 			size="large"
 		>
 			<Modal.Header>Edit Reason</Modal.Header>
-			<Modal.Content fluid>
+			<Modal.Content>
 				<Form onSubmit={onSubmit}>
 					<Form.Group>
 						<Form.Field inline name="description" width={10}>
 							<label>Description</label>
 							<Form.TextArea
-								fluid
 								name="description"
 								style={{ minHeight: 100 }}
 								onChange={onChange}
