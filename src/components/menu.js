@@ -110,6 +110,11 @@ function MenuBar(props) {
 		// this.setState({ activeIndex: newIndex })
 	};
 
+	const routeChange = (t) => {
+		history.push(t);
+		window.location.href = window.location.href;
+	};
+
 	return (
 		<div>
 			<Responsive {...Responsive.onlyMobile}>
@@ -248,8 +253,15 @@ function MenuBar(props) {
 						{!isAuthenticated && (
 							<>
 								<Menu.Item position="right">
-									<Button>
-										<Link to="/explore"> Explore</Link>
+									<Button
+										onClick={() => {
+											var t = `/explore`;
+											routeChange(t);
+										}}
+									>
+										{/* <Link to="/explore">  */}
+										Explore
+										{/* </Link> */}
 									</Button>
 								</Menu.Item>
 								<Menu.Item
@@ -270,8 +282,15 @@ function MenuBar(props) {
 						{isAuthenticated && !loading && (
 							<>
 								<Menu.Item position="right" fitted="vertically">
-									<Button>
-										<Link to="/explore"> Explore</Link>
+									<Button
+										onClick={() => {
+											var t = `/explore`;
+											routeChange(t);
+										}}
+									>
+										{/* <Link to="/explore">  */}
+										Explore
+										{/* </Link> */}
 									</Button>
 								</Menu.Item>
 								<Menu.Item position="right" fitted="vertically">
