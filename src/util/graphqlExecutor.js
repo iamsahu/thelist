@@ -834,6 +834,7 @@ export const GET_LIST = gql`
 		lists(where: { id: { _eq: $listid } }) {
 			description
 			list_name
+			id
 			like_lists_aggregate {
 				aggregate {
 					count
@@ -2141,6 +2142,9 @@ const INCREMENT_LIST_VIEW = gql`
 	mutation INCREMENT_LIST_VIEW($list_id: uuid) {
 		update_lists(where: { id: { _eq: $list_id } }, _inc: { view_count: 1 }) {
 			affected_rows
+			returning {
+				id
+			}
 		}
 	}
 `;
@@ -2153,6 +2157,7 @@ const IncrementListView = (list_id) => {
 				list_id: list_id,
 			},
 		})
+		.then((response) => response.data)
 		.catch((error) => console.log(error));
 };
 // = {list_id: "", link: "", description: "", name: ""}
