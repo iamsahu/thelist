@@ -152,24 +152,24 @@ function Curator(props) {
 								setheader(data.lists[0]["list_name"]);
 								setdescription(data.lists[0]["description"]);
 								propSent["description"] = data.lists[0]["description"];
-								// if (
-								// 	process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
-								// ) {
-								if (view === "") {
-									setview(-1);
-									IncrementListView(data.lists[0]["id"]).then((data) => {
-										// console.log(data);
-										setview(data.update_lists.returning[0]["id"]);
-										console.log("Incremented");
-									});
-								} else if (view !== data.lists[0]["id"] && view !== -1) {
-									IncrementListView(data.lists[0]["id"]).then((data) => {
-										// console.log(data);
-										setview(data.update_lists.returning[0]["id"]);
-										console.log("Incremented");
-									});
+								if (
+									process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+								) {
+									if (view === "") {
+										setview(-1);
+										IncrementListView(data.lists[0]["id"]).then((data) => {
+											// console.log(data);
+											setview(data.update_lists.returning[0]["id"]);
+											console.log("Incremented");
+										});
+									} else if (view !== data.lists[0]["id"] && view !== -1) {
+										IncrementListView(data.lists[0]["id"]).then((data) => {
+											// console.log(data);
+											setview(data.update_lists.returning[0]["id"]);
+											console.log("Incremented");
+										});
+									}
 								}
-								// }
 							}
 						})
 						.catch((error) => console.log(error))
@@ -205,19 +205,23 @@ function Curator(props) {
 									// 	);
 									// }
 									// console.log(data.lists[0]["id"]);
-									if (view === "") {
-										setview(-1);
-										IncrementListView(data.lists[0]["id"]).then((data) => {
-											// console.log(data);
-											setview(data.update_lists.returning[0]["id"]);
-											console.log("Incremented");
-										});
-									} else if (view !== data.lists[0]["id"] && view !== -1) {
-										IncrementListView(data.lists[0]["id"]).then((data) => {
-											// console.log(data);
-											setview(data.update_lists.returning[0]["id"]);
-											console.log("Incremented");
-										});
+									if (
+										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+									) {
+										if (view === "") {
+											setview(-1);
+											IncrementListView(data.lists[0]["id"]).then((data) => {
+												// console.log(data);
+												setview(data.update_lists.returning[0]["id"]);
+												console.log("Incremented");
+											});
+										} else if (view !== data.lists[0]["id"] && view !== -1) {
+											IncrementListView(data.lists[0]["id"]).then((data) => {
+												// console.log(data);
+												setview(data.update_lists.returning[0]["id"]);
+												console.log("Incremented");
+											});
+										}
 									}
 								}
 							}
