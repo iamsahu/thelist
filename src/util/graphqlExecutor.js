@@ -835,6 +835,7 @@ export const GET_LIST = gql`
 			description
 			list_name
 			id
+			image_url
 			like_lists_aggregate {
 				aggregate {
 					count
@@ -1155,6 +1156,7 @@ const GET_ALL_LISTS = gql`
 			id
 			curator_id
 			list_name
+			image_url
 			user {
 				username
 				image_link
@@ -2042,6 +2044,7 @@ const GETLISTSOFUSER = gql`
 			description
 			id
 			list_name
+			image_url
 			like_lists_aggregate {
 				aggregate {
 					count
@@ -2104,6 +2107,7 @@ const GETONELIST = gql`
 			id
 			list_name
 			view_count
+			image_url
 			items(order_by: { created_at: desc_nulls_last }) {
 				appreciation_count
 				auto_description
@@ -2418,6 +2422,54 @@ export const CHANGEUSERDESCRIPTION = gql`
 	}
 `;
 
+export const UPDATEIMAGE = gql`
+	mutation MyMutation($id: uuid, $image_url: String) {
+		update_lists(where: { id: { _eq: $id } }, _set: { image_url: $image_url }) {
+			returning {
+				id
+				image_url
+				curator_id
+			}
+		}
+	}
+`;
+
+const UpdateListImage = (id, image_url) => {
+	return client
+		.mutate({
+			mutation: UPDATEIMAGE,
+			variables: {
+				id: id,
+				image_url: image_url,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
+export const GETLISTIMAGE = gql`
+	query MyQuery($id: uuid) {
+		lists(where: { id: { _eq: $id } }) {
+			image_url
+			id
+			curator_id
+		}
+	}
+`;
+
+const GetListImage = (id) => {
+	// console.log(id);
+	return client
+		.query({
+			query: GETLISTIMAGE,
+			variables: {
+				id: id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -2456,6 +2508,8 @@ export {
 	UnfollowThisList,
 	DoIFollow,
 	HaveIBookmarked,
+	UpdateListImage,
+	GetListImage,
 };
 
 export const DELETE_LIST = gql`

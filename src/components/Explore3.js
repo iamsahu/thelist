@@ -14,6 +14,7 @@ import {
 	Container,
 	Button,
 	Loader,
+	Header,
 } from "semantic-ui-react";
 import { Grid as GG, Card as CC } from "@material-ui/core";
 function Explore3() {
@@ -83,22 +84,28 @@ function Explore3() {
 									(
 										<GG item xs={4}>
 											<Card.Group stackable={true} doubling={true}>
-												<Card
-													key={result.id}
-													// style={{ "box-shadow": "none" }}
-													// style={{ "background-color": col, "box-shadow": "none" }}
-												>
-													{/* <Card.Content> */}
-													<Card.Content header={result.list_name} />
-													{/* <Link to={`/${result.curator_id}/lists/${result.id}`}> */}
-
-													{/* </Link> */}
-													{/* </Card.Content> */}
-													{/* <Card.Meta>
-											by{" "}
-
-										</Card.Meta> */}
-
+												<Card key={result.id}>
+													<Card.Content>
+														{result.image_url === '""' ? (
+															<Image
+																floated="left"
+																size="mini"
+																rounded
+																src="https://react.semantic-ui.com/images/wireframe/square-image.png"
+															/>
+														) : (
+															<Image
+																floated="left"
+																size="mini"
+																rounded
+																src={result.image_url}
+															/>
+														)}
+														<Card.Header>
+															<Header as="h3">{result.list_name}</Header>
+														</Card.Header>
+													</Card.Content>
+													{/* <Card.Content header={result.list_name} /> */}
 													<Card.Content
 														description={result.description}
 														style={{
@@ -122,11 +129,8 @@ function Explore3() {
 															href={`/${result.curator_id}`}
 														>
 															<img src={result.user.image_link} />
-															{/* <Link to={`/${result.curator_id}`}> */}
 															{result.user.username}
-															{/* </Link> */}
 														</Label>
-														{/* <Icon floated="right" name="twitter" color="black" /> */}
 														<Button
 															size="tiny"
 															floated="right"
@@ -137,12 +141,9 @@ function Explore3() {
 																routeChange(t);
 															}}
 														>
-															{/* <Link to={`/${result.curator_id}/lists/${result.id}`}> */}
 															Read
-															{/* </Link> */}
 														</Button>
 													</Card.Content>
-													{/* </Card.Content> */}
 												</Card>
 											</Card.Group>
 										</GG>

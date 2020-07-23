@@ -137,6 +137,7 @@ function Curator(props) {
 	const [header, setheader] = useState("");
 	const [description, setdescription] = useState("");
 	const [view, setview] = useState("");
+	const [imageurl, setimageurl] = useState('""');
 
 	const loadData2 = () => {
 		propSent.contentType === "lists"
@@ -151,6 +152,7 @@ function Curator(props) {
 
 								setheader(data.lists[0]["list_name"]);
 								setdescription(data.lists[0]["description"]);
+								setimageurl(data.lists[0]["image_url"]);
 								propSent["description"] = data.lists[0]["description"];
 								if (
 									process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
@@ -195,6 +197,7 @@ function Curator(props) {
 								if (data.lists.length > 0) {
 									setheader(data.lists[0]["list_name"]);
 									setdescription(data.lists[0]["description"]);
+									setimageurl(data.lists[0]["image_url"]);
 									propSent["description"] = data.lists[0]["description"];
 									// console.log(data.items[0]['list']['description'])
 									// if (
@@ -416,6 +419,7 @@ function Curator(props) {
 						posts={posts}
 						title={header}
 						desc={description}
+						image_url={imageurl}
 						userName={username}
 						userImage={userProfile}
 					/>
@@ -440,6 +444,7 @@ function Curator(props) {
 								posts={posts}
 								title={header}
 								desc={description}
+								image_url={imageurl}
 								userName={username}
 								userImage={userProfile}
 							/>

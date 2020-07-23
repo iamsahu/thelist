@@ -16,6 +16,7 @@ import {
 	Divider,
 	Loader,
 	Form,
+	Reveal,
 } from "semantic-ui-react";
 import {
 	FacebookShareButton,
@@ -31,6 +32,7 @@ import ContentContext from "../context/ContentContext";
 import CentralList from "./CentralList";
 import AddItem2 from "./AddItem2";
 import LikeList from "./LikeList";
+import ListIcon from "./ListIcon";
 // import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
 import UserContext from "../context/UserContext";
 import {
@@ -168,14 +170,29 @@ function ContentMiddleNoLoad(props) {
 						:
 					</h1> */}
 					<Header as="h1">
-						{props.title} <b>by</b>{" "}
-						<Label as="a" image>
-							<img src={props.userImage} />
-							{props.userName}
-						</Label>
+						{props.propSent.contentType === "tags" ? (
+							<></>
+						) : (
+							<ListIcon
+								id={props.propSent.contentID}
+								image_url={props.image_url}
+							/>
+						)}
+
+						<span>
+							{props.title} <b>by</b>{" "}
+							<Label as="a" image>
+								<img src={props.userImage} />
+								{props.userName}
+							</Label>
+						</span>
 					</Header>
 					{/* <p>by {props.userName}</p> */}
-					<CurationReasonCard />
+					{props.propSent.contentType === "lists" ? (
+						<CurationReasonCard />
+					) : (
+						<></>
+					)}
 					{/* <Card fluid>
 						<Card.Content>
 							<Card.Description>{props.desc}</Card.Description>

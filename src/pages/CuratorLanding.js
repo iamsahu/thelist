@@ -254,37 +254,29 @@ function CuratorLanding(props) {
 									) : (
 										listData.lists.map((item) => (
 											<GG key={item.id} item xs={4}>
-												<Card
-													className="eq-card"
-													fluid
-													key={item.id}
-													// color="yellow"
-													style={
-														{
-															// "background-color": "#F5DD47",
-															// boxShadow: "none",
-														}
-													}
-												>
+												<Card className="eq-card" fluid key={item.id}>
 													<Card.Content>
+														{item.image_url === '""' ? (
+															<Image
+																floated="left"
+																size="mini"
+																rounded
+																src="https://react.semantic-ui.com/images/wireframe/square-image.png"
+															/>
+														) : (
+															<Image
+																floated="left"
+																size="mini"
+																rounded
+																src={item.image_url}
+															/>
+														)}
 														<Card.Header>
-															<Header as="h2">{item.list_name}</Header>
+															<Header as="h3">{item.list_name}</Header>
 														</Card.Header>
-													</Card.Content>
-
-													<Card.Content
-														description={item.description}
-														style={{
-															border: "none",
-															"border-top": "none",
-														}}
-													/>
-													<Card.Content
-														style={{
-															border: "none",
-															"border-top": "none",
-														}}
-													>
+														<Card.Description>
+															{item.description}
+														</Card.Description>
 														<Button
 															size="tiny"
 															floated="right"
@@ -294,13 +286,8 @@ function CuratorLanding(props) {
 																routeChange(t);
 															}}
 														>
-															{/* <Link to={`/${item.curator_id}/lists/${item.id}`}> */}
 															Read
-															{/* </Link> */}
 														</Button>
-														{/* <Button size="tiny" floated="right" basic icon>
-														<Icon color="blue" name="twitter" />
-													</Button> */}
 													</Card.Content>
 												</Card>
 											</GG>
