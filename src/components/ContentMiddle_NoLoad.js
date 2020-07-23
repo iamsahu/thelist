@@ -358,6 +358,7 @@ function ContentMiddleNoLoad(props) {
 									trigger={
 										<Button icon onClick={() => setopen(true)}>
 											<Icon name="feed" />
+											Follow
 										</Button>
 									}
 									basic
