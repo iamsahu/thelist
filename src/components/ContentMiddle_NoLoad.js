@@ -330,6 +330,7 @@ function ContentMiddleNoLoad(props) {
 										}}
 									>
 										<Icon name="feed" />
+										Follow
 									</Button>
 								) : (
 									//Unfollow
@@ -347,6 +348,7 @@ function ContentMiddleNoLoad(props) {
 										}}
 									>
 										<Icon color="red" name="feed" />
+										Unfollow
 									</Button>
 								)
 							) : (
