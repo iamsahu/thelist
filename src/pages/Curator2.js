@@ -407,14 +407,15 @@ function Curator(props) {
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 				<div id="content" className="ui">
-					<Grid stackable columns={3}>
+					<Grid stackable>
+						<Grid.Column width={1}></Grid.Column>
 						<Grid.Column width={3}>
 							<CurationList
 								curator_id={userC.curator_id}
 								contentType={propSent.contentType}
 							/>
 						</Grid.Column>
-						<Grid.Column width={9}>
+						<Grid.Column width={8}>
 							{/* {
 							content.contentType==='lists'?
 							<ContentMiddleLists propSent={propSent} posts={posts} title={header}/>:
@@ -430,13 +431,14 @@ function Curator(props) {
 								contID={contID}
 							/>
 						</Grid.Column>
-						<Grid.Column width={4}>
+						<Grid.Column width={3}>
 							<ContentRight
 								curator_id={userC.curator_id}
 								propSent={propSent}
 								contID={contID}
 							/>
 						</Grid.Column>
+						<Grid.Column width={1}></Grid.Column>
 					</Grid>
 				</div>
 			</Responsive>

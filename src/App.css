@@ -56,8 +56,8 @@
 
 .scrolly {
 	overflow-y: auto;
-	scrollbar-width: 2px;
-	height: 75vh;
+	/* scrollbar-width: 2px; */
+	height: 70vh;
 }
 
 .scrollyCuration {
@@ -167,4 +167,13 @@
 	background: #4d4d4d;
 	width: 234px;
 	border-radius: 27px;
+}
+
+/* Invisible scroll */
+.scrolly::-webkit-scrollbar {
+	display: none;
+}
+
+.scrollyCuration::-webkit-scrollbar {
+	display: none;
 }
