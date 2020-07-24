@@ -33,7 +33,8 @@ function LandingPage() {
 					/>
 					<Header
 						as="h1"
-						content="Save any content in one place!"
+						// content="Save any content in one place!"
+						content="Find and curate stuff from the internet!"
 						// content="Fastest way to create and share listicles!"
 						style={{
 							fontSize: "1em",

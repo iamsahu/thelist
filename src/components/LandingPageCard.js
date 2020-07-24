@@ -30,14 +30,29 @@ function LandingPageCard(props) {
 					<Card.Header>
 						<Header as="h3">{props.result.list_name}</Header>
 					</Card.Header>
+					{/* <Card.Meta>by {props.result.user.username}</Card.Meta> */}
+					<Card.Description>{props.result.description}</Card.Description>
+					{/* by{" "}
+						<Label
+							image
+							size="tiny"
+							floated="left"
+							basic
+							as="a"
+							href={`/${props.result.curator_id}`}
+						>
+							<img src={props.result.user.image_link} />
+							{props.result.user.username}
+						</Label>
+					</Card.Meta> */}
 				</Card.Content>
-				<Card.Content
+				{/* <Card.Content
 					description={props.result.description}
 					style={{
 						border: "none",
 						"border-top": "none",
 					}}
-				/>
+				/> */}
 				<Card.Content
 					style={{
 						border: "none",
