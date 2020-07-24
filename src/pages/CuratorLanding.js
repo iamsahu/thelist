@@ -12,6 +12,7 @@ import {
 	Label,
 	Responsive,
 	Icon,
+	Menu,
 } from "semantic-ui-react";
 import UserContext from "../context/UserContext";
 import {
@@ -99,6 +100,9 @@ function CuratorLanding(props) {
 	};
 
 	if (typeof tagData.tag === "undefined") return <div>Loading</div>;
+
+	var activeItem = "mylists";
+
 	return (
 		<>
 			<Responsive {...Responsive.onlyMobile}>
@@ -162,7 +166,36 @@ function CuratorLanding(props) {
 						<Grid>
 							<Grid.Column width={3}></Grid.Column>
 							<Grid.Column width={10}>
-								<div style={{ paddingBottom: "0.5em" }}>
+								<Menu pointing secondary>
+									<Menu.Item
+										name="My Lists"
+										active={activeItem === "mylists"}
+									/>
+									{isAuthenticated && u === userC.loggedin_user_id && (
+										<Menu.Item
+											name="Feed"
+											active={activeItem === "Latest"}
+											// onClick={handleItemClick}
+										/>
+									)}
+									<Menu.Menu position="right">
+										<div className="icobutton">
+											{isAuthenticated && u === userC.loggedin_user_id && (
+												<Button
+													floated="right"
+													onClick={() => {
+														var t = `/manage/${userC.loggedin_user_id}`;
+														routeChange(t);
+													}}
+													// style={{ marginBottom: "50px" }}
+												>
+													Manage Content
+												</Button>
+											)}
+										</div>
+									</Menu.Menu>
+								</Menu>
+								{/* <div style={{ paddingBottom: "0.5em" }}>
 									MY LISTS
 									{isAuthenticated && u === userC.loggedin_user_id && (
 										<Button
@@ -177,7 +210,7 @@ function CuratorLanding(props) {
 										</Button>
 									)}
 								</div>
-								<Divider />
+								<Divider /> */}
 
 								{/* <Item.Group divided relaxed="very"> */}
 								{/* <StackGrid

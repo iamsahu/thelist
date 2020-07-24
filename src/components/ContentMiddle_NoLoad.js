@@ -57,7 +57,7 @@ import useForm from "../util/hook";
 import CurationReasonCard from "./CurationReasonCard";
 
 function ContentMiddleNoLoad(props) {
-	// console.log(props)
+	// console.log(props);
 	// console.log(process.env)
 	// console.log(process.env.REACT_APP_BASE_URL)
 	const [content] = useContext(ContentContext);
@@ -177,10 +177,7 @@ function ContentMiddleNoLoad(props) {
 						{props.propSent.contentType === "tags" ? (
 							<></>
 						) : (
-							<ListIcon
-								id={props.propSent.contentID}
-								image_url={props.image_url}
-							/>
+							<ListIcon id={props.contID} image_url={props.image_url} />
 						)}
 
 						<span>
@@ -193,7 +190,7 @@ function ContentMiddleNoLoad(props) {
 					</Header>
 					{/* <p>by {props.userName}</p> */}
 					{props.propSent.contentType === "lists" ? (
-						<CurationReasonCard />
+						<CurationReasonCard id={props.contID} />
 					) : (
 						<></>
 					)}

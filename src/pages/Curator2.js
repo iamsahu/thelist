@@ -138,6 +138,7 @@ function Curator(props) {
 	const [description, setdescription] = useState("");
 	const [view, setview] = useState("");
 	const [imageurl, setimageurl] = useState('""');
+	const [contID, setcontID] = useState("");
 
 	const loadData2 = () => {
 		propSent.contentType === "lists"
@@ -154,6 +155,8 @@ function Curator(props) {
 								setdescription(data.lists[0]["description"]);
 								setimageurl(data.lists[0]["image_url"]);
 								propSent["description"] = data.lists[0]["description"];
+								propSent["contentID"] = data.lists[0]["id"];
+								setcontID(data.lists[0]["id"]);
 								if (
 									process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
 								) {
@@ -175,19 +178,7 @@ function Curator(props) {
 							}
 						})
 						.catch((error) => console.log(error))
-				: // GetItemsUsers({ curator_id: propSent.curator_id })
-				  // 		.then((data) => {
-				  // 			console.log("loading lists empty");
-				  // 			setPosts(data.items);
-				  // 			setloadState(1);
-				  // 			if (data.items.length > 0) {
-				  // 				setheader(data.items[0]["list"]["list_name"]);
-				  // 				setdescription(data.items[0]["list"]["description"]);
-				  // 				propSent["description"] = data.items[0]["list"]["description"];
-				  // 			}
-				  // 		})
-				  // 		.catch((error) => console.log(error))
-				  GetList({ userid: propSent.curator_id, listid: propSent.contentID })
+				: GetList({ userid: propSent.curator_id, listid: propSent.contentID })
 						.then((data) => {
 							// console.log("loading lists ");s
 							// console.log(data);
@@ -199,6 +190,7 @@ function Curator(props) {
 									setdescription(data.lists[0]["description"]);
 									setimageurl(data.lists[0]["image_url"]);
 									propSent["description"] = data.lists[0]["description"];
+									setcontID(data.lists[0]["id"]);
 									// console.log(data.items[0]['list']['description'])
 									if (
 										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
@@ -248,6 +240,7 @@ function Curator(props) {
 								setPosts(data.tag[0]["item_tags"]);
 								setheader(data.tag[0]["name"]);
 								setdescription("A place for all your curations!");
+								setcontID(data.tag[0]["id"]);
 								propSent["description"] = "";
 								// setPosts(temp)
 							}
@@ -408,6 +401,7 @@ function Curator(props) {
 						image_url={imageurl}
 						userName={username}
 						userImage={userProfile}
+						contID={contID}
 					/>
 				</div>
 			</Responsive>
@@ -433,10 +427,15 @@ function Curator(props) {
 								image_url={imageurl}
 								userName={username}
 								userImage={userProfile}
+								contID={contID}
 							/>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							<ContentRight curator_id={userC.curator_id} propSent={propSent} />
+							<ContentRight
+								curator_id={userC.curator_id}
+								propSent={propSent}
+								contID={contID}
+							/>
 						</Grid.Column>
 					</Grid>
 				</div>

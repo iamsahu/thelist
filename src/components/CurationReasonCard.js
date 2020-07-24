@@ -18,13 +18,14 @@ function CurationReasonCard(props) {
 	const [description, setDescription] = useState("");
 	const [editState, seteditState] = useState(false);
 	const [showModal, SetModal] = useState(false);
-
+	// console.log(props);
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
 		description: "",
 	});
 
 	const loadData = () => {
-		GetListDescription({ listid: content.currentListID })
+		// GetListDescription({ listid: content.currentListID })
+		GetListDescription({ listid: props.id })
 			.then((response) => {
 				// console.log(response);
 				if (typeof response !== "undefined") {
@@ -114,7 +115,7 @@ function CurationReasonCard(props) {
 		</Modal>
 	);
 
-	if (content.currentListID !== "") {
+	if (content.currentListID !== "" || props.id !== "") {
 		loadData();
 	}
 	return (

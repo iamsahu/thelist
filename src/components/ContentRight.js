@@ -22,10 +22,7 @@ function ContentRight(props) {
 					{/* {props.propSent.curator_id === userC.loggedin_user_id &&
 						(console.log("here "),
 						( */}
-					<ListStats
-						userid={props.propSent.curator_id}
-						listid={props.propSent.contentID}
-					/>
+					<ListStats userid={props.propSent.curator_id} listid={props.contID} />
 					{/* ))} */}
 				</>
 			) : (
