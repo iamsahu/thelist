@@ -113,7 +113,11 @@ function Home2(props) {
 				) : (
 					<div></div>
 				)} */}
-				<Grid>
+				<Grid
+					style={{
+						"padding-top": "20px",
+					}}
+				>
 					{/* <Grid.Column width={3}>
 						{/* <Header as='h3'>Tags</Header>
                     <Divider/>

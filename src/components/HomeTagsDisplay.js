@@ -55,36 +55,36 @@ function HomeTagsDisplay() {
 							</div>
 						</Responsive>
 						<Responsive minWidth={Responsive.onlyTablet.minWidth}>
-							<div className="scrollyExplore">
-								{/* <List animated verticalAlign="middle"> */}
-								<StackGrid
-									gutterWidth={10}
-									gutterHeight={10}
-									appearDelay={5}
-									columnWidth={200}
-								>
-									{searchResult.tag.map((result) => (
-										<List.Item key={result.id}>
-											<List.Content
-												onClick={() => {
-													contentChange((content) => ({
-														...content,
-														currentTag: result.name,
-														currentTagID: result.id,
-														currentListID: "",
-														contentType: "tags",
-													}));
-												}}
-											>
-												<Link to={`/${result.user_id}/tags/${result.id}`}>
-													# {result.name}
-												</Link>
-											</List.Content>
-										</List.Item>
-									))}
-									{/* </List> */}
-								</StackGrid>
-							</div>
+							{/* <div className="scrollyExplore"> */}
+							{/* <List animated verticalAlign="middle"> */}
+							<StackGrid
+								gutterWidth={10}
+								gutterHeight={10}
+								appearDelay={5}
+								columnWidth={200}
+							>
+								{searchResult.tag.map((result) => (
+									<List.Item key={result.id}>
+										<List.Content
+											onClick={() => {
+												contentChange((content) => ({
+													...content,
+													currentTag: result.name,
+													currentTagID: result.id,
+													currentListID: "",
+													contentType: "tags",
+												}));
+											}}
+										>
+											<Link to={`/${result.user_id}/tags/${result.id}`}>
+												# {result.name}
+											</Link>
+										</List.Content>
+									</List.Item>
+								))}
+								{/* </List> */}
+							</StackGrid>
+							{/* </div> */}
 						</Responsive>
 					</>
 				)

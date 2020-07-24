@@ -125,7 +125,15 @@ function AddList() {
 				closeIcon
 				trigger={
 					<div className="icobutton">
-						<Button onClick={() => SetModal(true)}>Add List</Button>
+						<Button
+							onClick={() => SetModal(true)}
+							style={{
+								background: "#ffffff",
+								// "border-radius": "30px",
+							}}
+						>
+							Add List
+						</Button>
 					</div>
 				}
 			>

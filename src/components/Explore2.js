@@ -4,6 +4,7 @@ import SearchResultItem from "./SearchResultItem";
 import { Link } from "react-router-dom";
 import StackGrid from "react-stack-grid";
 import { useHistory } from "react-router-dom";
+import LandingPageCard from "./LandingPageCard";
 
 import {
 	Item,
@@ -88,76 +89,61 @@ function Explore() {
 					>
 						{searchResult.lists.map(
 							(result) => (
-								(col = randomColor()),
-								(
-									<Card
-										fluid
-										raised
-										key={result.id}
-										// color="yellow"
-										// style={{ "background-color": col, boxShadow: "none" }}
-										// style={{ boxShadow: "none" }}
-									>
-										{/* <Card.Content> */}
-										<Card.Content>
-											<Card.Header>
-												<Header as="h2">{result.list_name}</Header>
-											</Card.Header>
-										</Card.Content>
-										{/* <Link to={`/${result.curator_id}/lists/${result.id}`}> */}
-										{/* </Link> */}
-										{/* </Card.Content> */}
-										{/* <Card.Meta>
-											by{" "}
-										</Card.Meta> */}
-
-										<Card.Content
-											description={result.description}
-											style={{
-												border: "none",
-												"border-top": "none",
-											}}
-										/>
-										<Card.Content
-											style={{
-												border: "none",
-												"border-top": "none",
-											}}
-										>
-											{/* <Label
-												image
-												size="tiny"
-												floated="left"
-												basic
-												as="a"
-												href={`/${result.curator_id}`}
-											>
-												<img src={result.user.image_link} />
-												{result.user.username}
-											</Label> */}
-											<Image src={result.user.image_link} avatar />
-											<span>
-												<Link to={`/${result.curator_id}`}>
-													{result.user.username}
-												</Link>
-											</span>
-											<Button
-												size="tiny"
-												floated="right"
-												basic
-												onClick={() => {
-													var t = `/${result.curator_id}/lists/${result.id}`;
-													routeChange(t);
-												}}
-											>
-												{/* <Link to={`/${result.curator_id}/lists/${result.id}`}> */}
-												Read
-												{/* </Link> */}
-											</Button>
-										</Card.Content>
-										{/* </Card.Content> */}
-									</Card>
-								)
+								(col = randomColor()), (<LandingPageCard result={result} />)
+								// <Card fluid raised key={result.id}>
+								// 	<Card.Content>
+								// 		{result.image_url === '""' ? (
+								// 			<Image
+								// 				floated="left"
+								// 				size="mini"
+								// 				rounded
+								// 				src="https://react.semantic-ui.com/images/wireframe/square-image.png"
+								// 			/>
+								// 		) : (
+								// 			<Image
+								// 				floated="left"
+								// 				size="mini"
+								// 				rounded
+								// 				src={result.image_url}
+								// 			/>
+								// 		)}
+								// 		<Card.Header>
+								// 			<Header as="h3">{result.list_name}</Header>
+								// 		</Card.Header>
+								// 	</Card.Content>
+								// 	<Card.Content
+								// 		description={result.description}
+								// 		style={{
+								// 			border: "none",
+								// 			"border-top": "none",
+								// 		}}
+								// 	/>
+								// 	<Card.Content
+								// 		style={{
+								// 			border: "none",
+								// 			"border-top": "none",
+								// 		}}
+								// 	>
+								// 		<Image src={result.user.image_link} avatar />
+								// 		<span>
+								// 			<Link to={`/${result.curator_id}`}>
+								// 				{result.user.username}
+								// 			</Link>
+								// 		</span>
+								// 		<Button
+								// 			size="tiny"
+								// 			floated="right"
+								// 			basic
+								// 			color="black"
+								// 			onClick={() => {
+								// 				var t = `/${result.curator_id}/lists/${result.id}`;
+								// 				routeChange(t);
+								// 			}}
+								// 		>
+								// 			Read
+								// 		</Button>
+								// 	</Card.Content>
+								// </Card>
 
 								//  <SearchResultItem key={result.id} props={result} />
 							)

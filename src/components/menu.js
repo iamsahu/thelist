@@ -237,7 +237,18 @@ function MenuBar(props) {
 			</Responsive>
 
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
-				<Menu fixed="top" borderless={true} inverted stackable>
+				<Menu
+					fixed="top"
+					borderless={true}
+					inverted
+					stackable
+					style={{
+						height: "60px",
+						"box-shadow": "0px 0px 5px 0px rgba(0, 0, 0, 0.20)",
+						// "height": "60px",
+						// "box-shadow": "0px 0px 5px 0px rgba(0, 0, 0, 0.20)",
+					}}
+				>
 					{/* <Link to={`/`}> */}
 					<Menu.Item
 						name="TheListSpace"
@@ -257,6 +268,10 @@ function MenuBar(props) {
 										onClick={() => {
 											var t = `/explore`;
 											routeChange(t);
+										}}
+										style={{
+											background: "#ffffff",
+											// "border-radius": "30px",
 										}}
 									>
 										{/* <Link to="/explore">  */}
@@ -286,6 +301,10 @@ function MenuBar(props) {
 										onClick={() => {
 											var t = `/explore`;
 											routeChange(t);
+										}}
+										style={{
+											background: "#ffffff",
+											// "border-radius": "30px",
 										}}
 									>
 										{/* <Link to="/explore">  */}

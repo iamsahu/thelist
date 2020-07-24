@@ -84,6 +84,10 @@ function ContentMiddleNoLoad(props) {
 		logout,
 	} = useAuth0();
 
+	// useEffect(() => {
+	// 	window.scrollTo(0, 0);
+	// }, []);
+
 	if (props.posts === null) {
 		return (
 			<div>
