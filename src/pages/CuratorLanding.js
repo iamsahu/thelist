@@ -15,11 +15,7 @@ import {
 	Menu,
 } from "semantic-ui-react";
 import UserContext from "../context/UserContext";
-import {
-	DoesUserExists,
-	GetListsOfUser,
-	GetTagsOfUser,
-} from "../util/graphqlExecutor";
+import { DoesUserExists, GetTagsOfUser } from "../util/graphqlExecutor";
 import { Link } from "react-router-dom";
 import ReactLinkify from "react-linkify";
 import ContentContext from "../context/ContentContext";
@@ -29,6 +25,8 @@ import { Grid as GG, Card as CC } from "@material-ui/core";
 import { useAuth0 } from "../react-auth0-spa";
 import UserProfileDisplay from "../components/UserProfileDisplay";
 import CuratorLandingCard from "../components/CuratorLandingCard";
+import MyLists from "../components/MyLists";
+import MyFeed from "../components/MyFeed";
 
 function CuratorLanding(props) {
 	// console.log(props);
@@ -48,6 +46,12 @@ function CuratorLanding(props) {
 	const [editState, seteditState] = useState(false);
 	const [listData, setlistData] = useState("");
 	const [tagData, settagData] = useState("");
+	var u;
+	if (typeof props.user !== "undefined") u = props.user;
+	else u = props.match.params.user;
+
+	const [activeitem, setactiveitem] = useState(<MyLists user={u} />);
+	const [activeTab, setactiveTab] = useState("mylists");
 
 	const loadUser = (user) => {
 		// if(tyuser)
@@ -72,12 +76,6 @@ function CuratorLanding(props) {
 				}
 			})
 			.catch((error) => console.log(error));
-		GetListsOfUser(user)
-			.then((response) => {
-				// console.log(response);
-				setlistData(response);
-			})
-			.catch((error) => console.log(error));
 		GetTagsOfUser(user)
 			.then((response) => {
 				// console.log(response);
@@ -89,9 +87,7 @@ function CuratorLanding(props) {
 	// useEffect(() => {
 	// 	loadUser(props.match.params.user);
 	// }, []);
-	var u;
-	if (typeof props.user !== "undefined") u = props.user;
-	else u = props.match.params.user;
+
 	loadUser(u);
 
 	const routeChange = (t) => {
@@ -101,7 +97,36 @@ function CuratorLanding(props) {
 
 	if (typeof tagData.tag === "undefined") return <div>Loading</div>;
 
-	var activeItem = "mylists";
+	// var activeItem = "mylists";
+
+	const handleItemClickDesktop = (e, { name }) => {
+		// dispatch({ activeItem:name })
+		console.log(name);
+		switch (name) {
+			case "My Lists":
+				setactiveitem(<MyLists user={u} />);
+				setactiveTab("mylists");
+				break;
+			case "Feed":
+				setactiveitem(<MyFeed user={u} />);
+				setactiveTab("feed");
+				break;
+		}
+	};
+
+	const handleItemClickMobile = (e, { name }) => {
+		// dispatch({ activeItem:name })
+		switch (name) {
+			case "My Lists":
+				setactiveitem(<MyLists user={u} />);
+				setactiveTab("mylists");
+				break;
+			case "Feed":
+				setactiveitem(<MyFeed user={u} />);
+				setactiveTab("feed");
+				break;
+		}
+	};
 
 	return (
 		<>
@@ -125,25 +150,42 @@ function CuratorLanding(props) {
 							</Item>
 						</Item.Group> */}
 					</div>
-					<div>
-						MY LISTS
-						{/* <span>
-									<Button floated="right">Manage Content</Button>
-								</span> */}
-						<Divider />
-					</div>
-
-					<Item.Group divided relaxed="very">
-						{listData === "" ? (
-							<div key="unique">
-								<Loader active inline="centered" />
-							</div>
-						) : (
-							listData.lists.map((item) => (
-								<CuratorLandingCard item={item} key={item.id} />
-							))
+					<Menu pointing secondary>
+						<Menu.Item
+							name="My Lists"
+							active={activeTab === "mylists"}
+							onClick={handleItemClickMobile}
+						/>
+						{isAuthenticated && u === userC.loggedin_user_id && (
+							<Menu.Item
+								name="Feed"
+								active={activeTab === "feed"}
+								onClick={handleItemClickMobile}
+							/>
 						)}
-					</Item.Group>
+						<Menu.Menu position="right">
+							<div className="icobutton">
+								{isAuthenticated && u === userC.loggedin_user_id && (
+									<Button
+										floated="right"
+										onClick={() => {
+											var t = `/manage/${userC.loggedin_user_id}`;
+											routeChange(t);
+										}}
+										// style={{ marginBottom: "50px" }}
+									>
+										Manage Content
+									</Button>
+								)}
+							</div>
+						</Menu.Menu>
+					</Menu>
+					{/* <div>
+						MY LISTS
+						<Divider />
+					</div> */}
+
+					{activeitem}
 				</div>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
@@ -169,13 +211,14 @@ function CuratorLanding(props) {
 								<Menu pointing secondary>
 									<Menu.Item
 										name="My Lists"
-										active={activeItem === "mylists"}
+										active={activeTab === "mylists"}
+										onClick={handleItemClickDesktop}
 									/>
 									{isAuthenticated && u === userC.loggedin_user_id && (
 										<Menu.Item
 											name="Feed"
-											active={activeItem === "Latest"}
-											// onClick={handleItemClick}
+											active={activeTab === "feed"}
+											onClick={handleItemClickDesktop}
 										/>
 									)}
 									<Menu.Menu position="right">
@@ -220,19 +263,7 @@ function CuratorLanding(props) {
 									columnWidth={300}
 									columnHeight={255}
 								> */}
-								<GG container spacing={3}>
-									{listData === "" ? (
-										<div>
-											<Loader active inline="centered" />
-										</div>
-									) : (
-										listData.lists.map((item) => (
-											<GG key={item.id} item xs={4}>
-												<CuratorLandingCard item={item} key={item.id} />
-											</GG>
-										))
-									)}
-								</GG>
+								{activeitem}
 								{/* </StackGrid> */}
 								{/* </Item.Group> */}
 							</Grid.Column>
