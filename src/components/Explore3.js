@@ -4,6 +4,7 @@ import SearchResultItem from "./SearchResultItem";
 import { Link } from "react-router-dom";
 import StackGrid from "react-stack-grid";
 import { useHistory } from "react-router-dom";
+import LandingPageCard from "./LandingPageCard";
 
 import {
 	Icon,
@@ -84,67 +85,7 @@ function Explore3() {
 									(
 										<GG item xs={4}>
 											<Card.Group stackable={true} doubling={true}>
-												<Card key={result.id}>
-													<Card.Content>
-														{result.image_url === '""' ? (
-															<Image
-																floated="left"
-																size="mini"
-																rounded
-																src="https://react.semantic-ui.com/images/wireframe/square-image.png"
-															/>
-														) : (
-															<Image
-																floated="left"
-																size="mini"
-																rounded
-																src={result.image_url}
-															/>
-														)}
-														<Card.Header>
-															<Header as="h3">{result.list_name}</Header>
-														</Card.Header>
-													</Card.Content>
-													{/* <Card.Content header={result.list_name} /> */}
-													<Card.Content
-														description={result.description}
-														style={{
-															border: "none",
-															"border-top": "none",
-														}}
-													/>
-													<Card.Content
-														style={{
-															border: "none",
-															"border-top": "none",
-														}}
-														extra
-													>
-														<Label
-															image
-															size="tiny"
-															floated="left"
-															basic
-															as="a"
-															href={`/${result.curator_id}`}
-														>
-															<img src={result.user.image_link} />
-															{result.user.username}
-														</Label>
-														<Button
-															size="tiny"
-															floated="right"
-															basic
-															color="black"
-															onClick={() => {
-																var t = `/${result.curator_id}/lists/${result.id}`;
-																routeChange(t);
-															}}
-														>
-															Read
-														</Button>
-													</Card.Content>
-												</Card>
+												<LandingPageCard result={result} key={result.id} />
 											</Card.Group>
 										</GG>
 									)

@@ -27,6 +27,7 @@ import StackGrid from "react-stack-grid";
 import { Grid as GG, Card as CC } from "@material-ui/core";
 import { useAuth0 } from "../react-auth0-spa";
 import UserProfileDisplay from "../components/UserProfileDisplay";
+import CuratorLandingCard from "../components/CuratorLandingCard";
 
 function CuratorLanding(props) {
 	// console.log(props);
@@ -135,46 +136,7 @@ function CuratorLanding(props) {
 							</div>
 						) : (
 							listData.lists.map((item) => (
-								<Card
-									fluid
-									key={item.id}
-									// color="yellow"
-									style={
-										{
-											// "background-color": "#F5DD47",
-											// boxShadow: "none",
-										}
-									}
-								>
-									<Card.Content>
-										<Card.Header>
-											<Header as="h2">{item.list_name}</Header>
-										</Card.Header>
-									</Card.Content>
-
-									<Card.Content
-										description={item.description}
-										style={{
-											border: "none",
-											"border-top": "none",
-										}}
-									/>
-									<Card.Content
-										style={{
-											border: "none",
-											"border-top": "none",
-										}}
-									>
-										{/* <Button floated="right" basic icon>
-											<Icon name="twitter" />
-										</Button> */}
-										<Button size="tiny" floated="right" basic>
-											<Link to={`/${item.curator_id}/lists/${item.id}`}>
-												Read
-											</Link>
-										</Button>
-									</Card.Content>
-								</Card>
+								<CuratorLandingCard item={item} key={item.id} />
 							))
 						)}
 					</Item.Group>
@@ -189,27 +151,6 @@ function CuratorLanding(props) {
 								<Grid.Column width={10}>
 									<div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
 										<UserProfileDisplay user={u} />
-										{/* <Item.Group>
-											<Item>
-												<Item.Image avatar size="small" src={userProfile} />
-												<Item.Content verticalAlign="middle">
-													
-													<Item.Header>{username}</Item.Header>
-													
-													<Item.Meta></Item.Meta>
-													<Item.Description>
-														<ReactLinkify>{description}</ReactLinkify>
-													</Item.Description>
-													{u === userC.loggedin_user_id && (
-														<Item.Extra>
-															<Button icon="edit" floated="left"></Button>
-														</Item.Extra>
-													)}
-
-													
-												</Item.Content>
-											</Item>
-										</Item.Group> */}
 									</div>
 								</Grid.Column>
 								<Grid.Column width={2}></Grid.Column>
@@ -254,42 +195,7 @@ function CuratorLanding(props) {
 									) : (
 										listData.lists.map((item) => (
 											<GG key={item.id} item xs={4}>
-												<Card className="eq-card" fluid key={item.id}>
-													<Card.Content>
-														{item.image_url === '""' ? (
-															<Image
-																floated="left"
-																size="mini"
-																rounded
-																src="https://react.semantic-ui.com/images/wireframe/square-image.png"
-															/>
-														) : (
-															<Image
-																floated="left"
-																size="mini"
-																rounded
-																src={item.image_url}
-															/>
-														)}
-														<Card.Header>
-															<Header as="h3">{item.list_name}</Header>
-														</Card.Header>
-														<Card.Description>
-															{item.description}
-														</Card.Description>
-														<Button
-															size="tiny"
-															floated="right"
-															basic
-															onClick={() => {
-																var t = `/${item.curator_id}/lists/${item.id}`;
-																routeChange(t);
-															}}
-														>
-															Read
-														</Button>
-													</Card.Content>
-												</Card>
+												<CuratorLandingCard item={item} key={item.id} />
 											</GG>
 										))
 									)}
