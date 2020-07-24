@@ -28,7 +28,7 @@ function LandingPage() {
 								fontSize: "4em",
 								fontWeight: "normal",
 								marginBottom: 0,
-								marginTop: "0.5em",
+								marginTop: "0.2em",
 							}}
 						/>
 						<Header
@@ -44,7 +44,14 @@ function LandingPage() {
 							}}
 						/>
 						<Link to="/explore">
-							<Button primary size="huge">
+							<Button
+								primary
+								size="huge"
+								style={{
+									"border-radius": "36px",
+									"box-shadow": "0px 13px 20px 0px rgba(0, 0, 0, 0.13)",
+								}}
+							>
 								Get Started
 								<Icon name="right arrow" />
 							</Button>

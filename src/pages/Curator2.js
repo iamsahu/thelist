@@ -200,14 +200,6 @@ function Curator(props) {
 									setimageurl(data.lists[0]["image_url"]);
 									propSent["description"] = data.lists[0]["description"];
 									// console.log(data.items[0]['list']['description'])
-									// if (
-									// 	process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
-									// ) {
-									// 	IncrementListView(propSent.contentID).then((data) =>
-									// 		console.log("Incremented")
-									// 	);
-									// }
-									// console.log(data.lists[0]["id"]);
 									if (
 										process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
 									) {
@@ -228,12 +220,6 @@ function Curator(props) {
 									}
 								}
 							}
-							// if(data.like_list.length>0){//Change this to take value from latest data
-							//   // console.log("setting likes")
-							//   setlistlike(true)
-							// }else{
-							//   setlistlike(false)
-							// }
 						})
 						.catch((error) => console.log(error))
 			: propSent.contentType === "tags"

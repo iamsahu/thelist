@@ -42,7 +42,7 @@ function ListStats(props) {
 	return (
 		<>
 			<Card fluid>
-				<Card.Content header="How are people finding your list?" />
+				<Card.Content header="How are people finding this list?" />
 				<Card.Content>
 					<Statistic.Group horizontal>
 						<Statistic>

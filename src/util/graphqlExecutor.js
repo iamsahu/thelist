@@ -387,8 +387,8 @@ function InsertItem(
 						});
 					}
 				}
-				console.log(list_id);
-				console.log(listfeed);
+				// console.log(list_id);
+				// console.log(listfeed);
 				// var temp = listfeed.feed("listfeed", list_id);
 				listfeed.addActivity({
 					// actor: listfeed.currentUser.client.currentUser.id,

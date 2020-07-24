@@ -265,10 +265,20 @@ function ContentMiddleNoLoad(props) {
 								: "A place for all your curations!"
 						}
 					/>
-					<meta
+					{/* <meta
 						property="og:image"
 						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
-					/>
+					/> */}
+					{props.propSent.contentType === "tags"
+						? ((
+								<meta
+									property="og:image"
+									content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
+								/>
+						  ),
+						  (<meta name="image" content="%PUBLIC_URL%/thelistspace.png" />))
+						: ((<meta property="og:image" content={props.image_url} />),
+						  (<meta name="image" content={props.image_url} />))}
 
 					<meta name="og:type" content="website" />
 					<meta name="og:url" content={shareUrl} />
@@ -281,6 +291,15 @@ function ContentMiddleNoLoad(props) {
 						}
 					/>
 					<meta
+						name="title"
+						content={
+							props.propSent.contentType === "tags"
+								? content.currentTag
+								: props.title
+						}
+					/>
+
+					<meta
 						name="og:description"
 						content={
 							props.propSent.contentType === "lists"
@@ -288,10 +307,10 @@ function ContentMiddleNoLoad(props) {
 								: "A place for all your curations!"
 						}
 					/>
-					<meta
+					{/* <meta
 						name="og:image"
 						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
-					/>
+					/> */}
 
 					{/* <!-- Twitter --/> */}
 
@@ -316,10 +335,18 @@ function ContentMiddleNoLoad(props) {
 								: "A place for all your curations!"
 						}
 					/>
-					<meta
+					{/* <meta
 						name="twitter:image"
 						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
-					/>
+					/> */}
+					{props.propSent.contentType === "tags" ? (
+						<meta
+							name="twitter:image"
+							content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
+						/>
+					) : (
+						<meta name="twitter:image" content={props.image_url} />
+					)}
 				</MetaTags>
 				<Menu.Menu position="right">
 					<div className="icobutton">
