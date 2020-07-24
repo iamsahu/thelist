@@ -122,7 +122,8 @@ function CurationReasonCard(props) {
 		</Modal>
 	);
 
-	if (content.currentListID !== "" || props.id !== "") {
+	// if (content.currentListID !== "" || props.id !== "") {
+	if (props.id !== "") {
 		loadData();
 	}
 	return (

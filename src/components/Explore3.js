@@ -76,10 +76,10 @@ function Explore3() {
 								(col = randomColor()),
 								(
 									// <GG item xs={4}>
-									<Card.Group stackable={true} doubling={true} fluid>
-										<LandingPageCard result={result} key={result.id} />
-									</Card.Group>
+									// <Card.Group stackable={true} doubling={true} fluid>
+									<LandingPageCard result={result} key={result.id} />
 								)
+								// </Card.Group>
 
 								//  <SearchResultItem key={result.id} props={result} />
 							)

@@ -10,7 +10,7 @@ function LandingPageCard(props) {
 	};
 	return (
 		<>
-			<Card key={props.result.id}>
+			<Card key={props.result.id} fluid>
 				<Card.Content>
 					{props.result.image_url === '""' ? (
 						<Image
