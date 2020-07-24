@@ -76,83 +76,99 @@ function Explore() {
 				</div>
 			) : (
 				<>
-					{/* <Responsive {...Responsive.onlyMobile}>Hell</Responsive>
-					<Responsive minWidth={Responsive.onlyTablet.minWidth}> */}
-
-					{/* <Card.Group stackable={true} doubling={true}> */}
-					{/* <Container> */}
-					<StackGrid
-						gutterWidth={10}
-						gutterHeight={10}
-						appearDelay={30}
-						columnWidth={300}
-					>
+					<Responsive {...Responsive.onlyMobile}>
+						{/* <Item.Group fluid> */}
 						{searchResult.lists.map(
 							(result) => (
-								(col = randomColor()), (<LandingPageCard result={result} />)
-								// <Card fluid raised key={result.id}>
-								// 	<Card.Content>
-								// 		{result.image_url === '""' ? (
-								// 			<Image
-								// 				floated="left"
-								// 				size="mini"
-								// 				rounded
-								// 				src="https://react.semantic-ui.com/images/wireframe/square-image.png"
-								// 			/>
-								// 		) : (
-								// 			<Image
-								// 				floated="left"
-								// 				size="mini"
-								// 				rounded
-								// 				src={result.image_url}
-								// 			/>
-								// 		)}
-								// 		<Card.Header>
-								// 			<Header as="h3">{result.list_name}</Header>
-								// 		</Card.Header>
-								// 	</Card.Content>
-								// 	<Card.Content
-								// 		description={result.description}
-								// 		style={{
-								// 			border: "none",
-								// 			"border-top": "none",
-								// 		}}
-								// 	/>
-								// 	<Card.Content
-								// 		style={{
-								// 			border: "none",
-								// 			"border-top": "none",
-								// 		}}
-								// 	>
-								// 		<Image src={result.user.image_link} avatar />
-								// 		<span>
-								// 			<Link to={`/${result.curator_id}`}>
-								// 				{result.user.username}
-								// 			</Link>
-								// 		</span>
-								// 		<Button
-								// 			size="tiny"
-								// 			floated="right"
-								// 			basic
-								// 			color="black"
-								// 			onClick={() => {
-								// 				var t = `/${result.curator_id}/lists/${result.id}`;
-								// 				routeChange(t);
-								// 			}}
-								// 		>
-								// 			Read
-								// 		</Button>
-								// 	</Card.Content>
-								// </Card>
+								(col = randomColor()),
+								(
+									<Card.Group stackable={true} doubling={true}>
+										<LandingPageCard fluid result={result} />
+									</Card.Group>
+								)
 
 								//  <SearchResultItem key={result.id} props={result} />
 							)
 						)}
-					</StackGrid>
-					{/* </Container> */}
-					{/* </Card.Group> */}
+						{/* </Item.Group> */}
+					</Responsive>
+					<Responsive minWidth={Responsive.onlyTablet.minWidth}>
+						{/* <Card.Group stackable={true} doubling={true}> */}
+						{/* <Container> */}
+						<StackGrid
+							gutterWidth={10}
+							gutterHeight={10}
+							appearDelay={30}
+							columnWidth={300}
+						>
+							{searchResult.lists.map(
+								(result) => (
+									(col = randomColor()),
+									(
+										// <LandingPageCard result={result}/>
+										<Card fluid raised key={result.id}>
+											<Card.Content>
+												{result.image_url === '""' ? (
+													<Image
+														floated="left"
+														size="mini"
+														rounded
+														src="https://react.semantic-ui.com/images/wireframe/square-image.png"
+													/>
+												) : (
+													<Image
+														floated="left"
+														size="mini"
+														rounded
+														src={result.image_url}
+													/>
+												)}
+												<Card.Header>
+													<Header as="h3">{result.list_name}</Header>
+												</Card.Header>
+											</Card.Content>
+											<Card.Content
+												description={result.description}
+												style={{
+													border: "none",
+													"border-top": "none",
+												}}
+											/>
+											<Card.Content
+												style={{
+													border: "none",
+													"border-top": "none",
+												}}
+											>
+												<Image src={result.user.image_link} avatar />
+												<span>
+													<Link to={`/${result.curator_id}`}>
+														{result.user.username}
+													</Link>
+												</span>
+												<Button
+													size="tiny"
+													floated="right"
+													basic
+													color="black"
+													onClick={() => {
+														var t = `/${result.curator_id}/lists/${result.id}`;
+														routeChange(t);
+													}}
+												>
+													Read
+												</Button>
+											</Card.Content>
+										</Card>
+									)
 
-					{/* </Responsive> */}
+									//  <SearchResultItem key={result.id} props={result} />
+								)
+							)}
+						</StackGrid>
+						{/* </Container> */}
+						{/* </Card.Group> */}
+					</Responsive>
 				</>
 			)}
 		</>

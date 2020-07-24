@@ -28,17 +28,19 @@ function LandingPage() {
 								fontSize: "4em",
 								fontWeight: "normal",
 								marginBottom: 0,
-								marginTop: "1em",
+								marginTop: "0.5em",
 							}}
 						/>
 						<Header
 							as="h1"
-							// content="Save any content in one place!"
-							content="Fastest way to create and share listicles!"
+							content="Save any content in one place!"
+							// content="Fastest way to create and share listicles!"
 							style={{
 								fontSize: "3em",
 								fontWeight: "normal",
-								marginTop: "1.5em",
+								marginTop: "0.3em",
+								// margin: "7px 0px 14px 0px",
+								color: "#7a7a7a",
 							}}
 						/>
 						<Link to="/explore">
@@ -97,7 +99,10 @@ function LandingPage() {
 							</Grid.Column>
 						</Grid>
 					</Container>
-					<Container>
+					<Container style={{ marginTop: "2rem" }} fluid>
+						<Header textAlign="center" as="h1">
+							Explore!
+						</Header>
 						<Explore3 />
 					</Container>
 					{/* <Divider/>

@@ -16,6 +16,7 @@ import {
 	Button,
 	Loader,
 	Header,
+	Item,
 } from "semantic-ui-react";
 import { Grid as GG, Card as CC } from "@material-ui/core";
 function Explore3() {
@@ -68,37 +69,52 @@ function Explore3() {
 				</div>
 			) : (
 				<>
-					{/* <Responsive {...Responsive.onlyMobile}>Hell</Responsive>
-					<Responsive minWidth={Responsive.onlyTablet.minWidth}> */}
-					{/* <Card.Group stackable={true} doubling={true}> */}
-					<Container>
-						{/* <StackGrid
+					<Responsive {...Responsive.onlyMobile}>
+						{/* <Item.Group> */}
+						{searchResult.lists.map(
+							(result) => (
+								(col = randomColor()),
+								(
+									// <GG item xs={4}>
+									<Card.Group stackable={true} doubling={true} fluid>
+										<LandingPageCard result={result} key={result.id} />
+									</Card.Group>
+								)
+
+								//  <SearchResultItem key={result.id} props={result} />
+							)
+						)}
+						{/* </Item.Group> */}
+					</Responsive>
+					<Responsive minWidth={Responsive.onlyTablet.minWidth}>
+						{/* <Card.Group stackable={true} doubling={true}> */}
+						<Container>
+							{/* <StackGrid
 						gutterWidth={10}
 						gutterHeight={10}
 						appearDelay={50}
 						columnWidth={250}
 					> */}
-						<GG container spacing={3}>
-							{searchResult.lists.map(
-								(result) => (
-									(col = randomColor()),
-									(
-										<GG item xs={4}>
-											<Card.Group stackable={true} doubling={true}>
-												<LandingPageCard result={result} key={result.id} />
-											</Card.Group>
-										</GG>
+							<GG container spacing={3}>
+								{searchResult.lists.map(
+									(result) => (
+										(col = randomColor()),
+										(
+											<GG item xs={4}>
+												<Card.Group stackable={true} doubling={true}>
+													<LandingPageCard result={result} key={result.id} />
+												</Card.Group>
+											</GG>
+										)
+
+										//  <SearchResultItem key={result.id} props={result} />
 									)
-
-									//  <SearchResultItem key={result.id} props={result} />
-								)
-							)}
-						</GG>
-						{/* </StackGrid> */}
-					</Container>
-					{/* </Card.Group> */}
-
-					{/* </Responsive> */}
+								)}
+							</GG>
+							{/* </StackGrid> */}
+						</Container>
+						{/* </Card.Group> */}
+					</Responsive>
 				</>
 			)}
 		</>
