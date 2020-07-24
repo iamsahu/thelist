@@ -93,7 +93,14 @@ function ProfileCard() {
 			onClose={OnClose}
 			closeIcon
 			trigger={
-				<Button icon="edit" floated="right" onClick={() => SetModal(true)} />
+				<Button
+					icon="edit"
+					size="tiny"
+					floated="right"
+					basic
+					color="black"
+					onClick={() => SetModal(true)}
+				/>
 			}
 		>
 			<Modal.Header>Edit Reason</Modal.Header>

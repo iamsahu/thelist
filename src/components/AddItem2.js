@@ -370,7 +370,13 @@ function AddItem2(props) {
 				centered={false}
 				onOpen={OpenHandle}
 				trigger={
-					<Button onClick={onClick}>
+					<Button
+						size="tiny"
+						floated="right"
+						basic
+						color="black"
+						onClick={onClick}
+					>
 						Add Item
 						{/* <Icon name="add" /> */}
 					</Button>

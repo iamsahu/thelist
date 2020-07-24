@@ -133,10 +133,11 @@ function LandingPage() {
 						/>
 
 						<Header
-							as="h1"
-							content="Save any content in one place!"
+							as="h3"
+							// content="Save any content in one place!"
+							content="Find and curate stuff from the internet!"
 							style={{
-								fontSize: "3em",
+								fontSize: "2em",
 								fontWeight: "normal",
 								// marginTop: "0.3em",
 								margin: "7px 0px 14px 0px",
@@ -157,7 +158,7 @@ function LandingPage() {
 							</Button>
 						</Link>
 					</Container>
-					<Container fluid>
+					{/* <Container fluid>
 						<Grid
 							columns={3}
 							className="equal width center aligned "
@@ -165,47 +166,46 @@ function LandingPage() {
 							style={{ marginTop: "2rem" }}
 						>
 							<Grid.Column width={4}>
-								{/* <Card className='ui fluid card'> */}
+								
 								<Card style={{ height: "431px" }} className="ui fluid card">
 									<Image
 										src={`${process.env.REACT_APP_BASE_URL}/undraw_pitching_36ol_ F5DD47.png`}
 										wrapped
 										ui={false}
 									/>
-									{/* <Image src={`${process.env.REACT_APP_BASE_URL}/pablo-list-is-empty.png`} wrapped ui={false} /> */}
+									
 									<Card.Content header="Curate" />
 									<Card.Content description="Curate content from all different places in one location in neat collections. Easy to find. Easy to cross reference. Easy to go back to." />
 								</Card>
 							</Grid.Column>
 							<Grid.Column width={4}>
 								<Card style={{ height: "431px" }} className="ui fluid card">
-									{/* <Card style={{'height':'361px'}} className='ui fluid card'> */}
-									{/* <Card className='ui fluid card'> */}
+									
 									<Image
 										src={`${process.env.REACT_APP_BASE_URL}/undraw_online_connection_6778_ F5DD47.png`}
 										wrapped
 										ui={false}
 									/>
-									{/* <Image src={`${process.env.REACT_APP_BASE_URL}/pablo-sign-up.png`} wrapped ui={false} /> */}
+									
 									<Card.Content header="Share" />
 									<Card.Content description="Fun and easy way to share your curation easily with others. Track how useful they are finding your curation." />
 								</Card>
 							</Grid.Column>
 							<Grid.Column width={4}>
-								{/* <Card style={{'height':'431px'}} className='ui fluid card'> */}
+								
 								<Card style={{ height: "431px" }} className="ui fluid card">
 									<Image
 										src={`${process.env.REACT_APP_BASE_URL}/undraw_location_search_bqps_ F5DD47.png`}
 										wrapped
 										ui={false}
 									/>
-									{/* <Image src={`${process.env.REACT_APP_BASE_URL}/pablo-searching.png`} wrapped ui={false} /> */}
+									
 									<Card.Content header="Discover" />
 									<Card.Content description="Discover fascinating curations by your fellow curators on things you like or find something all new. You can find all types of curation here!" />
 								</Card>
 							</Grid.Column>
 						</Grid>
-					</Container>
+					</Container> */}
 
 					<Container style={{ marginTop: "2rem" }}>
 						<Header textAlign="center" as="h1">

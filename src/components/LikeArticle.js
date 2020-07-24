@@ -36,7 +36,10 @@ function LikeArticle(postdata) {
 				(liked ? (
 					<Button
 						icon
+						size="tiny"
 						floated="right"
+						basic
+						color="black"
 						onClick={(e) => {
 							UnlikeItem(postdata.postdata.postdata.id, userC.loggedin_user_id);
 							setLiked(false);
@@ -60,7 +63,10 @@ function LikeArticle(postdata) {
 				) : (
 					<Button
 						icon
+						size="tiny"
 						floated="right"
+						basic
+						color="black"
 						onClick={(e) => {
 							LikeItem(postdata.postdata.postdata.id, userC.loggedin_user_id);
 							setLiked(true);

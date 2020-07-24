@@ -232,6 +232,9 @@ function ContentCard(postdata) {
 							<Button
 								icon
 								floated="right"
+								size="tiny"
+								basic
+								color="black"
 								onClick={(e) => {
 									deleteitem(postdata.postdata.id);
 									Mixpanel.track("Delete Item", {
@@ -341,7 +344,7 @@ function ContentCard(postdata) {
 								});
 						}}
 					>
-						<Button icon floated="right">
+						<Button icon size="tiny" floated="right" basic color="black">
 							<Icon name="copy" />
 							<Tap waves />
 						</Button>
@@ -355,7 +358,10 @@ function ContentCard(postdata) {
 						postdata.postdata.user.id === userC.loggedin_user_id && (
 							<Button
 								icon
+								size="tiny"
 								floated="right"
+								basic
+								color="black"
 								onClick={(e) => {
 									Mixpanel.track("Edit Item", {
 										link: postdata.postdata.link,

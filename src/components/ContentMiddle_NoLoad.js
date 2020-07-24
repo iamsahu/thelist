@@ -55,6 +55,7 @@ import StreamContext from "../context/StreamContext";
 import { useAuth0 } from "../react-auth0-spa";
 import useForm from "../util/hook";
 import CurationReasonCard from "./CurationReasonCard";
+import Follow from "./Follow";
 
 function ContentMiddleNoLoad(props) {
 	// console.log(props);
@@ -358,7 +359,11 @@ function ContentMiddleNoLoad(props) {
 							userC.loggedin_user_id === props.propSent.curator_id && (
 								<AddItem2 />
 							)} */}
-						{userC.loggedin_user_id !== props.propSent.curator_id &&
+						<Follow
+							curator_id={props.propSent.curator_id}
+							contentID={props.propSent.contentID}
+						/>
+						{/* {userC.loggedin_user_id !== props.propSent.curator_id &&
 							(userC.loggedin_user_id !== "" ? (
 								follow === 0 ? (
 									<Button
@@ -429,15 +434,7 @@ function ContentMiddleNoLoad(props) {
 										</Button>
 									</Modal.Actions>
 								</Modal>
-								// <Button
-								// 	icon
-								// 	onClick={() => {
-								// 		//Take user to signin/up
-								// 	}}
-								// >
-								// 	<Icon name="feed" />
-								// </Button>
-							))}
+							))} */}
 
 						{
 							props.propSent.contentType === "lists" &&
@@ -447,7 +444,16 @@ function ContentMiddleNoLoad(props) {
 										{/* */}
 										<Modal
 											closeIcon
-											trigger={<Button>Upload CSV</Button>}
+											trigger={
+												<Button
+													size="tiny"
+													// floated="right"
+													basic
+													color="black"
+												>
+													Upload CSV
+												</Button>
+											}
 											centered={false}
 										>
 											<Modal.Header>Upload CSV</Modal.Header>
@@ -473,7 +479,7 @@ function ContentMiddleNoLoad(props) {
 						<Modal
 							closeIcon
 							trigger={
-								<Button icon>
+								<Button icon size="tiny" floated="right" basic color="black">
 									<Icon name="share alternate" />
 								</Button>
 							}

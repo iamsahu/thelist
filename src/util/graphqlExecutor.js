@@ -2057,6 +2057,11 @@ const GETLISTSOFUSER = gql`
 					}
 				}
 			}
+			user {
+				username
+				description
+				image_link
+			}
 		}
 	}
 `;

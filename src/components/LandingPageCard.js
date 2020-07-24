@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Image, Header, Button, Label } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
+import Follow from "./Follow";
 
 function LandingPageCard(props) {
 	const history = useHistory();
@@ -55,6 +56,10 @@ function LandingPageCard(props) {
 						<img src={props.result.user.image_link} />
 						{props.result.user.username}
 					</Label>
+					<Follow
+						curator_id={props.result.curator_id}
+						contentID={props.result.id}
+					/>
 					<Button
 						size="tiny"
 						floated="right"
