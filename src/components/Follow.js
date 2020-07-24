@@ -104,7 +104,7 @@ function Follow(props) {
 						<Header icon="feed" content="Sign Up/Sign In" />
 						<Modal.Content>
 							<p>
-								To subscribe you will have to sign in. Do you want to proceed to
+								To follow you will have to sign in. Do you want to proceed to
 								sign in?
 							</p>
 						</Modal.Content>

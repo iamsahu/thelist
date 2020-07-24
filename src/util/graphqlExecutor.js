@@ -1151,7 +1151,7 @@ const Search = (values) => {
 
 const GET_ALL_LISTS = gql`
 	query MyQuery {
-		lists(order_by: { created_at: desc_nulls_first }) {
+		lists(order_by: { view_count: desc }) {
 			description
 			id
 			curator_id
