@@ -167,7 +167,10 @@ function CuratorLanding(props) {
 							<div className="icobutton">
 								{isAuthenticated && u === userC.loggedin_user_id && (
 									<Button
+										size="tiny"
 										floated="right"
+										basic
+										color="black"
 										onClick={() => {
 											var t = `/manage/${userC.loggedin_user_id}`;
 											routeChange(t);
@@ -225,7 +228,10 @@ function CuratorLanding(props) {
 										<div className="icobutton">
 											{isAuthenticated && u === userC.loggedin_user_id && (
 												<Button
+													size="tiny"
 													floated="right"
+													basic
+													color="black"
 													onClick={() => {
 														var t = `/manage/${userC.loggedin_user_id}`;
 														routeChange(t);

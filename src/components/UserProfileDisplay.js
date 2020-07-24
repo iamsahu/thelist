@@ -98,7 +98,14 @@ function UserProfileDisplay(props) {
 			onClose={OnClose}
 			closeIcon
 			trigger={
-				<Button icon="edit" floated="left" onClick={() => SetModal(true)} />
+				<Button
+					icon="edit"
+					size="tiny"
+					floated="left"
+					basic
+					color="black"
+					onClick={() => SetModal(true)}
+				/>
 			}
 			size="large"
 		>
