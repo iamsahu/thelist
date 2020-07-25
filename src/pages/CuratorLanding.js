@@ -1,30 +1,19 @@
 import React, { useContext, useState, useEffect } from "react";
 import {
 	Container,
-	Item,
-	Image,
 	Grid,
-	Header,
 	Divider,
-	Card,
-	Loader,
 	Button,
-	Label,
 	Responsive,
-	Icon,
 	Menu,
 } from "semantic-ui-react";
 import UserContext from "../context/UserContext";
 import { DoesUserExists, GetTagsOfUser } from "../util/graphqlExecutor";
 import { Link } from "react-router-dom";
-import ReactLinkify from "react-linkify";
-import ContentContext from "../context/ContentContext";
+// import ContentContext from "../context/ContentContext";
 import history from "../util/history";
-import StackGrid from "react-stack-grid";
-import { Grid as GG, Card as CC } from "@material-ui/core";
 import { useAuth0 } from "../react-auth0-spa";
 import UserProfileDisplay from "../components/UserProfileDisplay";
-import CuratorLandingCard from "../components/CuratorLandingCard";
 import MyLists from "../components/MyLists";
 import MyFeed from "../components/MyFeed";
 import YourActivities from "../components/YourActivities";
@@ -33,7 +22,7 @@ function CuratorLanding(props) {
 	// console.log(props);
 	const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
 	const [userC, userChange] = useContext(UserContext);
-	const [content, contentChange] = useContext(ContentContext);
+	// const [content, contentChange] = useContext(ContentContext);
 	const [userProfile, setuserProfile] = useState(
 		"https://react.semantic-ui.com/images/avatar/large/steve.jpg"
 	);
@@ -42,10 +31,10 @@ function CuratorLanding(props) {
 		"Something witty that tells how witty you are"
 	);
 	const [twitterNumber, setTwitterNumber] = useState("1");
-	const [showModal, SetModal] = useState(false);
-	const [id, setid] = useState("");
+	// const [showModal, SetModal] = useState(false);
+	// const [id, setid] = useState("");
 	const [editState, seteditState] = useState(false);
-	const [listData, setlistData] = useState("");
+	// const [listData, setlistData] = useState("");
 	const [tagData, settagData] = useState("");
 	var u;
 	if (typeof props.user !== "undefined") u = props.user;

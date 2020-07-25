@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import StreamContext from "../context/StreamContext";
 import { Loader, Header, Item } from "semantic-ui-react";
 import { GetItemsActivity } from "../util/graphqlExecutor";
+import { useHistory } from "react-router-dom";
 
 function YourActivities(props) {
 	const [streamClient, streamuserFeed] = useContext(StreamContext);
@@ -10,6 +11,10 @@ function YourActivities(props) {
 	// var feed = streamClient.feed("user", props.user);
 	// console.log(streamClient);
 	var t = streamClient.feed("user", props.user);
+	const history = useHistory();
+	const routeChange = (t) => {
+		history.push(t);
+	};
 
 	if (loading === "-1")
 		t.get()
@@ -43,11 +48,14 @@ function YourActivities(props) {
 			</div>
 		);
 	}
+	// console.log(activityData.items);
+
 	var lastDate;
 	return (
 		<>
 			<Item.Group divided relaxed>
 				{activityData.items.map((item) =>
+					// console.log(item.list.list_name)
 					lastDate === "" ? (
 						((lastDate = GiveMeDate(item.created_at)),
 						(
@@ -58,7 +66,16 @@ function YourActivities(props) {
 									<Item.Content>
 										<Item.Header target="_blank" as="a" href={item.link}>
 											{item.name}
-										</Item.Header>
+										</Item.Header>{" "}
+										<Item.Meta
+											as="a"
+											onClick={() => {
+												var t = `/${item.curator}/lists/${item.list.id}`;
+												routeChange(t);
+											}}
+										>
+											in {item.list.list_name}
+										</Item.Meta>
 										<Item.Description>
 											<p>{item.auto_description.substring(0, 240)}</p>
 										</Item.Description>
@@ -80,7 +97,16 @@ function YourActivities(props) {
 							<Item.Content>
 								<Item.Header target="_blank" as="a" href={item.link}>
 									{item.name}
-								</Item.Header>
+								</Item.Header>{" "}
+								<Item.Meta
+									as="a"
+									onClick={() => {
+										var t = `/${item.curator}/lists/${item.list.id}`;
+										routeChange(t);
+									}}
+								>
+									in {item.list.list_name}
+								</Item.Meta>
 								<Item.Description>
 									<p>{item.auto_description.substring(0, 240)}</p>
 								</Item.Description>
@@ -104,7 +130,16 @@ function YourActivities(props) {
 									<Item.Content>
 										<Item.Header target="_blank" as="a" href={item.link}>
 											{item.name}
-										</Item.Header>
+										</Item.Header>{" "}
+										<Item.Meta
+											as="a"
+											onClick={() => {
+												var t = `/${item.curator}/lists/${item.list.id}`;
+												routeChange(t);
+											}}
+										>
+											in {item.list.list_name}
+										</Item.Meta>
 										<Item.Description>
 											<p>{item.auto_description.substring(0, 240)}</p>
 										</Item.Description>
