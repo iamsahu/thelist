@@ -117,7 +117,7 @@ function LandingPage() {
 				{/* </div> */}
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
-				<div className="scroll">
+				<div className="scroll" style={{ background: "#f3f3f3" }}>
 					<br />
 					<Container fluid textAlign="center">
 						{/* <Image src={`${process.env.REACT_APP_BASE_URL}/clip-education.png`} wrapped size='medium'/> */}

@@ -58,6 +58,7 @@
 	overflow-y: auto;
 	/* scrollbar-width: 2px; */
 	height: 70vh;
+	background-color: white;
 }
 
 .scrollyCuration {

@@ -216,8 +216,12 @@ function ContentMiddleNoLoad(props) {
 				</Grid.Column> */}
 			</Grid>
 
-			<Menu pointing secondary>
-				<Menu.Item name="Home" active={activeItem === "home"} />
+			<Menu pointing secondary style={{ background: "white" }}>
+				<Menu.Item
+					name="Home"
+					active={activeItem === "home"}
+					style={{ background: "white" }}
+				/>
 				{/* <Menu.Item
         name='Latest'
         active={activeItem === 'Latest'} 
@@ -347,7 +351,7 @@ function ContentMiddleNoLoad(props) {
 					)}
 				</MetaTags>
 				<Menu.Menu position="right">
-					<div className="icobutton">
+					<div className="icobutton" style={{ background: "white" }}>
 						{userC.loggedin_user_id !== props.propSent.curator_id &&
 						content.contentType === "lists" ? (
 							<LikeList props={props.propSent.contentID} />
@@ -566,7 +570,7 @@ function ContentMiddleNoLoad(props) {
 									contentID={props.propSent.contentID}
 								/>
 							) : (
-								<div className="imageFix">
+								<div className="imageFix" style={{ background: "white" }}>
 									<Image
 										centered
 										src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47.png`}

@@ -406,7 +406,7 @@ function Curator(props) {
 				</div>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
-				<div id="content" className="ui">
+				<div id="content" className="ui" style={{ background: "#f3f3f3" }}>
 					<Grid stackable>
 						<Grid.Column width={1}></Grid.Column>
 						<Grid.Column width={3}>
@@ -420,16 +420,27 @@ function Curator(props) {
 							content.contentType==='lists'?
 							<ContentMiddleLists propSent={propSent} posts={posts} title={header}/>:
 							} */}
-							<ContentMiddleNoLoad
-								propSent={propSent}
-								posts={posts}
-								title={header}
-								desc={description}
-								image_url={imageurl}
-								userName={username}
-								userImage={userProfile}
-								contID={contID}
-							/>
+							<div
+								style={{
+									background: "white",
+									marginTop: "15px",
+									paddingLeft: "10px",
+									paddingRight: "10px",
+									"border-radius": "3px",
+									"box-shadow": "0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5",
+								}}
+							>
+								<ContentMiddleNoLoad
+									propSent={propSent}
+									posts={posts}
+									title={header}
+									desc={description}
+									image_url={imageurl}
+									userName={username}
+									userImage={userProfile}
+									contID={contID}
+								/>
+							</div>
 						</Grid.Column>
 						<Grid.Column width={3}>
 							<ContentRight

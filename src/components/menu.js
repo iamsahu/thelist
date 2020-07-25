@@ -240,8 +240,8 @@ function MenuBar(props) {
 				<Menu
 					fixed="top"
 					borderless={true}
-					inverted
 					stackable
+					inverted
 					style={{
 						height: "60px",
 						"box-shadow": "0px 0px 5px 0px rgba(0, 0, 0, 0.20)",
@@ -265,14 +265,20 @@ function MenuBar(props) {
 							<>
 								<Menu.Item position="right">
 									<Button
+										// size="tiny"
+										// floated="right"
+										// basic
+										// color="black"
 										onClick={() => {
 											var t = `/explore`;
 											routeChange(t);
 										}}
-										style={{
-											background: "#ffffff",
-											// "border-radius": "30px",
-										}}
+										style={
+											{
+												// background: "#ffffff",
+												// "border-radius": "30px",
+											}
+										}
 									>
 										{/* <Link to="/explore">  */}
 										Explore
@@ -298,6 +304,8 @@ function MenuBar(props) {
 							<>
 								<Menu.Item position="right" fitted="vertically">
 									<Button
+										// basic
+										// color="black"
 										onClick={() => {
 											var t = `/explore`;
 											routeChange(t);
