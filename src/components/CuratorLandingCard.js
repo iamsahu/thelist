@@ -49,7 +49,12 @@ function CuratorLandingCard(props) {
 					</Button>
 				</Card.Content>
 			</Card> */}
-			<Card className="eq-card" fluid key={props.item.id}>
+			<Card
+				// className="eq-card"
+				fluid
+				key={props.item.id}
+				style={{ height: "100%" }}
+			>
 				<Card.Content>
 					{props.item.image_url === '""' ? (
 						<Image
@@ -77,14 +82,15 @@ function CuratorLandingCard(props) {
 							{props.item.list_name}
 						</Header>
 					</Card.Header>
+					<Card.Description>{props.item.description}</Card.Description>
 				</Card.Content>
-				<Card.Content
+				{/* <Card.Content
 					description={props.item.description}
 					style={{
 						border: "none",
 						"border-top": "none",
 					}}
-				/>
+				/> */}
 				<Card.Content
 					style={{
 						border: "none",

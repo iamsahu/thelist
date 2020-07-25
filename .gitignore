@@ -23,3 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 src/pages/DataEntry.js
 .env.development
+src/pages/DataEntry.js
+src/pages/NotesView.js
+src/pages/ReadFeed.js
+src/pages/DataEntry.js
