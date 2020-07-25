@@ -107,7 +107,7 @@
 .scroll {
 	/* width: 0 !important; */
 	overflow: auto;
-	height: 100vh;
+	height: 95vh;
 }
 
 .scrollEntry {

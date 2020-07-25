@@ -27,6 +27,7 @@ import UserProfileDisplay from "../components/UserProfileDisplay";
 import CuratorLandingCard from "../components/CuratorLandingCard";
 import MyLists from "../components/MyLists";
 import MyFeed from "../components/MyFeed";
+import YourActivities from "../components/YourActivities";
 
 function CuratorLanding(props) {
 	// console.log(props);
@@ -101,7 +102,7 @@ function CuratorLanding(props) {
 
 	const handleItemClickDesktop = (e, { name }) => {
 		// dispatch({ activeItem:name })
-		console.log(name);
+		// console.log(name);
 		switch (name) {
 			case "My Lists":
 				setactiveitem(<MyLists user={u} />);
@@ -110,6 +111,10 @@ function CuratorLanding(props) {
 			case "Feed":
 				setactiveitem(<MyFeed user={u} />);
 				setactiveTab("feed");
+				break;
+			case "Activity":
+				setactiveitem(<YourActivities user={u} />);
+				setactiveTab("Activity");
 				break;
 		}
 	};
@@ -124,6 +129,10 @@ function CuratorLanding(props) {
 			case "Feed":
 				setactiveitem(<MyFeed user={u} />);
 				setactiveTab("feed");
+				break;
+			case "Activity":
+				setactiveitem(<YourActivities user={u} />);
+				setactiveTab("Activity");
 				break;
 		}
 	};
@@ -162,6 +171,15 @@ function CuratorLanding(props) {
 								active={activeTab === "feed"}
 								onClick={handleItemClickMobile}
 							/>
+						)}
+						{isAuthenticated ? (
+							<Menu.Item
+								name="Activity"
+								active={activeTab === "Activity"}
+								onClick={handleItemClickMobile}
+							/>
+						) : (
+							<></>
 						)}
 						<Menu.Menu position="right">
 							<div className="icobutton">
@@ -221,6 +239,13 @@ function CuratorLanding(props) {
 										<Menu.Item
 											name="Feed"
 											active={activeTab === "feed"}
+											onClick={handleItemClickDesktop}
+										/>
+									)}
+									{isAuthenticated && (
+										<Menu.Item
+											name="Activity"
+											active={activeTab === "Activity"}
 											onClick={handleItemClickDesktop}
 										/>
 									)}

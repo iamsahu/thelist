@@ -2475,6 +2475,43 @@ const GetListImage = (id) => {
 		.catch((error) => console.log(error));
 };
 
+const GETITEMS = gql`
+	query MyQuery($id: [uuid!]!) {
+		items(where: { id: { _in: $id } }, order_by: { created_at: desc }) {
+			appreciation_count
+			auto_description
+			auto_image
+			bookmarks_count
+			copy_count
+			created_at
+			curator
+			description
+			id
+			link
+			name
+			share_count
+			view_count
+			list {
+				id
+				list_name
+			}
+		}
+	}
+`;
+
+const GetItemsActivity = (id) => {
+	// console.log(id);
+	return client
+		.query({
+			query: GETITEMS,
+			variables: {
+				id: id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -2515,6 +2552,7 @@ export {
 	HaveIBookmarked,
 	UpdateListImage,
 	GetListImage,
+	GetItemsActivity,
 };
 
 export const DELETE_LIST = gql`
