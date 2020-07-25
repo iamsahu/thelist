@@ -58,7 +58,10 @@ function BookMarkItem(postdata) {
 				(liked ? (
 					<Button
 						icon
+						size="tiny"
 						floated="right"
+						basic
+						color="black"
 						onClick={(e) => {
 							DeleteBookmark(
 								postdata.postdata.postdata.id,
@@ -87,7 +90,10 @@ function BookMarkItem(postdata) {
 				) : (
 					<Button
 						icon
+						size="tiny"
 						floated="right"
+						basic
+						color="black"
 						onClick={(e) => {
 							InsertBookmark(
 								postdata.postdata.postdata.id,

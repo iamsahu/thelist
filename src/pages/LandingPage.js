@@ -34,7 +34,7 @@ function LandingPage() {
 					<Header
 						as="h1"
 						// content="Save any content in one place!"
-						content="Find and curate stuff from the internet!"
+						content="Find, follow and curate stuff from the internet!"
 						// content="Fastest way to create and share listicles!"
 						style={{
 							fontSize: "1em",
@@ -49,7 +49,7 @@ function LandingPage() {
 							primary
 							size="huge"
 							style={{
-								"border-radius": "36px",
+								// "border-radius": "36px",
 								"box-shadow": "0px 13px 20px 0px rgba(0, 0, 0, 0.13)",
 							}}
 						>
@@ -107,7 +107,8 @@ function LandingPage() {
 					</Container> */}
 				{/* <Container style={{ marginTop: "2rem" }} fluid> */}
 				<Header textAlign="center" as="h1">
-					Explore!
+					{/* Explore! */}
+					<br />
 				</Header>
 				<Explore3 />
 				{/* </Container> */}
@@ -134,7 +135,7 @@ function LandingPage() {
 						<Header
 							as="h3"
 							// content="Save any content in one place!"
-							content="Find and curate stuff from the internet!"
+							content="Find, follow and curate stuff from the internet!"
 							style={{
 								fontSize: "2em",
 								fontWeight: "normal",
@@ -148,8 +149,9 @@ function LandingPage() {
 								primary
 								size="huge"
 								style={{
-									"border-radius": "36px",
+									// "border-radius": "36px",
 									"box-shadow": "0px 13px 20px 0px rgba(0, 0, 0, 0.13)",
+									marginTop: "1em",
 								}}
 							>
 								Get Started
@@ -206,10 +208,11 @@ function LandingPage() {
 						</Grid>
 					</Container> */}
 
-					<Container style={{ marginTop: "2rem" }}>
-						<Header textAlign="center" as="h1">
+					<Container style={{ marginTop: "2em" }}>
+						{/* <Header textAlign="center" as="h1">
 							Explore!
-						</Header>
+						</Header> */}
+						<br />
 						<Explore3 />
 					</Container>
 					{/* <Divider/>

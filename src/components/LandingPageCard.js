@@ -28,7 +28,15 @@ function LandingPageCard(props) {
 						/>
 					)}
 					<Card.Header>
-						<Header as="h3">{props.result.list_name}</Header>
+						<Header
+							as="a"
+							onClick={() => {
+								var t = `/${props.result.curator_id}/lists/${props.result.id}`;
+								routeChange(t);
+							}}
+						>
+							{props.result.list_name}
+						</Header>
 					</Card.Header>
 					{/* <Card.Meta>
 						<Label color="olive" size="tiny">

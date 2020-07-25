@@ -35,7 +35,10 @@ function LikeList(props) {
 				(liked ? (
 					<Button
 						icon
+						size="tiny"
 						floated="right"
+						basic
+						color="black"
 						onClick={(e) => {
 							UnlikeList(props.props, userC.loggedin_user_id);
 							setLiked(false);
@@ -59,7 +62,10 @@ function LikeList(props) {
 				) : (
 					<Button
 						icon
+						size="tiny"
 						floated="right"
+						basic
+						color="black"
 						onClick={(e) => {
 							LL(props.props, userC.loggedin_user_id);
 							setLiked(true);

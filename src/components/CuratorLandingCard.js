@@ -67,7 +67,15 @@ function CuratorLandingCard(props) {
 						/>
 					)}
 					<Card.Header>
-						<Header as="h3">{props.item.list_name}</Header>
+						<Header
+							as="a"
+							onClick={() => {
+								var t = `/${props.item.curator_id}/lists/${props.item.id}`;
+								routeChange(t);
+							}}
+						>
+							{props.item.list_name}
+						</Header>
 					</Card.Header>
 				</Card.Content>
 				<Card.Content
