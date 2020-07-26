@@ -30,6 +30,7 @@ import SearchResults from "./pages/SearchResults";
 import DataEntry from "./pages/DataEntry";
 import LandingPage from "./pages/LandingPage";
 import CurrentConsumption from "./pages/CurrentConsumption";
+import Share from "./pages/Share";
 // import ReadFeed from "./pages/ReadFeed";
 // import NotesView from "./pages/NotesView";
 import history from "./util/history";
@@ -53,9 +54,30 @@ function App() {
 		// e.preventDefault();
 		// Stash the event so it can be triggered later.
 		deferredPrompt = e;
+		// deferredPrompt.prompt();
 		// Update UI notify the user they can install the PWA
 		// showInstallPromotion();
 	});
+
+	window.addEventListener("appinstalled", (evt) => {
+		// Log install to analytics
+		console.log("INSTALL: Success");
+	});
+
+	function showInstallPromotion() {
+		// Hide the app provided install promotion
+		// hideMyInstallPromotion();
+		// Show the install prompt
+		deferredPrompt.prompt();
+		// Wait for the user to respond to the prompt
+		deferredPrompt.userChoice.then((choiceResult) => {
+			if (choiceResult.outcome === "accepted") {
+				console.log("User accepted the install prompt");
+			} else {
+				console.log("User dismissed the install prompt");
+			}
+		});
+	}
 	// mixpanel.init("4521493075a15cf75d66df3581c5410e");
 	if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000") {
 		ReactGA.initialize("UA-166934260-1");
@@ -499,6 +521,7 @@ function App() {
 										<Container style={{ marginTop: "7em" }} fluid>
 											<Switch>
 												<Route exact path="/explore" component={Home2} />
+												<Route exact path="/share" component={Share} />
 												<Route exact path="/dataentry" component={DataEntry} />
 												<Route exact path="/search" component={SearchResults} />
 												<Route
