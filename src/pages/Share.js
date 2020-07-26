@@ -7,12 +7,11 @@ function Share(props) {
 	const [userC, userChange] = useContext(UserContext);
 	const parsedUrl = new URL(window.location);
 	return (
-		<>
-			{
-				(isAuthenticated ? "Authenticated" : "NotAuthenticated",
-				parsedUrl.searchParams)
-			}
-		</>
+		<div>
+			Hello
+			{isAuthenticated ? "Authenticated" : "NotAuthenticated"}
+			{parsedUrl.searchParams}
+		</div>
 	);
 }
 
