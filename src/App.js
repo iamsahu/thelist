@@ -46,6 +46,16 @@ import { client } from "./ApolloProvider";
 toast.configure();
 
 function App() {
+	let deferredPrompt;
+
+	window.addEventListener("beforeinstallprompt", (e) => {
+		// Prevent the mini-infobar from appearing on mobile
+		// e.preventDefault();
+		// Stash the event so it can be triggered later.
+		deferredPrompt = e;
+		// Update UI notify the user they can install the PWA
+		// showInstallPromotion();
+	});
 	// mixpanel.init("4521493075a15cf75d66df3581c5410e");
 	if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000") {
 		ReactGA.initialize("UA-166934260-1");
@@ -432,15 +442,15 @@ function App() {
 									style={{ minHeight: "10vh" }}
 								>
 									<Menu fixed="top" inverted>
-										<Menu.Item>
+										<Menu.Item onClick={() => history.push("/")}>
 											<Image
 												size="mini"
 												src={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
 											/>
 										</Menu.Item>
-										<Menu.Item onClick={onToggle}>
-											<Icon name="sidebar" />
-										</Menu.Item>
+										{/* <Menu.Item onClick={onToggle}>
+									<Icon name="sidebar" />
+								</Menu.Item> */}
 										<Menu.Menu position="right">
 											<Menu.Item>
 												{!isAuthenticated && (

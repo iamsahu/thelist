@@ -183,7 +183,7 @@ function ContentMiddleNoLoad(props) {
 
 						<span>
 							{props.title} <b>by</b>{" "}
-							<Label as="a" image>
+							<Label as="a" image href={`/${props.propSent.curator_id}`}>
 								<img src={props.userImage} />
 								{props.userName}
 							</Label>

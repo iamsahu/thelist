@@ -288,8 +288,13 @@ function CuratorLanding(props) {
 								{/* </Item.Group> */}
 							</Grid.Column>
 							<Grid.Column width={3}>
-								I CURATE ABOUT
-								<Divider />
+								<Menu pointing secondary>
+									<Menu.Item
+										name="I Curate About"
+										active={"I Curate About"}
+										// onClick={handleItemClickDesktop}
+									/>
+								</Menu>
 								{tagData !== "" &&
 									tagData.tag.map((item) => (
 										<>
@@ -302,6 +307,20 @@ function CuratorLanding(props) {
 											<br />
 										</>
 									))}
+								{/* I CURATE ABOUT
+								<Divider />
+								{tagData !== "" &&
+									tagData.tag.map((item) => (
+										<>
+											<Link
+												key={item.id}
+												to={`/${twitterNumber}/tags/${item.id}`}
+											>
+												# {item.name}
+											</Link>
+											<br />
+										</>
+									))} */}
 							</Grid.Column>
 						</Grid>
 						{/* </Container> */}
