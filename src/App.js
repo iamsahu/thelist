@@ -464,15 +464,15 @@ function App() {
 									style={{ minHeight: "10vh" }}
 								>
 									<Menu fixed="top" inverted>
-										<Menu.Item onClick={() => history.push("/")}>
+										{/* <Menu.Item onClick={() => history.push("/")}>
 											<Image
 												size="mini"
 												src={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
 											/>
+										</Menu.Item> */}
+										<Menu.Item onClick={onToggle}>
+											<Icon name="sidebar" />
 										</Menu.Item>
-										{/* <Menu.Item onClick={onToggle}>
-									<Icon name="sidebar" />
-								</Menu.Item> */}
 										<Menu.Menu position="right">
 											<Menu.Item>
 												{!isAuthenticated && (
