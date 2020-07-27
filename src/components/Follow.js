@@ -115,7 +115,16 @@ function Follow(props) {
 							<Button
 								color="green"
 								inverted
-								onClick={() => loginWithRedirect(window.location.href)}
+								onClick={() =>
+									loginWithRedirect({
+										appState: {
+											targetUrl: window.location.href.replace(
+												process.env.REACT_APP_BASE_URL,
+												""
+											),
+										},
+									})
+								}
 							>
 								<Icon name="checkmark" /> Yes
 							</Button>

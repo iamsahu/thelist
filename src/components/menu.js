@@ -295,7 +295,14 @@ function MenuBar(props) {
 											genre: "hip-hop",
 											"duration in seconds": 42,
 										});
-										loginWithRedirect({});
+										loginWithRedirect({
+											appState: {
+												targetUrl: window.location.href.replace(
+													process.env.REACT_APP_BASE_URL,
+													""
+												),
+											},
+										});
 									}}
 								/>
 							</>

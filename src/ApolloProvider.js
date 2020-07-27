@@ -26,8 +26,8 @@ export const client = new ApolloClient({
 });
 
 const onRedirectCallback = (appState) => {
-	// console.log(appState)
-	// console.log(appState.targetUrl)
+	// console.log(appState);
+	// console.log(appState.targetUrl);
 	history.push(
 		appState && appState.targetUrl
 			? appState.targetUrl
