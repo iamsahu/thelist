@@ -22,7 +22,11 @@ function Share(props) {
 	} else {
 		return (
 			<>
+				You need to sign in or sign up if you want to continue
+				<br />
 				<Button
+					basic
+					color="black"
 					onClick={() => {
 						loginWithRedirect({
 							appState: {

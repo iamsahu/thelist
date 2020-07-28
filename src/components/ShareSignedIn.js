@@ -54,7 +54,7 @@ function ShareSignedIn(props) {
 					<label>Title</label>
 					<Form.Input
 						name="name"
-						placeholder="name"
+						placeholder="Title"
 						onChange={onChange}
 						value={values.name}
 					/>
@@ -63,7 +63,7 @@ function ShareSignedIn(props) {
 					<label>Link</label>
 					<Form.Input
 						name="name"
-						placeholder="name"
+						placeholder="link"
 						onChange={onChange}
 						value={values.link}
 					/>
@@ -72,12 +72,13 @@ function ShareSignedIn(props) {
 					<label>Description</label>
 					<Form.Input
 						name="name"
-						placeholder="name"
+						placeholder="You can add a description here"
 						onChange={onChange}
 						value={values.description}
 					/>
 				</Form.Field>
-				<Form.Input>
+				<Form.Field>
+					<label>List Name</label>
 					<Dropdown
 						label="List Name"
 						name="list_name"
@@ -89,7 +90,7 @@ function ShareSignedIn(props) {
 						onChange={handleChangeListAll}
 						onAddItem={handleChangeListAddition}
 					/>
-				</Form.Input>
+				</Form.Field>
 				<Button primary type="submit">
 					Submit
 				</Button>
