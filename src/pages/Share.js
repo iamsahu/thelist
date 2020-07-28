@@ -6,17 +6,32 @@ import ShareSignIn from "../components/ShareSignIn";
 import ShareSignedIn from "../components/ShareSignedIn";
 import { Button } from "semantic-ui-react";
 
+function GetParams(url) {
+	var params = {};
+	var parser = document.createElement("a");
+	parser.href = url;
+	var query = parser.search.substring(1);
+	var vars = query.split("&");
+	for (var i = 0; i < vars.length; i++) {
+		var pair = vars[i].split("=");
+		params[pair[0]] = decodeURIComponent(pair[1]);
+	}
+	return params;
+}
+
 function Share(props) {
 	const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
 	const [userC, userChange] = useContext(UserContext);
 	const parsedUrl = new URL(window.location);
 
+	var para = GetParams(parsedUrl);
+
 	if (isAuthenticated) {
 		return (
 			<ShareSignedIn
 				props={parsedUrl.searchParams}
-				title={parsedUrl.searchParams.title}
-				text={parsedUrl.searchParams.text}
+				title={para.title}
+				text={para.text}
 			/>
 		);
 	} else {

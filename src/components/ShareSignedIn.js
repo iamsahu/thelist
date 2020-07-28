@@ -1,13 +1,17 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../context/UserContext";
-import { GetListsOfUser } from "../util/graphqlExecutor";
+import { GetListsOfUser, createItem } from "../util/graphqlExecutor";
 import { Form, Dropdown, Button } from "semantic-ui-react";
 import useForm from "../util/hook";
+import { connect } from "getstream";
+import history from "../util/history";
 
 function ShareSignedIn(props) {
 	const [listData, setlistData] = useState("");
 	const [userC, userChange] = useContext(UserContext);
 	const [list_id, setlist_id] = useState("");
+	const [seltags, setseltags] = useState("");
+	const [allTags, setallTags] = useState("");
 	console.log(props);
 	//Data from props to be filled in the form's appropriate field
 
@@ -42,7 +46,64 @@ function ShareSignedIn(props) {
 		setlist_id(value);
 	};
 
-	function createPostCallback() {}
+	function createPostCallback() {
+		var userToken;
+		fetch(
+			//"https://obzz0p3mah.execute-api.eu-west-3.amazonaws.com/default/getUserToken",
+			"https://cors-anywhere.herokuapp.com/https://32mois0yg1.execute-api.eu-west-3.amazonaws.com/default/getUserTokenNode",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ user: userC.loggedin_user_id }),
+			}
+		)
+			.then((r) => r.json())
+			.then((data) => {
+				//Write the code here for create item
+				userToken = data["token"];
+				console.log(userToken);
+				// console.log(data);
+				// console.log(process.env.REACT_APP_STREAM_API_KEY);
+				const client2 = connect(
+					// process.env.REACT_APP_STREAM_API_KEY,
+					"pf7sgqtb4h3x",
+					userToken,
+					"86395"
+					// process.env.REACT_APP_STREAM_APP_ID
+				);
+				var listfeed = client2.feed("user", userC.loggedin_user_id);
+				console.log(values);
+				console.log(list_id);
+				console.log(userC.loggedin_user_id);
+
+				createItem({
+					...values,
+					list_id: list_id,
+					selTags: seltags,
+					curator_id: userC.loggedin_user_id,
+					tags: allTags,
+					contentType: "dataentry",
+					currentListID: "",
+					currentTagID: "",
+					listfeed,
+				})
+					.then((response) => {
+						console.log(response);
+						// console.log(response2)
+						values.name = "";
+						values.link = "";
+						values.description = "";
+						// setlistDescription(false);
+						history.push("/" + userC.loggedin_user_id + "/lists/" + list_id);
+						window.location.href = window.location.href;
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+			});
+	}
 
 	function handleChangeListAddition(e, { value }) {}
 
@@ -62,7 +123,7 @@ function ShareSignedIn(props) {
 				<Form.Field>
 					<label>Link</label>
 					<Form.Input
-						name="name"
+						name="link"
 						placeholder="link"
 						onChange={onChange}
 						value={values.link}
@@ -71,7 +132,7 @@ function ShareSignedIn(props) {
 				<Form.Field>
 					<label>Description</label>
 					<Form.Input
-						name="name"
+						name="description"
 						placeholder="You can add a description here"
 						onChange={onChange}
 						value={values.description}
