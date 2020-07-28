@@ -12,10 +12,10 @@ function ShareSignedIn(props) {
 	//Data from props to be filled in the form's appropriate field
 
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
-		name: "",
-		link: "",
+		name: props.title,
+		link: props.text,
 		description: "",
-		curator: "",
+		curator: userC.loggedin_user_id,
 	});
 
 	const loadUser = (user) => {

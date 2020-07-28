@@ -11,32 +11,38 @@ function Share(props) {
 	const [userC, userChange] = useContext(UserContext);
 	const parsedUrl = new URL(window.location);
 
-	// if (isAuthenticated) {
-	// 	return <ShareSignedIn props={parsedUrl.searchParams} />;
-	// } else {
-	// 	return (
-	// 		<>
-	// 			<Button
-	// 				onClick={() => {
-	// 					loginWithRedirect({
-	// 						appState: {
-	// 							targetUrl: window.location,
-	// 						},
-	// 					});
-	// 				}}
-	// 			>
-	// 				Sign In/Sign Up
-	// 			</Button>
-	// 		</>
-	// 	);
-	// 	return <ShareSignIn props={parsedUrl.searchParams} />;
-	// }
+	if (isAuthenticated) {
+		return (
+			<ShareSignedIn
+				props={parsedUrl.searchParams}
+				title={parsedUrl.searchParams.title}
+				text={parsedUrl.searchParams.text}
+			/>
+		);
+	} else {
+		return (
+			<>
+				<Button
+					onClick={() => {
+						loginWithRedirect({
+							appState: {
+								targetUrl: window.location.href,
+							},
+						});
+					}}
+				>
+					Sign In/Sign Up
+				</Button>
+			</>
+		);
+		return <ShareSignIn props={parsedUrl.searchParams} />;
+	}
 	return (
 		<div>
 			Hello
 			{isAuthenticated ? "Authenticated" : "NotAuthenticated"}
-			{/* {parsedUrl.searchParams} */}
-			{parsedUrl.href}
+			{parsedUrl.searchParams}
+			{/* {parsedUrl.href} */}
 		</div>
 	);
 }
