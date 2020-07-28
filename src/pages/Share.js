@@ -45,7 +45,10 @@ function Share(props) {
 					onClick={() => {
 						loginWithRedirect({
 							appState: {
-								targetUrl: window.location.href,
+								targetUrl: window.location.href.replace(
+									process.env.REACT_APP_BASE_URL,
+									""
+								),
 							},
 						});
 					}}
