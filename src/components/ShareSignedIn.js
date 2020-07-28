@@ -12,12 +12,12 @@ function ShareSignedIn(props) {
 	const [list_id, setlist_id] = useState("");
 	const [seltags, setseltags] = useState("");
 	const [allTags, setallTags] = useState("");
-	console.log(props);
+	// console.log(props);
 	//Data from props to be filled in the form's appropriate field
 
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
 		name: props.title,
-		link: props.text,
+		link: props.url,
 		description: "",
 		curator: userC.loggedin_user_id,
 	});
@@ -26,7 +26,7 @@ function ShareSignedIn(props) {
 		// if(tyuser)
 		GetListsOfUser(user)
 			.then((response) => {
-				console.log(response);
+				// console.log(response);
 
 				const tempArr2 = response.lists.map((item) => ({
 					text: item.list_name,
