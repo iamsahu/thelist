@@ -44,11 +44,14 @@ function ShareSignedIn(props) {
 
 	function createPostCallback() {}
 
+	function handleChangeListAddition(e, { value }) {}
+
 	if (listData === "") loadUser(userC.loggedin_user_id);
 	return (
 		<>
-			<Form>
+			<Form onSubmit={onSubmit}>
 				<Form.Field>
+					<label>Title</label>
 					<Form.Input
 						name="name"
 						placeholder="name"
@@ -57,6 +60,7 @@ function ShareSignedIn(props) {
 					/>
 				</Form.Field>
 				<Form.Field>
+					<label>Link</label>
 					<Form.Input
 						name="name"
 						placeholder="name"
@@ -65,6 +69,7 @@ function ShareSignedIn(props) {
 					/>
 				</Form.Field>
 				<Form.Field>
+					<label>Description</label>
 					<Form.Input
 						name="name"
 						placeholder="name"
@@ -82,9 +87,12 @@ function ShareSignedIn(props) {
 						selection
 						upward
 						onChange={handleChangeListAll}
+						onAddItem={handleChangeListAddition}
 					/>
 				</Form.Input>
-				<Button type="submit">Submit</Button>
+				<Button primary type="submit">
+					Submit
+				</Button>
 			</Form>
 		</>
 	);

@@ -37,14 +37,14 @@ function Share(props) {
 		);
 		return <ShareSignIn props={parsedUrl.searchParams} />;
 	}
-	return (
-		<div>
-			Hello
-			{isAuthenticated ? "Authenticated" : "NotAuthenticated"}
-			{parsedUrl.searchParams}
-			{/* {parsedUrl.href} */}
-		</div>
-	);
+	// return (
+	// 	<div>
+	// 		Hello
+	// 		{isAuthenticated ? "Authenticated" : "NotAuthenticated"}
+	// 		{parsedUrl.searchParams}
+	// 		{/* {parsedUrl.href} */}
+	// 	</div>
+	// );
 }
 
 export default Share;
