@@ -462,7 +462,14 @@ function ContentMiddleNoLoad(props) {
 										>
 											<Modal.Header>Upload CSV</Modal.Header>
 											<Modal.Content>
-												<Button>Download Sample</Button>
+												<Button
+													as="a"
+													href="/sample.csv"
+													target="_blank"
+													download
+												>
+													Download Sample
+												</Button>
 												<Divider />
 												<CSVReader
 													onDrop={handleOnDrop}
