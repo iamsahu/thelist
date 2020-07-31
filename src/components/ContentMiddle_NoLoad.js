@@ -525,7 +525,7 @@ function ContentMiddleNoLoad(props) {
 
 			<Responsive {...Responsive.onlyMobile}>
 				<div style={{ paddingTop: "20px" }}>
-					<Item.Group divided relaxed="very">
+					<Item.Group divided>
 						{props.posts === null ? (
 							<Placeholder>
 								<Placeholder.Header image>

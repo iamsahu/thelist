@@ -390,13 +390,17 @@ function InsertItem(
 				// console.log(list_id);
 				// console.log(listfeed);
 				// var temp = listfeed.feed("listfeed", list_id);
-				listfeed.addActivity({
-					// actor: listfeed.currentUser.client.currentUser.id,
-					actor: listfeed.client.id, //.currentUser,
-					verb: "additem",
-					object: data.insert_items.returning[0].id,
-					to: ["listfeed:" + list_id],
-				});
+				console.log(data.insert_items.returning);
+				// listfeed
+				// 	.addActivity({
+				// 		// actor: listfeed.currentUser.client.currentUser.id,
+				// 		actor: listfeed.client.id, //.currentUser,
+				// 		verb: "additem",
+				// 		object: data.insert_items.returning[0].id,
+				// 		to: ["listfeed:" + list_id],
+				// 		foreign_id: "item:" + data.insert_items.returning[0].id,
+				// 	})
+				// 	.then((response) => console.log(response));
 			},
 			refetchQueries: [
 				{

@@ -20,6 +20,7 @@ import {
 import { UserProvider } from "./context/UserContext";
 import { ContentProvider } from "./context/ContentContext";
 import { StreamProvider } from "./context/StreamContext";
+import { AlgoliaProvider } from "./context/AlgoliaContext";
 import MenuBar from "./components/menu";
 import AddList from "./components/AddList";
 import Home2 from "./pages/Home2";
@@ -43,10 +44,18 @@ import { GetTagsListsUsers } from "./util/graphqlExecutor";
 import ReactGA from "react-ga";
 import { connect } from "getstream";
 import { client } from "./ApolloProvider";
+import algoliasearch from "algoliasearch";
 
 toast.configure();
 
 function App() {
+	const client = algoliasearch(
+		process.env.REACT_APP_APPLICATIONID,
+		process.env.REACT_APP_ADMIN_API_KEY
+	);
+	const itemindex = client.initIndex("items");
+	const listindex = client.initIndex("lists");
+
 	let deferredPrompt;
 
 	window.addEventListener("beforeinstallprompt", (e) => {
@@ -406,210 +415,224 @@ function App() {
 		<UserProvider value={[userC, userChange]}>
 			<ContentProvider value={[content, contentChange]}>
 				<StreamProvider value={[streamClient, streamuserFeed]}>
-					<Router history={history}>
-						<Responsive {...Responsive.onlyMobile}>
-							<Sidebar.Pushable>
-								<Sidebar
-									as={Menu}
-									animation="overlay"
-									icon="labeled"
-									inverted
-									// items={leftItems}
-									vertical
-									visible={visible}
-								>
-									<Menu.Item position="right">
-										<Button>
-											<Link to="/explore"> Explore</Link>
-										</Button>
-									</Menu.Item>
-
-									<Accordion as={Menu} vertical inverted>
-										<Menu.Item>
-											<Accordion.Title
-												active={accState === 0}
-												content="Lists"
-												index={0}
-												onClick={handleClick}
-											/>
-											<Accordion.Content
-												active={accState === 0}
-												content={
-													lists !== null &&
-													lists.map((item) => <Menu.Item {...item} />)
-												}
-											/>
+					<AlgoliaProvider value={[itemindex, listindex]}>
+						<Router history={history}>
+							<Responsive {...Responsive.onlyMobile}>
+								<Sidebar.Pushable>
+									<Sidebar
+										as={Menu}
+										animation="overlay"
+										icon="labeled"
+										inverted
+										// items={leftItems}
+										vertical
+										visible={visible}
+									>
+										<Menu.Item position="right">
+											<Button>
+												<Link to="/explore"> Explore</Link>
+											</Button>
 										</Menu.Item>
-										<Menu.Item>
-											<Accordion.Title
-												active={accState === 1}
-												content="Tags"
-												index={1}
-												onClick={handleClick}
-											/>
-											<Accordion.Content
-												active={accState === 1}
-												content={
-													tags !== null &&
-													tags.map((item) => <Menu.Item {...item} />)
-												}
-											/>
-										</Menu.Item>
-									</Accordion>
-								</Sidebar>
 
-								<Sidebar.Pusher
-									dimmed={visible}
-									onClick={onPusherClick}
-									style={{ minHeight: "10vh" }}
-								>
-									<Menu fixed="top" inverted>
-										{/* <Menu.Item onClick={() => history.push("/")}>
+										<Accordion as={Menu} vertical inverted>
+											<Menu.Item>
+												<Accordion.Title
+													active={accState === 0}
+													content="Lists"
+													index={0}
+													onClick={handleClick}
+												/>
+												<Accordion.Content
+													active={accState === 0}
+													content={
+														lists !== null &&
+														lists.map((item) => <Menu.Item {...item} />)
+													}
+												/>
+											</Menu.Item>
+											<Menu.Item>
+												<Accordion.Title
+													active={accState === 1}
+													content="Tags"
+													index={1}
+													onClick={handleClick}
+												/>
+												<Accordion.Content
+													active={accState === 1}
+													content={
+														tags !== null &&
+														tags.map((item) => <Menu.Item {...item} />)
+													}
+												/>
+											</Menu.Item>
+										</Accordion>
+									</Sidebar>
+
+									<Sidebar.Pusher
+										dimmed={visible}
+										onClick={onPusherClick}
+										style={{ minHeight: "10vh" }}
+									>
+										<Menu fixed="top" inverted>
+											{/* <Menu.Item onClick={() => history.push("/")}>
 											<Image
 												size="mini"
 												src={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
 											/>
 										</Menu.Item> */}
-										<Menu.Item onClick={onToggle}>
-											<Icon name="sidebar" />
-										</Menu.Item>
-										<Menu.Menu position="right">
-											<Menu.Item>
-												{!isAuthenticated && (
-													<>
-														<Menu.Item
-															position="right"
-															name="Login"
-															active={activeItem === "Login"}
-															onClick={() => {
-																console.log("Login");
-																Mixpanel.track("Login", {
-																	genre: "hip-hop",
-																	"duration in seconds": 42,
-																});
-																loginWithRedirect({});
-															}}
-														/>
-													</>
-												)}
-												{isAuthenticated && !loading && (
-													<>
-														<Menu.Item position="right" fitted="vertically">
-															<AddList />
-														</Menu.Item>
-														<Menu.Item position="right">
-															<Dropdown
-																fluid
-																trigger={
-																	<>
-																		<Image avatar src={user.picture} />
-																		{user.name}
-																	</>
-																}
-																options={options}
-																pointing="top right"
-																icon={null}
-																onChange={handleChangeList}
-															/>
-														</Menu.Item>
-													</>
-												)}
+											<Menu.Item onClick={onToggle}>
+												<Icon name="sidebar" />
 											</Menu.Item>
-										</Menu.Menu>
-									</Menu>
-									<div style={{ marginTop: "3em" }}>
-										<Container style={{ marginTop: "7em" }} fluid>
-											<Switch>
-												<Route exact path="/explore" component={Home2} />
-												<Route exact path="/share" component={Share} />
-												<Route exact path="/dataentry" component={DataEntry} />
-												<Route exact path="/search" component={SearchResults} />
-												<Route
-													exact
-													path="/:user/:contenttype/:contentid"
-													component={Curator2}
-												/>
-												<Route
-													exact
-													path="/:user/:contenttype"
-													component={Curator2}
-												/>
-												{/* <Route exact path="/:user" component={CuratorLanding} /> */}
-												<Route
-													exact
-													path="/manage/:user"
-													component={Curator2}
-												/>
-												<Route exact path="/:user" component={CuratorLanding} />
-												{isAuthenticated && !loading && !loadingT ? (
-													<Route
-														path="/"
-														render={(props) => (
-															<CuratorLanding
-																user={userC["loggedin_user_id"]}
-																isAuthed={true}
+											<Menu.Menu position="right">
+												<Menu.Item>
+													{!isAuthenticated && (
+														<>
+															<Menu.Item
+																position="right"
+																name="Login"
+																active={activeItem === "Login"}
+																onClick={() => {
+																	console.log("Login");
+																	Mixpanel.track("Login", {
+																		genre: "hip-hop",
+																		"duration in seconds": 42,
+																	});
+																	loginWithRedirect({});
+																}}
 															/>
-														)}
+														</>
+													)}
+													{isAuthenticated && !loading && (
+														<>
+															<Menu.Item position="right" fitted="vertically">
+																<AddList />
+															</Menu.Item>
+															<Menu.Item position="right">
+																<Dropdown
+																	fluid
+																	trigger={
+																		<>
+																			<Image avatar src={user.picture} />
+																			{user.name}
+																		</>
+																	}
+																	options={options}
+																	pointing="top right"
+																	icon={null}
+																	onChange={handleChangeList}
+																/>
+															</Menu.Item>
+														</>
+													)}
+												</Menu.Item>
+											</Menu.Menu>
+										</Menu>
+										<div style={{ marginTop: "3em" }}>
+											<Container style={{ marginTop: "7em" }} fluid>
+												<Switch>
+													<Route exact path="/explore" component={Home2} />
+													<Route exact path="/share" component={Share} />
+													<Route
+														exact
+														path="/dataentry"
+														component={DataEntry}
 													/>
-												) : (
+													<Route
+														exact
+														path="/search"
+														component={SearchResults}
+													/>
+													<Route
+														exact
+														path="/:user/:contenttype/:contentid"
+														component={Curator2}
+													/>
+													<Route
+														exact
+														path="/:user/:contenttype"
+														component={Curator2}
+													/>
+													{/* <Route exact path="/:user" component={CuratorLanding} /> */}
+													<Route
+														exact
+														path="/manage/:user"
+														component={Curator2}
+													/>
 													<Route
 														exact
 														path="/:user"
 														component={CuratorLanding}
 													/>
-												)}
-												<Route exact path="/" component={LandingPage} />
-											</Switch>
-										</Container>
-									</div>
-								</Sidebar.Pusher>
-							</Sidebar.Pushable>
-						</Responsive>
-						<Responsive minWidth={Responsive.onlyTablet.minWidth}>
-							<MenuBar user={user} />
-							<div className="novscroll">
-								<Container style={{ marginTop: "3em", height: "85vh" }} fluid>
-									<Switch>
-										<Route
-											exact
-											path="/consumption/:user"
-											component={CurrentConsumption}
-										/>
-										{/* <Route exact path="/notes/:user" component={NotesView} /> */}
-										{/* <Route exact path="/readfeed" component={ReadFeed} /> */}
-										<Route exact path="/explore" component={Home2} />
-										<Route exact path="/dataentry" component={DataEntry} />
-										<Route exact path="/search" component={SearchResults} />
-										<Route
-											exact
-											path="/:user/:contenttype/:contentid"
-											component={Curator2}
-										/>
-										<Route
-											exact
-											path="/:user/:contenttype"
-											component={Curator2}
-										/>
-										<Route exact path="/manage/:user" component={Curator2} />
-										<Route exact path="/:user" component={CuratorLanding} />
-										{isAuthenticated && !loading && !loadingT ? (
+													{isAuthenticated && !loading && !loadingT ? (
+														<Route
+															path="/"
+															render={(props) => (
+																<CuratorLanding
+																	user={userC["loggedin_user_id"]}
+																	isAuthed={true}
+																/>
+															)}
+														/>
+													) : (
+														<Route
+															exact
+															path="/:user"
+															component={CuratorLanding}
+														/>
+													)}
+													<Route exact path="/" component={LandingPage} />
+												</Switch>
+											</Container>
+										</div>
+									</Sidebar.Pusher>
+								</Sidebar.Pushable>
+							</Responsive>
+							<Responsive minWidth={Responsive.onlyTablet.minWidth}>
+								<MenuBar user={user} />
+								<div className="novscroll">
+									<Container style={{ marginTop: "3em", height: "85vh" }} fluid>
+										<Switch>
 											<Route
-												path="/"
-												render={(props) => (
-													<CuratorLanding
-														user={userC["loggedin_user_id"]}
-														isAuthed={true}
-													/>
-												)}
+												exact
+												path="/consumption/:user"
+												component={CurrentConsumption}
 											/>
-										) : (
-											<Route exact path="/" component={LandingPage} />
-										)}
-									</Switch>
-								</Container>
-							</div>
-						</Responsive>
-					</Router>
+											{/* <Route exact path="/notes/:user" component={NotesView} /> */}
+											{/* <Route exact path="/readfeed" component={ReadFeed} /> */}
+											<Route exact path="/explore" component={Home2} />
+											<Route exact path="/dataentry" component={DataEntry} />
+											<Route exact path="/search" component={SearchResults} />
+											<Route
+												exact
+												path="/:user/:contenttype/:contentid"
+												component={Curator2}
+											/>
+											<Route
+												exact
+												path="/:user/:contenttype"
+												component={Curator2}
+											/>
+											<Route exact path="/manage/:user" component={Curator2} />
+											<Route exact path="/:user" component={CuratorLanding} />
+											{isAuthenticated && !loading && !loadingT ? (
+												<Route
+													path="/"
+													render={(props) => (
+														<CuratorLanding
+															user={userC["loggedin_user_id"]}
+															isAuthed={true}
+														/>
+													)}
+												/>
+											) : (
+												<Route exact path="/" component={LandingPage} />
+											)}
+										</Switch>
+									</Container>
+								</div>
+							</Responsive>
+						</Router>
+					</AlgoliaProvider>
 				</StreamProvider>
 			</ContentProvider>
 		</UserProvider>
