@@ -24,6 +24,7 @@
 		"graphql-tag": "^2.10.3",
 		"mixpanel-browser": "^2.36.0",
 		"moment": "^2.25.3",
+		"patreon": "^0.4.1",
 		"react": "^16.13.1",
 		"react-absolute-grid": "^3.0.1",
 		"react-bootstrap": "^1.0.1",

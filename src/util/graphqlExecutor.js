@@ -1079,6 +1079,7 @@ export const GET_USER = gql`
 			image_link
 			description
 			username
+			buymeacoffee
 		}
 	}
 `;
@@ -2049,6 +2050,7 @@ const GETLISTSOFUSER = gql`
 			id
 			list_name
 			image_url
+			view_count
 			like_lists_aggregate {
 				aggregate {
 					count
@@ -2516,6 +2518,120 @@ const GetItemsActivity = (id) => {
 		.catch((error) => console.log(error));
 };
 
+const USERDETAILS = gql`
+	query MyQuery($id: String) {
+		user(where: { id: { _eq: $id } }) {
+			buymeacoffee
+			description
+			image_link
+			patreon_id
+			username
+		}
+	}
+`;
+
+const GetUserDetails = (id) => {
+	// console.log(id);
+	return client
+		.query({
+			query: USERDETAILS,
+			variables: {
+				id: id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
+const UPDATEUSERDETAILS = gql`
+	mutation MyMutation(
+		$id: String
+		$buymeacoffee: String
+		$description: String
+		$image_link: String
+		$username: String
+	) {
+		update_user(
+			where: { id: { _eq: $id } }
+			_set: {
+				buymeacoffee: $buymeacoffee
+				description: $description
+				image_link: $image_link
+				username: $username
+			}
+		) {
+			affected_rows
+			returning {
+				buymeacoffee
+				description
+				image_link
+				patreon_id
+				username
+			}
+		}
+	}
+`;
+
+const UpdateUserDetails = (
+	id,
+	image_link,
+	username,
+	description,
+	buymeacoffee
+) => {
+	return client
+		.mutate({
+			mutation: UPDATEUSERDETAILS,
+			variables: {
+				id: id,
+				image_link: image_link,
+				username: username,
+				description: description,
+				buymeacoffee: buymeacoffee,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
+const GETUSERSTATS = gql`
+	query MyQuery($id: String) {
+		lists_aggregate(where: { curator_id: { _eq: $id } }) {
+			aggregate {
+				count
+				sum {
+					view_count
+				}
+			}
+		}
+		items_aggregate(where: { curator: { _eq: $id } }) {
+			aggregate {
+				count
+				sum {
+					view_count
+					share_count
+					copy_count
+					bookmarks_count
+					appreciation_count
+				}
+			}
+		}
+	}
+`;
+
+const GetUserStats = (id) => {
+	// console.log(id);
+	return client
+		.query({
+			query: GETUSERSTATS,
+			variables: {
+				id: id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -2557,6 +2673,9 @@ export {
 	UpdateListImage,
 	GetListImage,
 	GetItemsActivity,
+	GetUserDetails,
+	UpdateUserDetails,
+	GetUserStats,
 };
 
 export const DELETE_LIST = gql`

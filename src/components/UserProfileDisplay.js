@@ -3,8 +3,9 @@ import {
 	DoesUserExists,
 	GET_USER,
 	CHANGEUSERDESCRIPTION,
+	GetUserStats,
 } from "../util/graphqlExecutor";
-import { Item, Form, Modal, Button } from "semantic-ui-react";
+import { Item, Form, Modal, Button, Statistic } from "semantic-ui-react";
 import UserContext from "../context/UserContext";
 import useForm from "../util/hook";
 import { useMutation } from "@apollo/react-hooks";
@@ -22,6 +23,9 @@ function UserProfileDisplay(props) {
 	const [twitterNumber, setTwitterNumber] = useState("1");
 	const [showModal, SetModal] = useState(false);
 	const [editState, seteditState] = useState(false);
+	const [itemscount, setitemscount] = useState(0);
+	const [listviewcount, setlistviewcount] = useState(0);
+	const [listcount, setListcount] = useState(0);
 
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
 		description: "",
@@ -49,6 +53,14 @@ function UserProfileDisplay(props) {
 						}
 					}
 				}
+			})
+			.catch((error) => console.log(error));
+		GetUserStats(user)
+			.then((response) => {
+				// console.log(response);
+				setitemscount(response.items_aggregate.aggregate.count);
+				setlistviewcount(response.lists_aggregate.aggregate.sum.view_count);
+				setListcount(response.lists_aggregate.aggregate.count);
 			})
 			.catch((error) => console.log(error));
 	};
@@ -142,7 +154,7 @@ function UserProfileDisplay(props) {
 						{/* <Header as="h1"> */}
 						<Item.Header>{username}</Item.Header>
 						{/* </Header> */}
-						<Item.Meta></Item.Meta>
+
 						<Item.Description>
 							<ReactLinkify>{description}</ReactLinkify>
 						</Item.Description>
@@ -150,9 +162,33 @@ function UserProfileDisplay(props) {
 							<Item.Extra>
 								{editform}
 								{/* <Button icon="edit" floated="left"></Button> */}
+								{/* <div
+									floated="right"
+									dangerouslySetInnerHTML={{
+										__html:
+											'<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/' +
+											props.user +
+											'"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px;font-size:28px !important;">Buy me a coffee</span></a>',
+									}}
+								/> */}
 							</Item.Extra>
 						)}
-
+						<Item.Meta>
+							<Statistic.Group size="mini" color="grey">
+								<Statistic>
+									<Statistic.Value>{listcount}</Statistic.Value>
+									<Statistic.Label>Lists</Statistic.Label>
+								</Statistic>
+								<Statistic>
+									<Statistic.Value>{listviewcount}</Statistic.Value>
+									<Statistic.Label>Total List Views</Statistic.Label>
+								</Statistic>
+								<Statistic>
+									<Statistic.Value>{itemscount}</Statistic.Value>
+									<Statistic.Label>Items</Statistic.Label>
+								</Statistic>
+							</Statistic.Group>
+						</Item.Meta>
 						{/* <Item.Extra>Have added x unique items</Item.Extra> */}
 					</Item.Content>
 				</Item>

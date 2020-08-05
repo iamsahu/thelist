@@ -561,7 +561,7 @@ function ContentMiddleNoLoad(props) {
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 				<div className="scrolly">
-					<Item.Group divided relaxed="very">
+					<Item.Group divided>
 						{props.posts === null ? (
 							<Placeholder>
 								<Placeholder.Header image>

@@ -217,6 +217,7 @@ function ContentCard(postdata) {
 			<Item background="white">
 				<Item.Image
 					size="tiny"
+					floated="left"
 					src={
 						postdata.postdata.auto_image !== "none"
 							? postdata.postdata.auto_image
@@ -227,6 +228,8 @@ function ContentCard(postdata) {
 					<Item.Header as="a" target="_blank" href={postdata.postdata.link}>
 						{postName}
 					</Item.Header>
+
+					{/* <Item.Extra> */}
 					{isAuthenticated &&
 						postdata.postdata.user.id === userC.loggedin_user_id && (
 							<Button
@@ -257,74 +260,10 @@ function ContentCard(postdata) {
 								<Tap waves />
 							</Button>
 						)}
-					{
-						isAuthenticated &&
-							postdata.postdata.user.id !== userC.loggedin_user_id && (
-								<BookMarkItem postdata={postdata} />
-							)
-						// (bookmark ? (
-						// 	<Button
-						// 		icon
-						// 		floated="right"
-						// 		onClick={(e) => {
-						// 			DeleteBookmark(
-						// 				postdata.postdata.id,
-						// 				userC.loggedin_user_id,
-						// 				postdata.postdata.user.id
-						// 			);
-						// 			setbookmark(false);
-						// 			Mixpanel.track("Bookmark Item", {
-						// 				link: postdata.postdata.link,
-						// 				curator: postdata.postdata.user.id,
-						// 				name: postdata.postdata.name,
-						// 			});
-						// 			if (
-						// 				process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
-						// 			)
-						// 				ReactGA.event({
-						// 					category: "Item",
-						// 					action: "Bookmark",
-						// 					label: postdata.postdata.name,
-						// 					transport: "beacon",
-						// 				});
-						// 		}}
-						// 	>
-						// 		<Icon color="red" name="bookmark outline" />
-						// 		<Tap waves />
-						// 	</Button>
-						// ) : (
-						// 	<Button
-						// 		icon
-						// 		floated="right"
-						// 		onClick={(e) => {
-						// 			InsertBookmark(
-						// 				postdata.postdata.id,
-						// 				userC.loggedin_user_id,
-						// 				postdata.postdata.user.id,
-						// 				postdata.postdata.list_id
-						// 			);
-						// 			setbookmark(true);
-						// 			Mixpanel.track("Bookmark Item", {
-						// 				link: postdata.postdata.link,
-						// 				curator: postdata.postdata.user.id,
-						// 				name: postdata.postdata.name,
-						// 			});
-						// 			if (
-						// 				process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
-						// 			)
-						// 				ReactGA.event({
-						// 					category: "Item",
-						// 					action: "Bookmark",
-						// 					label: postdata.postdata.name,
-						// 					transport: "beacon",
-						// 				});
-						// 		}}
-						// 	>
-						// 		<Icon name="bookmark outline" />
-						// 		<Tap waves />
-						// 	</Button>
-						// ))
-					}
+					{isAuthenticated &&
+						postdata.postdata.user.id !== userC.loggedin_user_id && (
+							<BookMarkItem postdata={postdata} />
+						)}
 					<CopyToClipboard
 						text={postdata.postdata.link}
 						onCopy={(e) => {
@@ -383,7 +322,7 @@ function ContentCard(postdata) {
 								<Tap waves />
 							</Button>
 						)}
-					{/* </Reward> */}
+					{/* </Item.Extra> */}
 					<Popup
 						trigger={
 							<Item.Description>
@@ -408,6 +347,7 @@ function ContentCard(postdata) {
 						}
 						hideOnScroll
 					/>
+					{/* </Reward> */}
 				</Item.Content>
 			</Item>
 			{/* }

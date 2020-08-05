@@ -109,6 +109,7 @@ function CuratorLandingCard(props) {
 						<img src={props.item.user.image_link} />
 						{props.item.user.username}
 					</Label> */}
+					{props.item.view_count} Views
 					<Follow
 						curator_id={props.item.curator_id}
 						contentID={props.item.id}

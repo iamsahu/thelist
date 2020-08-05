@@ -32,6 +32,7 @@ import DataEntry from "./pages/DataEntry";
 import LandingPage from "./pages/LandingPage";
 import CurrentConsumption from "./pages/CurrentConsumption";
 import Share from "./pages/Share";
+import UserSettings from "./pages/UserSettings";
 // import ReadFeed from "./pages/ReadFeed";
 // import NotesView from "./pages/NotesView";
 import history from "./util/history";
@@ -530,6 +531,11 @@ function App() {
 										<div style={{ marginTop: "3em" }}>
 											<Container style={{ marginTop: "7em" }} fluid>
 												<Switch>
+													<Route
+														exact
+														path="/settings/:id"
+														component={UserSettings}
+													/>
 													<Route exact path="/explore" component={Home2} />
 													<Route exact path="/share" component={Share} />
 													<Route
@@ -542,6 +548,7 @@ function App() {
 														path="/search"
 														component={SearchResults}
 													/>
+
 													<Route
 														exact
 														path="/:user/:contenttype/:contentid"
@@ -594,6 +601,11 @@ function App() {
 										<Switch>
 											<Route
 												exact
+												path="/settings/:id"
+												component={UserSettings}
+											/>
+											<Route
+												exact
 												path="/consumption/:user"
 												component={CurrentConsumption}
 											/>
@@ -602,6 +614,7 @@ function App() {
 											<Route exact path="/explore" component={Home2} />
 											<Route exact path="/dataentry" component={DataEntry} />
 											<Route exact path="/search" component={SearchResults} />
+
 											<Route
 												exact
 												path="/:user/:contenttype/:contentid"
@@ -613,7 +626,9 @@ function App() {
 												component={Curator2}
 											/>
 											<Route exact path="/manage/:user" component={Curator2} />
+
 											<Route exact path="/:user" component={CuratorLanding} />
+
 											{isAuthenticated && !loading && !loadingT ? (
 												<Route
 													path="/"
@@ -627,6 +642,11 @@ function App() {
 											) : (
 												<Route exact path="/" component={LandingPage} />
 											)}
+											{/* {isAuthenticated && !loading && !loadingT ? (
+												
+											) : (
+												<></>
+											)} */}
 										</Switch>
 									</Container>
 								</div>

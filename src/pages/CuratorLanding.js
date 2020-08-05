@@ -17,6 +17,7 @@ import UserProfileDisplay from "../components/UserProfileDisplay";
 import MyLists from "../components/MyLists";
 import MyFeed from "../components/MyFeed";
 import YourActivities from "../components/YourActivities";
+import BuyMeCoffee from "../components/BuyMeCoffee";
 
 function CuratorLanding(props) {
 	// console.log(props);
@@ -31,6 +32,7 @@ function CuratorLanding(props) {
 		"Something witty that tells how witty you are"
 	);
 	const [twitterNumber, setTwitterNumber] = useState("1");
+	const [buymecoffee, setbuymecoffee] = useState("");
 	// const [showModal, SetModal] = useState(false);
 	// const [id, setid] = useState("");
 	const [editState, seteditState] = useState(false);
@@ -54,6 +56,7 @@ function CuratorLanding(props) {
 						setuserProfile(response.user[0]["image_link"]);
 						setusername(response.user[0]["username"]);
 						setTwitterNumber(response.user[0]["id"]);
+						setbuymecoffee(response.user[0]["buymeacoffee"]);
 						if (response.user[0]["description"] !== null) {
 							setdescription(response.user[0]["description"]);
 						}
@@ -132,21 +135,6 @@ function CuratorLanding(props) {
 				<div>
 					<div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
 						<UserProfileDisplay user={u} />
-						{/* <Item.Group>
-							<Item>
-								<Item.Image avatar size="small" src={userProfile} />
-								<Item.Content verticalAlign="middle">
-									<Item.Header>{username}</Item.Header>
-									<Item.Meta></Item.Meta>
-									<Item.Description>
-										<ReactLinkify>{description}</ReactLinkify>
-									</Item.Description>
-									<Item.Extra>
-										<Button icon="edit" floated="right"></Button>
-									</Item.Extra>
-								</Item.Content>
-							</Item>
-						</Item.Group> */}
 					</div>
 					<Menu pointing secondary>
 						<Menu.Item
@@ -187,6 +175,10 @@ function CuratorLanding(props) {
 										Manage Content
 									</Button>
 								)}
+								{<BuyMeCoffee coffee={buymecoffee} user={username} />}
+								{/* {isAuthenticated &&
+									u !== userC.loggedin_user_id &&
+									"Buy me coffee"} */}
 							</div>
 						</Menu.Menu>
 					</Menu>
@@ -255,6 +247,10 @@ function CuratorLanding(props) {
 													Manage Content
 												</Button>
 											)}
+											{<BuyMeCoffee coffee={buymecoffee} user={username} />}
+											{/* {isAuthenticated &&
+												u !== userC.loggedin_user_id &&
+												"Buy me coffee"} */}
 										</div>
 									</Menu.Menu>
 								</Menu>
