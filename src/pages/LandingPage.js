@@ -34,7 +34,8 @@ function LandingPage() {
 					<Header
 						as="h1"
 						// content="Save any content in one place!"
-						content="Find, follow and curate stuff from the internet!"
+						// content="Find, follow and curate stuff from the internet!"
+						content="Find, follow and curate lists!"
 						// content="Fastest way to create and share listicles!"
 						style={{
 							fontSize: "1em",
@@ -135,7 +136,7 @@ function LandingPage() {
 						<Header
 							as="h3"
 							// content="Save any content in one place!"
-							content="Find, follow and curate stuff from the internet!"
+							content="Find, follow and curate lists!"
 							style={{
 								fontSize: "2em",
 								fontWeight: "normal",
