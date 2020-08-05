@@ -97,9 +97,9 @@ function ShareSignedIn(props) {
 						values.description = "";
 						// setlistDescription(false);
 
-						window.close();
-						// history.push("/" + userC.loggedin_user_id + "/lists/" + list_id);
-						// window.location.href = window.location.href;
+						// window.close();
+						history.push("/" + userC.loggedin_user_id + "/lists/" + list_id);
+						window.location.href = window.location.href;
 					})
 					.catch((error) => {
 						console.log(error);
