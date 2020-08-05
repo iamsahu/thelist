@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../context/UserContext";
 import { GetListsOfUser, createItem } from "../util/graphqlExecutor";
-import { Form, Dropdown, Button } from "semantic-ui-react";
+import { Form, Dropdown, Button, Loader } from "semantic-ui-react";
 import useForm from "../util/hook";
 import { connect } from "getstream";
 import history from "../util/history";
@@ -12,6 +12,7 @@ function ShareSignedIn(props) {
 	const [list_id, setlist_id] = useState("");
 	const [seltags, setseltags] = useState("");
 	const [allTags, setallTags] = useState("");
+	const [loadingbut, setloadingbut] = useState(false);
 	// console.log(props);
 	//Data from props to be filled in the form's appropriate field
 
@@ -48,6 +49,10 @@ function ShareSignedIn(props) {
 
 	function createPostCallback() {
 		var userToken;
+		if (list_id === "") {
+			return;
+		}
+		setloadingbut(true);
 		fetch(
 			//"https://obzz0p3mah.execute-api.eu-west-3.amazonaws.com/default/getUserToken",
 			"https://cors-anywhere.herokuapp.com/https://32mois0yg1.execute-api.eu-west-3.amazonaws.com/default/getUserTokenNode",
@@ -96,10 +101,11 @@ function ShareSignedIn(props) {
 						values.link = "";
 						values.description = "";
 						// setlistDescription(false);
-
-						// window.close();
+						setloadingbut(false);
+						window.close();
 						history.push("/" + userC.loggedin_user_id + "/lists/" + list_id);
 						window.location.href = window.location.href;
+						console.log("Done");
 					})
 					.catch((error) => {
 						console.log(error);
@@ -112,6 +118,7 @@ function ShareSignedIn(props) {
 	if (listData === "") loadUser(userC.loggedin_user_id);
 	return (
 		<>
+			{" "}
 			<Form onSubmit={onSubmit}>
 				<Form.Field>
 					<label>Title</label>
@@ -154,7 +161,7 @@ function ShareSignedIn(props) {
 						onAddItem={handleChangeListAddition}
 					/>
 				</Form.Field>
-				<Button primary type="submit">
+				<Button loading={loadingbut} primary type="submit">
 					Submit
 				</Button>
 			</Form>
