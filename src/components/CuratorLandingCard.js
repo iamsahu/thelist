@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button, Image, Header, Label } from "semantic-ui-react";
+import { Card, Button, Image, Header } from "semantic-ui-react";
 import history from "../util/history";
 import Follow from "./Follow";
 

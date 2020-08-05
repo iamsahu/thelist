@@ -1,14 +1,5 @@
 import React, { useContext, useState } from "react";
-import {
-	Modal,
-	Button,
-	Form,
-	Dropdown,
-	Divider,
-	Segment,
-	Grid,
-	Icon,
-} from "semantic-ui-react";
+import { Modal, Button, Form, Dropdown } from "semantic-ui-react";
 import useForm from "../util/hook";
 // import { useMutation, useQuery } from "@apollo/react-hooks";
 // import { CREATE_ITEM, INSERT_TAG_MULTI } from "../util/graphql";

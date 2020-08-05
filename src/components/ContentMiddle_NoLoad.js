@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 // import { useQuery } from "@apollo/react-hooks";
 import {
 	Menu,
@@ -37,23 +37,23 @@ import ListIcon from "./ListIcon";
 import UserContext from "../context/UserContext";
 import {
 	// LikeList,
-	UnlikeList,
-	DoILike,
+	// UnlikeList,
+	// DoILike,
 	InsertMultiple,
-	FollowThisList,
-	UnfollowThisList,
+	// FollowThisList,
+	// UnfollowThisList,
 	DoIFollow,
-	GET_LIST_DESCRIPTION,
-	CHANGE_LIST_DESCRIPTION,
+	// GET_LIST_DESCRIPTION,
+	// CHANGE_LIST_DESCRIPTION,
 } from "../util/graphqlExecutor";
 import MetaTags from "react-meta-tags";
-import ReactGA from "react-ga";
-import Mixpanel from "../util/mix";
+// import ReactGA from "react-ga";
+// import Mixpanel from "../util/mix";
 // import Tap from "react-interactions";
 import { CSVReader } from "react-papaparse";
 import StreamContext from "../context/StreamContext";
 import { useAuth0 } from "../react-auth0-spa";
-import useForm from "../util/hook";
+// import useForm from "../util/hook";
 import CurationReasonCard from "./CurationReasonCard";
 import Follow from "./Follow";
 

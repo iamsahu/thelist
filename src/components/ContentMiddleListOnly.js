@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useQuery } from "@apollo/react-hooks";
+// import { useQuery } from "@apollo/react-hooks";
 import {
-	Grid,
-	Segment,
-	Placeholder,
-	Divider,
+	// Grid,
+	// Segment,
+	// Placeholder,
+	// Divider,
 	Menu,
 	Button,
 	Icon,
@@ -13,12 +13,12 @@ import {
 } from "semantic-ui-react";
 import ContentContext from "../context/ContentContext";
 
-import ContentCard from "./ContentCard";
+// import ContentCard from "./ContentCard";
 import CentralList from "./CentralList";
-import { FETCH_FEED_ITEMS, FETCH_FEED_ITEMS_OFCURATOR } from "../util/graphql";
+// import { FETCH_FEED_ITEMS, FETCH_FEED_ITEMS_OFCURATOR } from "../util/graphql";
 import UserContext from "../context/UserContext";
 import { GetList } from "../util/graphqlExecutor";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+// import { CopyToClipboard } from "react-copy-to-clipboard";
 
 function ContentMiddleListOnly(props) {
 	const [content, contentChange] = useContext(ContentContext);

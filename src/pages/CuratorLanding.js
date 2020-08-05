@@ -1,12 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
-import {
-	Container,
-	Grid,
-	Divider,
-	Button,
-	Responsive,
-	Menu,
-} from "semantic-ui-react";
+import React, { useContext, useState } from "react";
+import { Container, Grid, Button, Responsive, Menu } from "semantic-ui-react";
 import UserContext from "../context/UserContext";
 import { DoesUserExists, GetTagsOfUser } from "../util/graphqlExecutor";
 import { Link } from "react-router-dom";

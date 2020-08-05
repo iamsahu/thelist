@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { render } from "@testing-library/react";
+// import { render } from "@testing-library/react";
 import ContentCard from "./ContentCard";
 import ContentContext from "../context/ContentContext";
 

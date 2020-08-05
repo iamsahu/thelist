@@ -1,6 +1,6 @@
 import React from "react";
 import { GetUserDetails } from "../util/graphqlExecutor";
-import { Responsive, Form, Button, Grid, Input } from "semantic-ui-react";
+import { Form, Button, Input } from "semantic-ui-react";
 import useForm from "../util/hook";
 
 function UserSettings(props) {

@@ -4,8 +4,6 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css"; //readable
 import "./App.css";
 import "react-interactions/dist/main.css";
-import mixpanel from "mixpanel-browser";
-import { MixpanelProvider } from "react-mixpanel";
 import {
 	Accordion,
 	Menu,
@@ -24,7 +22,7 @@ import { AlgoliaProvider } from "./context/AlgoliaContext";
 import MenuBar from "./components/menu";
 import AddList from "./components/AddList";
 import Home2 from "./pages/Home2";
-import HomeNoLogin from "./pages/HomeNoLogin";
+// import HomeNoLogin from "./pages/HomeNoLogin";
 import Curator2 from "./pages/Curator2";
 import CuratorLanding from "./pages/CuratorLanding";
 import SearchResults from "./pages/SearchResults";
@@ -44,7 +42,7 @@ import Mixpanel from "./util/mix";
 import { GetTagsListsUsers } from "./util/graphqlExecutor";
 import ReactGA from "react-ga";
 import { connect } from "getstream";
-import { client } from "./ApolloProvider";
+// import { client } from "./ApolloProvider";
 import algoliasearch from "algoliasearch";
 
 toast.configure();

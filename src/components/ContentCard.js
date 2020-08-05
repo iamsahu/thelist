@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Item, Button, Icon, Placeholder, Popup } from "semantic-ui-react";
+import React, { useState, useContext } from "react";
+import { Item, Button, Icon, Popup } from "semantic-ui-react";
 import { useAuth0 } from "../react-auth0-spa";
-import { FETCH_FEED_ITEMS, INSERT_TAG, DELETE_ITEM } from "../util/graphql";
+// import { FETCH_FEED_ITEMS, INSERT_TAG, DELETE_ITEM } from "../util/graphql";
 import { useMutation } from "@apollo/react-hooks";
 import UserContext from "../context/UserContext";
 import grabity from "grabity";
@@ -9,21 +9,21 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Tap from "react-interactions";
-import Reward from "react-rewards";
-import { MixpanelConsumer } from "react-mixpanel";
+// import Reward from "react-rewards";
+// import { MixpanelConsumer } from "react-mixpanel";
 import ReactGA from "react-ga";
 import Mixpanel from "../util/mix";
 import {
 	DeleteItem,
-	LikeItem,
-	UnlikeItem,
-	InsertBookmark,
-	DeleteBookmark,
+	// LikeItem,
+	// UnlikeItem,
+	// InsertBookmark,
+	// DeleteBookmark,
 } from "../util/graphqlExecutor";
-import { client } from "../ApolloProvider";
+// import { client } from "../ApolloProvider";
 import gql from "graphql-tag";
 import ContentContext from "../context/ContentContext";
-import { useQuery } from "@apollo/react-hooks";
+// import { useQuery } from "@apollo/react-hooks";
 import Linkify from "react-linkify";
 import LikeArticle from "./LikeArticle";
 import BookMarkItem from "./BookMarkItem";

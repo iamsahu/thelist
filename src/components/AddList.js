@@ -1,13 +1,8 @@
 import React, { useContext, useState } from "react";
-import { Modal, Button, Form, Icon } from "semantic-ui-react";
+import { Modal, Button, Form } from "semantic-ui-react";
 import useForm from "../util/hook";
 import { useMutation } from "@apollo/react-hooks";
-import {
-	CREATE_LIST,
-	FETCH_LISTS,
-	COMBINED_FETCH,
-	FETCH_ALL,
-} from "../util/graphql";
+import { CREATE_LIST, COMBINED_FETCH } from "../util/graphql";
 import UserContext from "../context/UserContext";
 import ContentContext from "../context/ContentContext";
 import history from "../util/history";

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 // import { useQuery } from '@apollo/react-hooks';
 import {
 	Menu,
@@ -12,11 +12,11 @@ import {
 	Loader,
 } from "semantic-ui-react";
 import {
-	EmailShareButton,
+	// EmailShareButton,
 	FacebookShareButton,
-	LinkedinShareButton,
-	PocketShareButton,
-	RedditShareButton,
+	// LinkedinShareButton,
+	// PocketShareButton,
+	// RedditShareButton,
 	TwitterShareButton,
 	WhatsappShareButton,
 	TwitterIcon,
@@ -34,7 +34,7 @@ import { LikeList, UnlikeList, DoILike } from "../util/graphqlExecutor";
 import MetaTags from "react-meta-tags";
 import ReactGA from "react-ga";
 import Mixpanel from "../util/mix";
-import Tap from "react-interactions";
+// import Tap from "react-interactions";
 
 function ContentMiddleLists(props) {
 	console.log(props);
