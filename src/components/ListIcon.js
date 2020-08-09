@@ -120,7 +120,7 @@ function ListIcon(props) {
 				<Form onSubmit={onSubmit}>
 					<Form.Group>
 						<Form.Field inline name="image_url" width={10}>
-							<label>Image URL</label>
+							<label>Image URL </label>(Image of size 256x256 works the best!)
 							<Form.TextArea
 								name="image_url"
 								style={{ minHeight: 50 }}
