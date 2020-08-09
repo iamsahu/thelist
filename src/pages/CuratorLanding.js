@@ -188,13 +188,13 @@ function CuratorLanding(props) {
 					<div id="content" className="ui">
 						<Container fluid>
 							<Grid>
-								<Grid.Column width={4}></Grid.Column>
+								<Grid.Column width={3}></Grid.Column>
 								<Grid.Column width={10}>
 									<div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
 										<UserProfileDisplay user={u} />
 									</div>
 								</Grid.Column>
-								<Grid.Column width={2}></Grid.Column>
+								<Grid.Column width={3}></Grid.Column>
 							</Grid>
 						</Container>
 					</div>

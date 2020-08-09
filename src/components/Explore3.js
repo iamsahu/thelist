@@ -106,8 +106,6 @@ function Explore3() {
 												{/* </Card.Group> */}
 											</GG>
 										)
-
-										//  <SearchResultItem key={result.id} props={result} />
 									)
 								)}
 							</GG>

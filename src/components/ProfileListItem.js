@@ -49,7 +49,9 @@ function ProfileListItem(props) {
 							{props.username}
 						</Header>
 					</Card.Header>
-					<Card.Description>{props.description}</Card.Description>
+					<Card.Description>
+						<Linkify>{props.description}</Linkify>
+					</Card.Description>
 				</Card.Content>
 				<Card.Content
 					style={{
@@ -58,9 +60,8 @@ function ProfileListItem(props) {
 					}}
 					extra
 				>
-					Views {props.viewcount}
-					{"     "} Lists {props.listcount}
-					{"     "} Items {props.itemscount}
+					Views {props.viewcount} Lists {props.listcount} Items{" "}
+					{props.itemscount}
 				</Card.Content>
 			</Card>
 		</>
