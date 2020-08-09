@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, Suspense, lazy } from "react";
 
 import {
 	Card,
@@ -10,10 +10,15 @@ import {
 	Menu,
 } from "semantic-ui-react";
 
-import PopularProfile from "../components/PopularProfile";
-import HomeListsDisplay from "../components/HomeListsDisplay";
-import HomeTagsDisplay from "../components/HomeTagsDisplay";
-import Explore2 from "../components/Explore2";
+// import PopularProfile from "../components/PopularProfile";
+// import HomeListsDisplay from "../components/HomeListsDisplay";
+// import HomeTagsDisplay from "../components/HomeTagsDisplay";
+// import Explore2 from "../components/Explore2";
+
+const PopularProfile = lazy(() => import("../components/PopularProfile"));
+const HomeListsDisplay = lazy(() => import("../components/HomeListsDisplay"));
+const HomeTagsDisplay = lazy(() => import("../components/HomeTagsDisplay"));
+const Explore2 = lazy(() => import("../components/Explore2"));
 
 function Home2(props) {
 	const [welcomeBox, setwelcomeBox] = useState(true);
@@ -100,8 +105,7 @@ function Home2(props) {
 							onClick={handleItemClick}
 						/>
 					</Menu>
-
-					{activeItem}
+					<Suspense fallback={<div>Loading...</div>}>{activeItem}</Suspense>
 				</div>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
@@ -144,7 +148,9 @@ function Home2(props) {
 						{/* <Header as='h3'>Lists</Header>
                     <Divider/>
                     <HomeListsDisplay/> */}
-						<div className="scrollyExplore">{activeItem}</div>
+						<div className="scrollyExplore">
+							<Suspense fallback={<div>Loading...</div>}>{activeItem}</Suspense>
+						</div>
 					</Grid.Column>
 					{/* <Grid.Column width={4}> */}
 					{/* <Header as='h3'>Curators</Header>

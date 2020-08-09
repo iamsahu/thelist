@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, Suspense, lazy } from "react";
 import { Container, Grid, Button, Responsive, Menu } from "semantic-ui-react";
 import UserContext from "../context/UserContext";
 import { DoesUserExists, GetTagsOfUser } from "../util/graphqlExecutor";
@@ -6,11 +6,20 @@ import { Link } from "react-router-dom";
 // import ContentContext from "../context/ContentContext";
 import history from "../util/history";
 import { useAuth0 } from "../react-auth0-spa";
-import UserProfileDisplay from "../components/UserProfileDisplay";
-import MyLists from "../components/MyLists";
-import MyFeed from "../components/MyFeed";
-import YourActivities from "../components/YourActivities";
-import BuyMeCoffee from "../components/BuyMeCoffee";
+
+// import UserProfileDisplay from "../components/UserProfileDisplay";
+// import MyLists from "../components/MyLists";
+// import MyFeed from "../components/MyFeed";
+// import YourActivities from "../components/YourActivities";
+// import BuyMeCoffee from "../components/BuyMeCoffee";
+
+const UserProfileDisplay = lazy(() =>
+	import("../components/UserProfileDisplay")
+);
+const MyLists = lazy(() => import("../components/MyLists"));
+const MyFeed = lazy(() => import("../components/MyFeed"));
+const YourActivities = lazy(() => import("../components/YourActivities"));
+const BuyMeCoffee = lazy(() => import("../components/BuyMeCoffee"));
 
 function CuratorLanding(props) {
 	// console.log(props);
@@ -179,8 +188,7 @@ function CuratorLanding(props) {
 						MY LISTS
 						<Divider />
 					</div> */}
-
-					{activeitem}
+					<Suspense fallback={<div>Loading...</div>}>{activeitem}</Suspense>
 				</div>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
@@ -272,7 +280,9 @@ function CuratorLanding(props) {
 									columnWidth={300}
 									columnHeight={255}
 								> */}
-								{activeitem}
+								<Suspense fallback={<div>Loading...</div>}>
+									{activeitem}
+								</Suspense>
 								{/* </StackGrid> */}
 								{/* </Item.Group> */}
 							</Grid.Column>

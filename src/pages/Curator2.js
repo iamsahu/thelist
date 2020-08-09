@@ -1,11 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, Suspense, lazy } from "react";
 
 import { Grid } from "semantic-ui-react";
 
-import ContentMiddleNoLoad from "../components/ContentMiddle_NoLoad";
-import ContentMiddleLists from "../components/ContentMiddleLists";
-import ContentRight from "../components/ContentRight";
-import CurationList from "../components/CurationList";
+// import ContentMiddleNoLoad from "../components/ContentMiddle_NoLoad";
+// import ContentMiddleLists from "../components/ContentMiddleLists";
+// import ContentRight from "../components/ContentRight";
+// import CurationList from "../components/CurationList";
 
 import UserContext from "../context/UserContext";
 import ContentContext from "../context/ContentContext";
@@ -21,6 +21,15 @@ import {
 	GetOneListOfUser,
 	IncrementListView,
 } from "../util/graphqlExecutor";
+
+const ContentMiddleNoLoad = lazy(() =>
+	import("../components/ContentMiddle_NoLoad")
+);
+const ContentMiddleLists = lazy(() =>
+	import("../components/ContentMiddleLists")
+);
+const ContentRight = lazy(() => import("../components/ContentRight"));
+const CurationList = lazy(() => import("../components/CurationList"));
 
 function Curator(props) {
 	// console.log(props);
@@ -393,16 +402,18 @@ function Curator(props) {
 		<>
 			<Responsive {...Responsive.onlyMobile}>
 				<div>
-					<ContentMiddleNoLoad
-						propSent={propSent}
-						posts={posts}
-						title={header}
-						desc={description}
-						image_url={imageurl}
-						userName={username}
-						userImage={userProfile}
-						contID={contID}
-					/>
+					<Suspense fallback={<div>Loading...</div>}>
+						<ContentMiddleNoLoad
+							propSent={propSent}
+							posts={posts}
+							title={header}
+							desc={description}
+							image_url={imageurl}
+							userName={username}
+							userImage={userProfile}
+							contID={contID}
+						/>
+					</Suspense>
 				</div>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
@@ -410,10 +421,12 @@ function Curator(props) {
 					<Grid stackable>
 						<Grid.Column width={1}></Grid.Column>
 						<Grid.Column width={3}>
-							<CurationList
-								curator_id={userC.curator_id}
-								contentType={propSent.contentType}
-							/>
+							<Suspense fallback={<div>Loading...</div>}>
+								<CurationList
+									curator_id={userC.curator_id}
+									contentType={propSent.contentType}
+								/>
+							</Suspense>
 						</Grid.Column>
 						<Grid.Column width={8}>
 							{/* {
@@ -430,24 +443,28 @@ function Curator(props) {
 									"box-shadow": "0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5",
 								}}
 							>
-								<ContentMiddleNoLoad
-									propSent={propSent}
-									posts={posts}
-									title={header}
-									desc={description}
-									image_url={imageurl}
-									userName={username}
-									userImage={userProfile}
-									contID={contID}
-								/>
+								<Suspense fallback={<div>Loading...</div>}>
+									<ContentMiddleNoLoad
+										propSent={propSent}
+										posts={posts}
+										title={header}
+										desc={description}
+										image_url={imageurl}
+										userName={username}
+										userImage={userProfile}
+										contID={contID}
+									/>
+								</Suspense>
 							</div>
 						</Grid.Column>
 						<Grid.Column width={3}>
-							<ContentRight
-								curator_id={userC.curator_id}
-								propSent={propSent}
-								contID={contID}
-							/>
+							<Suspense fallback={<div>Loading...</div>}>
+								<ContentRight
+									curator_id={userC.curator_id}
+									propSent={propSent}
+									contID={contID}
+								/>
+							</Suspense>
 						</Grid.Column>
 						<Grid.Column width={1}></Grid.Column>
 					</Grid>
