@@ -73,6 +73,7 @@ const INSERT_ITEM = gql`
 		$description: String
 		$curator: String!
 		$list_id: uuid!
+		$suggestion: Boolean
 	) {
 		insert_items(
 			objects: {
@@ -81,6 +82,7 @@ const INSERT_ITEM = gql`
 				description: $description
 				curator: $curator
 				list_id: $list_id
+				suggestion: $suggestion
 			}
 		) {
 			affected_rows
@@ -99,6 +101,7 @@ const INSERT_ITEM = gql`
 				name
 				share_count
 				view_count
+				suggestion
 				user {
 					id
 				}
@@ -218,6 +221,7 @@ function InsertItem(
 	contentType,
 	currentListID,
 	currentTagID,
+	suggestion,
 	listfeed
 ) {
 	// console.log(contentType)
@@ -282,6 +286,7 @@ function InsertItem(
 					description: description,
 					curator: curator_id,
 					list_id: list_id,
+					suggestion: suggestion,
 				},
 			})
 			.catch((error) => {
@@ -298,6 +303,7 @@ function InsertItem(
 				description: description,
 				curator: curator_id,
 				list_id: list_id,
+				suggestion: suggestion,
 			},
 			update: (cache, { data }) => {
 				if (contentType === "lists") {
@@ -494,6 +500,7 @@ const createItem = (values) => {
 							values.contentType,
 							values.currentListID,
 							values.currentTagID,
+							values.suggestion,
 							values.listfeed
 						)
 							.then((response) => {
@@ -551,6 +558,7 @@ const createItem = (values) => {
 							values.contentType,
 							values.currentListID,
 							values.currentTagID,
+							values.suggestion,
 							values.listfeed
 						)
 							.then((response) => {
@@ -604,6 +612,7 @@ const createItem = (values) => {
 							values.contentType,
 							values.currentListID,
 							values.currentTagID,
+							values.suggestion,
 							values.listfeed
 						)
 							.then((response) => {
@@ -645,6 +654,7 @@ const createItem = (values) => {
 							values.contentType,
 							values.currentListID,
 							values.currentTagID,
+							values.suggestion,
 							values.listfeed
 						).catch((error) => {
 							console.log(error);
@@ -667,6 +677,7 @@ const createItem = (values) => {
 					values.contentType,
 					values.currentListID,
 					values.currentTagID,
+					values.suggestion,
 					values.listfeed
 				)
 					.then((response) => {
@@ -713,6 +724,7 @@ const createItem = (values) => {
 					values.contentType,
 					values.currentListID,
 					values.currentTagID,
+					values.suggestion,
 					values.listfeed
 				)
 					.then((response) => {
@@ -752,6 +764,7 @@ const createItem = (values) => {
 					values.contentType,
 					values.currentListID,
 					values.currentTagID,
+					values.suggestion,
 					values.listfeed
 				)
 					.then((response) => {
@@ -778,6 +791,7 @@ const createItem = (values) => {
 					values.contentType,
 					values.currentListID,
 					values.currentTagID,
+					values.suggestion,
 					values.listfeed
 				).catch((error) => {
 					console.log(error);
@@ -805,6 +819,7 @@ export const GET_LIST = gql`
 			list_id
 			name
 			share_count
+			suggestion
 			view_count
 			user {
 				id
@@ -909,6 +924,7 @@ const GET_ITEMS = gql`
 			list_id
 			name
 			share_count
+			suggestion
 			view_count
 			user {
 				id
@@ -983,6 +999,7 @@ const GET_ITEMS_USER = gql`
 			link
 			list_id
 			name
+			suggestion
 			user {
 				id
 			}
@@ -1241,6 +1258,7 @@ const DELETE_ITEM = gql`
 				link
 				list_id
 				name
+				suggestion
 				user {
 					id
 				}
@@ -1544,6 +1562,7 @@ const GTI = gql`
 					name
 					share_count
 					view_count
+					suggestion
 					user {
 						id
 					}
@@ -1757,6 +1776,7 @@ const GETALL_BOOKMARK_ITEMS = gql`
 				list_id
 				name
 				share_count
+				suggestion
 				view_count
 				user {
 					id
@@ -1815,6 +1835,7 @@ const GETBOOKMARKSOFCURATOR = gql`
 				list_id
 				name
 				share_count
+				suggestion
 				view_count
 				user {
 					id
@@ -2133,6 +2154,7 @@ const GETONELIST = gql`
 				name
 				share_count
 				view_count
+				suggestion
 				user {
 					id
 				}
@@ -2189,6 +2211,7 @@ const INSERT_MULTIPLE_ITEMS = gql`
 				created_at
 				curator
 				description
+				suggestion
 				link
 				user {
 					id
@@ -2232,6 +2255,7 @@ const GETITEMNOTES = gql`
 			name
 			share_count
 			view_count
+			suggestion
 			user {
 				id
 			}
@@ -2496,6 +2520,7 @@ const GETITEMS = gql`
 			link
 			name
 			share_count
+			suggestion
 			view_count
 			list {
 				id

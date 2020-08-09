@@ -6,7 +6,7 @@ import StackGrid from "react-stack-grid";
 import { useHistory } from "react-router-dom";
 import LandingPageCard from "./LandingPageCard";
 import Follow from "./Follow";
-
+import { Grid as GG } from "@material-ui/core";
 import {
 	Item,
 	Responsive,
@@ -21,11 +21,11 @@ import {
 
 function Explore() {
 	const [loading, setloading] = useState(true);
-	const [searchResult, setsearchResult] = useState(null);
+	const [alllists, setalllists] = useState(null);
 	const history = useHistory();
 	const loadData = () => {
 		GetAllLists().then((response) => {
-			setsearchResult(response);
+			setalllists(response);
 			setloading(false);
 		});
 	};
@@ -79,7 +79,8 @@ function Explore() {
 				<>
 					<Responsive {...Responsive.onlyMobile}>
 						{/* <Item.Group fluid> */}
-						{searchResult.lists.map(
+
+						{alllists.lists.map(
 							(result) => (
 								(col = randomColor()),
 								(
@@ -96,18 +97,25 @@ function Explore() {
 					<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 						{/* <Card.Group stackable={true} doubling={true}> */}
 						{/* <Container> */}
-						<StackGrid
+						{/* <StackGrid
 							gutterWidth={10}
 							gutterHeight={10}
 							appearDelay={10}
 							columnWidth={300}
-						>
-							{searchResult.lists.map(
+						> */}
+						<GG container spacing={3}>
+							{alllists.lists.map(
 								(result) => (
-									(col = randomColor()), (<LandingPageCard result={result} />)
+									(col = randomColor()),
+									(
+										<GG item xs={3}>
+											<LandingPageCard result={result} />
+										</GG>
+									)
 								)
 							)}
-						</StackGrid>
+						</GG>
+						{/* </StackGrid> */}
 						{/* </Container> */}
 						{/* </Card.Group> */}
 					</Responsive>
