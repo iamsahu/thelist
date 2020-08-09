@@ -195,7 +195,9 @@ function MenuBar(props) {
 											},
 										});
 									}}
-								/>
+								>
+									Login/Sign Up
+								</Menu.Item>
 							</>
 						)}
 						{isAuthenticated && !loading && (

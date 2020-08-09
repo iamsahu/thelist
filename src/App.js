@@ -514,7 +514,9 @@ function App() {
 																		});
 																		loginWithRedirect({});
 																	}}
-																/>
+																>
+																	Login/Sign Up
+																</Menu.Item>
 															</>
 														)}
 														{isAuthenticated && !loading && (

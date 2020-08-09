@@ -56,13 +56,14 @@ function SearchResults(props) {
 		<div id="content" className="ui">
 			<Grid columns={3}>
 				<Grid.Column width={3} />
-				<Grid.Column width={9}>
-					<Header as="h2">Results for {foo} </Header>
+				<Grid.Column width={10}>
+					<Header as="h2">Results for "{foo}" </Header>
 					<Image
 						src="https://res.cloudinary.com/hilnmyskv/image/upload/q_auto/v1595410010/Algolia_com_Website_assets/images/shared/algolia_logo/search-by-algolia-light-background.png"
 						size="small"
-						spaced="right"
+						spaced
 					/>
+
 					<Divider />
 					<Item.Group>
 						{loading ? (
@@ -78,7 +79,7 @@ function SearchResults(props) {
 						)}
 					</Item.Group>
 				</Grid.Column>
-				<Grid.Column width={4} />
+				<Grid.Column width={3} />
 			</Grid>
 		</div>
 	);
