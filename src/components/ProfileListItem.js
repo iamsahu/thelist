@@ -31,11 +31,11 @@ function ProfileListItem(props) {
 						<Image
 							floated="left"
 							size="mini"
-							rounded
+							circular
 							src="https://react.semantic-ui.com/images/wireframe/square-image.png"
 						/>
 					) : (
-						<Image floated="left" size="mini" rounded src={props.image_link} />
+						<Image floated="left" size="mini" circular src={props.image_link} />
 					)}
 					<Card.Header>
 						<Header
@@ -58,7 +58,9 @@ function ProfileListItem(props) {
 					}}
 					extra
 				>
-					Follow
+					Views {props.viewcount}
+					{"     "} Lists {props.listcount}
+					{"     "} Items {props.itemscount}
 				</Card.Content>
 			</Card>
 		</>

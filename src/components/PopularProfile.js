@@ -34,6 +34,9 @@ function PopularProfile() {
 									id={theone.id}
 									username={theone.username}
 									description={theone.description}
+									listcount={theone.lists_aggregate.aggregate.count}
+									viewcount={theone.lists_aggregate.aggregate.sum.view_count}
+									itemscount={theone.items_aggregate.aggregate.count}
 								/>
 							))}
 						</Item.Group>
@@ -43,7 +46,7 @@ function PopularProfile() {
 						{/* <Grid.Column width={3}></Grid.Column>
 						<Grid.Column width={10}> */}
 						{/* <Item.Group divided> */}
-						<GG container spacing={3}>
+						<GG container spacing={2}>
 							{allusers.user.map((theone) => (
 								<GG item xs={3}>
 									<ProfileListItem
@@ -52,6 +55,9 @@ function PopularProfile() {
 										id={theone.id}
 										username={theone.username}
 										description={theone.description}
+										listcount={theone.lists_aggregate.aggregate.count}
+										viewcount={theone.lists_aggregate.aggregate.sum.view_count}
+										itemscount={theone.items_aggregate.aggregate.count}
 									/>
 								</GG>
 							))}

@@ -1228,6 +1228,22 @@ const GET_ALL_USERS = gql`
 			id
 			image_link
 			username
+			lists_aggregate {
+				aggregate {
+					count
+					sum {
+						view_count
+					}
+				}
+			}
+			items_aggregate {
+				aggregate {
+					count
+					sum {
+						appreciation_count
+					}
+				}
+			}
 		}
 	}
 `;
