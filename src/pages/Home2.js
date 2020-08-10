@@ -22,8 +22,8 @@ const Explore2 = lazy(() => import("../components/Explore2"));
 
 function Home2(props) {
 	const [welcomeBox, setwelcomeBox] = useState(true);
-	const [activeItem, setactiveItem] = useState(<Explore2 />);
-	const [activeTab, setactiveTab] = useState("lists");
+	const [activeItem, setactiveItem] = useState(<PopularProfile />);
+	const [activeTab, setactiveTab] = useState("curators");
 
 	// function reducer(state, action) {
 	//     switch (action.type) {
@@ -90,6 +90,11 @@ function Home2(props) {
 
 					<Menu pointing secondary>
 						<Menu.Item
+							name="curators"
+							active={activeTab === "curators"}
+							onClick={handleItemClick}
+						/>
+						<Menu.Item
 							name="lists"
 							active={activeTab === "lists"}
 							onClick={handleItemClick}
@@ -97,11 +102,6 @@ function Home2(props) {
 						<Menu.Item
 							name="tags"
 							active={activeTab === "tags"}
-							onClick={handleItemClick}
-						/>
-						<Menu.Item
-							name="curators"
-							active={activeTab === "curators"}
 							onClick={handleItemClick}
 						/>
 					</Menu>
