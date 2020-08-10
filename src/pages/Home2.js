@@ -130,6 +130,11 @@ function Home2(props) {
 					<Grid.Column>
 						<Menu pointing secondary>
 							<Menu.Item
+								name="curators"
+								active={activeTab === "curators"}
+								onClick={handleItemClick}
+							/>
+							<Menu.Item
 								name="lists"
 								active={activeTab === "lists"}
 								onClick={handleItemClick}
@@ -137,11 +142,6 @@ function Home2(props) {
 							<Menu.Item
 								name="tags"
 								active={activeTab === "tags"}
-								onClick={handleItemClick}
-							/>
-							<Menu.Item
-								name="curators"
-								active={activeTab === "curators"}
 								onClick={handleItemClick}
 							/>
 						</Menu>
