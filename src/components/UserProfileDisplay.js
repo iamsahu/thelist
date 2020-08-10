@@ -57,9 +57,13 @@ function UserProfileDisplay(props) {
 			.catch((error) => console.log(error));
 		GetUserStats(user)
 			.then((response) => {
-				// console.log(response);
+				console.log(response);
 				setitemscount(response.items_aggregate.aggregate.count);
-				setlistviewcount(response.lists_aggregate.aggregate.sum.view_count);
+				if (response.lists_aggregate.aggregate.sum.view_count === null) {
+					setlistviewcount(0);
+				} else {
+					setlistviewcount(response.lists_aggregate.aggregate.sum.view_count);
+				}
 				setListcount(response.lists_aggregate.aggregate.count);
 			})
 			.catch((error) => console.log(error));
