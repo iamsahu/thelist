@@ -41,7 +41,7 @@ function UserSettings(props) {
 			values.image = data.user[0].image_link;
 			values.description = data.user[0].description;
 			values.coffee = data.user[0].buymeacoffee;
-
+			setLoaded("loaded");
 			console.log("complete");
 		});
 	};
