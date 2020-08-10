@@ -29,6 +29,7 @@ function UserProfileDisplay(props) {
 
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
 		description: "",
+		image_link: "",
 	});
 
 	const loadUser = (user) => {
@@ -45,6 +46,9 @@ function UserProfileDisplay(props) {
 						if (response.user[0]["description"] !== null) {
 							setdescription(response.user[0]["description"]);
 							values.description = response.user[0]["description"];
+						}
+						if (response.user[0]["image_link"] !== null) {
+							values.image_link = response.user[0]["image_link"];
 						}
 						if (response.user[0].id === userC.loggedin_user_id) {
 							seteditState(true);
@@ -91,6 +95,7 @@ function UserProfileDisplay(props) {
 		variables: {
 			id: props.user,
 			description: values.description,
+			image_link: values.image_link,
 		},
 		update: updateCache,
 		onError: (error) => {
@@ -139,6 +144,16 @@ function UserProfileDisplay(props) {
 								error={error ? true : false}
 							/>
 						</Form.Field>
+						<Form.Field inline name="image_link" width={10}>
+							<label>Profile Image</label>
+							<Form.TextArea
+								name="image_link"
+								style={{ minHeight: 100 }}
+								onChange={onChange}
+								value={values.image_link}
+								error={error ? true : false}
+							/>
+						</Form.Field>
 					</Form.Group>
 					<Button primary type="submit">
 						Submit
@@ -148,7 +163,7 @@ function UserProfileDisplay(props) {
 		</Modal>
 	);
 
-	loadUser(props.user);
+	if (props.user !== "") if (values.image_link === "") loadUser(props.user);
 	return (
 		<>
 			<Item.Group>
