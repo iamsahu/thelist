@@ -34,9 +34,37 @@ function MyLists(props) {
 						<div key="unique">
 							<Loader active inline="centered" />
 						</div>
-					) : (
+					) : listData.lists.length > 0 ? (
 						listData.lists.map((item) => (
 							<CuratorLandingCard item={item} key={item.id} />
+						))
+					) : props.user === userC.loggedin_user_id ? (
+						<div
+							style={{
+								display: "block",
+								"margin-left": "auto",
+								"margin-right": "auto",
+								"text-align": "center",
+							}}
+						>
+							You have no lists. Click <AddList /> to create one!
+							<br />
+							<Image
+								centered
+								src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47.png`}
+								size="large"
+								verticalAlign="middle"
+							/>
+						</div>
+					) : (
+						("Nothing to see here",
+						(
+							<Image
+								centered
+								src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47.png`}
+								size="large"
+								verticalAlign="middle"
+							/>
 						))
 					)}
 				</Item.Group>
@@ -54,9 +82,23 @@ function MyLists(props) {
 							</GG>
 						))
 					) : props.user === userC.loggedin_user_id ? (
-						("You have no lists please add one to begin ",
-						(<br />),
-						(<AddList />))
+						<div
+							style={{
+								display: "block",
+								"margin-left": "auto",
+								"margin-right": "auto",
+								"text-align": "center",
+							}}
+						>
+							You have no lists. Click on <AddList /> to create one!
+							<br />
+							<Image
+								centered
+								src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47.png`}
+								size="large"
+								verticalAlign="middle"
+							/>
+						</div>
 					) : (
 						("Nothing to see here",
 						(
