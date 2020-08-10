@@ -202,11 +202,13 @@ function App() {
 	};
 
 	if (!loading && userCheckStatus) {
+		// console.log("Hello");
 		if (typeof user !== "undefined") {
 			// console.log(user);
 			var userID = user["sub"].split("|")[1];
-
+			// console.log("Hello");
 			if (userC.loggedin_user_id === "") {
+				// console.log("Hello2");
 				userChange({
 					curator_id: "",
 					loggedin_user_id: userID,
@@ -245,7 +247,7 @@ function App() {
 						// t.get()
 						// 	.then((activitiesSuccess) => console.log(activitiesSuccess))
 						// 	.catch((activitiesError) => console.log(activitiesError));
-						// console.log(t);
+						console.log(t);
 						setstreamClient(client2);
 						setstreamuserFeed(t);
 						// console.log(t.id);
