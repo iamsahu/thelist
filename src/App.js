@@ -266,8 +266,14 @@ function App() {
 	const [activeItem, setActiveItem] = useState("");
 
 	const options = [
-		{ key: "user", text: "Account", icon: "user", value: "user" },
-		{ key: "settings", text: "Settings", icon: "settings", value: "settings" },
+		{ key: "user", text: "Your Page", icon: "user", value: "user" },
+		{
+			key: "manage",
+			text: "Manage Content",
+			icon: "clipboard list",
+			value: "manage",
+		},
+		{ key: "settings", text: "Settings", icon: "setting", value: "settings" },
 		{ key: "sign-out", text: "Sign Out", icon: "sign out", value: "logout" },
 	];
 
@@ -277,10 +283,17 @@ function App() {
 			case "user":
 				history.push("/" + user["sub"].split("|")[1]);
 				break;
+			case "manage":
+				history.push("/manage/" + user["sub"].split("|")[1]);
+				break;
 			case "settings":
+				history.push("/settings/" + user["sub"].split("|")[1]);
 				break;
 			case "logout":
 				//TODO: in the future write code here to handle the proper redirect
+				userChange((userC) => {
+					return { ...userC, loggedin_user_id: "" };
+				});
 				logout({ returnTo: process.env.REACT_APP_BASE_URL });
 				break;
 			default:

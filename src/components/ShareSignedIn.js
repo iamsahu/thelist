@@ -102,7 +102,7 @@ function ShareSignedIn(props) {
 						values.description = "";
 						// setlistDescription(false);
 						setloadingbut(false);
-						window.close();
+						// window.close();
 						history.push("/" + userC.loggedin_user_id + "/lists/" + list_id);
 						window.location.href = window.location.href;
 						console.log("Done");

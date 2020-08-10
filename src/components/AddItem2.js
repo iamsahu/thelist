@@ -96,6 +96,7 @@ function AddItem2(props) {
 		listDescription: "",
 		description: "",
 		curator: userC.loggedin_user_id,
+		suggestion: false,
 	});
 
 	// const { loading, error, data } = useQuery(ALL_TAGS,{ fetchPolicy: "network-only" })
@@ -371,12 +372,6 @@ function AddItem2(props) {
 						Add Item
 						{/* <Icon name="add" /> */}
 					</Button>
-					// <Button floated="right" onClick={onClick}>
-					// 	<Tap scale fade waves />
-					// 	{/* <Icon name="add" /> */}
-					// 	{/* <Button circular icon="add" floated="right" /> */}
-					// 	Add Item
-					// </Button>
 				}
 			>
 				<Modal.Header>Add Item</Modal.Header>
@@ -442,45 +437,6 @@ function AddItem2(props) {
 								</Form.Input>
 							</Form.Field>
 						</Form.Group>
-						{/* <Divider /> */}
-						{/* <Form.Group>
-							<Form.Field inline name="listname">
-								<label>List Name</label>
-								<Form.Input>
-									<Dropdown
-										label="List Name"
-										name="list_name"
-										options={Object.values(dropList)}
-										placeholder="Choose list name"
-										search
-										selection
-										upward
-										allowAdditions
-										onAddItem={handleChangeListAddition}
-										onChange={handleChangeList}
-										error={errorList} //?"Please choose a list":false}
-									/>
-								</Form.Input>
-							</Form.Field>
-							{listDescription ? (
-								<Form.Field inline name="listDescription">
-									<label>List Description</label>
-									<Form.TextArea
-										name="listDescription"
-										placeholder="Write about why are you creating this list"
-										style={{ minHeight: 100 }}
-										onChange={onChange}
-										value={values.listDescription}
-										error={
-											errorDescription ? "Please add a description" : false
-										}
-									/>
-								</Form.Field>
-							) : (
-								<div></div>
-							)}
-						</Form.Group> */}
-
 						<br />
 						<Button primary type="submit">
 							Submit
