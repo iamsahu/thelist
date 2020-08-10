@@ -39,6 +39,7 @@ function Curator(props) {
 	const [content, contentChange] = useContext(ContentContext);
 	const [lastCurator, setlastCurator] = useState("");
 	const [reload, setreload] = useState(false);
+	const [noContent, setnoContent] = useState(false);
 	var userid;
 	var propSent = {};
 
@@ -157,6 +158,7 @@ function Curator(props) {
 							console.log("loading lists empty");
 							// console.log(data);
 							if (data.lists.length > 0) {
+								setnoContent(false);
 								setPosts(data.lists[0]["items"]);
 								setloadState(1);
 
@@ -184,6 +186,8 @@ function Curator(props) {
 										});
 									}
 								}
+							} else {
+								setnoContent(true);
 							}
 						})
 						.catch((error) => console.log(error))
@@ -412,6 +416,7 @@ function Curator(props) {
 							userName={username}
 							userImage={userProfile}
 							contID={contID}
+							noContent={noContent}
 						/>
 					</Suspense>
 				</div>
@@ -453,6 +458,7 @@ function Curator(props) {
 										userName={username}
 										userImage={userProfile}
 										contID={contID}
+										noContent={noContent}
 									/>
 								</Suspense>
 							</div>

@@ -129,9 +129,9 @@ function ProfileCard() {
 			<div>
 				<Card fluid>
 					<Card.Content>
-						<Image floated="right" size="mini" src={userProfile} circular />
+						<Image floated="left" size="mini" src={userProfile} circular />
 						<Card.Header>{username}</Card.Header>
-						<Card.Meta>You are twitter user # {twitterNumber}</Card.Meta>
+						{/* <Card.Meta>You are twitter user # {twitterNumber}</Card.Meta> */}
 						<Card.Description>
 							<Linkify>{description}</Linkify>
 						</Card.Description>

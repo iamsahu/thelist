@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, Suspense, lazy } from "react";
 // import { useQuery } from "@apollo/react-hooks";
 import {
 	Menu,
@@ -57,6 +57,8 @@ import { useAuth0 } from "../react-auth0-spa";
 import CurationReasonCard from "./CurationReasonCard";
 import Follow from "./Follow";
 
+const Suggest = lazy(() => import("./Suggest"));
+
 function ContentMiddleNoLoad(props) {
 	// console.log(props);
 	// console.log(process.env)
@@ -73,7 +75,8 @@ function ContentMiddleNoLoad(props) {
 	const [streamClient, streamuserFeed] = useContext(StreamContext);
 	const [follow, setfollow] = useState(0);
 	const [open, setopen] = useState(false);
-	var activeItem = "home";
+	const [activeTab, setactiveTab] = useState("Home");
+	const [activeItem, setactiveItem] = useState("home");
 	// console.log(props.propSent)
 	// console.log(props.propSent.description)
 
@@ -88,6 +91,30 @@ function ContentMiddleNoLoad(props) {
 	// useEffect(() => {
 	// 	window.scrollTo(0, 0);
 	// }, []);
+
+	if (props.noContent) {
+		return (
+			<div className="scrolly">
+				<div
+					className="imageFix"
+					style={{ background: "white", height: "100%", paddingTop: "10px" }}
+				>
+					<Header as="h1">
+						There is nothing here! Click on the add list button on the top right
+						side to create a list and begin your journey!
+						<br />
+					</Header>
+					<Image
+						centered
+						src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47.png`}
+						size="large"
+						verticalAlign="middle"
+					/>
+					<br />
+				</div>
+			</div>
+		);
+	}
 
 	if (props.posts === null) {
 		return (
@@ -160,20 +187,33 @@ function ContentMiddleNoLoad(props) {
 		setopen(false);
 	}
 
+	const handleItemClick = (e, { name }) => {
+		// dispatch({ activeTab:name })
+		// console.log(name);
+		switch (name) {
+			case "Home":
+				setactiveTab("Home");
+				setactiveItem(
+					<CentralList
+						posts={props.posts}
+						contentType={props.propSent.contentType}
+						contentID={props.propSent.contentID}
+					/>
+				);
+				break;
+			case "Suggestions":
+				setactiveTab("Suggestions");
+				setactiveItem(<></>);
+				break;
+		}
+	};
+
 	return (
 		<>
 			{/* <h1>{props.propSent.contentType==='lists'?content.currentList:content.currentTag}</h1> */}
 
 			<Grid>
 				<Grid.Column floated="left">
-					{/* <h1>
-						{props.propSent.contentType === "lists"
-							? "List"
-							: props.propSent.contentType === "tags"
-							? "Tag"
-							: "Bookmark"}{" "}
-						:
-					</h1> */}
 					<Header as="h1">
 						{props.propSent.contentType === "tags" ? (
 							<></>
@@ -195,163 +235,131 @@ function ContentMiddleNoLoad(props) {
 					) : (
 						<></>
 					)}
-					{/* <Card fluid>
-						<Card.Content>
-							<Card.Description>{props.desc}</Card.Description>
-							{userC.loggedin_user_id !== props.propSent.curator_id && (
-								<Card.Content extra>{editform}</Card.Content>
-							)}
-						</Card.Content>
-					</Card> */}
-					{/* <p>{props.desc}</p> */}
 				</Grid.Column>
-				{/* <Grid.Column floated="right" width={3}>
-					{
-						props.propSent.contentType === "lists" &&
-							userC.loggedin_user_id === props.propSent.curator_id && (
-								<AddItem2 />
-							)
-						// <Button circular icon='add' floated='right'/>
-					}
-				</Grid.Column> */}
 			</Grid>
-
-			<Menu pointing secondary style={{ background: "white" }}>
-				<Menu.Item
-					name="Home"
-					active={activeItem === "home"}
-					style={{ background: "white" }}
+			{/* <!-- Open Graph / Facebook --> */}
+			<MetaTags>
+				<meta property="og:type" content="website" />
+				<meta property="og:url" content={shareUrl} />
+				<meta
+					property="og:title"
+					content={
+						props.propSent.contentType === "tags"
+							? content.currentTag
+							: props.title
+					}
 				/>
-				{/* <Menu.Item
-        name='Latest'
-        active={activeItem === 'Latest'} 
-        onClick={handleItemClick}
-      />
-      <Menu.Item
-        name='Most Appreciated'
-        active={activeItem === 'Most Appreciated'}
-        onClick={handleItemClick}
-      />
-      <Menu.Item
-        name='Lost in time'
-        active={activeItem === 'Lost in time'}
-        onClick={handleItemClick}
-      />
-      <Menu.Item
-        name='All'
-        active={activeItem === 'All'}
-        onClick={handleItemClick}
-      />
-      <Menu.Item
-        name='Bookmarked'
-        active={activeItem === 'Bookmarked'}
-        onClick={handleItemClick}
-      /> */}
-				{/* <!-- Open Graph / Facebook --> */}
-				<MetaTags>
-					<meta property="og:type" content="website" />
-					<meta property="og:url" content={shareUrl} />
-					<meta
-						property="og:title"
-						content={
-							props.propSent.contentType === "tags"
-								? content.currentTag
-								: props.title
-						}
-					/>
-					<meta
-						property="og:description"
-						content={
-							props.propSent.contentType === "lists"
-								? props.desc
-								: "A place for all your curations!"
-						}
-					/>
-					{/* <meta
+				<meta
+					property="og:description"
+					content={
+						props.propSent.contentType === "lists"
+							? props.desc
+							: "A place for all your curations!"
+					}
+				/>
+				{/* <meta
 						property="og:image"
 						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
 					/> */}
-					{props.propSent.contentType === "tags"
-						? ((
-								<meta
-									property="og:image"
-									content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
-								/>
-						  ),
-						  (<meta name="image" content="%PUBLIC_URL%/thelistspace.png" />))
-						: ((<meta property="og:image" content={props.image_url} />),
-						  (<meta name="image" content={props.image_url} />))}
+				{props.propSent.contentType === "tags"
+					? ((
+							<meta
+								property="og:image"
+								content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
+							/>
+					  ),
+					  (<meta name="image" content="%PUBLIC_URL%/thelistspace.png" />))
+					: ((<meta property="og:image" content={props.image_url} />),
+					  (<meta name="image" content={props.image_url} />))}
 
-					<meta name="og:type" content="website" />
-					<meta name="og:url" content={shareUrl} />
-					<meta
-						name="og:title"
-						content={
-							props.propSent.contentType === "tags"
-								? content.currentTag
-								: props.title
-						}
-					/>
-					<meta
-						name="title"
-						content={
-							props.propSent.contentType === "tags"
-								? content.currentTag
-								: props.title
-						}
-					/>
+				<meta name="og:type" content="website" />
+				<meta name="og:url" content={shareUrl} />
+				<meta
+					name="og:title"
+					content={
+						props.propSent.contentType === "tags"
+							? content.currentTag
+							: props.title
+					}
+				/>
+				<meta
+					name="title"
+					content={
+						props.propSent.contentType === "tags"
+							? content.currentTag
+							: props.title
+					}
+				/>
 
-					<meta
-						name="og:description"
-						content={
-							props.propSent.contentType === "lists"
-								? props.desc
-								: "A place for all your curations!"
-						}
-					/>
-					{/* <meta
+				<meta
+					name="og:description"
+					content={
+						props.propSent.contentType === "lists"
+							? props.desc
+							: "A place for all your curations!"
+					}
+				/>
+				{/* <meta
 						name="og:image"
 						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
 					/> */}
 
-					{/* <!-- Twitter --/> */}
+				{/* <!-- Twitter --/> */}
 
-					<meta
-						name="twitter:card"
-						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
-					/>
-					<meta name="twitter:url" content={shareUrl} />
-					<meta
-						name="twitter:title"
-						content={
-							props.propSent.contentType === "tags"
-								? content.currentTag
-								: props.title
-						}
-					/>
-					<meta
-						name="twitter:description"
-						content={
-							props.propSent.contentType === "lists"
-								? props.desc
-								: "A place for all your curations!"
-						}
-					/>
-					{/* <meta
+				<meta
+					name="twitter:card"
+					content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
+				/>
+				<meta name="twitter:url" content={shareUrl} />
+				<meta
+					name="twitter:title"
+					content={
+						props.propSent.contentType === "tags"
+							? content.currentTag
+							: props.title
+					}
+				/>
+				<meta
+					name="twitter:description"
+					content={
+						props.propSent.contentType === "lists"
+							? props.desc
+							: "A place for all your curations!"
+					}
+				/>
+				{/* <meta
 						name="twitter:image"
 						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
 					/> */}
-					{props.propSent.contentType === "tags" ? (
-						<meta
-							name="twitter:image"
-							content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
-						/>
-					) : (
-						<meta name="twitter:image" content={props.image_url} />
-					)}
-				</MetaTags>
+				{props.propSent.contentType === "tags" ? (
+					<meta
+						name="twitter:image"
+						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
+					/>
+				) : (
+					<meta name="twitter:image" content={props.image_url} />
+				)}
+			</MetaTags>
+			<Menu pointing secondary>
+				<Menu.Item
+					name="Home"
+					active={activeTab === "Home"}
+					onClick={handleItemClick}
+				/>
+				{/* <Menu.Item
+					name="Suggestions"
+					active={activeTab === "Suggestions"}
+					onClick={handleItemClick}
+				/> */}
+
 				<Menu.Menu position="right">
 					<div className="icobutton" style={{ background: "white" }}>
+						{/* {userC.loggedin_user_id !== props.propSent.curator_id &&
+						content.contentType === "lists" ? (
+							<Suggest id={props.contID} />
+						) : (
+							<></>
+						)} */}
 						{userC.loggedin_user_id !== props.propSent.curator_id &&
 						content.contentType === "lists" ? (
 							<LikeList props={props.propSent.contentID} />
@@ -367,78 +375,6 @@ function ContentMiddleNoLoad(props) {
 							curator_id={props.propSent.curator_id}
 							contentID={props.propSent.contentID}
 						/>
-						{/* {userC.loggedin_user_id !== props.propSent.curator_id &&
-							(userC.loggedin_user_id !== "" ? (
-								follow === 0 ? (
-									<Button
-										icon
-										onClick={() => {
-											streamClient
-												.feed("timeline", userC.loggedin_user_id)
-												.follow("listfeed", props.propSent.contentID);
-											FollowThisList(
-												props.propSent.contentID,
-												userC.loggedin_user_id
-											);
-											setfollow(1);
-										}}
-									>
-										<Icon name="feed" />
-										Follow
-									</Button>
-								) : (
-									//Unfollow
-									<Button
-										icon
-										onClick={() => {
-											streamClient
-												.feed("timeline", userC.loggedin_user_id)
-												.unfollow("listfeed", props.propSent.contentID);
-											UnfollowThisList(
-												props.propSent.contentID,
-												userC.loggedin_user_id
-											);
-											setfollow(0);
-										}}
-									>
-										<Icon color="red" name="feed" />
-										Unfollow
-									</Button>
-								)
-							) : (
-								<Modal
-									open={open}
-									onClose={OnClose}
-									trigger={
-										<Button icon onClick={() => setopen(true)}>
-											<Icon name="feed" />
-											Follow
-										</Button>
-									}
-									basic
-									size="small"
-								>
-									<Header icon="feed" content="Sign Up/Sign In" />
-									<Modal.Content>
-										<p>
-											To subscribe you will have to sign in. Do you want to
-											proceed to sign in?
-										</p>
-									</Modal.Content>
-									<Modal.Actions>
-										<Button basic color="red" inverted onClick={OnClose}>
-											<Icon name="remove" /> No
-										</Button>
-										<Button
-											color="green"
-											inverted
-											onClick={() => loginWithRedirect(window.location.href)}
-										>
-											<Icon name="checkmark" /> Yes
-										</Button>
-									</Modal.Actions>
-								</Modal>
-							))} */}
 
 						{
 							props.propSent.contentType === "lists" &&

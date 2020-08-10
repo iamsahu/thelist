@@ -237,7 +237,10 @@ function CurationList(props) {
 							</div>
 						)
 					) : (
-						<div>No data</div>
+						<div>
+							You don't seem to have any lists. Please add a list by clicking on
+							the Add List button.
+						</div>
 					)}
 				</div>
 			</List>

@@ -33,8 +33,13 @@ function MenuBar(props) {
 	const [lastCurator, setlastCurator] = useState("");
 
 	const options = [
-		{ key: "user", text: "Account", icon: "user", value: "user" },
-		{ key: "manage", text: "Manage", icon: "clipboard list", value: "manage" },
+		{ key: "user", text: "Your Page", icon: "user", value: "user" },
+		{
+			key: "manage",
+			text: "Manage Content",
+			icon: "clipboard list",
+			value: "manage",
+		},
 		{ key: "settings", text: "Settings", icon: "setting", value: "settings" },
 		{ key: "sign-out", text: "Sign Out", icon: "sign out", value: "logout" },
 	];
