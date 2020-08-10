@@ -151,15 +151,13 @@ function CuratorLanding(props) {
 								onClick={handleItemClickMobile}
 							/>
 						)}
-						{isAuthenticated ? (
-							<Menu.Item
-								name="Activity"
-								active={activeTab === "Activity"}
-								onClick={handleItemClickMobile}
-							/>
-						) : (
-							<></>
-						)}
+
+						<Menu.Item
+							name="Activity"
+							active={activeTab === "Activity"}
+							onClick={handleItemClickMobile}
+						/>
+
 						<Menu.Menu position="right">
 							<div className="icobutton">
 								{isAuthenticated && u === userC.loggedin_user_id && (
@@ -224,13 +222,13 @@ function CuratorLanding(props) {
 											onClick={handleItemClickDesktop}
 										/>
 									)}
-									{isAuthenticated && (
-										<Menu.Item
-											name="Activity"
-											active={activeTab === "Activity"}
-											onClick={handleItemClickDesktop}
-										/>
-									)}
+
+									<Menu.Item
+										name="Activity"
+										active={activeTab === "Activity"}
+										onClick={handleItemClickDesktop}
+									/>
+
 									<Menu.Menu position="right">
 										<div className="icobutton">
 											{isAuthenticated && u === userC.loggedin_user_id && (

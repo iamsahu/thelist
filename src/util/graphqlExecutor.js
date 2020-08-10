@@ -2522,8 +2522,12 @@ const GetListImage = (id) => {
 };
 
 const GETITEMS = gql`
-	query MyQuery($id: [uuid!]!) {
-		items(where: { id: { _in: $id } }, order_by: { created_at: desc }) {
+	query MyQuery($id: String) {
+		items(
+			order_by: { created_at: desc }
+			where: { curator: { _eq: $id } }
+			limit: 20
+		) {
 			appreciation_count
 			auto_description
 			auto_image

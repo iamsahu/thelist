@@ -1,47 +1,41 @@
-import React, { useContext, useState } from "react";
-import StreamContext from "../context/StreamContext";
+import React, { useState } from "react";
+
 import { Loader, Header, Item } from "semantic-ui-react";
 import { GetItemsActivity } from "../util/graphqlExecutor";
 import { useHistory } from "react-router-dom";
 
 function YourActivities(props) {
-	const [streamClient, streamuserFeed] = useContext(StreamContext);
 	const [loading, setloading] = useState("-1");
 	const [activityData, setactivityData] = useState("");
 	// var feed = streamClient.feed("user", props.user);
 	// console.log(streamClient);
-	var t = streamClient.feed("user", props.user);
+	// var t = streamClient.feed("user", props.user);
 	const history = useHistory();
 	const routeChange = (t) => {
 		history.push(t);
 	};
 
 	if (loading === "-1")
-		t.get()
-			.then((activitiesSuccess) => {
-				if (activitiesSuccess.results.length > 0) {
-					// setactivityData(activitiesSuccess);
-					var ids = [];
-					for (
-						let index = 0;
-						index < activitiesSuccess.results.length;
-						index++
-					) {
-						const element = activitiesSuccess.results[index];
-						ids.push(element["object"]);
-					}
-					// console.log(ids);
-					GetItemsActivity(ids).then((response) => {
-						// console.log(response);
-						if (response.items.length > 0) {
-							setactivityData(response);
-							setloading("0");
-						}
-					});
+		GetItemsActivity(props.user)
+			.then((response) => {
+				// console.log(response);
+				if (response.items.length > 0) {
+					setactivityData(response);
+					setloading("0");
 				}
 			})
-			.catch((activitiesError) => console.log(activitiesError));
+			.catch((error) => console.log(error));
+
 	if (loading === "-1") {
+		return (
+			<div>
+				<Loader active inline="centered" />
+			</div>
+		);
+	}
+
+	if (activityData.items.length < 1) {
+		// console.log("Activity Data");
 		return (
 			<div>
 				<Loader active inline="centered" />
@@ -55,7 +49,6 @@ function YourActivities(props) {
 		<>
 			<Item.Group divided relaxed>
 				{activityData.items.map((item) =>
-					// console.log(item.list.list_name)
 					lastDate === "" ? (
 						((lastDate = GiveMeDate(item.created_at)),
 						(
@@ -80,13 +73,13 @@ function YourActivities(props) {
 											<p>{item.auto_description.substring(0, 240)}</p>
 										</Item.Description>
 										{/* <Item.Extra>
-                                <Checkbox
-                                    id={item.id}
-                                    label="Add to newsletter"
-                                    data={item}
-                                    onChange={onChange}
-                                />
-                            </Item.Extra> */}
+					            <Checkbox
+					                id={item.id}
+					                label="Add to newsletter"
+					                data={item}
+					                onChange={onChange}
+					            />
+					        </Item.Extra> */}
 									</Item.Content>
 								</Item>
 							</>
@@ -111,13 +104,13 @@ function YourActivities(props) {
 									<p>{item.auto_description.substring(0, 240)}</p>
 								</Item.Description>
 								{/* <Item.Extra>
-                        <Checkbox
-                            id={item.id}
-                            label="Add to newsletter"
-                            data={item}
-                            onChange={onChange}
-                        />
-                    </Item.Extra> */}
+					    <Checkbox
+					        id={item.id}
+					        label="Add to newsletter"
+					        data={item}
+					        onChange={onChange}
+					    />
+					</Item.Extra> */}
 							</Item.Content>
 						</Item>
 					) : (
@@ -144,13 +137,13 @@ function YourActivities(props) {
 											<p>{item.auto_description.substring(0, 240)}</p>
 										</Item.Description>
 										{/* <Item.Extra>
-                                <Checkbox
-                                    id={item.id}
-                                    label="Add to newsletter"
-                                    data={item}
-                                    onChange={onChange}
-                                />
-                            </Item.Extra> */}
+					            <Checkbox
+					                id={item.id}
+					                label="Add to newsletter"
+					                data={item}
+					                onChange={onChange}
+					            />
+					        </Item.Extra> */}
 									</Item.Content>
 								</Item>
 							</>
