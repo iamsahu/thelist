@@ -59,6 +59,7 @@ const LandingPage = lazy(() => import("./pages/LandingPage"));
 const CurrentConsumption = lazy(() => import("./pages/CurrentConsumption"));
 const Share = lazy(() => import("./pages/Share"));
 const UserSettings = lazy(() => import("./pages/UserSettings"));
+const Privacy = lazy(() => import("./pages/Privacy"));
 
 toast.configure();
 
@@ -565,6 +566,7 @@ function App() {
 											<div style={{ marginTop: "3em" }}>
 												<Container style={{ marginTop: "7em" }} fluid>
 													<Switch>
+														<Route exact path="/privacy" component={Privacy} />
 														<Route
 															exact
 															path="/settings/:id"
@@ -636,6 +638,7 @@ function App() {
 											fluid
 										>
 											<Switch>
+												<Route exact path="/privacy" component={Privacy} />
 												<Route
 													exact
 													path="/settings/:id"
