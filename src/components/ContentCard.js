@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Item, Button, Icon, Popup } from "semantic-ui-react";
+import { Item, Icon, Popup, Image, Button } from "semantic-ui-react";
 import { useAuth0 } from "../react-auth0-spa";
 // import { FETCH_FEED_ITEMS, INSERT_TAG, DELETE_ITEM } from "../util/graphql";
 import { useMutation } from "@apollo/react-hooks";
@@ -27,60 +27,6 @@ import ContentContext from "../context/ContentContext";
 import Linkify from "react-linkify";
 import LikeArticle from "./LikeArticle";
 import BookMarkItem from "./BookMarkItem";
-// const LIKE_ITEM=gql`
-//     mutation MyMutation ($item_id:uuid!,$user_id:String!){
-//         insert_like_item(objects: {item_id: $item_id, user_id: $user_id}) {
-//             affected_rows
-//         }
-//     }
-// `
-// const LikeItem=(item_id,user_id)=>{
-//     return client.mutate({
-//         mutation:LIKE_ITEM,
-//         variables:{
-//             item_id:item_id,
-//             user_id:user_id
-//         },
-//         refetchQueries: [
-//             {
-//               query: FETCH_ITEM_LIKES,
-//               variables: { item_id: item_id, user_id: user_id }
-//             }
-//         ]
-//     }).then((response)=>response.data).catch((error)=>console.log(error))
-// }
-// const UNLIKE_ITEM=gql`
-//     mutation MyMutation($item_id:uuid!,$user_id:String!) {
-//         delete_like_item(where: {item_id: {_eq: $item_id}, user_id: {_eq: $user_id}}) {
-//             affected_rows
-//         }
-//     }
-// `
-// const UnlikeItem=(item_id,user_id)=>{
-//     return client.mutate({
-//         mutation:UNLIKE_ITEM,
-//         variables:{
-//             item_id:item_id,
-//             user_id:user_id
-//         },
-//         refetchQueries: [
-//             {
-//               query: FETCH_ITEM_LIKES,
-//               variables: { item_id: item_id, user_id: user_id }
-//             }
-//         ]
-//     }).then((response)=>response.data).catch((error)=>console.log(error))
-// }
-
-// const FETCH_ITEM_LIKES=gql`
-//     query MyQuery($item_id:uuid!,$user_id:String!) {
-//         like_item_aggregate(where: {item_id: {_eq: $item_id}, user_id: {_eq: $user_id}}) {
-//             aggregate {
-//                 count
-//             }
-//         }
-//     }
-// `
 
 const COPY_COUNT = gql`
 	mutation MyMutation($id: uuid) {
@@ -204,16 +150,19 @@ function ContentCard(postdata) {
 				}
 		}
 	}
+
 	// console.log(postdata);
 	//Fix for list->tag->list crash bug
 	if (typeof postdata === "undefined") return <></>;
 	if (typeof postdata.postdata === "undefined") return <></>;
 	if (typeof postdata.postdata.name === "undefined") return <></>;
 	var postName = postdata.postdata.name.substring(0, 70);
+
 	return (
 		<>
 			{/* <MixpanelConsumer>
                         {mixpanel=> */}
+
 			<Item background="white">
 				<Item.Image
 					size="tiny"
@@ -229,7 +178,6 @@ function ContentCard(postdata) {
 						{postName}
 					</Item.Header>
 
-					{/* <Item.Extra> */}
 					{isAuthenticated &&
 						postdata.postdata.user.id === userC.loggedin_user_id && (
 							<Button
@@ -288,7 +236,7 @@ function ContentCard(postdata) {
 							<Tap waves />
 						</Button>
 					</CopyToClipboard>
-					{/* <Reward ref={(ref) => { setreward(ref) }} type='confetti' config={{springAnimation:false}}> */}
+
 					{isAuthenticated &&
 						postdata.postdata.user.id !== userC.loggedin_user_id && (
 							<LikeArticle postdata={postdata} />
@@ -322,7 +270,7 @@ function ContentCard(postdata) {
 								<Tap waves />
 							</Button>
 						)}
-					{/* </Item.Extra> */}
+
 					<Popup
 						trigger={
 							<Item.Description>
@@ -347,7 +295,6 @@ function ContentCard(postdata) {
 						}
 						hideOnScroll
 					/>
-					{/* </Reward> */}
 				</Item.Content>
 			</Item>
 			{/* }

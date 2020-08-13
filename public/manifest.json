@@ -24,6 +24,10 @@
 			"purpose": "maskable"
 		}
 	],
+	"start_url": ".",
+	"display": "standalone",
+	"theme_color": "#000000",
+	"background_color": "#ffffff",
 	"share_target": {
 		"action": "/share",
 		"method": "GET",
@@ -32,9 +36,5 @@
 			"text": "text",
 			"url": "url"
 		}
-	},
-	"start_url": ".",
-	"display": "standalone",
-	"theme_color": "#000000",
-	"background_color": "#ffffff"
+	}
 }

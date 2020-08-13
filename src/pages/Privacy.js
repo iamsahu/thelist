@@ -2,7 +2,7 @@ import React from "react";
 
 function Privacy() {
 	return (
-		<div style={{ paddingTop: "20px" }}>
+		<div style={{ paddingTop: "20px", "text-align": "center" }}>
 			<h2>Privacy Policy</h2>
 			<p>
 				Your privacy is important to us. It is The List Space's policy to

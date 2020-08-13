@@ -10,7 +10,7 @@ function LandingPageCard(props) {
 	};
 	return (
 		<>
-			<Card key={props.result.id} fluid style={{ height: "100%" }}>
+			<Card key={props.result.id} fluid style={{ height: "100%" }} raised>
 				<Card.Content>
 					{props.result.image_url === '""' ? (
 						<Image
