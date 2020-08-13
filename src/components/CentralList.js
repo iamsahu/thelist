@@ -16,6 +16,7 @@ function CentralList(props) {
 		switch (props.posts[0].__typename) {
 			case "items":
 				temp = props.posts;
+				// console.log("items");
 				break;
 			case "item_tag":
 				// console.log(props.posts)
@@ -33,6 +34,25 @@ function CentralList(props) {
 		// console.log(temp)
 	} else if (props.contentType === "lists") {
 		temp = props.posts;
+		// console.log("lists");
+		// console.log(temp);
+		var p = [];
+		var sug = [];
+		for (let index = 0; index < props.posts.length; index++) {
+			const element = props.posts[index];
+			if (element.suggestion) {
+				sug.push(element);
+			} else {
+				// console.log("h");
+				p.push(element);
+			}
+		}
+		if (props.suggest) {
+			temp = sug;
+		} else {
+			temp = p;
+		}
+		// console.log(temp);
 	}
 
 	return temp.map((post) => (

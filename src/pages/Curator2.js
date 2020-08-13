@@ -155,10 +155,11 @@ function Curator(props) {
 			? propSent.contentID === ""
 				? GetOneListOfUser(propSent.curator_id)
 						.then((data) => {
-							console.log("loading lists empty");
+							// console.log("loading lists empty");
 							// console.log(data);
 							if (data.lists.length > 0) {
 								setnoContent(false);
+
 								setPosts(data.lists[0]["items"]);
 								setloadState(1);
 
@@ -193,7 +194,7 @@ function Curator(props) {
 						.catch((error) => console.log(error))
 				: GetList({ userid: propSent.curator_id, listid: propSent.contentID })
 						.then((data) => {
-							// console.log("loading lists ");s
+							// console.log("loading lists ");
 							// console.log(data);
 							setPosts(data.items);
 							setloadState(1);

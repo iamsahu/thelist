@@ -104,6 +104,7 @@ const INSERT_ITEM = gql`
 				suggestion
 				user {
 					id
+					username
 				}
 				list {
 					description
@@ -823,6 +824,7 @@ export const GET_LIST = gql`
 			view_count
 			user {
 				id
+				username
 			}
 			list {
 				description
@@ -928,6 +930,7 @@ const GET_ITEMS = gql`
 			view_count
 			user {
 				id
+				username
 			}
 			list {
 				description
@@ -1002,6 +1005,7 @@ const GET_ITEMS_USER = gql`
 			suggestion
 			user {
 				id
+				username
 			}
 			share_count
 			view_count
@@ -1151,6 +1155,7 @@ const SEARCH = gql`
 			description
 			curator_id
 			user {
+				id
 				username
 				description
 				image_link
@@ -1277,6 +1282,7 @@ const DELETE_ITEM = gql`
 				suggestion
 				user {
 					id
+					username
 				}
 				share_count
 				view_count
@@ -1581,6 +1587,7 @@ const GTI = gql`
 					suggestion
 					user {
 						id
+						username
 					}
 					list {
 						description
@@ -1796,6 +1803,7 @@ const GETALL_BOOKMARK_ITEMS = gql`
 				view_count
 				user {
 					id
+					username
 				}
 				list {
 					description
@@ -1855,6 +1863,7 @@ const GETBOOKMARKSOFCURATOR = gql`
 				view_count
 				user {
 					id
+					username
 				}
 				list {
 					description
@@ -2173,6 +2182,7 @@ const GETONELIST = gql`
 				suggestion
 				user {
 					id
+					username
 				}
 			}
 		}
@@ -2231,6 +2241,7 @@ const INSERT_MULTIPLE_ITEMS = gql`
 				link
 				user {
 					id
+					username
 				}
 				name
 				list_id
@@ -2274,6 +2285,7 @@ const GETITEMNOTES = gql`
 			suggestion
 			user {
 				id
+				username
 			}
 			notes(order_by: { created_at: desc_nulls_last }) {
 				comment
