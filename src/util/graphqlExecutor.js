@@ -806,7 +806,7 @@ export const GET_LIST = gql`
 	query MyQuery($userid: String, $listid: uuid!) {
 		items(
 			order_by: { created_at: desc_nulls_last }
-			where: { user: { id: { _eq: $userid } }, list_id: { _eq: $listid } }
+			where: { list_id: { _eq: $listid } }
 		) {
 			auto_description
 			auto_image

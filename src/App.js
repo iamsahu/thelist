@@ -248,7 +248,7 @@ function App() {
 						// t.get()
 						// 	.then((activitiesSuccess) => console.log(activitiesSuccess))
 						// 	.catch((activitiesError) => console.log(activitiesError));
-						console.log(t);
+						// console.log(t);
 						setstreamClient(client2);
 						setstreamuserFeed(t);
 						// console.log(t.id);

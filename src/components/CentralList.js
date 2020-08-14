@@ -16,7 +16,7 @@ function CentralList(props) {
 		switch (props.posts[0].__typename) {
 			case "items":
 				temp = props.posts;
-				// console.log("items");
+				console.log("items");
 				break;
 			case "item_tag":
 				// console.log(props.posts)
@@ -40,8 +40,10 @@ function CentralList(props) {
 		var sug = [];
 		for (let index = 0; index < props.posts.length; index++) {
 			const element = props.posts[index];
+			// console.log(element.suggestion);
 			if (element.suggestion) {
 				sug.push(element);
+				// console.log("suggestion");
 			} else {
 				// console.log("h");
 				p.push(element);
