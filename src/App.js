@@ -2,7 +2,8 @@ import React, { useState, Suspense, lazy } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 // import "semantic-ui-forest-themes/semantic.flatly.min.css";
 import "semantic-ui-css/semantic.min.css"; //readable
-import "./App.css";
+// import "./App.css";
+import "./assets/main.css";
 import "react-interactions/dist/main.css";
 import {
 	Accordion,
@@ -632,7 +633,10 @@ function App() {
 								</Responsive>
 								<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 									<MenuBar user={user} />
-									<div className="novscroll">
+									<div
+										class="bg-gray-100 antialiased text-gray-900"
+										className="novscroll"
+									>
 										<Container
 											style={{ marginTop: "3em", height: "85vh" }}
 											fluid

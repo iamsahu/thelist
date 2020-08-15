@@ -10,7 +10,40 @@ function LandingPageCard(props) {
 	};
 	return (
 		<>
-			<Card key={props.result.id} fluid style={{ height: "100%" }} raised>
+			<div class="bg-white border shadow-md mt-4 rounded-lg overflow-hidden mr-1 ml-1 text-gray-900 w-full">
+				<div class="flex h-40">
+					<div class="flex w-1/4 max-h-full">
+						{props.result.image_url === '""' ? (
+							<img
+								class="object-contain"
+								src="https://i.imgur.com/MwTfvwo.png"
+							/>
+						) : (
+							<img class="object-contain" src={props.result.image_url} />
+						)}
+					</div>
+					<div class="p-2 w-3/4">
+						<div class="h-32">
+							<a
+								class="font-semibold text-base md:text-xl text-gray-800 w-full"
+								href={props.result.curator_id + "/lists/" + props.result.id}
+							>
+								{props.result.list_name}
+							</a>
+							<p class="text-gray-600 text-sm md:text-base font-thin">
+								{props.result.description}
+							</p>
+						</div>
+						{/* <div class="text-gray-500 mb-8 text-left uppercase tracking-widest object-bottom text-sm md:text-base">
+							{props.viewcount === null ? 0 : props.viewcount} Views{" "}
+							{props.listcount} Lists{" "}
+							{props.itemscount === null ? 0 : props.itemscount} Items
+						</div> */}
+					</div>
+				</div>
+			</div>
+
+			{/* <Card key={props.result.id} fluid style={{ height: "100%" }} raised>
 				<Card.Content>
 					{props.result.image_url === '""' ? (
 						<Image
@@ -38,21 +71,10 @@ function LandingPageCard(props) {
 							{props.result.list_name}
 						</Header>
 					</Card.Header>
-					{/* <Card.Meta>
-						<Label color="olive" size="tiny">
-							Product
-						</Label>
-					</Card.Meta> */}
-					{/* <Card.Meta>by {props.result.user.username}</Card.Meta> */}
+					
 					<Card.Description>{props.result.description}</Card.Description>
 				</Card.Content>
-				{/* <Card.Content
-					description={props.result.description}
-					style={{
-						border: "none",
-						"border-top": "none",
-					}}
-				/> */}
+				
 				<Card.Content
 					style={{
 						border: "none",
@@ -88,7 +110,7 @@ function LandingPageCard(props) {
 						Read
 					</Button>
 				</Card.Content>
-			</Card>
+			</Card> */}
 		</>
 	);
 }

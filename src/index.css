@@ -9,9 +9,10 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-/* body #fonts {
-	font-family: "Montserrat", sans-serif;
-} */
+body #fonts {
+	/* font-family: "Montserrat", sans-serif; */
+	color: #1a202c;
+}
 
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

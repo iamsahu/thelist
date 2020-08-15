@@ -4,7 +4,7 @@ import { GetAllUsers } from "../util/graphqlExecutor";
 
 import ProfileListItem from "./ProfileListItem";
 import { Grid as GG } from "@material-ui/core";
-function PopularProfile() {
+function PopularProfileLanding() {
 	const [loading, setloading] = useState(true);
 	const [allusers, setallusers] = useState(null);
 
@@ -48,7 +48,7 @@ function PopularProfile() {
 						{/* <Item.Group divided> */}
 						<GG container spacing={1}>
 							{allusers.user.map((theone) => (
-								<GG item xs={3}>
+								<GG item xs={4}>
 									<ProfileListItem
 										key={theone.id}
 										image_link={theone.image_link}
@@ -73,4 +73,4 @@ function PopularProfile() {
 	);
 }
 
-export default PopularProfile;
+export default PopularProfileLanding;

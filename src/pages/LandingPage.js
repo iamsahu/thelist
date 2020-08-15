@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import {
 	Header,
 	Container,
@@ -12,6 +12,9 @@ import {
 import Home from "./Home";
 import { Link } from "react-router-dom";
 import Explore3 from "../components/Explore3";
+const PopularProfileLanding = lazy(() =>
+	import("../components/PopularProfileLanding")
+);
 
 function LandingPage() {
 	return (
@@ -111,7 +114,10 @@ function LandingPage() {
 					{/* Explore! */}
 					<br />
 				</Header>
-				<Explore3 />
+				{/* <Explore3 /> */}
+				<Suspense fallback={<div>Loading...</div>}>
+					<PopularProfileLanding />
+				</Suspense>
 				{/* </Container> */}
 				{/* <Divider/>
         <Home/> */}
@@ -214,7 +220,10 @@ function LandingPage() {
 							Explore!
 						</Header> */}
 						<br />
-						<Explore3 />
+						{/* <Explore3 /> */}
+						<Suspense fallback={<div>Loading...</div>}>
+							<PopularProfileLanding />
+						</Suspense>
 					</Container>
 					{/* <Divider/>
         <Home/> */}

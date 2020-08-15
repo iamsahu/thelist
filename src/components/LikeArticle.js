@@ -34,12 +34,10 @@ function LikeArticle(postdata) {
 		<>
 			{isAuthenticated &&
 				(liked ? (
-					<Button
-						icon
-						size="tiny"
-						floated="right"
-						basic
-						color="black"
+					<img
+						class="h-4 float-right mr-1 object-bottom"
+						src={`${process.env.REACT_APP_BASE_URL}/heart (1).svg`}
+						alt="Kiwi standing on oval"
 						onClick={(e) => {
 							UnlikeItem(postdata.postdata.postdata.id, userC.loggedin_user_id);
 							setLiked(false);
@@ -56,17 +54,38 @@ function LikeArticle(postdata) {
 									transport: "beacon",
 								});
 						}}
-					>
-						<Icon color="red" name="like" />
-						<Tap waves />
-					</Button>
+					/>
 				) : (
-					<Button
-						icon
-						size="tiny"
-						floated="right"
-						basic
-						color="black"
+					// <Button
+					// 	icon
+					// 	size="tiny"
+					// 	floated="right"
+					// 	basic
+					// 	color="black"
+					// 	onClick={(e) => {
+					// 		UnlikeItem(postdata.postdata.postdata.id, userC.loggedin_user_id);
+					// 		setLiked(false);
+					// 		Mixpanel.track("Appreciate Item", {
+					// 			link: postdata.postdata.postdata.link,
+					// 			curator: postdata.postdata.postdata.user.id,
+					// 			name: postdata.postdata.postdata.name,
+					// 		});
+					// 		if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000")
+					// 			ReactGA.event({
+					// 				category: "Item",
+					// 				action: "Appreciate",
+					// 				label: postdata.postdata.postdata.name,
+					// 				transport: "beacon",
+					// 			});
+					// 	}}
+					// >
+					// 	<Icon color="red" name="like" />
+					// 	<Tap waves />
+					// </Button>
+					<img
+						class="h-4 float-right mr-1 object-bottom"
+						src={`${process.env.REACT_APP_BASE_URL}/heart.svg`}
+						alt="Kiwi standing on oval"
 						onClick={(e) => {
 							LikeItem(postdata.postdata.postdata.id, userC.loggedin_user_id);
 							setLiked(true);
@@ -83,10 +102,33 @@ function LikeArticle(postdata) {
 									transport: "beacon",
 								});
 						}}
-					>
-						<Icon name="like" />
-						<Tap waves />
-					</Button>
+					/>
+					// <Button
+					// 	icon
+					// 	size="tiny"
+					// 	floated="right"
+					// 	basic
+					// 	color="black"
+					// 	onClick={(e) => {
+					// 		LikeItem(postdata.postdata.postdata.id, userC.loggedin_user_id);
+					// 		setLiked(true);
+					// 		Mixpanel.track("Appreciate Item", {
+					// 			link: postdata.postdata.postdata.link,
+					// 			curator: postdata.postdata.postdata.user.id,
+					// 			name: postdata.postdata.postdata.name,
+					// 		});
+					// 		if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000")
+					// 			ReactGA.event({
+					// 				category: "Item",
+					// 				action: "Appreciate",
+					// 				label: postdata.postdata.postdata.name,
+					// 				transport: "beacon",
+					// 			});
+					// 	}}
+					// >
+					// 	<Icon name="like" />
+					// 	<Tap waves />
+					// </Button>
 				))}
 		</>
 	);

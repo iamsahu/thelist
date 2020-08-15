@@ -103,7 +103,7 @@ function Explore() {
 							appearDelay={10}
 							columnWidth={300}
 						> */}
-						<GG container spacing={2}>
+						<GG container spacing={1}>
 							{alllists.lists.map(
 								(result) => (
 									(col = randomColor()),

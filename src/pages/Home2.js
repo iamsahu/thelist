@@ -148,7 +148,7 @@ function Home2(props) {
 						{/* <Header as='h3'>Lists</Header>
                     <Divider/>
                     <HomeListsDisplay/> */}
-						<div className="scrollyExplore">
+						<div className="scrollyExplore" class="pl-2 pr-2">
 							<Suspense fallback={<div>Loading...</div>}>{activeItem}</Suspense>
 						</div>
 					</Grid.Column>

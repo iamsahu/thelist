@@ -160,10 +160,229 @@ function ContentCard(postdata) {
 
 	return (
 		<>
-			{/* <MixpanelConsumer>
-                        {mixpanel=> */}
+			<div class="flex h-48">
+				<div class="bg-white border shadow-md mt-4 rounded-lg overflow-hidden mr-1 ml-1 text-gray-900 w-full">
+					<div class="flex h-48">
+						<div class="w-1/4 max-w-full h-48 relative">
+							<img
+								class="absolute h-48 w-full object-cover object-center"
+								src={
+									postdata.postdata.auto_image !== "none"
+										? postdata.postdata.auto_image
+										: thumbImage
+								}
+							/>
+						</div>
+						<div class="p-2 w-3/4 h-48">
+							<div class="overflow-hidden h-32">
+								{/* <h4 class="font-semibold text-xl text-gray-800 truncate"> */}
+								<a
+									class="font-semibold text-base md:text-xl text-gray-800 w-full"
+									target="_blank"
+									href={postdata.postdata.link}
+								>
+									{postName}
+								</a>
+								{/* </h4> */}
+								<p class="text-gray-600 text-sm md:text-base mt-1 overflow-hidden">
+									<Linkify>
+										{postdata.postdata.description !== ""
+											? postdata.postdata.description
+											: postdata.postdata.auto_description === "none"
+											? ""
+											: postdata.postdata.auto_description.substring(0, 336)}
+									</Linkify>
+								</p>
+							</div>
+							<div class="max-w-full max-h-full relative h-8">
+								{isAuthenticated &&
+									postdata.postdata.user.id === userC.loggedin_user_id && (
+										<img
+											class="h-4 float-right mr-1 object-bottom"
+											src={`${process.env.REACT_APP_BASE_URL}/close.svg`}
+											alt="Kiwi standing on oval"
+											onClick={(e) => {
+												deleteitem(postdata.postdata.id);
+												Mixpanel.track("Delete Item", {
+													link: postdata.postdata.link,
+													curator: postdata.postdata.user.id,
+													name: postdata.postdata.name,
+												});
+												if (
+													process.env.REACT_APP_BASE_URL !==
+													"http://localhost:3000"
+												)
+													ReactGA.event({
+														category: "Item",
+														action: "Delete",
+														label: postdata.postdata.name,
+														transport: "beacon",
+													});
+											}}
+										/>
+									)}
+								{/* <img
+									class="h-4 float-right mr-1 object-bottom"
+									src={`${process.env.REACT_APP_BASE_URL}/close.svg`}
+									alt="Kiwi standing on oval"
+								/> */}
 
-			<Item background="white">
+								<CopyToClipboard
+									text={postdata.postdata.link}
+									onCopy={(e) => {
+										notify();
+										copyItem();
+										Mixpanel.track("Copy Item", {
+											link: postdata.postdata.link,
+											curator: postdata.postdata.user.id,
+											name: postdata.postdata.name,
+										});
+										if (
+											process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+										)
+											ReactGA.event({
+												category: "Item",
+												action: "Copy",
+												label: postdata.postdata.name,
+												transport: "beacon",
+											});
+									}}
+								>
+									<img
+										class="h-4 float-right mr-1 object-bottom"
+										src={`${process.env.REACT_APP_BASE_URL}/copy.svg`}
+										alt="Kiwi standing on oval"
+									/>
+								</CopyToClipboard>
+								{/* <img
+									class="h-4 float-right mr-1 object-bottom"
+									src={`${process.env.REACT_APP_BASE_URL}/copy.svg`}
+									alt="Kiwi standing on oval"
+								/> */}
+								{isAuthenticated &&
+									postdata.postdata.user.id !== userC.loggedin_user_id && (
+										<BookMarkItem postdata={postdata} />
+									)}
+								{/* <img
+									class="h-4 float-right mr-1 object-bottom"
+									src={`${process.env.REACT_APP_BASE_URL}/bookmark.svg`}
+									alt="Kiwi standing on oval"
+								/> */}
+								{isAuthenticated &&
+									postdata.postdata.user.id !== userC.loggedin_user_id && (
+										<LikeArticle postdata={postdata} />
+									)}
+								{/* <img
+									class="h-4 float-right mr-1 object-bottom"
+									src={`${process.env.REACT_APP_BASE_URL}/heart.svg`}
+									alt="Kiwi standing on oval"
+								/> */}
+								{/* <button class="object-bottom absolute inset-x-0 bottom-0 object-none inline-block px-5 py-3 rounded-lg shadow border text-sm">
+									hello
+								</button> */}
+							</div>
+						</div>
+					</div>
+				</div>
+				{/* <div class="w-1/12">
+					<div class="max-w-full h-full mt-4 items-center">
+						
+						{isAuthenticated &&
+							postdata.postdata.user.id === userC.loggedin_user_id && (
+								<Button
+									icon
+									floated="right"
+									size="tiny"
+									basic
+									color="black"
+									onClick={(e) => {
+										deleteitem(postdata.postdata.id);
+										Mixpanel.track("Delete Item", {
+											link: postdata.postdata.link,
+											curator: postdata.postdata.user.id,
+											name: postdata.postdata.name,
+										});
+										if (
+											process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+										)
+											ReactGA.event({
+												category: "Item",
+												action: "Delete",
+												label: postdata.postdata.name,
+												transport: "beacon",
+											});
+									}}
+								>
+									<Icon name="delete" />
+									<Tap waves />
+								</Button>
+							)}
+						{isAuthenticated &&
+							postdata.postdata.user.id !== userC.loggedin_user_id && (
+								<BookMarkItem postdata={postdata} />
+							)}
+						<CopyToClipboard
+							text={postdata.postdata.link}
+							onCopy={(e) => {
+								notify();
+								copyItem();
+								Mixpanel.track("Copy Item", {
+									link: postdata.postdata.link,
+									curator: postdata.postdata.user.id,
+									name: postdata.postdata.name,
+								});
+								if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000")
+									ReactGA.event({
+										category: "Item",
+										action: "Copy",
+										label: postdata.postdata.name,
+										transport: "beacon",
+									});
+							}}
+						>
+							<Button icon size="tiny" floated="right" basic color="black">
+								<Icon name="copy" />
+								<Tap waves />
+							</Button>
+						</CopyToClipboard>
+
+						{isAuthenticated &&
+							postdata.postdata.user.id !== userC.loggedin_user_id && (
+								<LikeArticle postdata={postdata} />
+							)}
+						{isAuthenticated &&
+							postdata.postdata.user.id === userC.loggedin_user_id && (
+								<Button
+									icon
+									size="tiny"
+									floated="right"
+									basic
+									color="black"
+									onClick={(e) => {
+										Mixpanel.track("Edit Item", {
+											link: postdata.postdata.link,
+											curator: postdata.postdata.user.id,
+											name: postdata.postdata.name,
+										});
+										if (
+											process.env.REACT_APP_BASE_URL !== "http://localhost:3000"
+										)
+											ReactGA.event({
+												category: "Item",
+												action: "Edit",
+												label: postdata.postdata.name,
+												transport: "beacon",
+											});
+									}}
+								>
+									<Icon name="edit" />
+									<Tap waves />
+								</Button>
+							)}
+					</div>
+				</div> */}
+			</div>
+			{/* <Item background="white">
 				<Item.Image
 					size="tiny"
 					floated="left"
@@ -296,9 +515,7 @@ function ContentCard(postdata) {
 						hideOnScroll
 					/>
 				</Item.Content>
-			</Item>
-			{/* }
-        </MixpanelConsumer> */}
+			</Item> */}
 		</>
 	);
 }
