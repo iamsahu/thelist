@@ -30,7 +30,7 @@ function ProfileListItem(props) {
 							>
 								{props.username}
 							</a>
-							<p class="text-gray-600 text-sm md:text-base font-thin">
+							<p class="text-gray-500 text-sm md:text-base font-thin">
 								<Linkify>{props.description}</Linkify>
 							</p>
 						</div>
