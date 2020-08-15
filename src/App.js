@@ -564,7 +564,7 @@ function App() {
 													</Menu.Item>
 												</Menu.Menu>
 											</Menu>
-											<div style={{ marginTop: "3em" }}>
+											<div className="font-sans" style={{ marginTop: "3em" }}>
 												<Container style={{ marginTop: "7em" }} fluid>
 													<Switch>
 														<Route exact path="/privacy" component={Privacy} />
@@ -634,8 +634,8 @@ function App() {
 								<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 									<MenuBar user={user} />
 									<div
-										class="bg-gray-100 antialiased text-gray-900"
-										className="novscroll"
+										// class="bg-gray-100 antialiased text-gray-900 font-sans"
+										className="novscroll font-sans bg-gray-100 antialiased text-gray-900"
 									>
 										<Container
 											style={{ marginTop: "3em", height: "85vh" }}
