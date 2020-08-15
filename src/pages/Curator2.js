@@ -439,7 +439,7 @@ function Curator(props) {
 							<ContentMiddleLists propSent={propSent} posts={posts} title={header}/>:
 							} */}
 							<div
-								class="text-gray-900"
+								class="text-gray-900 pb-4"
 								style={{
 									background: "white",
 									marginTop: "15px",

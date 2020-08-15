@@ -33,6 +33,24 @@ function CentralList(props) {
 		// console.log(temp)
 	} else if (props.contentType === "lists") {
 		temp = props.posts;
+		// console.log("lists");
+		// console.log(temp);
+		var p = [];
+		var sug = [];
+		for (let index = 0; index < props.posts.length; index++) {
+			const element = props.posts[index];
+			if (element.suggestion) {
+				sug.push(element);
+			} else {
+				// console.log("h");
+				p.push(element);
+			}
+		}
+		if (props.suggest) {
+			temp = sug;
+		} else {
+			temp = p;
+		}
 	}
 
 	return temp.map((post) => (

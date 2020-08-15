@@ -193,17 +193,11 @@ function ContentMiddleNoLoad(props) {
 		switch (name) {
 			case "Home":
 				setactiveTab("Home");
-				setactiveItem(
-					<CentralList
-						posts={props.posts}
-						contentType={props.propSent.contentType}
-						contentID={props.propSent.contentID}
-					/>
-				);
+				setactiveItem("home");
 				break;
 			case "Suggestions":
 				setactiveTab("Suggestions");
-				setactiveItem(<></>);
+				setactiveItem("suggest");
 				break;
 		}
 	};
@@ -346,20 +340,20 @@ function ContentMiddleNoLoad(props) {
 					active={activeTab === "Home"}
 					onClick={handleItemClick}
 				/>
-				{/* <Menu.Item
+				<Menu.Item
 					name="Suggestions"
 					active={activeTab === "Suggestions"}
 					onClick={handleItemClick}
-				/> */}
+				/>
 
 				<Menu.Menu position="right">
 					<div className="icobutton" style={{ background: "white" }}>
-						{/* {userC.loggedin_user_id !== props.propSent.curator_id &&
+						{userC.loggedin_user_id !== props.propSent.curator_id &&
 						content.contentType === "lists" ? (
 							<Suggest id={props.contID} />
 						) : (
 							<></>
-						)} */}
+						)}
 						{userC.loggedin_user_id !== props.propSent.curator_id &&
 						content.contentType === "lists" ? (
 							<LikeList props={props.propSent.contentID} />
@@ -471,11 +465,21 @@ function ContentMiddleNoLoad(props) {
 							</Placeholder>
 						) : typeof props.posts !== "undefined" ? (
 							props.posts.length > 0 ? (
-								<CentralList
-									posts={props.posts}
-									contentType={props.propSent.contentType}
-									contentID={props.propSent.contentID}
-								/>
+								activeItem === "home" ? (
+									<CentralList
+										posts={props.posts}
+										contentType={props.propSent.contentType}
+										contentID={props.propSent.contentID}
+										suggest={false}
+									/>
+								) : (
+									<CentralList
+										posts={props.posts}
+										contentType={props.propSent.contentType}
+										contentID={props.propSent.contentID}
+										suggest={true}
+									/>
+								)
 							) : (
 								<div className="imageFix">
 									<Image
@@ -507,11 +511,21 @@ function ContentMiddleNoLoad(props) {
 							</Placeholder>
 						) : typeof props.posts !== "undefined" ? (
 							props.posts.length > 0 ? (
-								<CentralList
-									posts={props.posts}
-									contentType={props.propSent.contentType}
-									contentID={props.propSent.contentID}
-								/>
+								activeItem === "home" ? (
+									<CentralList
+										posts={props.posts}
+										contentType={props.propSent.contentType}
+										contentID={props.propSent.contentID}
+										suggest={false}
+									/>
+								) : (
+									<CentralList
+										posts={props.posts}
+										contentType={props.propSent.contentType}
+										contentID={props.propSent.contentID}
+										suggest={true}
+									/>
+								)
 							) : (
 								<div className="imageFix" style={{ background: "white" }}>
 									<Image
