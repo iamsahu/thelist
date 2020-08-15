@@ -10,27 +10,30 @@ function LandingPageCard(props) {
 	};
 	return (
 		<>
-			<div class="bg-white border shadow-md mt-4 rounded-lg overflow-hidden mr-1 ml-1 text-gray-900 w-full">
+			<div class="bg-white border shadow-md mt-4 rounded-lg overflow-hidden mr-1 ml-1 text-gray-900 w-full font-sans">
 				<div class="flex h-40">
 					<div class="flex w-1/4 max-h-full">
 						{props.result.image_url === '""' ? (
 							<img
-								class="object-contain"
+								class="object-contain rounded-lg"
 								src="https://i.imgur.com/MwTfvwo.png"
 							/>
 						) : (
-							<img class="object-contain" src={props.result.image_url} />
+							<img
+								class="object-contain rounded-lg"
+								src={props.result.image_url}
+							/>
 						)}
 					</div>
-					<div class="p-2 w-3/4">
-						<div class="h-32">
+					<div class="p-2 w-3/4 h-40">
+						<div class="mb-1 max-h-full">
 							<a
-								class="font-semibold text-base md:text-xl text-gray-800 w-full"
+								class="font-normal text-base md:text-xl text-gray-800 w-full"
 								href={props.result.curator_id + "/lists/" + props.result.id}
 							>
 								{props.result.list_name}
 							</a>
-							<p class="text-gray-600 text-sm md:text-base font-thin">
+							<p class="text-gray-600 text-sm md:text-base font-thin overflow-hidden max-h-full mb-1 pb-1 h-24">
 								{props.result.description}
 							</p>
 						</div>

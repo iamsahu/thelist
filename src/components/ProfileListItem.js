@@ -11,7 +11,7 @@ function ProfileListItem(props) {
 	return (
 		<>
 			<div
-				class="bg-white border shadow-md mt-4 rounded-lg overflow-hidden mr-1 ml-1 text-gray-900 w-full"
+				class="bg-white border shadow-md mt-4 rounded-lg overflow-hidden mr-1 ml-1 text-gray-900 w-full font-sans"
 				key={props.id}
 			>
 				<div class="flex h-40">
@@ -25,16 +25,16 @@ function ProfileListItem(props) {
 					<div class="p-2 w-3/4">
 						<div class="h-32">
 							<a
-								class="font-semibold text-base md:text-xl text-gray-800 w-full"
+								class="font-normal text-base md:text-xl text-gray-800 w-full"
 								href={`${process.env.REACT_APP_BASE_URL}/${props.id}`}
 							>
 								{props.username}
 							</a>
-							<p class="text-gray-500 text-sm md:text-base font-thin">
+							<p class="font-thin text-gray-600 text-sm md:text-base">
 								<Linkify>{props.description}</Linkify>
 							</p>
 						</div>
-						<div class="text-gray-500 mb-8 text-left uppercase tracking-widest object-bottom text-sm md:text-base">
+						<div class="text-gray-500 mb-8 text-left uppercase tracking-widest object-bottom text-sm md:text-base font-thin">
 							{props.viewcount === null ? 0 : props.viewcount} Views{" "}
 							{props.listcount} Lists{" "}
 							{props.itemscount === null ? 0 : props.itemscount} Items
