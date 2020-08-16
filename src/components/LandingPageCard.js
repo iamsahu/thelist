@@ -33,7 +33,7 @@ function LandingPageCard(props) {
 							>
 								{props.result.list_name}
 							</a>
-							<p class="text-gray-600 text-sm md:text-base font-thin overflow-hidden max-h-full mb-1 pb-1 h-24">
+							<p class="text-gray-600 text-sm md:text-base sm:font-normal md:font-thin overflow-hidden max-h-full mb-1 pb-1 h-24">
 								{props.result.description}
 							</p>
 						</div>
