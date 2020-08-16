@@ -16,17 +16,19 @@ function CuratorLandingCard(props) {
 			>
 				<div class="flex h-64">
 					<div class="w-1/3 h-64">
-						{props.item.image_url === '""' ? (
-							<img
-								class="object-cover rounded p-4"
-								src="https://i.imgur.com/MwTfvwo.png"
-							/>
-						) : (
-							<img
-								class="object-cover rounded p-4"
-								src={props.item.image_url}
-							/>
-						)}
+						<div class="rounded border-black p-2">
+							{props.item.image_url === '""' ? (
+								<img
+									class="object-contain rounded-lg"
+									src="https://i.imgur.com/MwTfvwo.png"
+								/>
+							) : (
+								<img
+									class="object-contain rounded-lg"
+									src={props.item.image_url}
+								/>
+							)}
+						</div>
 					</div>
 					<div class="p-2 w-2/3 h-64">
 						<div class="mb-1 max-h-full h-48">

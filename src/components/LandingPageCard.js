@@ -13,17 +13,19 @@ function LandingPageCard(props) {
 			<div class="bg-white border shadow-md mt-4 rounded-lg overflow-hidden mr-1 ml-1 text-gray-900 w-full font-sans">
 				<div class="flex h-48">
 					<div class="w-1/3 h-48">
-						{props.result.image_url === '""' ? (
-							<img
-								class="object-contain rounded-lg p-4"
-								src="https://i.imgur.com/MwTfvwo.png"
-							/>
-						) : (
-							<img
-								class="object-contain rounded-lg p-4"
-								src={props.result.image_url}
-							/>
-						)}
+						<div class="rounded border-black p-2">
+							{props.result.image_url === '""' ? (
+								<img
+									class="object-contain rounded-lg"
+									src="https://i.imgur.com/MwTfvwo.png"
+								/>
+							) : (
+								<img
+									class="object-contain rounded-lg"
+									src={props.result.image_url}
+								/>
+							)}
+						</div>
 					</div>
 					<div class="p-2 w-2/3 h-48">
 						<div class="mb-1 max-h-full">
