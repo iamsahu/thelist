@@ -2690,7 +2690,10 @@ const GetUserStats = (id) => {
 
 const GETFOLLOWOFUSER = gql`
 	query MyQuery($user_id: String) {
-		list_follow(where: { user_id: { _eq: $user_id } }) {
+		list_follow(
+			where: { user_id: { _eq: $user_id } }
+			order_by: { created_at: desc_nulls_last }
+		) {
 			list {
 				id
 				list_name

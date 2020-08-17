@@ -111,9 +111,9 @@ function CuratorLanding(props) {
 				setactiveitem(<YourActivities user={u} />);
 				setactiveTab("Activity");
 				break;
-			case "Follow":
+			case "Following":
 				setactiveitem(<YourFollow user={u} />);
-				setactiveTab("Follow");
+				setactiveTab("Following");
 				break;
 		}
 	};
@@ -133,9 +133,9 @@ function CuratorLanding(props) {
 				setactiveitem(<YourActivities user={u} />);
 				setactiveTab("Activity");
 				break;
-			case "Follow":
+			case "Following":
 				setactiveitem(<YourFollow user={u} />);
-				setactiveTab("Follow");
+				setactiveTab("Following");
 				break;
 		}
 	};
@@ -167,8 +167,8 @@ function CuratorLanding(props) {
 							onClick={handleItemClickMobile}
 						/>
 						<Menu.Item
-							name="Follow"
-							active={activeTab === "Follow"}
+							name="Following"
+							active={activeTab === "Following"}
 							onClick={handleItemClickMobile}
 						/>
 
@@ -243,8 +243,8 @@ function CuratorLanding(props) {
 										onClick={handleItemClickDesktop}
 									/>
 									<Menu.Item
-										name="Follow"
-										active={activeTab === "Follow"}
+										name="Following"
+										active={activeTab === "Following"}
 										onClick={handleItemClickMobile}
 									/>
 
