@@ -38,13 +38,15 @@ function YourFollow(props) {
 	}
 
 	function Card(item) {
+		var str = item.list.description;
+		var shrt = str.substr(0, 108);
 		return (
 			<div
 				class="bg-white border shadow-md mt-4 rounded-lg overflow-hidden mr-1 ml-1 text-gray-900 w-full font-sans"
 				key={item.list.id}
 			>
-				<div class="flex h-64">
-					<div class="w-1/3 h-64">
+				<div class="flex h-56">
+					<div class="w-1/3 h-56">
 						<div class="rounded border-black p-2">
 							{item.list.image_url === '""' ? (
 								<img
@@ -59,10 +61,10 @@ function YourFollow(props) {
 							)}
 						</div>
 					</div>
-					<div class="p-2 w-2/3 h-64">
-						<div class="mb-1 max-h-full h-48">
+					<div class="p-2 w-2/3 h-56">
+						<div class="mb-1 max-h-full h-40">
 							<a
-								class="font-normal text-base md:text-xl text-gray-800 w-full"
+								class="font-normal text-gray-800 w-full text-lg md:text-xl"
 								href={item.list.curator_id + "/lists/" + item.list.id}
 							>
 								{item.list.list_name}
@@ -73,8 +75,8 @@ function YourFollow(props) {
 									{item.list.user.username}
 								</a>
 							</div>
-							<p class="text-gray-700 text-sm md:text-base font-thin overflow-hidden max-h-full mb-1 pb-1 h-40">
-								{item.list.description}
+							<p class="text-gray-700 font-thin overflow-hidden max-h-full mb-1 pb-1 h-32 text-base lg:text-lg">
+								{shrt}...
 							</p>
 						</div>
 						<div class="text-gray-500 mb-8 text-left uppercase tracking-widest text-sm md:text-base">

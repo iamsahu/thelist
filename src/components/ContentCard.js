@@ -1,5 +1,12 @@
 import React, { useState, useContext } from "react";
-import { Item, Icon, Popup, Image, Button } from "semantic-ui-react";
+import {
+	Item,
+	Icon,
+	Popup,
+	Image,
+	Button,
+	Responsive,
+} from "semantic-ui-react";
 import { useAuth0 } from "../react-auth0-spa";
 // import { FETCH_FEED_ITEMS, INSERT_TAG, DELETE_ITEM } from "../util/graphql";
 import { useMutation } from "@apollo/react-hooks";
@@ -177,22 +184,24 @@ function ContentCard(postdata) {
 							<div class="overflow-hidden h-32">
 								{/* <h4 class="font-semibold text-xl text-gray-800 truncate"> */}
 								<a
-									class="font-normal text-base md:text-xl text-gray-800 w-full"
+									class="font-normal text-gray-800 w-full text-lg md:text-xl"
 									target="_blank"
 									href={postdata.postdata.link}
 								>
 									{postName}
 								</a>
 								{/* </h4> */}
-								<p class="text-gray-700 text-sm md:text-base mt-1 overflow-hidden font-thin">
-									<Linkify>
-										{postdata.postdata.description !== ""
-											? postdata.postdata.description
-											: postdata.postdata.auto_description === "none"
-											? ""
-											: postdata.postdata.auto_description.substring(0, 336)}
-									</Linkify>
-								</p>
+								<Responsive minWidth={Responsive.onlyTablet.minWidth}>
+									<p class="text-gray-700 mt-1 overflow-hidden font-thin text-base lg:text-lg">
+										<Linkify>
+											{postdata.postdata.description !== ""
+												? postdata.postdata.description
+												: postdata.postdata.auto_description === "none"
+												? ""
+												: postdata.postdata.auto_description.substring(0, 336)}
+										</Linkify>
+									</p>
+								</Responsive>
 							</div>
 							<div class="max-w-full max-h-full relative h-8">
 								{isAuthenticated &&

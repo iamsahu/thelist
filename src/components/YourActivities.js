@@ -59,7 +59,7 @@ function YourActivities(props) {
 							<div class="overflow-hidden h-32">
 								{/* <h4 class="font-semibold text-xl text-gray-800 truncate"> */}
 								<a
-									class="font-normal text-base md:text-xl text-gray-800 w-full"
+									class="font-normal text-gray-800 w-full text-lg md:text-xl"
 									target="_blank"
 									href={item.link}
 								>
@@ -75,7 +75,7 @@ function YourActivities(props) {
 									</a>
 								</div>
 								{/* </h4> */}
-								<p class="text-gray-700 text-sm md:text-base mt-1 overflow-hidden font-thin">
+								<p class="text-gray-700 mt-1 overflow-hidden font-thin text-base lg:text-lg">
 									{/* <Linkify> */}
 									{item.description !== ""
 										? item.description

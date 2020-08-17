@@ -25,12 +25,12 @@ function ProfileListItem(props) {
 					<div class="p-2 w-3/4">
 						<div class="h-32">
 							<a
-								class="font-normal text-base md:text-xl text-gray-800 w-full"
+								class="font-normal text-lg md:text-xl text-gray-800 w-full"
 								href={`${process.env.REACT_APP_BASE_URL}/${props.id}`}
 							>
 								{props.username}
 							</a>
-							<p class="font-thin text-gray-700 text-sm lg:text-base">
+							<p class="font-thin text-gray-700 text-base lg:text-lg overflow-hidden md:h-24 h-32">
 								<Linkify>{props.description}</Linkify>
 							</p>
 						</div>
