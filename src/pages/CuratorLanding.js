@@ -143,7 +143,7 @@ function CuratorLanding(props) {
 	return (
 		<>
 			<Responsive {...Responsive.onlyMobile}>
-				<div>
+				<div class="bg-gray-100">
 					<div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
 						<UserProfileDisplay user={u} />
 					</div>
@@ -204,7 +204,7 @@ function CuratorLanding(props) {
 				</div>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
-				<div className="scrollyCuratorLanding">
+				<div className="scrollyCuratorLanding" class="bg-gray-100">
 					<div id="content" className="ui">
 						<Container fluid>
 							<Grid>

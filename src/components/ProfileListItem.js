@@ -30,11 +30,11 @@ function ProfileListItem(props) {
 							>
 								{props.username}
 							</a>
-							<p class="font-thin text-gray-700 text-sm lg:text-sm md:text-xs sm:text-xs">
+							<p class="font-thin text-gray-700 text-sm lg:text-base">
 								<Linkify>{props.description}</Linkify>
 							</p>
 						</div>
-						<div class="text-gray-600 mb-8 text-left uppercase tracking-widest object-bottom text-sm md:text-base font-thin">
+						<div class="text-gray-600 mb-8 text-left uppercase tracking-widest object-bottom text-xs font-thin">
 							{props.viewcount === null ? 0 : props.viewcount} Views{" "}
 							{props.listcount} Lists{" "}
 							{props.itemscount === null ? 0 : props.itemscount} Items

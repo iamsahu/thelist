@@ -70,7 +70,7 @@ function MyLists(props) {
 				</Item.Group>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
-				<GG container spacing={3}>
+				<GG container spacing={2}>
 					{listData === "" ? (
 						<div>
 							<Loader active inline="centered" />

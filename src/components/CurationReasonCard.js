@@ -131,6 +131,13 @@ function CurationReasonCard(props) {
 			<Card fluid>
 				{/* <Card.Content header="My Reason for this curation" /> */}
 				<Card.Content description={description} />
+				{/* <Card.Content>
+					<Card.Description>
+						<div class="font-normal text-base md:text-xl text-gray-800 w-full">
+							{description}
+						</div>
+					</Card.Description>
+				</Card.Content> */}
 				{editState && <Card.Content extra>{editform}</Card.Content>}
 			</Card>
 		</>

@@ -69,7 +69,7 @@ function YourFollow(props) {
 							</a>{" "}
 							<div class="text-gray-500 text-sm md:text-base font-thin">
 								by{" "}
-								<a href={item.list.curator_id} class="text-blue-300">
+								<a href={item.list.curator_id} class="text-blue-500">
 									{item.list.user.username}
 								</a>
 							</div>

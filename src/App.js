@@ -564,7 +564,10 @@ function App() {
 													</Menu.Item>
 												</Menu.Menu>
 											</Menu>
-											<div className="font-sans" style={{ marginTop: "3em" }}>
+											<div
+												className="font-sans text-gray-900 bg-gray-100"
+												style={{ marginTop: "3em" }}
+											>
 												<Container style={{ marginTop: "7em" }} fluid>
 													<Switch>
 														<Route exact path="/privacy" component={Privacy} />

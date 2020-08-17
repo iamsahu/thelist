@@ -177,14 +177,14 @@ function ContentCard(postdata) {
 							<div class="overflow-hidden h-32">
 								{/* <h4 class="font-semibold text-xl text-gray-800 truncate"> */}
 								<a
-									class="font-semibold text-base md:text-xl text-gray-800 w-full"
+									class="font-normal text-base md:text-xl text-gray-800 w-full"
 									target="_blank"
 									href={postdata.postdata.link}
 								>
 									{postName}
 								</a>
 								{/* </h4> */}
-								<p class="text-gray-600 text-sm md:text-base mt-1 overflow-hidden">
+								<p class="text-gray-700 text-sm md:text-base mt-1 overflow-hidden font-thin">
 									<Linkify>
 										{postdata.postdata.description !== ""
 											? postdata.postdata.description
