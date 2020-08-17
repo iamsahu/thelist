@@ -78,7 +78,7 @@ function Home2(props) {
 	return (
 		<>
 			<Responsive {...Responsive.onlyMobile}>
-				<div>
+				<div class="bg-gray-100">
 					{/* {welcomeBox ? (
 						<Message onDismiss={handleDismiss}>
 							<Message.Header>Welcome to List Space</Message.Header>
@@ -148,7 +148,7 @@ function Home2(props) {
 						{/* <Header as='h3'>Lists</Header>
                     <Divider/>
                     <HomeListsDisplay/> */}
-						<div className="scrollyExplore" class="pl-2 pr-2">
+						<div className="scrollyExplore" class="pl-2 pr-2 mr-2 bg-gray-100">
 							<Suspense fallback={<div>Loading...</div>}>{activeItem}</Suspense>
 						</div>
 					</Grid.Column>
