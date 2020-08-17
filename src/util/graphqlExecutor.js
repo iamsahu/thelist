@@ -2688,6 +2688,38 @@ const GetUserStats = (id) => {
 		.catch((error) => console.log(error));
 };
 
+const GETFOLLOWOFUSER = gql`
+	query MyQuery($user_id: String) {
+		list_follow(where: { user_id: { _eq: $user_id } }) {
+			list {
+				id
+				list_name
+				image_url
+				description
+				curator_id
+				user {
+					id
+					image_link
+					username
+				}
+			}
+		}
+	}
+`;
+
+const GetFollowOfUser = (user_id) => {
+	// console.log(id);
+	return client
+		.query({
+			query: GETFOLLOWOFUSER,
+			variables: {
+				user_id: user_id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -2732,6 +2764,7 @@ export {
 	GetUserDetails,
 	UpdateUserDetails,
 	GetUserStats,
+	GetFollowOfUser,
 };
 
 export const DELETE_LIST = gql`

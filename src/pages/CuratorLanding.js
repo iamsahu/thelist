@@ -19,6 +19,7 @@ const UserProfileDisplay = lazy(() =>
 const MyLists = lazy(() => import("../components/MyLists"));
 const MyFeed = lazy(() => import("../components/MyFeed"));
 const YourActivities = lazy(() => import("../components/YourActivities"));
+const YourFollow = lazy(() => import("../components/YourFollow"));
 const BuyMeCoffee = lazy(() => import("../components/BuyMeCoffee"));
 
 function CuratorLanding(props) {
@@ -110,6 +111,10 @@ function CuratorLanding(props) {
 				setactiveitem(<YourActivities user={u} />);
 				setactiveTab("Activity");
 				break;
+			case "Follow":
+				setactiveitem(<YourFollow user={u} />);
+				setactiveTab("Follow");
+				break;
 		}
 	};
 
@@ -127,6 +132,10 @@ function CuratorLanding(props) {
 			case "Activity":
 				setactiveitem(<YourActivities user={u} />);
 				setactiveTab("Activity");
+				break;
+			case "Follow":
+				setactiveitem(<YourFollow user={u} />);
+				setactiveTab("Follow");
 				break;
 		}
 	};
@@ -155,6 +164,11 @@ function CuratorLanding(props) {
 						<Menu.Item
 							name="Activity"
 							active={activeTab === "Activity"}
+							onClick={handleItemClickMobile}
+						/>
+						<Menu.Item
+							name="Follow"
+							active={activeTab === "Follow"}
 							onClick={handleItemClickMobile}
 						/>
 
@@ -227,6 +241,11 @@ function CuratorLanding(props) {
 										name="Activity"
 										active={activeTab === "Activity"}
 										onClick={handleItemClickDesktop}
+									/>
+									<Menu.Item
+										name="Follow"
+										active={activeTab === "Follow"}
+										onClick={handleItemClickMobile}
 									/>
 
 									<Menu.Menu position="right">
