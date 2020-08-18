@@ -28,8 +28,18 @@ const ALL_TAGS = gql`
 	}
 `;
 
-function GetDetails(link, signal) {
-	var data = { key: "c167314d71c0ad6e8af2da5aea93779f", q: link };
+function GetDetails(link) {
+	var data = { key: process.env.REACT_APP_LINKPREVIEW, q: link };
+	// console.log(data);
+	return fetch("https://api.linkpreview.net", {
+		method: "POST",
+		mode: "cors",
+		body: JSON.stringify(data),
+	});
+}
+
+function GetDetails1(link, signal) {
+	var data = { key: process.env.REACT_APP_LINKPREVIEW, q: link };
 	console.log(data);
 	// return fetch('https://api.linkpreview.net', {
 	//   method: 'POST',
@@ -173,50 +183,82 @@ function AddItem2(props) {
 		} else if (content.contentType === "lists") {
 			//If current list is open is the list to which the new item is being added
 		}
-		var listfeed = streamuserFeed; //streamClient; //.feed("listfeed", props.listID);
+		var auto_description = "";
+		var auto_image = "";
+
 		console.log(props.listID);
 		if (!errors) {
-			createItem({
-				...values,
-				list_id: props.listID,
-				selTags: content.selTags,
-				curator_id: userC.loggedin_user_id,
-				tags: content.alltags,
-				contentType: content.contentType,
-				currentListID: content.currentListID,
-				currentTagID: content.currentTagID,
-				listfeed,
-			}).then((response) => {
-				// console.log(response);
-				if (typeof response.data.insert_item_tag !== "undefined") {
-					if (response.data.insert_item_tag.returning.length > 0) {
-						var tempTag = content.tags;
-						var tempAllTags = content.alltags;
-						for (
-							let index = 0;
-							index < response.data.insert_item_tag.returning.length;
-							index++
-						) {
-							tempTag.push({
-								text: response.data.insert_item_tag.returning[index].tag.name,
-								key: response.data.insert_item_tag.returning[index].tag.name,
-								value: response.data.insert_item_tag.returning[index].id,
-							});
-							tempAllTags.push({
-								text: response.data.insert_item_tag.returning[index].tag.name,
-								key: response.data.insert_item_tag.returning[index].tag.name,
-								value: response.data.insert_item_tag.returning[index].id,
-							});
-						}
-						contentChange((content) => ({
-							...content,
-							tags: tempTag,
-							alltags: tempAllTags,
-						}));
+			GetDetails(values.link)
+				.then(function (response) {
+					return response.text();
+				})
+				.then((data) => {
+					// var data = response.text();
+					// console.log(data);
+
+					data = JSON.parse(data);
+					// console.log(data["description"]);
+					if (data["description"] === "Invalid response status code (0)") {
+					} else if (data["description"] === "Linkpreview service denied") {
+					} else if (
+						data["description"] === "Too many requests / rate limit exceeded"
+					) {
+					} else {
+						// console.log(data["description"]);
+						auto_description = data["description"];
+						auto_image = data["image"];
+						values.name = data["title"];
 					}
-				}
-				contentChange((content) => ({ ...content, add: "ad" }));
-			});
+					// return "hello";
+
+					createItem({
+						...values,
+						list_id: props.listID,
+						selTags: content.selTags,
+						curator_id: userC.loggedin_user_id,
+						tags: content.alltags,
+						contentType: content.contentType,
+						currentListID: content.currentListID,
+						currentTagID: content.currentTagID,
+						auto_description,
+						auto_image,
+					}).then((response) => {
+						// console.log(response);
+						if (typeof response.data.insert_item_tag !== "undefined") {
+							if (response.data.insert_item_tag.returning.length > 0) {
+								var tempTag = content.tags;
+								var tempAllTags = content.alltags;
+								for (
+									let index = 0;
+									index < response.data.insert_item_tag.returning.length;
+									index++
+								) {
+									tempTag.push({
+										text:
+											response.data.insert_item_tag.returning[index].tag.name,
+										key:
+											response.data.insert_item_tag.returning[index].tag.name,
+										value: response.data.insert_item_tag.returning[index].id,
+									});
+									tempAllTags.push({
+										text:
+											response.data.insert_item_tag.returning[index].tag.name,
+										key:
+											response.data.insert_item_tag.returning[index].tag.name,
+										value: response.data.insert_item_tag.returning[index].id,
+									});
+								}
+								contentChange((content) => ({
+									...content,
+									tags: tempTag,
+									alltags: tempAllTags,
+								}));
+							}
+						}
+						contentChange((content) => ({ ...content, add: "ad" }));
+					});
+				});
+
 			SetModal(false);
 			// reward.rewardMe();
 			if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000")

@@ -74,6 +74,8 @@ const INSERT_ITEM = gql`
 		$curator: String!
 		$list_id: uuid!
 		$suggestion: Boolean
+		$auto_description: String
+		$auto_image: String
 	) {
 		insert_items(
 			objects: {
@@ -83,6 +85,8 @@ const INSERT_ITEM = gql`
 				curator: $curator
 				list_id: $list_id
 				suggestion: $suggestion
+				auto_description: $auto_description
+				auto_image: $auto_image
 			}
 		) {
 			affected_rows
@@ -223,7 +227,8 @@ function InsertItem(
 	currentListID,
 	currentTagID,
 	suggestion,
-	listfeed
+	auto_description,
+	auto_image
 ) {
 	// console.log(contentType)
 	// console.log(currentListID)
@@ -288,6 +293,8 @@ function InsertItem(
 					curator: curator_id,
 					list_id: list_id,
 					suggestion: suggestion,
+					auto_image: auto_image,
+					auto_description: auto_description,
 				},
 			})
 			.catch((error) => {
@@ -305,6 +312,8 @@ function InsertItem(
 				curator: curator_id,
 				list_id: list_id,
 				suggestion: suggestion,
+				auto_image: auto_image,
+				auto_description: auto_description,
 			},
 			update: (cache, { data }) => {
 				if (contentType === "lists") {
@@ -439,6 +448,7 @@ function InsertTagPost(temp) {
 }
 
 const createItem = (values) => {
+	console.log(values);
 	function FindTagName(id) {
 		for (var tag in values.tags) {
 			if (values.tags[tag]["value"] === id) {
@@ -502,7 +512,8 @@ const createItem = (values) => {
 							values.currentListID,
 							values.currentTagID,
 							values.suggestion,
-							values.listfeed
+							values.auto_description,
+							values.auto_image
 						)
 							.then((response) => {
 								const item = response.data.insert_items.returning[0];
@@ -560,7 +571,8 @@ const createItem = (values) => {
 							values.currentListID,
 							values.currentTagID,
 							values.suggestion,
-							values.listfeed
+							values.auto_description,
+							values.auto_image
 						)
 							.then((response) => {
 								const item = response.data.insert_items.returning[0];
@@ -614,7 +626,8 @@ const createItem = (values) => {
 							values.currentListID,
 							values.currentTagID,
 							values.suggestion,
-							values.listfeed
+							values.auto_description,
+							values.auto_image
 						)
 							.then((response) => {
 								const item = response.data.insert_items.returning[0];
@@ -656,7 +669,8 @@ const createItem = (values) => {
 							values.currentListID,
 							values.currentTagID,
 							values.suggestion,
-							values.listfeed
+							values.auto_description,
+							values.auto_image
 						).catch((error) => {
 							console.log(error);
 						});
@@ -679,7 +693,8 @@ const createItem = (values) => {
 					values.currentListID,
 					values.currentTagID,
 					values.suggestion,
-					values.listfeed
+					values.auto_description,
+					values.auto_image
 				)
 					.then((response) => {
 						const item = response.data.insert_items.returning[0];
@@ -726,7 +741,8 @@ const createItem = (values) => {
 					values.currentListID,
 					values.currentTagID,
 					values.suggestion,
-					values.listfeed
+					values.auto_description,
+					values.auto_image
 				)
 					.then((response) => {
 						const item = response.data.insert_items.returning[0];
@@ -766,7 +782,8 @@ const createItem = (values) => {
 					values.currentListID,
 					values.currentTagID,
 					values.suggestion,
-					values.listfeed
+					values.auto_description,
+					values.auto_image
 				)
 					.then((response) => {
 						const item = response.data.insert_items.returning[0];
@@ -793,7 +810,8 @@ const createItem = (values) => {
 					values.currentListID,
 					values.currentTagID,
 					values.suggestion,
-					values.listfeed
+					values.auto_description,
+					values.auto_image
 				).catch((error) => {
 					console.log(error);
 				});
