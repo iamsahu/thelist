@@ -62,6 +62,7 @@ const CurrentConsumption = lazy(() => import("./pages/CurrentConsumption"));
 const Share = lazy(() => import("./pages/Share"));
 const UserSettings = lazy(() => import("./pages/UserSettings"));
 const Privacy = lazy(() => import("./pages/Privacy"));
+const Feedback = lazy(() => import("./pages/Feedback"));
 
 toast.configure();
 
@@ -279,6 +280,12 @@ function App() {
 			value: "manage",
 		},
 		{ key: "settings", text: "Settings", icon: "setting", value: "settings" },
+		{
+			key: "feedback",
+			text: "Request Feature",
+			icon: "bug",
+			value: "feedback",
+		},
 		{ key: "sign-out", text: "Sign Out", icon: "sign out", value: "logout" },
 	];
 
@@ -297,6 +304,10 @@ function App() {
 				history.push("/settings/" + user["sub"].split("|")[1]);
 				window.location.href = window.location.href;
 				break;
+			case "feedback":
+				history.push("/feedback");
+				window.location.href = window.location.href;
+				break;
 			case "logout":
 				//TODO: in the future write code here to handle the proper redirect
 				userChange((userC) => {
@@ -304,6 +315,7 @@ function App() {
 				});
 				logout({ returnTo: process.env.REACT_APP_BASE_URL });
 				break;
+
 			default:
 				break;
 		}
@@ -581,6 +593,11 @@ function App() {
 														<Route exact path="/privacy" component={Privacy} />
 														<Route
 															exact
+															path="/feedback"
+															component={Feedback}
+														/>
+														<Route
+															exact
 															path="/settings/:id"
 															component={UserSettings}
 														/>
@@ -655,6 +672,7 @@ function App() {
 										>
 											<Switch>
 												<Route exact path="/privacy" component={Privacy} />
+												<Route exact path="/feedback" component={Feedback} />
 												<Route
 													exact
 													path="/settings/:id"

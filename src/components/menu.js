@@ -41,6 +41,12 @@ function MenuBar(props) {
 			value: "manage",
 		},
 		{ key: "settings", text: "Settings", icon: "setting", value: "settings" },
+		{
+			key: "feedback",
+			text: "Request Feature",
+			icon: "bug",
+			value: "feedback",
+		},
 		{ key: "sign-out", text: "Sign Out", icon: "sign out", value: "logout" },
 	];
 
@@ -55,6 +61,9 @@ function MenuBar(props) {
 				break;
 			case "settings":
 				history.push("/settings/" + user["sub"].split("|")[1]);
+				break;
+			case "feedback":
+				history.push("/feedback");
 				break;
 			case "logout":
 				//TODO: in the future write code here to handle the proper redirect
