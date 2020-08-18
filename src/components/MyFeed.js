@@ -4,10 +4,11 @@ import StreamContext from "../context/StreamContext";
 
 function MyFeed(props) {
 	const [streamClient, streamuserFeed] = useContext(StreamContext);
-	var feed = streamClient.feed("timeline", props.user);
-	feed.get().then((activitiesSuccess) => {
-		console.log(activitiesSuccess);
-	});
+
+	// var feed = streamClient.feed("timeline", props.user);
+	// feed.get().then((activitiesSuccess) => {
+	// 	console.log(activitiesSuccess);
+	// });
 	return (
 		<>
 			<Responsive {...Responsive.onlyMobile}>Coming Soon!</Responsive>
