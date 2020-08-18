@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { List, Divider, Item, Grid, Responsive } from "semantic-ui-react";
 import { GetAllUsers } from "../util/graphqlExecutor";
-
+import CommonLoader from "./CommonLoader";
 import ProfileListItem from "./ProfileListItem";
 import { Grid as GG } from "@material-ui/core";
 function PopularProfileLanding() {
@@ -20,7 +20,7 @@ function PopularProfileLanding() {
 	return (
 		<>
 			{loading ? (
-				<div>loading</div>
+				<CommonLoader />
 			) : (
 				<>
 					{/* <Grid> */}

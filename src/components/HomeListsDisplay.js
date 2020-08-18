@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { GetAllLists } from "../util/graphqlExecutor";
 import SearchResultItem from "./SearchResultItem";
 import { Item, Responsive, Loader } from "semantic-ui-react";
+import CommonLoader from "./CommonLoader";
 
 function HomeListsDisplay() {
 	const [loading, setloading] = useState(true);
@@ -18,9 +19,7 @@ function HomeListsDisplay() {
 	return (
 		<>
 			{loading ? (
-				<div>
-					<Loader active inline="centered" />
-				</div>
+				<CommonLoader />
 			) : (
 				<>
 					<Responsive {...Responsive.onlyMobile}>

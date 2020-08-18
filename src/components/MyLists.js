@@ -6,7 +6,7 @@ import CuratorLandingCard from "./CuratorLandingCard";
 import AddList from "../components/AddList";
 import { useAuth0 } from "../react-auth0-spa";
 import UserContext from "../context/UserContext";
-
+import CommonLoader from "./CommonLoader";
 function MyLists(props) {
 	const [listData, setlistData] = useState("");
 	const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
@@ -31,9 +31,7 @@ function MyLists(props) {
 			<Responsive {...Responsive.onlyMobile}>
 				<Item.Group divided relaxed="very">
 					{listData === "" ? (
-						<div key="unique">
-							<Loader active inline="centered" />
-						</div>
+						<CommonLoader />
 					) : listData.lists.length > 0 ? (
 						listData.lists.map((item) => (
 							<CuratorLandingCard item={item} key={item.id} />
@@ -72,9 +70,7 @@ function MyLists(props) {
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 				<GG container spacing={2}>
 					{listData === "" ? (
-						<div>
-							<Loader active inline="centered" />
-						</div>
+						<CommonLoader />
 					) : listData.lists.length > 0 ? (
 						listData.lists.map((item) => (
 							<GG key={item.id} item xs={4}>

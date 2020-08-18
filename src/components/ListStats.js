@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Statistic, Loader } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
+import CommonLoader from "./CommonLoader";
 
 const GET_STATS = gql`
 	query MyQuery($list_id: uuid!) {
@@ -27,11 +28,7 @@ function ListStats(props) {
 	});
 
 	if (loading) {
-		return (
-			<div>
-				<Loader active inline="centered" />
-			</div>
-		);
+		return <CommonLoader />;
 	}
 	if (error) {
 		console.log(error);

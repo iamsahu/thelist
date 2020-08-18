@@ -4,6 +4,7 @@ import SearchResultItem from "./SearchResultItem";
 import { List, Responsive, Loader } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import StackGrid from "react-stack-grid";
+import CommonLoader from "./CommonLoader";
 
 import ContentContext from "../context/ContentContext";
 
@@ -24,9 +25,7 @@ function HomeTagsDisplay() {
 		<>
 			{
 				loading ? (
-					<div>
-						<Loader active inline="centered" />
-					</div>
+					<CommonLoader />
 				) : (
 					<>
 						<Responsive {...Responsive.onlyMobile}>

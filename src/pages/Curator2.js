@@ -21,7 +21,7 @@ import {
 	GetOneListOfUser,
 	IncrementListView,
 } from "../util/graphqlExecutor";
-
+import CommonLoader from "../components/CommonLoader";
 const ContentMiddleNoLoad = lazy(() =>
 	import("../components/ContentMiddle_NoLoad")
 );
@@ -406,7 +406,7 @@ function Curator(props) {
 		<>
 			<Responsive {...Responsive.onlyMobile}>
 				<div>
-					<Suspense fallback={<div>Loading...</div>}>
+					<Suspense fallback={<CommonLoader />}>
 						<ContentMiddleNoLoad
 							propSent={propSent}
 							posts={posts}
@@ -426,7 +426,7 @@ function Curator(props) {
 					<Grid stackable>
 						<Grid.Column width={1}></Grid.Column>
 						<Grid.Column width={3}>
-							<Suspense fallback={<div>Loading...</div>}>
+							<Suspense fallback={<CommonLoader />}>
 								<CurationList
 									curator_id={userC.curator_id}
 									contentType={propSent.contentType}
@@ -449,7 +449,7 @@ function Curator(props) {
 									"box-shadow": "0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5",
 								}}
 							>
-								<Suspense fallback={<div>Loading...</div>}>
+								<Suspense fallback={<CommonLoader />}>
 									<ContentMiddleNoLoad
 										propSent={propSent}
 										posts={posts}
@@ -465,7 +465,7 @@ function Curator(props) {
 							</div>
 						</Grid.Column>
 						<Grid.Column width={3}>
-							<Suspense fallback={<div>Loading...</div>}>
+							<Suspense fallback={<CommonLoader />}>
 								<ContentRight
 									curator_id={userC.curator_id}
 									propSent={propSent}

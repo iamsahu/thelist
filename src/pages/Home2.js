@@ -14,7 +14,7 @@ import {
 // import HomeListsDisplay from "../components/HomeListsDisplay";
 // import HomeTagsDisplay from "../components/HomeTagsDisplay";
 // import Explore2 from "../components/Explore2";
-
+import CommonLoader from "../components/CommonLoader";
 const PopularProfile = lazy(() => import("../components/PopularProfile"));
 const HomeListsDisplay = lazy(() => import("../components/HomeListsDisplay"));
 const HomeTagsDisplay = lazy(() => import("../components/HomeTagsDisplay"));
@@ -105,7 +105,7 @@ function Home2(props) {
 							onClick={handleItemClick}
 						/>
 					</Menu>
-					<Suspense fallback={<div>Loading...</div>}>{activeItem}</Suspense>
+					<Suspense fallback={<CommonLoader />}>{activeItem}</Suspense>
 				</div>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
@@ -149,7 +149,7 @@ function Home2(props) {
                     <Divider/>
                     <HomeListsDisplay/> */}
 						<div className="scrollyExplore" class="pl-2 pr-2 mr-2 bg-gray-100">
-							<Suspense fallback={<div>Loading...</div>}>{activeItem}</Suspense>
+							<Suspense fallback={<CommonLoader />}>{activeItem}</Suspense>
 						</div>
 					</Grid.Column>
 					{/* <Grid.Column width={4}> */}

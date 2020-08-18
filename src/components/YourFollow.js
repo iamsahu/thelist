@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Loader, Responsive, Item, Button } from "semantic-ui-react";
 import { Grid as GG, Card as CC } from "@material-ui/core";
 import Follow from "./Follow";
-
+import CommonLoader from "./CommonLoader";
 function YourFollow(props) {
 	const [loading, setloading] = useState("-1");
 	const [followData, setfollowData] = useState("");
@@ -25,11 +25,7 @@ function YourFollow(props) {
 			.catch((error) => console.log(error));
 
 	if (loading === "-1") {
-		return (
-			<div>
-				<Loader active inline="centered" />
-			</div>
-		);
+		return <CommonLoader />;
 	}
 
 	if (followData.list_follow.length < 1) {

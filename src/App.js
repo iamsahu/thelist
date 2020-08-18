@@ -20,6 +20,7 @@ import { UserProvider } from "./context/UserContext";
 import { ContentProvider } from "./context/ContentContext";
 import { StreamProvider } from "./context/StreamContext";
 import { AlgoliaProvider } from "./context/AlgoliaContext";
+import CommonLoader from "./components/CommonLoader";
 
 // import HomeNoLogin from "./pages/HomeNoLogin";
 
@@ -440,7 +441,8 @@ function App() {
 	if (loading)
 		return (
 			<div>
-				<Loader active inline="centered" />
+				{/* <Loader active inline="centered" /> */}
+				<CommonLoader />
 			</div>
 		);
 
@@ -451,7 +453,13 @@ function App() {
 				<StreamProvider value={[streamClient, streamuserFeed]}>
 					<AlgoliaProvider value={[itemindex, listindex]}>
 						<Router history={history}>
-							<Suspense fallback={<div>Loading...</div>}>
+							<Suspense
+								fallback={
+									<div>
+										<CommonLoader />
+									</div>
+								}
+							>
 								<Responsive {...Responsive.onlyMobile}>
 									<Sidebar.Pushable>
 										<Sidebar

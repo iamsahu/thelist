@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import StackGrid from "react-stack-grid";
 import { useHistory } from "react-router-dom";
 import LandingPageCard from "./LandingPageCard";
-
+import CommonLoader from "./CommonLoader";
 import {
 	Icon,
 	Responsive,
@@ -65,7 +65,8 @@ function Explore3() {
 		<>
 			{loading ? (
 				<div>
-					<Loader active inline="centered" />
+					{/* <Loader active inline="centered" /> */}
+					<CommonLoader />
 				</div>
 			) : (
 				<>

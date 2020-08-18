@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 // import ContentContext from "../context/ContentContext";
 import history from "../util/history";
 import { useAuth0 } from "../react-auth0-spa";
-
+import CommonLoader from "../components/CommonLoader";
 // import UserProfileDisplay from "../components/UserProfileDisplay";
 // import MyLists from "../components/MyLists";
 // import MyFeed from "../components/MyFeed";
@@ -91,7 +91,7 @@ function CuratorLanding(props) {
 		window.location.href = window.location.href;
 	};
 
-	if (typeof tagData.tag === "undefined") return <div>Loading</div>;
+	if (typeof tagData.tag === "undefined") return <CommonLoader />;
 
 	// var activeItem = "mylists";
 
@@ -200,7 +200,7 @@ function CuratorLanding(props) {
 						MY LISTS
 						<Divider />
 					</div> */}
-					<Suspense fallback={<div>Loading...</div>}>{activeitem}</Suspense>
+					<Suspense fallback={<CommonLoader />}>{activeitem}</Suspense>
 				</div>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
@@ -297,9 +297,7 @@ function CuratorLanding(props) {
 									columnWidth={300}
 									columnHeight={255}
 								> */}
-								<Suspense fallback={<div>Loading...</div>}>
-									{activeitem}
-								</Suspense>
+								<Suspense fallback={<CommonLoader />}>{activeitem}</Suspense>
 								{/* </StackGrid> */}
 								{/* </Item.Group> */}
 							</Grid.Column>

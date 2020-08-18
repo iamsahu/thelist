@@ -4,6 +4,7 @@ import { GetAllUsers } from "../util/graphqlExecutor";
 
 import ProfileListItem from "./ProfileListItem";
 import { Grid as GG } from "@material-ui/core";
+import CommonLoader from "./CommonLoader";
 function PopularProfile() {
 	const [loading, setloading] = useState(true);
 	const [allusers, setallusers] = useState(null);
@@ -20,7 +21,7 @@ function PopularProfile() {
 	return (
 		<>
 			{loading ? (
-				<div>loading</div>
+				<CommonLoader />
 			) : (
 				<>
 					{/* <Grid> */}

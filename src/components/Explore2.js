@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import LandingPageCard from "./LandingPageCard";
 import Follow from "./Follow";
 import { Grid as GG } from "@material-ui/core";
+import CommonLoader from "./CommonLoader";
 import {
 	Item,
 	Responsive,
@@ -72,8 +73,9 @@ function Explore() {
 	return (
 		<>
 			{loading ? (
-				<div>
-					<Loader active inline="centered" />
+				<div class="h-full w-full content-center">
+					{/* <Loader active inline="centered" /> */}
+					<CommonLoader />
 				</div>
 			) : (
 				<>

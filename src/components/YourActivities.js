@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-import { Loader, Header, Item } from "semantic-ui-react";
+import { Loader, Header, Item, Responsive } from "semantic-ui-react";
 import { GetItemsActivity } from "../util/graphqlExecutor";
 import { useHistory } from "react-router-dom";
-
+import CommonLoader from "./CommonLoader";
 function YourActivities(props) {
 	const [loading, setloading] = useState("-1");
 	const [activityData, setactivityData] = useState("");
@@ -27,11 +27,7 @@ function YourActivities(props) {
 			.catch((error) => console.log(error));
 
 	if (loading === "-1") {
-		return (
-			<div>
-				<Loader active inline="centered" />
-			</div>
-		);
+		return <CommonLoader />;
 	}
 
 	if (activityData.items.length < 1) {
@@ -43,7 +39,6 @@ function YourActivities(props) {
 		);
 	}
 	// console.log(activityData.items);
-
 	function Activity(item) {
 		return (
 			<div class="flex h-48">
@@ -56,7 +51,7 @@ function YourActivities(props) {
 							/>
 						</div>
 						<div class="p-2 w-3/4 h-48">
-							<div class="overflow-hidden h-32">
+							<div class="overflow-hidden h-48">
 								{/* <h4 class="font-semibold text-xl text-gray-800 truncate"> */}
 								<a
 									class="font-normal text-gray-800 w-full text-lg md:text-xl"
@@ -75,15 +70,25 @@ function YourActivities(props) {
 									</a>
 								</div>
 								{/* </h4> */}
-								<p class="text-gray-700 mt-1 overflow-hidden font-thin text-base lg:text-lg">
-									{/* <Linkify> */}
-									{item.description !== ""
-										? item.description
-										: item.auto_description === "none"
-										? ""
-										: item.auto_description.substring(0, 336)}
-									{/* </Linkify> */}
-								</p>
+								<Responsive {...Responsive.onlyMobile}>
+									<p class="text-gray-700 mt-1 overflow-hidden font-thin text-base lg:text-lg">
+										{item.description !== ""
+											? item.description.substring(0, 100)
+											: item.auto_description === "none"
+											? ""
+											: item.auto_description.substring(0, 100)}
+										...
+									</p>
+								</Responsive>
+								<Responsive minWidth={Responsive.onlyTablet.minWidth}>
+									<p class="text-gray-700 mt-1 overflow-hidden font-thin text-base lg:text-lg">
+										{item.description !== ""
+											? item.description.substring(0, 336)
+											: item.auto_description === "none"
+											? ""
+											: item.auto_description.substring(0, 336)}
+									</p>
+								</Responsive>
 							</div>
 							{/* <div class="max-w-full max-h-full relative h-8">
 						{isAuthenticated &&
