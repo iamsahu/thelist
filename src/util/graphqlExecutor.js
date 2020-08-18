@@ -2741,6 +2741,50 @@ const GetFollowOfUser = (user_id) => {
 		.catch((error) => console.log(error));
 };
 
+const GETFEEDITEMS = gql`
+	query MyQuery($_in: [uuid!]!) {
+		items(where: { id: { _in: $_in } }) {
+			appreciation_count
+			auto_description
+			auto_image
+			bookmarks_count
+			copy_count
+			created_at
+			curator
+			description
+			id
+			link
+			list_id
+			name
+			share_count
+			suggestion
+			view_count
+			user {
+				id
+				image_link
+				username
+			}
+			list {
+				id
+				list_name
+			}
+		}
+	}
+`;
+
+const GetFeedItems = (_in) => {
+	console.log(_in);
+	return client
+		.query({
+			query: GETFEEDITEMS,
+			variables: {
+				_in: _in,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -2786,6 +2830,7 @@ export {
 	UpdateUserDetails,
 	GetUserStats,
 	GetFollowOfUser,
+	GetFeedItems,
 };
 
 export const DELETE_LIST = gql`

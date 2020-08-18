@@ -1,6 +1,7 @@
 import React from "react";
 import Lottie from "react-lottie";
 import * as animationData from "../assets/animations/simpleloader.json";
+import { Loader } from "semantic-ui-react";
 
 function CommonLoader() {
 	const defaultOptions = {
@@ -13,7 +14,8 @@ function CommonLoader() {
 	};
 	return (
 		<div class="content-center flex">
-			<Lottie options={defaultOptions} height={100} width={100} />
+			{/* <Lottie options={defaultOptions} height={100} width={100} /> */}
+			<Loader active inline="centered" />
 		</div>
 	);
 }
