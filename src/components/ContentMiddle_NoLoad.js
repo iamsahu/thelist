@@ -334,125 +334,174 @@ function ContentMiddleNoLoad(props) {
 					<meta name="twitter:image" content={props.image_url} />
 				)}
 			</MetaTags>
-			<Menu pointing secondary>
-				<Menu.Item
-					name="Home"
-					active={activeTab === "Home"}
-					onClick={handleItemClick}
-				/>
-				<Menu.Item
-					name="Suggestions"
-					active={activeTab === "Suggestions"}
-					onClick={handleItemClick}
+			<div class="md:hidden sm:inline p-2">
+				{userC.loggedin_user_id !== props.propSent.curator_id &&
+				content.contentType === "lists" ? (
+					<Suggest id={props.contID} />
+				) : (
+					<></>
+				)}
+				<Follow
+					curator_id={props.propSent.curator_id}
+					contentID={props.propSent.contentID}
 				/>
 
-				<Menu.Menu position="right">
-					<div className="icobutton" style={{ background: "white" }}>
-						{userC.loggedin_user_id !== props.propSent.curator_id &&
-						content.contentType === "lists" ? (
-							<Suggest id={props.contID} />
-						) : (
-							<></>
-						)}
-						{userC.loggedin_user_id !== props.propSent.curator_id &&
-						content.contentType === "lists" ? (
-							<LikeList props={props.propSent.contentID} />
-						) : (
-							<></>
-						)}
+				{props.propSent.contentType === "lists" &&
+					userC.loggedin_user_id === props.propSent.curator_id && (
+						<>
+							<AddItem2 listID={props.propSent.contentID} />
+							{/* */}
+							<Modal
+								closeIcon
+								trigger={
+									<Button
+										size="tiny"
+										// floated="right"
+										basic
+										color="black"
+									>
+										Upload CSV
+									</Button>
+								}
+								centered={false}
+							>
+								<Modal.Header>Upload CSV</Modal.Header>
+								<Modal.Content>
+									<Button as="a" href="/sample.csv" target="_blank" download>
+										Download Sample
+									</Button>
+									<Divider />
+									<CSVReader
+										onDrop={handleOnDrop}
+										onError={handleOnError}
+										noDrag
+										onRemoveFile={handleOnRemoveFile}
+									>
+										<span>Drop the file here</span>
+									</CSVReader>
+									<br />
+									{fileUpload === "1" && <Button>Upload This</Button>}
+								</Modal.Content>
+							</Modal>
+						</>
+					)}
+			</div>
+			<div class="mt-8">
+				<Menu pointing secondary>
+					<Menu.Item
+						name="Home"
+						active={activeTab === "Home"}
+						onClick={handleItemClick}
+					/>
+					<Menu.Item
+						name="Suggestions"
+						active={activeTab === "Suggestions"}
+						onClick={handleItemClick}
+					/>
 
-						{/* {content.contentType === "lists" &&
+					<Menu.Menu position="right">
+						<div className="icobutton" style={{ background: "white" }}>
+							{userC.loggedin_user_id !== props.propSent.curator_id &&
+							content.contentType === "lists" ? (
+								<LikeList props={props.propSent.contentID} />
+							) : (
+								<></>
+							)}
+
+							{/* {content.contentType === "lists" &&
 							userC.loggedin_user_id === props.propSent.curator_id && (
 								<AddItem2 />
 							)} */}
-						<Follow
-							curator_id={props.propSent.curator_id}
-							contentID={props.propSent.contentID}
-						/>
+							<div class="hidden md:inline">
+								{userC.loggedin_user_id !== props.propSent.curator_id &&
+								content.contentType === "lists" ? (
+									<Suggest id={props.contID} />
+								) : (
+									<></>
+								)}
+								<Follow
+									curator_id={props.propSent.curator_id}
+									contentID={props.propSent.contentID}
+								/>
 
-						{
-							props.propSent.contentType === "lists" &&
-								userC.loggedin_user_id === props.propSent.curator_id && (
-									<>
-										<AddItem2 listID={props.propSent.contentID} />
-										{/* */}
-										<Modal
-											closeIcon
-											trigger={
-												<Button
-													size="tiny"
-													// floated="right"
-													basic
-													color="black"
-												>
-													Upload CSV
-												</Button>
-											}
-											centered={false}
+								{props.propSent.contentType === "lists" &&
+									userC.loggedin_user_id === props.propSent.curator_id && (
+										<>
+											<AddItem2 listID={props.propSent.contentID} />
+											{/* */}
+											<Modal
+												closeIcon
+												trigger={
+													<Button
+														size="tiny"
+														// floated="right"
+														basic
+														color="black"
+													>
+														Upload CSV
+													</Button>
+												}
+												centered={false}
+											>
+												<Modal.Header>Upload CSV</Modal.Header>
+												<Modal.Content>
+													<Button
+														as="a"
+														href="/sample.csv"
+														target="_blank"
+														download
+													>
+														Download Sample
+													</Button>
+													<Divider />
+													<CSVReader
+														onDrop={handleOnDrop}
+														onError={handleOnError}
+														noDrag
+														onRemoveFile={handleOnRemoveFile}
+													>
+														<span>Drop the file here</span>
+													</CSVReader>
+													<br />
+													{fileUpload === "1" && <Button>Upload This</Button>}
+												</Modal.Content>
+											</Modal>
+										</>
+									)}
+							</div>
+							<Modal
+								closeIcon
+								trigger={
+									<Button icon size="tiny" floated="right" basic color="black">
+										<Icon name="share alternate" />
+									</Button>
+								}
+								centered={false}
+							>
+								<Modal.Header>Share on Social Media</Modal.Header>
+								<Modal.Content>
+									<div>
+										<FacebookShareButton url={shareUrl} quote={props.desc}>
+											<FacebookIcon size={32} round />
+										</FacebookShareButton>
+										<TwitterShareButton url={shareUrl} title={props.desc}>
+											<TwitterIcon size={32} round />
+										</TwitterShareButton>
+										<WhatsappShareButton
+											url={shareUrl}
+											title={props.desc}
+											separator=":: "
+											className="Demo__some-network__share-button"
 										>
-											<Modal.Header>Upload CSV</Modal.Header>
-											<Modal.Content>
-												<Button
-													as="a"
-													href="/sample.csv"
-													target="_blank"
-													download
-												>
-													Download Sample
-												</Button>
-												<Divider />
-												<CSVReader
-													onDrop={handleOnDrop}
-													onError={handleOnError}
-													noDrag
-													onRemoveFile={handleOnRemoveFile}
-												>
-													<span>Drop the file here</span>
-												</CSVReader>
-												<br />
-												{fileUpload === "1" && <Button>Upload This</Button>}
-											</Modal.Content>
-										</Modal>
-									</>
-								)
-							// <Button circular icon='add' floated='right'/>
-						}
-						<Modal
-							closeIcon
-							trigger={
-								<Button icon size="tiny" floated="right" basic color="black">
-									<Icon name="share alternate" />
-								</Button>
-							}
-							centered={false}
-						>
-							<Modal.Header>Share on Social Media</Modal.Header>
-							<Modal.Content>
-								<div>
-									<FacebookShareButton url={shareUrl} quote={props.desc}>
-										<FacebookIcon size={32} round />
-									</FacebookShareButton>
-									<TwitterShareButton url={shareUrl} title={props.desc}>
-										<TwitterIcon size={32} round />
-									</TwitterShareButton>
-									<WhatsappShareButton
-										url={shareUrl}
-										title={props.desc}
-										separator=":: "
-										className="Demo__some-network__share-button"
-									>
-										<WhatsappIcon size={32} round />
-									</WhatsappShareButton>
-								</div>
-							</Modal.Content>
-						</Modal>
-						{/* <Button icon>
-            <Icon name='share alternate' />
-        </Button> */}
-					</div>
-				</Menu.Menu>
-			</Menu>
-
+											<WhatsappIcon size={32} round />
+										</WhatsappShareButton>
+									</div>
+								</Modal.Content>
+							</Modal>
+						</div>
+					</Menu.Menu>
+				</Menu>
+			</div>
 			<Responsive {...Responsive.onlyMobile}>
 				<div style={{ paddingTop: "20px" }}>
 					<Item.Group divided>

@@ -147,32 +147,54 @@ function CuratorLanding(props) {
 					<div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
 						<UserProfileDisplay user={u} />
 					</div>
-					<Menu pointing secondary>
-						<Menu.Item
-							name="My Lists"
-							active={activeTab === "mylists"}
-							onClick={handleItemClickMobile}
-						/>
+					<div class="p-2">
 						{isAuthenticated && u === userC.loggedin_user_id && (
+							<Button
+								size="tiny"
+								floated="right"
+								basic
+								color="black"
+								onClick={() => {
+									var t = `/manage/${userC.loggedin_user_id}`;
+									routeChange(t);
+								}}
+								// style={{ marginBottom: "50px" }}
+							>
+								Manage Content
+							</Button>
+						)}
+						{<BuyMeCoffee coffee={buymecoffee} user={username} />}
+						{/* {isAuthenticated &&
+									u !== userC.loggedin_user_id &&
+									"Buy me coffee"} */}
+					</div>
+					<div class="mt-8">
+						<Menu pointing secondary>
 							<Menu.Item
-								name="Feed"
-								active={activeTab === "feed"}
+								name="My Lists"
+								active={activeTab === "mylists"}
 								onClick={handleItemClickMobile}
 							/>
-						)}
+							{isAuthenticated && u === userC.loggedin_user_id && (
+								<Menu.Item
+									name="Feed"
+									active={activeTab === "feed"}
+									onClick={handleItemClickMobile}
+								/>
+							)}
 
-						<Menu.Item
-							name="Activity"
-							active={activeTab === "Activity"}
-							onClick={handleItemClickMobile}
-						/>
-						<Menu.Item
-							name="Following"
-							active={activeTab === "Following"}
-							onClick={handleItemClickMobile}
-						/>
+							<Menu.Item
+								name="Activity"
+								active={activeTab === "Activity"}
+								onClick={handleItemClickMobile}
+							/>
+							<Menu.Item
+								name="Following"
+								active={activeTab === "Following"}
+								onClick={handleItemClickMobile}
+							/>
 
-						<Menu.Menu position="right">
+							{/* <Menu.Menu position="right">
 							<div className="icobutton">
 								{isAuthenticated && u === userC.loggedin_user_id && (
 									<Button
@@ -190,12 +212,10 @@ function CuratorLanding(props) {
 									</Button>
 								)}
 								{<BuyMeCoffee coffee={buymecoffee} user={username} />}
-								{/* {isAuthenticated &&
-									u !== userC.loggedin_user_id &&
-									"Buy me coffee"} */}
 							</div>
-						</Menu.Menu>
-					</Menu>
+						</Menu.Menu> */}
+						</Menu>
+					</div>
 					{/* <div>
 						MY LISTS
 						<Divider />
