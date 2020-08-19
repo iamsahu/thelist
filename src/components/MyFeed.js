@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Responsive } from "semantic-ui-react";
+import { Responsive, Loader } from "semantic-ui-react";
 import StreamContext from "../context/StreamContext";
 import { connect } from "getstream";
 import { GetFeedItems } from "../util/graphqlExecutor";
@@ -116,15 +116,23 @@ function MyFeed(props) {
 			<Responsive {...Responsive.onlyMobile}>
 				{activities === "" ? (
 					<div>Loading</div>
-				) : (
+				) : activities.items.length > 0 ? (
 					activities.items.map((item) => Activity(item))
+				) : (
+					<div class="content-center">
+						<Loader active inline="centered" />
+					</div>
 				)}
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 				{activities === "" ? (
 					<div>Loading</div>
-				) : (
+				) : activities.items.length > 0 ? (
 					activities.items.map((item) => Activity(item))
+				) : (
+					<div class="content-center">
+						<Loader active inline="centered" />
+					</div>
 				)}
 			</Responsive>
 		</>
