@@ -219,7 +219,8 @@ function Suggest(props) {
 						contentType: content.contentType,
 						currentListID: content.currentListID,
 						currentTagID: content.currentTagID,
-						listfeed,
+						auto_description,
+						auto_image,
 					}).then((response) => {
 						// console.log(response);
 						if (typeof response.data.insert_item_tag !== "undefined") {
@@ -254,9 +255,10 @@ function Suggest(props) {
 							}
 						}
 						contentChange((content) => ({ ...content, add: "ad" }));
+						SetModal(false);
 					});
 				});
-			SetModal(false);
+
 			// reward.rewardMe();
 			if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000")
 				ReactGA.event({

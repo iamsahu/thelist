@@ -1,4 +1,11 @@
-import React, { useContext, useState, Suspense, lazy } from "react";
+import React, {
+	useContext,
+	useState,
+	Suspense,
+	lazy,
+	useEffect,
+	useRef,
+} from "react";
 // import { useQuery } from "@apollo/react-hooks";
 import {
 	Menu,
@@ -60,6 +67,7 @@ import Follow from "./Follow";
 const Suggest = lazy(() => import("./Suggest"));
 
 function ContentMiddleNoLoad(props) {
+	useTraceUpdate(props);
 	// console.log(props);
 	// console.log(process.env)
 	// console.log(process.env.REACT_APP_BASE_URL)
@@ -196,6 +204,7 @@ function ContentMiddleNoLoad(props) {
 				setactiveItem("home");
 				break;
 			case "Suggestions":
+				console.log("SUggestion");
 				setactiveTab("Suggestions");
 				setactiveItem("suggest");
 				break;
@@ -596,6 +605,22 @@ function ContentMiddleNoLoad(props) {
 			</Responsive>
 		</>
 	);
+}
+
+function useTraceUpdate(props) {
+	const prev = useRef(props);
+	useEffect(() => {
+		const changedProps = Object.entries(props).reduce((ps, [k, v]) => {
+			if (prev.current[k] !== v) {
+				ps[k] = [prev.current[k], v];
+			}
+			return ps;
+		}, {});
+		if (Object.keys(changedProps).length > 0) {
+			console.log("Changed props:", changedProps);
+		}
+		prev.current = props;
+	});
 }
 
 export default ContentMiddleNoLoad;

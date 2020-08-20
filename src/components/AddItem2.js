@@ -256,10 +256,10 @@ function AddItem2(props) {
 							}
 						}
 						contentChange((content) => ({ ...content, add: "ad" }));
+						SetModal(false);
 					});
 				});
 
-			SetModal(false);
 			// reward.rewardMe();
 			if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000")
 				ReactGA.event({
