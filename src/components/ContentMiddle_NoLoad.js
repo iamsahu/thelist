@@ -76,7 +76,11 @@ function ContentMiddleNoLoad(props) {
 	const [userC, userChange] = useContext(UserContext);
 	const [shareUrl, setshareUrl] = useState(window.location.href);
 	// const [header, setheader] = useState("");
-	const [description, setdescription] = useState("");
+	const [description, setdescription] = useState(
+		props.propSent.description !== undefined
+			? props.propSent.description !== undefined
+			: ""
+	);
 	// const [listlike, setlistlike] = useState(false);
 	// const [loadState, setloadState] = useState(-1);
 	const [fileUpload, setfileUpload] = useState("0");
@@ -132,13 +136,13 @@ function ContentMiddleNoLoad(props) {
 		);
 	}
 
-	if (props.propSent.contentType === "lists") {
-		if (description === "") {
-			// console.log(props.propSent.description)
-			if (props.propSent.description !== undefined)
-				setdescription(props.propSent.description);
-		}
-	}
+	// if (props.propSent.contentType === "lists") {
+	// 	if (description === "") {
+	// 		// console.log(props.propSent.description)
+	// 		if (props.propSent.description !== undefined)
+	// 			setdescription(props.propSent.description);
+	// 	}
+	// }
 
 	if (props.posts.length > 0) {
 		// props.posts[0][]
