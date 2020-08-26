@@ -627,4 +627,4 @@ function useTraceUpdate(props) {
 	});
 }
 
-export default ContentMiddleNoLoad;
+export default React.memo(ContentMiddleNoLoad);

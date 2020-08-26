@@ -164,4 +164,4 @@ function Home2(props) {
 	);
 }
 
-export default Home2;
+export default React.memo(Home2);

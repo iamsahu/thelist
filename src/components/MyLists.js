@@ -1,5 +1,9 @@
 import React, { useState, useContext } from "react";
-import { GetListsOfUser, GetTagsOfUser } from "../util/graphqlExecutor";
+import {
+	GetListsOfUser,
+	GetTagsOfUser,
+	GetListsOfUserNonPrivate,
+} from "../util/graphqlExecutor";
 import { Item, Loader, Responsive, Image } from "semantic-ui-react";
 import { Grid as GG, Card as CC } from "@material-ui/core";
 import CuratorLandingCard from "./CuratorLandingCard";
@@ -7,6 +11,7 @@ import AddList from "../components/AddList";
 import { useAuth0 } from "../react-auth0-spa";
 import UserContext from "../context/UserContext";
 import CommonLoader from "./CommonLoader";
+
 function MyLists(props) {
 	const [listData, setlistData] = useState("");
 	const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
@@ -14,12 +19,23 @@ function MyLists(props) {
 
 	const loadUser = (user) => {
 		// if(tyuser)
-		GetListsOfUser(user)
-			.then((response) => {
-				// console.log(response);
-				setlistData(response);
-			})
-			.catch((error) => console.log(error));
+		if (userC.loggedin_user_id === user) {
+			//Loggedin but also the same user so private fetched
+			GetListsOfUser(user)
+				.then((response) => {
+					// console.log(response);
+					setlistData(response);
+				})
+				.catch((error) => console.log(error));
+		} else {
+			//Not the same as logged in user so fetching the non private lists
+			GetListsOfUserNonPrivate(user)
+				.then((response) => {
+					// console.log(response);
+					setlistData(response);
+				})
+				.catch((error) => console.log(error));
+		}
 	};
 
 	if (props.user !== "") {
@@ -112,4 +128,4 @@ function MyLists(props) {
 	);
 }
 
-export default MyLists;
+export default React.memo(MyLists);

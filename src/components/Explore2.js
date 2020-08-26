@@ -127,4 +127,4 @@ function Explore() {
 	);
 }
 
-export default Explore;
+export default React.memo(Explore);

@@ -120,4 +120,4 @@ function Explore3() {
 	);
 }
 
-export default Explore3;
+export default React.memo(Explore3);

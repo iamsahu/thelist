@@ -394,6 +394,7 @@ function AddItem2(props) {
 	function OpenHandle() {
 		SetDropList(content.lists);
 		SetDropTag(content.alltags);
+		contentChange((content) => ({ ...content, selTags: "" }));
 		console.log("Open Modal");
 	}
 	// if (typeof dropTag === "undefined") return <></>;

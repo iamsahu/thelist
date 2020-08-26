@@ -63,4 +63,4 @@ function CentralList(props) {
 	));
 }
 
-export default CentralList;
+export default React.memo(CentralList);

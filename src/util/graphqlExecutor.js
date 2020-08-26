@@ -113,6 +113,8 @@ const INSERT_ITEM = gql`
 				list {
 					description
 					list_name
+					paid
+					private
 					like_lists_aggregate {
 						aggregate {
 							count
@@ -847,6 +849,8 @@ export const GET_LIST = gql`
 			list {
 				description
 				list_name
+				paid
+				private
 				like_lists_aggregate {
 					aggregate {
 						count
@@ -953,6 +957,8 @@ const GET_ITEMS = gql`
 			list {
 				description
 				list_name
+				paid
+				private
 				like_lists_aggregate {
 					aggregate {
 						count
@@ -1033,6 +1039,8 @@ const GET_ITEMS_USER = gql`
 			list {
 				description
 				list_name
+				paid
+				private
 				like_lists_aggregate {
 					aggregate {
 						count
@@ -1195,7 +1203,7 @@ const Search = (values) => {
 
 const GET_ALL_LISTS = gql`
 	query MyQuery {
-		lists(order_by: { view_count: desc }) {
+		lists(order_by: { view_count: desc }, where: { private: { _eq: false } }) {
 			description
 			id
 			curator_id
@@ -1304,6 +1312,8 @@ const DELETE_ITEM = gql`
 				share_count
 				view_count
 				list {
+					paid
+					private
 					description
 					list_name
 					like_lists_aggregate {
@@ -1609,6 +1619,8 @@ const GTI = gql`
 					list {
 						description
 						list_name
+						paid
+						private
 						like_lists_aggregate {
 							aggregate {
 								count
@@ -1825,6 +1837,8 @@ const GETALL_BOOKMARK_ITEMS = gql`
 				list {
 					description
 					list_name
+					paid
+					private
 					like_lists_aggregate {
 						aggregate {
 							count
@@ -1885,6 +1899,8 @@ const GETBOOKMARKSOFCURATOR = gql`
 				list {
 					description
 					list_name
+					paid
+					private
 					like_lists_aggregate {
 						aggregate {
 							count
@@ -2114,6 +2130,8 @@ const GETLISTSOFUSER = gql`
 			list_name
 			image_url
 			view_count
+			paid
+			private
 			like_lists_aggregate {
 				aggregate {
 					count
@@ -2147,6 +2165,54 @@ const GetListsOfUser = (user_id) => {
 		.catch((error) => console.log(error));
 };
 
+const GETLISTSOFUSERNONPRIVATE = gql`
+	query MyQuery($user_id: String) {
+		lists(
+			order_by: { created_at: desc_nulls_last }
+			where: { user: { id: { _eq: $user_id } }, private: { _eq: false } }
+		) {
+			created_at
+			curator_id
+			description
+			id
+			list_name
+			image_url
+			view_count
+			paid
+			private
+			like_lists_aggregate {
+				aggregate {
+					count
+				}
+			}
+			items {
+				like_items_aggregate {
+					aggregate {
+						count
+					}
+				}
+			}
+			user {
+				username
+				description
+				image_link
+			}
+		}
+	}
+`;
+
+const GetListsOfUserNonPrivate = (user_id) => {
+	return client
+		.query({
+			query: GETLISTSOFUSERNONPRIVATE,
+			variables: {
+				user_id: user_id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 const TAGSBYUSER = gql`
 	query MyQuery($user_id: String) {
 		tag(where: { user_id: { _eq: $user_id } }) {
@@ -2172,7 +2238,11 @@ const GETONELIST = gql`
 	query MyQuery($curator_id: String!) {
 		lists(
 			limit: 1
-			where: { curator_id: { _eq: $curator_id } }
+			where: {
+				curator_id: { _eq: $curator_id }
+				paid: { _eq: false }
+				private: { _eq: false }
+			}
 			order_by: { created_at: desc_nulls_last }
 		) {
 			created_at
@@ -2574,6 +2644,8 @@ const GETITEMS = gql`
 			list {
 				id
 				list_name
+				paid
+				private
 			}
 		}
 	}
@@ -2717,6 +2789,8 @@ const GETFOLLOWOFUSER = gql`
 				list_name
 				image_url
 				description
+				paid
+				private
 				curator_id
 				user {
 					id
@@ -2767,6 +2841,8 @@ const GETFEEDITEMS = gql`
 			list {
 				id
 				list_name
+				paid
+				private
 			}
 		}
 	}
@@ -2831,6 +2907,7 @@ export {
 	GetUserStats,
 	GetFollowOfUser,
 	GetFeedItems,
+	GetListsOfUserNonPrivate,
 };
 
 export const DELETE_LIST = gql`

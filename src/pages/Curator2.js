@@ -481,5 +481,5 @@ function Curator(props) {
 	);
 }
 
-export default Curator;
+export default React.memo(Curator);
 //contentType={props.match.params.contenttype} contentID={props.match.params.listid}
