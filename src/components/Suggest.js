@@ -256,23 +256,23 @@ function Suggest(props) {
 						}
 						contentChange((content) => ({ ...content, add: "ad" }));
 						SetModal(false);
+						if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000")
+							ReactGA.event({
+								category: "Item",
+								action: "Create",
+								transport: "beacon",
+							});
+						Mixpanel.track("Item Created");
+
+						values.reason = "";
+						values.name = "";
+						values.link = "";
+						values.description = "";
+						setlistDescription(false);
 					});
 				});
 
 			// reward.rewardMe();
-			if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000")
-				ReactGA.event({
-					category: "Item",
-					action: "Create",
-					transport: "beacon",
-				});
-			Mixpanel.track("Item Created");
-
-			values.reason = "";
-			values.name = "";
-			values.link = "";
-			values.description = "";
-			setlistDescription(false);
 		}
 	}
 

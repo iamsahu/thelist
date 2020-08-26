@@ -147,6 +147,7 @@ function AddItem2(props) {
 
 	function createPostCallback() {
 		// console.log(content.list_id)
+		console.log(values);
 		var errors = false;
 		// if (typeof content.list_id === "undefined") {
 		// 	setErrorList(true);
@@ -210,7 +211,7 @@ function AddItem2(props) {
 						values.name = data["title"];
 					}
 					// return "hello";
-
+					console.log(values);
 					createItem({
 						...values,
 						list_id: props.listID,
@@ -257,23 +258,23 @@ function AddItem2(props) {
 						}
 						contentChange((content) => ({ ...content, add: "ad" }));
 						SetModal(false);
+						if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000")
+							ReactGA.event({
+								category: "Item",
+								action: "Create",
+								transport: "beacon",
+							});
+						Mixpanel.track("Item Created");
+
+						values.reason = "";
+						values.name = "";
+						values.link = "";
+						values.description = "";
+						setlistDescription(false);
 					});
 				});
 
 			// reward.rewardMe();
-			if (process.env.REACT_APP_BASE_URL !== "http://localhost:3000")
-				ReactGA.event({
-					category: "Item",
-					action: "Create",
-					transport: "beacon",
-				});
-			Mixpanel.track("Item Created");
-
-			values.reason = "";
-			values.name = "";
-			values.link = "";
-			values.description = "";
-			setlistDescription(false);
 		}
 	}
 
