@@ -427,7 +427,7 @@ function Suggest(props) {
 			>
 				<Modal.Header>Add Item</Modal.Header>
 				<Modal.Content image scrolling>
-					<Dimmer.Dimmable dimmed={dimmer}>
+					<Dimmer.Dimmable dimmed={dimmer} inverted>
 						<Form onSubmit={onSubmit} size="large">
 							<Form.Group widths="equal">
 								<Form.Field inline name="name">
@@ -494,8 +494,9 @@ function Suggest(props) {
 								Submit
 							</Button>
 						</Form>
-						<Dimmer active={dimmer}>
+						<Dimmer active={dimmer} inverted>
 							<Loader />
+							Fetching data
 						</Dimmer>
 					</Dimmer.Dimmable>
 				</Modal.Content>
