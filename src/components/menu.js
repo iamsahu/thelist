@@ -55,6 +55,7 @@ function MenuBar(props) {
 		switch (value) {
 			case "user":
 				history.push("/" + user["sub"].split("|")[1]);
+				window.location.href = window.location.href;
 				break;
 			case "manage":
 				history.push("/manage/" + user["sub"].split("|")[1]);
