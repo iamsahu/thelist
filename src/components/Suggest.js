@@ -1,5 +1,12 @@
 import React, { useContext, useState } from "react";
-import { Modal, Button, Form, Dropdown } from "semantic-ui-react";
+import {
+	Modal,
+	Button,
+	Form,
+	Dropdown,
+	Dimmer,
+	Loader,
+} from "semantic-ui-react";
 import useForm from "../util/hook";
 // import { useMutation, useQuery } from "@apollo/react-hooks";
 // import { CREATE_ITEM, INSERT_TAG_MULTI } from "../util/graphql";
@@ -76,7 +83,7 @@ function Suggest(props) {
 	const [userC, userChange] = useContext(UserContext);
 	const [multiTag, SetMultiTag] = useState([]);
 	const [showModal, SetModal] = useState(false);
-	const [listID, SetListID] = useState("");
+	const [dimmer, setDimmer] = useState(false);
 	const [newItemID, SetItemID] = useState("");
 	const [dropTag, SetDropTag] = useState(content.alltags);
 	const [dropList, SetDropList] = useState(content.lists);
@@ -188,6 +195,7 @@ function Suggest(props) {
 		if (!errors) {
 			var auto_description = "";
 			var auto_image = "";
+			setDimmer(true);
 			GetDetails(values.link)
 				.then(function (response) {
 					return response.text();
@@ -341,6 +349,7 @@ function Suggest(props) {
 		setErrorLink(false);
 		setErrorName(false);
 		SetModal(false);
+		setDimmer(false);
 	}
 
 	function onClick(event) {
@@ -352,6 +361,7 @@ function Suggest(props) {
 		//     }
 		// }
 		SetModal(true);
+		setDimmer(false);
 		SetDropTag(content.alltags);
 		// if(!loading){
 		//     // console.log(data)
@@ -417,72 +427,77 @@ function Suggest(props) {
 			>
 				<Modal.Header>Add Item</Modal.Header>
 				<Modal.Content image scrolling>
-					<Form onSubmit={onSubmit} size="large">
-						<Form.Group widths="equal">
-							<Form.Field inline name="name">
-								<label>Title for item</label>
-								<Form.Input
-									name="name"
-									placeholder="name"
-									onChange={onChange}
-									value={values.name}
-									error={errorName ? "Please Enter Name" : false}
-								/>
-							</Form.Field>
-							<Form.Field inline name="link">
-								<label>Link of the item</label>
-								<Form.Input
-									name="link"
-									placeholder="Link"
-									onChange={(e, { value }) => {
-										onChange(e);
-										linkCheck(e, { value });
-									}}
-									value={values.link}
-									error={errorLink ? "Please add a link" : false}
-								/>
-							</Form.Field>
-						</Form.Group>
-						<Form.Field inline name="description">
-							{/* <label>Description</label> */}
-							<Form.TextArea
-								label="Description"
-								name="description"
-								placeholder="Describe what your consumers should expect from this content. (If you are feeling lazy leave this upto us)"
-								style={{ minHeight: 100 }}
-								onChange={onChange}
-								value={values.description}
-								error={errorDescription ? "Please add a description" : false}
-							/>
-						</Form.Field>
-						<Form.Group>
-							<Form.Field inline name="tag">
-								<label>Tags</label>
-								<Form.Input>
-									{/* {loading?<Dropdown text='Dropdown' loading />: */}
-									<Dropdown
-										name="tag"
-										options={Object.values(dropTag)}
-										placeholder="Tags"
-										search
-										selection
-										fluid
-										multiple
-										allowAdditions
-										// value={currentValues}
-										onAddItem={handleAddition}
-										onChange={handleChange}
-										upward
+					<Dimmer.Dimmable dimmed={dimmer}>
+						<Form onSubmit={onSubmit} size="large">
+							<Form.Group widths="equal">
+								<Form.Field inline name="name">
+									<label>Title for item</label>
+									<Form.Input
+										name="name"
+										placeholder="name"
+										onChange={onChange}
+										value={values.name}
+										error={errorName ? "Please Enter Name" : false}
 									/>
-									{/* } */}
-								</Form.Input>
+								</Form.Field>
+								<Form.Field inline name="link">
+									<label>Link of the item</label>
+									<Form.Input
+										name="link"
+										placeholder="Link"
+										onChange={(e, { value }) => {
+											onChange(e);
+											linkCheck(e, { value });
+										}}
+										value={values.link}
+										error={errorLink ? "Please add a link" : false}
+									/>
+								</Form.Field>
+							</Form.Group>
+							<Form.Field inline name="description">
+								{/* <label>Description</label> */}
+								<Form.TextArea
+									label="Description"
+									name="description"
+									placeholder="Describe what your consumers should expect from this content. (If you are feeling lazy leave this upto us)"
+									style={{ minHeight: 100 }}
+									onChange={onChange}
+									value={values.description}
+									error={errorDescription ? "Please add a description" : false}
+								/>
 							</Form.Field>
-						</Form.Group>
-						<br />
-						<Button primary type="submit">
-							Submit
-						</Button>
-					</Form>
+							<Form.Group>
+								<Form.Field inline name="tag">
+									<label>Tags</label>
+									<Form.Input>
+										{/* {loading?<Dropdown text='Dropdown' loading />: */}
+										<Dropdown
+											name="tag"
+											options={Object.values(dropTag)}
+											placeholder="Tags"
+											search
+											selection
+											fluid
+											multiple
+											allowAdditions
+											// value={currentValues}
+											onAddItem={handleAddition}
+											onChange={handleChange}
+											upward
+										/>
+										{/* } */}
+									</Form.Input>
+								</Form.Field>
+							</Form.Group>
+							<br />
+							<Button primary type="submit">
+								Submit
+							</Button>
+						</Form>
+						<Dimmer active={dimmer}>
+							<Loader />
+						</Dimmer>
+					</Dimmer.Dimmable>
 				</Modal.Content>
 			</Modal>
 			{/* </Reward> */}

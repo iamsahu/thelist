@@ -1,5 +1,13 @@
 import React, { useContext, useState } from "react";
-import { Modal, Button, Form, Dropdown } from "semantic-ui-react";
+import {
+	Modal,
+	Button,
+	Form,
+	Dropdown,
+	Dimmer,
+	Loader,
+	Segment,
+} from "semantic-ui-react";
 import useForm from "../util/hook";
 // import { useMutation, useQuery } from "@apollo/react-hooks";
 // import { CREATE_ITEM, INSERT_TAG_MULTI } from "../util/graphql";
@@ -86,13 +94,12 @@ function AddItem2(props) {
 	const [userC, userChange] = useContext(UserContext);
 	const [multiTag, SetMultiTag] = useState([]);
 	const [showModal, SetModal] = useState(false);
-	const [listID, SetListID] = useState("");
+	const [dimmer, setDimmer] = useState(false);
 	const [newItemID, SetItemID] = useState("");
 	const [dropTag, SetDropTag] = useState(content.alltags);
 	const [dropList, SetDropList] = useState(content.lists);
 	const [listDescription, setlistDescription] = useState(false);
-	const [reward, setreward] = useState(null);
-	const [refetch, setRefetch] = useState(false);
+
 	//Figure out how to add content to thte dropTag
 
 	const [errorList, setErrorList] = useState(false);
@@ -189,6 +196,7 @@ function AddItem2(props) {
 
 		console.log(props.listID);
 		if (!errors) {
+			setDimmer(true);
 			GetDetails(values.link)
 				.then(function (response) {
 					return response.text();
@@ -343,6 +351,7 @@ function AddItem2(props) {
 		setErrorLink(false);
 		setErrorName(false);
 		SetModal(false);
+		setDimmer(false);
 	}
 
 	function onClick(event) {
@@ -354,6 +363,7 @@ function AddItem2(props) {
 		//     }
 		// }
 		SetModal(true);
+		setDimmer(false);
 		SetDropTag(content.alltags);
 		// if(!loading){
 		//     // console.log(data)
@@ -396,6 +406,7 @@ function AddItem2(props) {
 				}}
 				type="confetti"
 			> */}
+
 			<Modal
 				size="small"
 				open={showModal}
@@ -418,75 +429,82 @@ function AddItem2(props) {
 				}
 			>
 				<Modal.Header>Add Item</Modal.Header>
+
 				<Modal.Content image scrolling>
-					<Form onSubmit={onSubmit} size="large">
-						<Form.Group widths="equal">
-							<Form.Field inline name="name">
-								<label>Title for item</label>
-								<Form.Input
-									name="name"
-									placeholder="name"
-									onChange={onChange}
-									value={values.name}
-									error={errorName ? "Please Enter Name" : false}
-								/>
-							</Form.Field>
-							<Form.Field inline name="link">
-								<label>Link of the item</label>
-								<Form.Input
-									name="link"
-									placeholder="Link"
-									onChange={(e, { value }) => {
-										onChange(e);
-										linkCheck(e, { value });
-									}}
-									value={values.link}
-									error={errorLink ? "Please add a link" : false}
-								/>
-							</Form.Field>
-						</Form.Group>
-						<Form.Field inline name="description">
-							{/* <label>Description</label> */}
-							<Form.TextArea
-								label="Description"
-								name="description"
-								placeholder="Describe what your consumers should expect from this content. (If you are feeling lazy leave this upto us)"
-								style={{ minHeight: 100 }}
-								onChange={onChange}
-								value={values.description}
-								error={errorDescription ? "Please add a description" : false}
-							/>
-						</Form.Field>
-						<Form.Group>
-							<Form.Field inline name="tag">
-								<label>Tags</label>
-								<Form.Input>
-									{/* {loading?<Dropdown text='Dropdown' loading />: */}
-									<Dropdown
-										name="tag"
-										options={Object.values(dropTag)}
-										placeholder="Tags"
-										search
-										selection
-										fluid
-										multiple
-										allowAdditions
-										// value={currentValues}
-										onAddItem={handleAddition}
-										onChange={handleChange}
-										upward
+					<Dimmer.Dimmable dimmed={dimmer}>
+						<Form onSubmit={onSubmit} size="large">
+							<Form.Group widths="equal">
+								<Form.Field inline name="name">
+									<label>Title for item</label>
+									<Form.Input
+										name="name"
+										placeholder="name"
+										onChange={onChange}
+										value={values.name}
+										error={errorName ? "Please Enter Name" : false}
 									/>
-									{/* } */}
-								</Form.Input>
+								</Form.Field>
+								<Form.Field inline name="link">
+									<label>Link of the item</label>
+									<Form.Input
+										name="link"
+										placeholder="Link"
+										onChange={(e, { value }) => {
+											onChange(e);
+											linkCheck(e, { value });
+										}}
+										value={values.link}
+										error={errorLink ? "Please add a link" : false}
+									/>
+								</Form.Field>
+							</Form.Group>
+							<Form.Field inline name="description">
+								{/* <label>Description</label> */}
+								<Form.TextArea
+									label="Description"
+									name="description"
+									placeholder="Describe what your consumers should expect from this content. (If you are feeling lazy leave this upto us)"
+									style={{ minHeight: 100 }}
+									onChange={onChange}
+									value={values.description}
+									error={errorDescription ? "Please add a description" : false}
+								/>
 							</Form.Field>
-						</Form.Group>
-						<br />
-						<Button primary type="submit">
-							Submit
-						</Button>
-					</Form>
+							<Form.Group>
+								<Form.Field inline name="tag">
+									<label>Tags</label>
+									<Form.Input>
+										{/* {loading?<Dropdown text='Dropdown' loading />: */}
+										<Dropdown
+											name="tag"
+											options={Object.values(dropTag)}
+											placeholder="Tags"
+											search
+											selection
+											fluid
+											multiple
+											allowAdditions
+											// value={currentValues}
+											onAddItem={handleAddition}
+											onChange={handleChange}
+											upward
+										/>
+										{/* } */}
+									</Form.Input>
+								</Form.Field>
+							</Form.Group>
+							<br />
+							<Button primary type="submit">
+								Submit
+							</Button>
+						</Form>
+						<Dimmer active={dimmer}>
+							<Loader />
+						</Dimmer>
+					</Dimmer.Dimmable>
 				</Modal.Content>
 			</Modal>
+
 			{/* </Reward> */}
 		</>
 	);
