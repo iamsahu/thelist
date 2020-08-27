@@ -10,7 +10,6 @@ import UserContext from "../context/UserContext";
 import useForm from "../util/hook";
 import { useMutation } from "@apollo/react-hooks";
 import ReactLinkify from "react-linkify";
-const Profile = lazy(() => import("../components/Profile"));
 
 function UserProfileDisplay(props) {
 	const [userC, userChange] = useContext(UserContext);
@@ -168,7 +167,6 @@ function UserProfileDisplay(props) {
 	if (props.user !== "") if (values.image_link === "") loadUser(props.user);
 	return (
 		<>
-			{/* <Profile /> */}
 			<main className="profile-page">
 				<section
 					className="relative block"
