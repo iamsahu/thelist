@@ -165,6 +165,8 @@ function UserProfileDisplay(props) {
 	);
 
 	if (props.user !== "") if (values.image_link === "") loadUser(props.user);
+
+	const bg = ["https://imgur.com/4AQLgTl", "https://imgur.com/3Bu9ITh"];
 	return (
 		<>
 			<main className="profile-page">
@@ -177,12 +179,17 @@ function UserProfileDisplay(props) {
 						style={{
 							backgroundImage:
 								"url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80')",
+							//"url('https://imgur.com/3Bu9ITh')",
+							// "url('https://images.unsplash.com/photo-1582815642030-a31dd13ef4ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80')",
+							// "url('https://images.unsplash.com/photo-1555642053-663d5a84a56b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80')",
+							// "url('https://images.unsplash.com/photo-1579691099788-42394ae932d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2689&q=80')",
+							// "url('https://images.unsplash.com/photo-1568186576492-324f2541f272?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3200&q=80')",
 						}}
 					>
-						<span
+						{/* <span
 							id="blackOverlay"
 							className="w-full h-full absolute opacity-50 bg-black"
-						></span>
+						></span> */}
 					</div>
 					<div
 						className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden"

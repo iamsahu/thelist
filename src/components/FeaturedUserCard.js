@@ -43,14 +43,14 @@ function FeaturedUserCard(props) {
 						<img class="object-cover" src={userProfile} />
 					</div>
 					<div class="p-2 w-3/4">
-						<div class="h-32">
+						<div class="h-40">
 							<a
 								class="font-normal text-lg md:text-xl text-gray-800 w-full"
 								href={`${process.env.REACT_APP_BASE_URL}/${id}`}
 							>
 								{username}
 							</a>
-							<p class="font-thin text-gray-700 text-base lg:text-lg overflow-hidden md:h-24 h-32">
+							<p class="font-thin text-gray-700 text-base lg:text-lg overflow-hidden md:h-24 h-40">
 								<Linkify>{description}</Linkify>
 							</p>
 						</div>

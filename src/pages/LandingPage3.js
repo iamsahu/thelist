@@ -653,7 +653,7 @@ function LandingPage3() {
 						</div> */}
 
 						<div class="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
-							<div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow">
+							<div class="flex-1 bg-white rounded-md overflow-hidden shadow-lg border">
 								<a
 									href="#"
 									class="flex flex-wrap no-underline hover:no-underline mt-4"
@@ -680,7 +680,7 @@ function LandingPage3() {
 						</div>
 
 						<div class="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
-							<div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow">
+							<div class="flex-1 bg-white rounded-md overflow-hidden shadow-lg border">
 								<a
 									href="#"
 									class="flex flex-wrap no-underline hover:no-underline mt-4"
@@ -706,7 +706,7 @@ function LandingPage3() {
 						</div>
 
 						<div class="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
-							<div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow">
+							<div class="flex-1 bg-white rounded-md overflow-hidden shadow-lg border">
 								<a
 									href="#"
 									class="flex flex-wrap no-underline hover:no-underline mt-4"
