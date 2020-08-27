@@ -57,7 +57,7 @@ const Curator2 = lazy(() => import("./pages/Curator2"));
 const CuratorLanding = lazy(() => import("./pages/CuratorLanding"));
 const SearchResults = lazy(() => import("./pages/SearchResults"));
 const DataEntry = lazy(() => import("./pages/DataEntry"));
-const LandingPage = lazy(() => import("./pages/LandingPage"));
+const LandingPage = lazy(() => import("./pages/LandingPage3"));
 const CurrentConsumption = lazy(() => import("./pages/CurrentConsumption"));
 const Share = lazy(() => import("./pages/Share"));
 const UserSettings = lazy(() => import("./pages/UserSettings"));
