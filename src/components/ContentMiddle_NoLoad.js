@@ -219,7 +219,7 @@ function ContentMiddleNoLoad(props) {
 	return (
 		<>
 			{/* <h1>{props.propSent.contentType==='lists'?content.currentList:content.currentTag}</h1> */}
-			<Container style={{ marginTop: "5em" }} fluid>
+			<Container style={{ marginTop: "6em" }} fluid>
 				<Grid>
 					<Grid.Column floated="left">
 						<Header as="h1">
