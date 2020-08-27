@@ -63,6 +63,7 @@ const Share = lazy(() => import("./pages/Share"));
 const UserSettings = lazy(() => import("./pages/UserSettings"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Feedback = lazy(() => import("./pages/Feedback"));
+// const LandingPage = lazy(() => import("./pages/LandingPage"));
 
 toast.configure();
 
@@ -585,76 +586,76 @@ function App() {
 												</Menu.Menu>
 											</Menu>
 											<div
-												className="font-sans text-gray-900 bg-gray-100 antialiased"
+												className=" text-gray-900 bg-gray-100 antialiased w-screen"
 												style={{ marginTop: "3em" }}
 											>
-												<Container style={{ marginTop: "7em" }} fluid>
-													<Switch>
-														<Route exact path="/privacy" component={Privacy} />
-														<Route
-															exact
-															path="/feedback"
-															component={Feedback}
-														/>
-														<Route
-															exact
-															path="/settings/:id"
-															component={UserSettings}
-														/>
-														<Route exact path="/explore" component={Home2} />
-														<Route exact path="/share" component={Share} />
-														<Route
-															exact
-															path="/dataentry"
-															component={DataEntry}
-														/>
-														<Route
-															exact
-															path="/search"
-															component={SearchResults}
-														/>
+												{/* <Container
+													style={{ marginTop: "5em" }}
+													fluid
+													className="w-full"
+												> */}
+												<Switch>
+													<Route exact path="/privacy" component={Privacy} />
+													<Route exact path="/feedback" component={Feedback} />
+													<Route
+														exact
+														path="/settings/:id"
+														component={UserSettings}
+													/>
+													<Route exact path="/explore" component={Home2} />
+													<Route exact path="/share" component={Share} />
+													<Route
+														exact
+														path="/dataentry"
+														component={DataEntry}
+													/>
+													<Route
+														exact
+														path="/search"
+														component={SearchResults}
+													/>
 
+													<Route
+														exact
+														path="/:user/:contenttype/:contentid"
+														component={Curator2}
+													/>
+													<Route
+														exact
+														path="/:user/:contenttype"
+														component={Curator2}
+													/>
+													{/* <Route exact path="/:user" component={CuratorLanding} /> */}
+													<Route
+														exact
+														path="/manage/:user"
+														component={Curator2}
+													/>
+													<Route
+														exact
+														path="/:user"
+														component={CuratorLanding}
+													/>
+													{isAuthenticated && !loading && !loadingT ? (
 														<Route
-															exact
-															path="/:user/:contenttype/:contentid"
-															component={Curator2}
+															path="/"
+															render={(props) => (
+																<CuratorLanding
+																	user={userC["loggedin_user_id"]}
+																	isAuthed={true}
+																/>
+															)}
 														/>
-														<Route
-															exact
-															path="/:user/:contenttype"
-															component={Curator2}
-														/>
-														{/* <Route exact path="/:user" component={CuratorLanding} /> */}
-														<Route
-															exact
-															path="/manage/:user"
-															component={Curator2}
-														/>
+													) : (
 														<Route
 															exact
 															path="/:user"
 															component={CuratorLanding}
 														/>
-														{isAuthenticated && !loading && !loadingT ? (
-															<Route
-																path="/"
-																render={(props) => (
-																	<CuratorLanding
-																		user={userC["loggedin_user_id"]}
-																		isAuthed={true}
-																	/>
-																)}
-															/>
-														) : (
-															<Route
-																exact
-																path="/:user"
-																component={CuratorLanding}
-															/>
-														)}
-														<Route exact path="/" component={LandingPage} />
-													</Switch>
-												</Container>
+													)}
+													<Route exact path="/" component={LandingPage} />
+												</Switch>
+												{/* </Container> */}
 											</div>
 										</Sidebar.Pusher>
 									</Sidebar.Pushable>

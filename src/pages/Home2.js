@@ -8,6 +8,7 @@ import {
 	Message,
 	Responsive,
 	Menu,
+	Container,
 } from "semantic-ui-react";
 
 // import PopularProfile from "../components/PopularProfile";
@@ -78,8 +79,9 @@ function Home2(props) {
 	return (
 		<>
 			<Responsive {...Responsive.onlyMobile}>
-				<div class="bg-gray-100">
-					{/* {welcomeBox ? (
+				<Container style={{ marginTop: "5em" }} fluid>
+					<div class="bg-gray-100">
+						{/* {welcomeBox ? (
 						<Message onDismiss={handleDismiss}>
 							<Message.Header>Welcome to List Space</Message.Header>
 							<Message.List items={items} />
@@ -88,25 +90,26 @@ function Home2(props) {
 						<div></div>
 					)} */}
 
-					<Menu pointing secondary>
-						<Menu.Item
-							name="curators"
-							active={activeTab === "curators"}
-							onClick={handleItemClick}
-						/>
-						<Menu.Item
-							name="lists"
-							active={activeTab === "lists"}
-							onClick={handleItemClick}
-						/>
-						<Menu.Item
-							name="tags"
-							active={activeTab === "tags"}
-							onClick={handleItemClick}
-						/>
-					</Menu>
-					<Suspense fallback={<CommonLoader />}>{activeItem}</Suspense>
-				</div>
+						<Menu pointing secondary>
+							<Menu.Item
+								name="curators"
+								active={activeTab === "curators"}
+								onClick={handleItemClick}
+							/>
+							<Menu.Item
+								name="lists"
+								active={activeTab === "lists"}
+								onClick={handleItemClick}
+							/>
+							<Menu.Item
+								name="tags"
+								active={activeTab === "tags"}
+								onClick={handleItemClick}
+							/>
+						</Menu>
+						<Suspense fallback={<CommonLoader />}>{activeItem}</Suspense>
+					</div>
+				</Container>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 				{/* {welcomeBox ? (

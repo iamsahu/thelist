@@ -143,10 +143,9 @@ function CuratorLanding(props) {
 	return (
 		<>
 			<Responsive {...Responsive.onlyMobile}>
-				<div class="bg-gray-100">
-					<div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
-						<UserProfileDisplay user={u} />
-					</div>
+				<div class="bg-gray-100 w-full">
+					<UserProfileDisplay user={u} />
+
 					<div class="p-2">
 						{isAuthenticated && u === userC.loggedin_user_id && (
 							<Button
@@ -168,33 +167,34 @@ function CuratorLanding(props) {
 									u !== userC.loggedin_user_id &&
 									"Buy me coffee"} */}
 					</div>
-					<div class="mt-8">
-						<Menu pointing secondary>
-							<Menu.Item
-								name="My Lists"
-								active={activeTab === "mylists"}
-								onClick={handleItemClickMobile}
-							/>
-							{isAuthenticated && u === userC.loggedin_user_id && (
+					<Container fluid>
+						<div class="mt-8">
+							<Menu pointing secondary>
 								<Menu.Item
-									name="Feed"
-									active={activeTab === "feed"}
+									name="My Lists"
+									active={activeTab === "mylists"}
 									onClick={handleItemClickMobile}
 								/>
-							)}
+								{isAuthenticated && u === userC.loggedin_user_id && (
+									<Menu.Item
+										name="Feed"
+										active={activeTab === "feed"}
+										onClick={handleItemClickMobile}
+									/>
+								)}
 
-							<Menu.Item
-								name="Activity"
-								active={activeTab === "Activity"}
-								onClick={handleItemClickMobile}
-							/>
-							<Menu.Item
-								name="Following"
-								active={activeTab === "Following"}
-								onClick={handleItemClickMobile}
-							/>
+								<Menu.Item
+									name="Activity"
+									active={activeTab === "Activity"}
+									onClick={handleItemClickMobile}
+								/>
+								<Menu.Item
+									name="Following"
+									active={activeTab === "Following"}
+									onClick={handleItemClickMobile}
+								/>
 
-							{/* <Menu.Menu position="right">
+								{/* <Menu.Menu position="right">
 							<div className="icobutton">
 								{isAuthenticated && u === userC.loggedin_user_id && (
 									<Button
@@ -214,28 +214,30 @@ function CuratorLanding(props) {
 								{<BuyMeCoffee coffee={buymecoffee} user={username} />}
 							</div>
 						</Menu.Menu> */}
-						</Menu>
-					</div>
-					{/* <div>
+							</Menu>
+						</div>
+
+						{/* <div>
 						MY LISTS
 						<Divider />
 					</div> */}
-					<Suspense fallback={<CommonLoader />}>{activeitem}</Suspense>
+						<Suspense fallback={<CommonLoader />}>{activeitem}</Suspense>
+					</Container>
 				</div>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 				<div className="scrollyCuratorLanding" class="bg-gray-100">
 					<div id="content" className="ui">
 						<Container fluid>
-							<Grid>
+							{/* <Grid>
 								<Grid.Column width={3}></Grid.Column>
 								<Grid.Column width={10}>
-									<div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
-										<UserProfileDisplay user={u} />
-									</div>
+									<div style={{ marginTop: "2rem", marginBottom: "2rem" }}> */}
+							<UserProfileDisplay user={u} />
+							{/* </div>
 								</Grid.Column>
 								<Grid.Column width={3}></Grid.Column>
-							</Grid>
+							</Grid> */}
 						</Container>
 					</div>
 					<div id="content" className="ui">
