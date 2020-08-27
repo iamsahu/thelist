@@ -24,6 +24,7 @@ import {
 	Loader,
 	Form,
 	Reveal,
+	Container,
 } from "semantic-ui-react";
 import {
 	FacebookShareButton,
@@ -218,395 +219,402 @@ function ContentMiddleNoLoad(props) {
 	return (
 		<>
 			{/* <h1>{props.propSent.contentType==='lists'?content.currentList:content.currentTag}</h1> */}
+			<Container style={{ marginTop: "5em" }} fluid>
+				<Grid>
+					<Grid.Column floated="left">
+						<Header as="h1">
+							{props.propSent.contentType === "tags" ? (
+								<></>
+							) : (
+								<ListIcon id={props.contID} image_url={props.image_url} />
+							)}
 
-			<Grid>
-				<Grid.Column floated="left">
-					<Header as="h1">
-						{props.propSent.contentType === "tags" ? (
-							<></>
+							<span>
+								{props.title} <b>by</b>{" "}
+								<Label as="a" image href={`/${props.propSent.curator_id}`}>
+									<img src={props.userImage} />
+									{props.userName}
+								</Label>
+							</span>
+						</Header>
+						{/* <p>by {props.userName}</p> */}
+						{props.propSent.contentType === "lists" ? (
+							<CurationReasonCard id={props.contID} />
 						) : (
-							<ListIcon id={props.contID} image_url={props.image_url} />
+							<></>
 						)}
-
-						<span>
-							{props.title} <b>by</b>{" "}
-							<Label as="a" image href={`/${props.propSent.curator_id}`}>
-								<img src={props.userImage} />
-								{props.userName}
-							</Label>
-						</span>
-					</Header>
-					{/* <p>by {props.userName}</p> */}
-					{props.propSent.contentType === "lists" ? (
-						<CurationReasonCard id={props.contID} />
-					) : (
-						<></>
-					)}
-				</Grid.Column>
-			</Grid>
-			{/* <!-- Open Graph / Facebook --> */}
-			<MetaTags>
-				<meta property="og:type" content="website" />
-				<meta property="og:url" content={shareUrl} />
-				<meta
-					property="og:title"
-					content={
-						props.propSent.contentType === "tags"
-							? content.currentTag
-							: props.title
-					}
-				/>
-				<meta
-					property="og:description"
-					content={
-						props.propSent.contentType === "lists"
-							? props.desc
-							: "A place for all your curations!"
-					}
-				/>
-				{/* <meta
+					</Grid.Column>
+				</Grid>
+				{/* <!-- Open Graph / Facebook --> */}
+				<MetaTags>
+					<meta property="og:type" content="website" />
+					<meta property="og:url" content={shareUrl} />
+					<meta
+						property="og:title"
+						content={
+							props.propSent.contentType === "tags"
+								? content.currentTag
+								: props.title
+						}
+					/>
+					<meta
+						property="og:description"
+						content={
+							props.propSent.contentType === "lists"
+								? props.desc
+								: "A place for all your curations!"
+						}
+					/>
+					{/* <meta
 						property="og:image"
 						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
 					/> */}
-				{props.propSent.contentType === "tags"
-					? ((
-							<meta
-								property="og:image"
-								content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
-							/>
-					  ),
-					  (<meta name="image" content="%PUBLIC_URL%/thelistspace.png" />))
-					: ((<meta property="og:image" content={props.image_url} />),
-					  (<meta name="image" content={props.image_url} />))}
+					{props.propSent.contentType === "tags"
+						? ((
+								<meta
+									property="og:image"
+									content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
+								/>
+						  ),
+						  (<meta name="image" content="%PUBLIC_URL%/thelistspace.png" />))
+						: ((<meta property="og:image" content={props.image_url} />),
+						  (<meta name="image" content={props.image_url} />))}
 
-				<meta name="og:type" content="website" />
-				<meta name="og:url" content={shareUrl} />
-				<meta
-					name="og:title"
-					content={
-						props.propSent.contentType === "tags"
-							? content.currentTag
-							: props.title
-					}
-				/>
-				<meta
-					name="title"
-					content={
-						props.propSent.contentType === "tags"
-							? content.currentTag
-							: props.title
-					}
-				/>
+					<meta name="og:type" content="website" />
+					<meta name="og:url" content={shareUrl} />
+					<meta
+						name="og:title"
+						content={
+							props.propSent.contentType === "tags"
+								? content.currentTag
+								: props.title
+						}
+					/>
+					<meta
+						name="title"
+						content={
+							props.propSent.contentType === "tags"
+								? content.currentTag
+								: props.title
+						}
+					/>
 
-				<meta
-					name="og:description"
-					content={
-						props.propSent.contentType === "lists"
-							? props.desc
-							: "A place for all your curations!"
-					}
-				/>
-				{/* <meta
+					<meta
+						name="og:description"
+						content={
+							props.propSent.contentType === "lists"
+								? props.desc
+								: "A place for all your curations!"
+						}
+					/>
+					{/* <meta
 						name="og:image"
 						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
 					/> */}
 
-				{/* <!-- Twitter --/> */}
+					{/* <!-- Twitter --/> */}
 
-				<meta
-					name="twitter:card"
-					content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
-				/>
-				<meta name="twitter:url" content={shareUrl} />
-				<meta
-					name="twitter:title"
-					content={
-						props.propSent.contentType === "tags"
-							? content.currentTag
-							: props.title
-					}
-				/>
-				<meta
-					name="twitter:description"
-					content={
-						props.propSent.contentType === "lists"
-							? props.desc
-							: "A place for all your curations!"
-					}
-				/>
-				{/* <meta
+					<meta
+						name="twitter:card"
+						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
+					/>
+					<meta name="twitter:url" content={shareUrl} />
+					<meta
+						name="twitter:title"
+						content={
+							props.propSent.contentType === "tags"
+								? content.currentTag
+								: props.title
+						}
+					/>
+					<meta
+						name="twitter:description"
+						content={
+							props.propSent.contentType === "lists"
+								? props.desc
+								: "A place for all your curations!"
+						}
+					/>
+					{/* <meta
 						name="twitter:image"
 						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
 					/> */}
-				{props.propSent.contentType === "tags" ? (
-					<meta
-						name="twitter:image"
-						content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
-					/>
-				) : (
-					<meta name="twitter:image" content={props.image_url} />
-				)}
-			</MetaTags>
-			<div class="md:hidden sm:inline p-2">
-				{userC.loggedin_user_id !== props.propSent.curator_id &&
-				content.contentType === "lists" ? (
-					<Suggest id={props.contID} />
-				) : (
-					<></>
-				)}
-				<Follow
-					curator_id={props.propSent.curator_id}
-					contentID={props.propSent.contentID}
-				/>
-
-				{props.propSent.contentType === "lists" &&
-					userC.loggedin_user_id === props.propSent.curator_id && (
-						<>
-							<AddItem2 listID={props.propSent.contentID} />
-							{/* */}
-							<Modal
-								closeIcon
-								trigger={
-									<Button
-										size="tiny"
-										// floated="right"
-										basic
-										color="black"
-									>
-										Upload CSV
-									</Button>
-								}
-								centered={false}
-							>
-								<Modal.Header>Upload CSV</Modal.Header>
-								<Modal.Content>
-									<Button as="a" href="/sample.csv" target="_blank" download>
-										Download Sample
-									</Button>
-									<Divider />
-									<CSVReader
-										onDrop={handleOnDrop}
-										onError={handleOnError}
-										noDrag
-										onRemoveFile={handleOnRemoveFile}
-									>
-										<span>Drop the file here</span>
-									</CSVReader>
-									<br />
-									{fileUpload === "1" && <Button>Upload This</Button>}
-								</Modal.Content>
-							</Modal>
-						</>
+					{props.propSent.contentType === "tags" ? (
+						<meta
+							name="twitter:image"
+							content={`${process.env.REACT_APP_BASE_URL}/thelistspace.png`}
+						/>
+					) : (
+						<meta name="twitter:image" content={props.image_url} />
 					)}
-			</div>
-			<div class="mt-8">
-				<Menu pointing secondary>
-					<Menu.Item
-						name="Home"
-						active={activeTab === "Home"}
-						onClick={handleItemClick}
-					/>
-					<Menu.Item
-						name="Suggestions"
-						active={activeTab === "Suggestions"}
-						onClick={handleItemClick}
+				</MetaTags>
+				<div class="md:hidden sm:inline pb-2 pt-2">
+					{userC.loggedin_user_id !== props.propSent.curator_id &&
+					content.contentType === "lists" ? (
+						<Suggest id={props.contID} />
+					) : (
+						<></>
+					)}
+					<Follow
+						curator_id={props.propSent.curator_id}
+						contentID={props.propSent.contentID}
 					/>
 
-					<Menu.Menu position="right">
-						<div className="icobutton" style={{ background: "white" }}>
-							{userC.loggedin_user_id !== props.propSent.curator_id &&
-							content.contentType === "lists" ? (
-								<LikeList props={props.propSent.contentID} />
-							) : (
-								<></>
-							)}
+					{props.propSent.contentType === "lists" &&
+						userC.loggedin_user_id === props.propSent.curator_id && (
+							<>
+								<AddItem2 listID={props.propSent.contentID} />
+								{/* */}
+								<Modal
+									closeIcon
+									trigger={
+										<Button
+											size="tiny"
+											// floated="right"
+											basic
+											color="black"
+										>
+											Upload CSV
+										</Button>
+									}
+									centered={false}
+								>
+									<Modal.Header>Upload CSV</Modal.Header>
+									<Modal.Content>
+										<Button as="a" href="/sample.csv" target="_blank" download>
+											Download Sample
+										</Button>
+										<Divider />
+										<CSVReader
+											onDrop={handleOnDrop}
+											onError={handleOnError}
+											noDrag
+											onRemoveFile={handleOnRemoveFile}
+										>
+											<span>Drop the file here</span>
+										</CSVReader>
+										<br />
+										{fileUpload === "1" && <Button>Upload This</Button>}
+									</Modal.Content>
+								</Modal>
+							</>
+						)}
+				</div>
+				<div class="mt-8">
+					<Menu pointing secondary>
+						<Menu.Item
+							name="Home"
+							active={activeTab === "Home"}
+							onClick={handleItemClick}
+						/>
+						<Menu.Item
+							name="Suggestions"
+							active={activeTab === "Suggestions"}
+							onClick={handleItemClick}
+						/>
 
-							{/* {content.contentType === "lists" &&
-							userC.loggedin_user_id === props.propSent.curator_id && (
-								<AddItem2 />
-							)} */}
-							<div class="hidden md:inline">
+						<Menu.Menu position="right">
+							<div className="icobutton" style={{ background: "white" }}>
 								{userC.loggedin_user_id !== props.propSent.curator_id &&
 								content.contentType === "lists" ? (
-									<Suggest id={props.contID} />
+									<LikeList props={props.propSent.contentID} />
 								) : (
 									<></>
 								)}
-								<Follow
-									curator_id={props.propSent.curator_id}
-									contentID={props.propSent.contentID}
-								/>
 
-								{props.propSent.contentType === "lists" &&
-									userC.loggedin_user_id === props.propSent.curator_id && (
-										<>
-											<AddItem2 listID={props.propSent.contentID} />
-											{/* */}
-											<Modal
-												closeIcon
-												trigger={
-													<Button
-														size="tiny"
-														// floated="right"
-														basic
-														color="black"
-													>
-														Upload CSV
-													</Button>
-												}
-												centered={false}
-											>
-												<Modal.Header>Upload CSV</Modal.Header>
-												<Modal.Content>
-													<Button
-														as="a"
-														href="/sample.csv"
-														target="_blank"
-														download
-													>
-														Download Sample
-													</Button>
-													<Divider />
-													<CSVReader
-														onDrop={handleOnDrop}
-														onError={handleOnError}
-														noDrag
-														onRemoveFile={handleOnRemoveFile}
-													>
-														<span>Drop the file here</span>
-													</CSVReader>
-													<br />
-													{fileUpload === "1" && <Button>Upload This</Button>}
-												</Modal.Content>
-											</Modal>
-										</>
+								{/* {content.contentType === "lists" &&
+							userC.loggedin_user_id === props.propSent.curator_id && (
+								<AddItem2 />
+							)} */}
+								<div class="hidden md:inline">
+									{userC.loggedin_user_id !== props.propSent.curator_id &&
+									content.contentType === "lists" ? (
+										<Suggest id={props.contID} />
+									) : (
+										<></>
 									)}
-							</div>
-							<Modal
-								closeIcon
-								trigger={
-									<Button icon size="tiny" floated="right" basic color="black">
-										<Icon name="share alternate" />
-									</Button>
-								}
-								centered={false}
-							>
-								<Modal.Header>Share on Social Media</Modal.Header>
-								<Modal.Content>
-									<div>
-										<FacebookShareButton url={shareUrl} quote={props.desc}>
-											<FacebookIcon size={32} round />
-										</FacebookShareButton>
-										<TwitterShareButton url={shareUrl} title={props.desc}>
-											<TwitterIcon size={32} round />
-										</TwitterShareButton>
-										<WhatsappShareButton
-											url={shareUrl}
-											title={props.desc}
-											separator=":: "
-											className="Demo__some-network__share-button"
+									<Follow
+										curator_id={props.propSent.curator_id}
+										contentID={props.propSent.contentID}
+									/>
+
+									{props.propSent.contentType === "lists" &&
+										userC.loggedin_user_id === props.propSent.curator_id && (
+											<>
+												<AddItem2 listID={props.propSent.contentID} />
+												{/* */}
+												<Modal
+													closeIcon
+													trigger={
+														<Button
+															size="tiny"
+															// floated="right"
+															basic
+															color="black"
+														>
+															Upload CSV
+														</Button>
+													}
+													centered={false}
+												>
+													<Modal.Header>Upload CSV</Modal.Header>
+													<Modal.Content>
+														<Button
+															as="a"
+															href="/sample.csv"
+															target="_blank"
+															download
+														>
+															Download Sample
+														</Button>
+														<Divider />
+														<CSVReader
+															onDrop={handleOnDrop}
+															onError={handleOnError}
+															noDrag
+															onRemoveFile={handleOnRemoveFile}
+														>
+															<span>Drop the file here</span>
+														</CSVReader>
+														<br />
+														{fileUpload === "1" && <Button>Upload This</Button>}
+													</Modal.Content>
+												</Modal>
+											</>
+										)}
+								</div>
+								<Modal
+									closeIcon
+									trigger={
+										<Button
+											icon
+											size="tiny"
+											floated="right"
+											basic
+											color="black"
 										>
-											<WhatsappIcon size={32} round />
-										</WhatsappShareButton>
+											<Icon name="share alternate" />
+										</Button>
+									}
+									centered={false}
+								>
+									<Modal.Header>Share on Social Media</Modal.Header>
+									<Modal.Content>
+										<div>
+											<FacebookShareButton url={shareUrl} quote={props.desc}>
+												<FacebookIcon size={32} round />
+											</FacebookShareButton>
+											<TwitterShareButton url={shareUrl} title={props.desc}>
+												<TwitterIcon size={32} round />
+											</TwitterShareButton>
+											<WhatsappShareButton
+												url={shareUrl}
+												title={props.desc}
+												separator=":: "
+												className="Demo__some-network__share-button"
+											>
+												<WhatsappIcon size={32} round />
+											</WhatsappShareButton>
+										</div>
+									</Modal.Content>
+								</Modal>
+							</div>
+						</Menu.Menu>
+					</Menu>
+				</div>
+				<Responsive {...Responsive.onlyMobile}>
+					<div style={{ paddingTop: "20px" }}>
+						<Item.Group divided>
+							{props.posts === null ? (
+								<Placeholder>
+									<Placeholder.Header image>
+										<Placeholder.Line />
+										<Placeholder.Line />
+									</Placeholder.Header>
+								</Placeholder>
+							) : typeof props.posts !== "undefined" ? (
+								props.posts.length > 0 ? (
+									activeItem === "home" ? (
+										<CentralList
+											posts={props.posts}
+											contentType={props.propSent.contentType}
+											contentID={props.propSent.contentID}
+											suggest={false}
+										/>
+									) : (
+										<CentralList
+											posts={props.posts}
+											contentType={props.propSent.contentType}
+											contentID={props.propSent.contentID}
+											suggest={true}
+										/>
+									)
+								) : (
+									<div className="imageFix">
+										<Image
+											centered
+											src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47.png`}
+											size="large"
+											verticalAlign="middle"
+										/>
+										<br />
+										There is nothing here! Click on the add item button on the
+										top right side to add an item to your list!
 									</div>
-								</Modal.Content>
-							</Modal>
-						</div>
-					</Menu.Menu>
-				</Menu>
-			</div>
-			<Responsive {...Responsive.onlyMobile}>
-				<div style={{ paddingTop: "20px" }}>
-					<Item.Group divided>
-						{props.posts === null ? (
-							<Placeholder>
-								<Placeholder.Header image>
-									<Placeholder.Line />
-									<Placeholder.Line />
-								</Placeholder.Header>
-							</Placeholder>
-						) : typeof props.posts !== "undefined" ? (
-							props.posts.length > 0 ? (
-								activeItem === "home" ? (
-									<CentralList
-										posts={props.posts}
-										contentType={props.propSent.contentType}
-										contentID={props.propSent.contentID}
-										suggest={false}
-									/>
-								) : (
-									<CentralList
-										posts={props.posts}
-										contentType={props.propSent.contentType}
-										contentID={props.propSent.contentID}
-										suggest={true}
-									/>
 								)
 							) : (
-								<div className="imageFix">
-									<Image
-										centered
-										src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47.png`}
-										size="large"
-										verticalAlign="middle"
-									/>
-									<br />
-									There is nothing here! Click on the add item button on the top
-									right side to add an item to your list!
-								</div>
-							)
-						) : (
-							<div>No mojo as of now</div>
-						)}
-					</Item.Group>
-				</div>
-			</Responsive>
-			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
-				<div className="scrolly">
-					<Item.Group divided>
-						{props.posts === null ? (
-							<Placeholder>
-								<Placeholder.Header image>
-									<Placeholder.Line />
-									<Placeholder.Line />
-								</Placeholder.Header>
-							</Placeholder>
-						) : typeof props.posts !== "undefined" ? (
-							props.posts.length > 0 ? (
-								activeItem === "home" ? (
-									<CentralList
-										posts={props.posts}
-										contentType={props.propSent.contentType}
-										contentID={props.propSent.contentID}
-										suggest={false}
-									/>
+								<div>No mojo as of now</div>
+							)}
+						</Item.Group>
+					</div>
+				</Responsive>
+				<Responsive minWidth={Responsive.onlyTablet.minWidth}>
+					<div className="scrolly">
+						<Item.Group divided>
+							{props.posts === null ? (
+								<Placeholder>
+									<Placeholder.Header image>
+										<Placeholder.Line />
+										<Placeholder.Line />
+									</Placeholder.Header>
+								</Placeholder>
+							) : typeof props.posts !== "undefined" ? (
+								props.posts.length > 0 ? (
+									activeItem === "home" ? (
+										<CentralList
+											posts={props.posts}
+											contentType={props.propSent.contentType}
+											contentID={props.propSent.contentID}
+											suggest={false}
+										/>
+									) : (
+										<CentralList
+											posts={props.posts}
+											contentType={props.propSent.contentType}
+											contentID={props.propSent.contentID}
+											suggest={true}
+										/>
+									)
 								) : (
-									<CentralList
-										posts={props.posts}
-										contentType={props.propSent.contentType}
-										contentID={props.propSent.contentID}
-										suggest={true}
-									/>
+									<div className="imageFix" style={{ background: "white" }}>
+										<Image
+											centered
+											src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47.png`}
+											size="large"
+											verticalAlign="middle"
+										/>
+										<br />
+										There is nothing here! Click on the add item button on the
+										top right side to add an item to your list!
+									</div>
 								)
 							) : (
-								<div className="imageFix" style={{ background: "white" }}>
-									<Image
-										centered
-										src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47.png`}
-										size="large"
-										verticalAlign="middle"
-									/>
-									<br />
-									There is nothing here! Click on the add item button on the top
-									right side to add an item to your list!
-								</div>
-							)
-						) : (
-							<div>No mojo as of now</div>
-						)}
-					</Item.Group>
-				</div>
-			</Responsive>
+								<div>No mojo as of now</div>
+							)}
+						</Item.Group>
+					</div>
+				</Responsive>
+			</Container>
 		</>
 	);
 }

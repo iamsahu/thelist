@@ -168,7 +168,7 @@ function ContentCard(postdata) {
 	return (
 		<>
 			<div class="flex h-48">
-				<div class="bg-white border shadow-md mt-4 rounded-lg overflow-hidden mr-1 ml-1 text-gray-900 w-full">
+				<div class="bg-white border shadow-md mt-4 rounded-lg overflow-hidden text-gray-900 w-full">
 					<div class="flex h-48">
 						<div class="w-1/4 max-w-full h-48 relative">
 							<img
