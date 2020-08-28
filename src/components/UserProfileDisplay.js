@@ -120,14 +120,20 @@ function UserProfileDisplay(props) {
 			onClose={OnClose}
 			closeIcon
 			trigger={
-				<Button
-					icon="edit"
-					size="tiny"
-					floated="right"
-					basic
-					color="black"
+				// <Button
+				// 	icon="edit"
+				// 	size="tiny"
+				// 	floated="right"
+				// 	basic
+				// 	color="black"
+				// 	onClick={() => SetModal(true)}
+				// />
+				<button
+					class="lg:mx-0 gradient hover:bg-black hover:text-white font-bold rounded-md py-3 px-3 shadow-lg float-right ml-1 bg-white text-black border-gray-800"
 					onClick={() => SetModal(true)}
-				/>
+				>
+					<i class="fas fa-edit"></i>
+				</button>
 			}
 			size="large"
 		>

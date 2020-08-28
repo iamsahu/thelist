@@ -442,7 +442,7 @@ function Curator(props) {
 								class="text-gray-900 pb-4"
 								style={{
 									background: "white",
-									marginTop: "15px",
+									// marginTop: "15px",
 									paddingLeft: "10px",
 									paddingRight: "10px",
 									"border-radius": "3px",

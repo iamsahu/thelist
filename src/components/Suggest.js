@@ -421,8 +421,13 @@ function Suggest(props) {
 						onClick={onClick}
 					>
 						Suggest
-						{/* <Icon name="add" /> */}
 					</Button>
+					// <button
+					// 	class="mx-auto lg:mx-0 gradient mb-1 hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right ml-2 bg-white text-black border-gray-800"
+					// 	onClick={onClick}
+					// >
+					// 	Suggest
+					// </button>
 				}
 			>
 				<Modal.Header>Add Item</Modal.Header>

@@ -49,10 +49,10 @@ function FeaturedUserCard(props) {
 								href={`${process.env.REACT_APP_BASE_URL}/${id}`}
 							>
 								{username}
+								<p class="font-thin text-gray-700 text-base lg:text-lg overflow-hidden md:h-24 h-40">
+									<Linkify>{description}</Linkify>
+								</p>
 							</a>
-							<p class="font-thin text-gray-700 text-base lg:text-lg overflow-hidden md:h-24 h-40">
-								<Linkify>{description}</Linkify>
-							</p>
 						</div>
 					</div>
 				</div>

@@ -425,8 +425,13 @@ function AddItem2(props) {
 						onClick={onClick}
 					>
 						Add Item
-						{/* <Icon name="add" /> */}
 					</Button>
+					// <button
+					// 	class="mx-auto lg:mx-0 gradient hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right ml-1 bg-white text-black border-gray-800"
+					// 	onClick={onClick}
+					// >
+					// 	Add Item
+					// </button>
 				}
 			>
 				<Modal.Header>Add Item</Modal.Header>

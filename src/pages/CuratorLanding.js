@@ -148,6 +148,15 @@ function CuratorLanding(props) {
 
 					<div class="p-2">
 						{isAuthenticated && u === userC.loggedin_user_id && (
+							// <button
+							// 	class="mx-auto lg:mx-0 gradient mb-1 hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right ml-2 bg-white text-black border-gray-800"
+							// 	onClick={() => {
+							// 		var t = `/manage/${userC.loggedin_user_id}`;
+							// 		routeChange(t);
+							// 	}}
+							// >
+							// 	Manage Content
+							// </button>
 							<Button
 								size="tiny"
 								floated="right"
@@ -157,7 +166,6 @@ function CuratorLanding(props) {
 									var t = `/manage/${userC.loggedin_user_id}`;
 									routeChange(t);
 								}}
-								// style={{ marginBottom: "50px" }}
 							>
 								Manage Content
 							</Button>
@@ -273,6 +281,15 @@ function CuratorLanding(props) {
 									<Menu.Menu position="right">
 										<div className="icobutton">
 											{isAuthenticated && u === userC.loggedin_user_id && (
+												// <button
+												// 	class="mx-auto lg:mx-0 gradient mb-1 hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right ml-2 bg-white text-black border-gray-800"
+												// 	onClick={() => {
+												// 		var t = `/manage/${userC.loggedin_user_id}`;
+												// 		routeChange(t);
+												// 	}}
+												// >
+												// 	Manage Content
+												// </button>
 												<Button
 													size="tiny"
 													floated="right"

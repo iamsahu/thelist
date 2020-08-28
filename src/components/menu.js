@@ -170,26 +170,23 @@ function MenuBar(props) {
 						{!isAuthenticated && (
 							<>
 								<Menu.Item position="right">
-									<Button
-										// size="tiny"
-										// floated="right"
-										// basic
-										// color="black"
+									<button
+										class="mx-auto lg:mx-0 gradient bg-white text-gray-700 font-bold rounded-md py-3 px-4 shadow-lg"
 										onClick={() => {
 											var t = `/explore`;
 											routeChange(t);
 										}}
-										style={
-											{
-												// background: "#ffffff",
-												// "border-radius": "30px",
-											}
-										}
 									>
-										{/* <Link to="/explore">  */}
 										Explore
-										{/* </Link> */}
-									</Button>
+									</button>
+									{/* <Button
+										onClick={() => {
+											var t = `/explore`;
+											routeChange(t);
+										}}
+									>
+										Explore
+									</Button> */}
 								</Menu.Item>
 								<Menu.Item
 									position="right"
@@ -218,26 +215,31 @@ function MenuBar(props) {
 						{isAuthenticated && !loading && (
 							<>
 								<Menu.Item position="right" fitted="vertically">
-									<Button
-										// basic
-										// color="black"
+									<button
+										class="mr-1 gradient bg-white text-black font-bold rounded-md py-3 px-4 shadow-lg"
+										onClick={() => {
+											var t = `/explore`;
+											routeChange(t);
+										}}
+									>
+										Explore
+									</button>
+									{/* <Button
 										onClick={() => {
 											var t = `/explore`;
 											routeChange(t);
 										}}
 										style={{
 											background: "#ffffff",
-											// "border-radius": "30px",
 										}}
 									>
-										{/* <Link to="/explore">  */}
 										Explore
-										{/* </Link> */}
-									</Button>
-								</Menu.Item>
-								<Menu.Item position="right" fitted="vertically">
+									</Button> */}
 									<AddList />
 								</Menu.Item>
+								{/* <Menu.Item position="right" fitted="vertically">
+									
+								</Menu.Item> */}
 								{/* <Menu.Item position='right' fitted='vertically'>
               <AddItem/>
             </Menu.Item> */}

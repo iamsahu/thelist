@@ -219,7 +219,7 @@ function ContentMiddleNoLoad(props) {
 	return (
 		<>
 			{/* <h1>{props.propSent.contentType==='lists'?content.currentList:content.currentTag}</h1> */}
-			<Container style={{ marginTop: "6em" }} fluid>
+			<Container fluid className="md:mt-4 sm:mt-24">
 				<Grid>
 					<Grid.Column floated="left">
 						<Header as="h1">
@@ -421,11 +421,6 @@ function ContentMiddleNoLoad(props) {
 								) : (
 									<></>
 								)}
-
-								{/* {content.contentType === "lists" &&
-							userC.loggedin_user_id === props.propSent.curator_id && (
-								<AddItem2 />
-							)} */}
 								<div class="hidden md:inline">
 									{userC.loggedin_user_id !== props.propSent.curator_id &&
 									content.contentType === "lists" ? (
@@ -442,7 +437,7 @@ function ContentMiddleNoLoad(props) {
 										userC.loggedin_user_id === props.propSent.curator_id && (
 											<>
 												<AddItem2 listID={props.propSent.contentID} />
-												{/* */}
+
 												<Modal
 													closeIcon
 													trigger={
@@ -495,6 +490,9 @@ function ContentMiddleNoLoad(props) {
 										>
 											<Icon name="share alternate" />
 										</Button>
+										// <button class="lg:mx-0 gradient hover:bg-black hover:text-white font-bold rounded-md py-3 px-3 shadow-lg float-right ml-1 bg-white text-black border-gray-800">
+										// 	<i class="fas fa-share-alt"></i>
+										// </button>
 									}
 									centered={false}
 								>

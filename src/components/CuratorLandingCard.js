@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button, Image, Header } from "semantic-ui-react";
 import history from "../util/history";
-import Follow from "./Follow";
+import FollowCard from "./FollowCard";
 
 function CuratorLandingCard(props) {
 	const routeChange = (t) => {
@@ -45,11 +45,20 @@ function CuratorLandingCard(props) {
 							</p>
 						</div>
 						<div class="text-gray-500 mb-8 text-left uppercase tracking-widest text-sm md:text-base">
-							<Follow
+							<FollowCard
 								curator_id={props.item.curator_id}
 								contentID={props.item.id}
 							/>
-							<Button
+							<button
+								class="gradient hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right mr-1 bg-white text-black border-gray-800"
+								onClick={() => {
+									var t = `/${props.item.curator_id}/lists/${props.item.id}`;
+									routeChange(t);
+								}}
+							>
+								Read
+							</button>
+							{/* <Button
 								size="tiny"
 								floated="right"
 								basic
@@ -60,72 +69,11 @@ function CuratorLandingCard(props) {
 								}}
 							>
 								Read
-							</Button>
+							</Button> */}
 						</div>
 					</div>
 				</div>
 			</div>
-
-			{/* <Card
-				fluid
-				key={props.item.id}
-				style={{ height: "100%" }}
-			>
-				<Card.Content>
-					{props.item.image_url === '""' ? (
-						<Image
-							floated="left"
-							size="mini"
-							rounded
-							src="https://react.semantic-ui.com/images/wireframe/square-image.png"
-						/>
-					) : (
-						<Image
-							floated="left"
-							size="mini"
-							rounded
-							src={props.item.image_url}
-						/>
-					)}
-					<Card.Header>
-						<Header
-							as="a"
-							onClick={() => {
-								var t = `/${props.item.curator_id}/lists/${props.item.id}`;
-								routeChange(t);
-							}}
-						>
-							{props.item.list_name}
-						</Header>
-					</Card.Header>
-					<Card.Description>{props.item.description}</Card.Description>
-				</Card.Content>
-				<Card.Content
-					style={{
-						border: "none",
-						"border-top": "none",
-					}}
-					extra
-				>
-					{props.item.view_count} Views
-					<Follow
-						curator_id={props.item.curator_id}
-						contentID={props.item.id}
-					/>
-					<Button
-						size="tiny"
-						floated="right"
-						basic
-						color="black"
-						onClick={() => {
-							var t = `/${props.item.curator_id}/lists/${props.item.id}`;
-							routeChange(t);
-						}}
-					>
-						Read
-					</Button>
-				</Card.Content>
-			</Card> */}
 		</>
 	);
 }
