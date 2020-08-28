@@ -9,7 +9,8 @@ function CuratorLandingCard(props) {
 		window.location.href = window.location.href;
 	};
 	var str = props.item.description;
-	var shrt = str.substr(0, 130);
+	var shrt = str.length > 130 ? str.substr(0, 130) + "..." : str;
+
 	return (
 		<>
 			<div
@@ -30,6 +31,13 @@ function CuratorLandingCard(props) {
 									src={props.item.image_url}
 								/>
 							)}
+							{props.item.private ? (
+								<span class="inline-block bg-teal-200 text-teal-800 text-xs px-2 rounded-full uppercase font-semibold tracking-wide mt-1">
+									<i class="fas fa-lock text-teal-800"></i> Private
+								</span>
+							) : (
+								<></>
+							)}
 						</div>
 					</div>
 					<div class="p-2 w-2/3 h-56">
@@ -41,7 +49,7 @@ function CuratorLandingCard(props) {
 								{props.item.list_name}
 							</a>
 							<p class="text-gray-700 text-base lg:text-lg font-thin overflow-hidden max-h-full mb-1 pb-1 h-32">
-								{shrt}...
+								{shrt}
 							</p>
 						</div>
 						<div class="text-gray-500 mb-8 text-left uppercase tracking-widest text-sm md:text-base">

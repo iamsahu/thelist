@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Modal, Button, Form } from "semantic-ui-react";
+import { Modal, Button, Form, Dropdown } from "semantic-ui-react";
 import useForm from "../util/hook";
 import { useMutation } from "@apollo/react-hooks";
 import { CREATE_LIST, COMBINED_FETCH } from "../util/graphql";
@@ -17,6 +17,7 @@ function AddList() {
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
 		list_name: "",
 		description: "",
+		private: false,
 		curator: userC.loggedin_user_id,
 	});
 
@@ -102,7 +103,7 @@ function AddList() {
 	});
 
 	function createPostCallback() {
-		// console.log(values)
+		// console.log(values);
 		// console.log(user.loggedin_user_id)
 		createList();
 		SetModal(false);
@@ -222,6 +223,16 @@ function AddList() {
 	// 	</>
 	// );
 
+	const options = [
+		{ key: 1, text: "True", value: true },
+		{ key: 2, text: "False", value: false },
+	];
+
+	const handleChange = (e, { value }) => {
+		values.private = value;
+		// console.log(value);
+	};
+
 	return (
 		<>
 			<Modal
@@ -272,14 +283,21 @@ function AddList() {
 								value={values.description}
 								error={error ? true : false}
 							/>
-							{/* <Form.Input 
-                            name='description' 
-                            placeholder='Description'
-                            onChange={onChange}
-                            value={values.description}
-                            error={error?true:false}
-                        /> */}
 						</Form.Field>
+						<Form.Field name="private">
+							<label>Privacy</label>
+							<Dropdown
+								name="private"
+								placeholder="Private"
+								options={Object.values(options)}
+								// values={values.private}
+								onChange={handleChange}
+								simple
+								item
+								defaultValue={false}
+							/>
+						</Form.Field>
+						<br />
 						<Button primary type="submit">
 							Submit
 						</Button>

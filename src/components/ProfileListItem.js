@@ -80,10 +80,10 @@ function ProfileListItem(props) {
 								href={`${process.env.REACT_APP_BASE_URL}/${props.id}`}
 							>
 								{props.username}
+								<p class="font-thin text-gray-700 text-base lg:text-lg overflow-hidden md:h-24 h-32">
+									<Linkify>{props.description}</Linkify>
+								</p>
 							</a>
-							<p class="font-thin text-gray-700 text-base lg:text-lg overflow-hidden md:h-24 h-32">
-								<Linkify>{props.description}</Linkify>
-							</p>
 						</div>
 						<div class="text-gray-600 mb-8 text-left uppercase tracking-widest object-bottom text-xs font-thin">
 							{props.viewcount === null ? 0 : props.viewcount} Views{" "}
