@@ -19,6 +19,7 @@
 		"core-js": "^3.6.5",
 		"dotenv": "^8.2.0",
 		"faker": "^4.1.0",
+		"formik": "^2.1.5",
 		"getstream": "^5.0.1",
 		"grabity": "^1.0.5",
 		"graphql": "^15.0.0",
