@@ -168,11 +168,11 @@ function UserProfileDisplay(props) {
 
 	function randomColor() {
 		const t = [
-			"url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80')",
-			"url('https://images.unsplash.com/photo-1582815642030-a31dd13ef4ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80')",
-			"url('https://images.unsplash.com/photo-1555642053-663d5a84a56b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80')",
-			"url('https://images.unsplash.com/photo-1579691099788-42394ae932d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2689&q=80')",
-			"url('https://images.unsplash.com/photo-1568186576492-324f2541f272?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3200&q=80')",
+			"url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=80')",
+			"url('https://images.unsplash.com/photo-1582815642030-a31dd13ef4ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=80')",
+			"url('https://images.unsplash.com/photo-1555642053-663d5a84a56b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=80')",
+			"url('https://images.unsplash.com/photo-1579691099788-42394ae932d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=80')",
+			"url('https://images.unsplash.com/photo-1568186576492-324f2541f272?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=80')",
 		];
 		return t[Math.floor(Math.random() * t.length)];
 	}
@@ -238,14 +238,14 @@ function UserProfileDisplay(props) {
 										{username}
 									</h3>
 									<div className="w-full lg:w-4/12 px-4 lg:order-1 container mx-auto">
-										<div className="flex py-4 lg:pt-2 pt-4 justify-center">
-											<div className=" p-3 text-center">
+										<div className="flex py-2 lg:pt-1 pt-4 justify-center">
+											<div className=" p-2 text-center">
 												<span className="text-xl font-bold block uppercase tracking-wide text-gray-700">
 													{listcount}
 												</span>
 												<span className="text-sm text-gray-500">Lists</span>
 											</div>
-											<div className=" p-3 text-center">
+											<div className=" p-2 text-center">
 												<span className="text-xl font-bold block uppercase tracking-wide text-gray-700">
 													{listviewcount}
 												</span>
@@ -253,7 +253,7 @@ function UserProfileDisplay(props) {
 													Total List Views
 												</span>
 											</div>
-											<div className=" p-3 text-center">
+											<div className=" p-2 text-center">
 												<span className="text-xl font-bold block uppercase tracking-wide text-gray-700">
 													{itemscount}
 												</span>
@@ -262,7 +262,7 @@ function UserProfileDisplay(props) {
 										</div>
 									</div>
 								</div>
-								<div className="mt-2 py-10 border-t border-gray-300 text-center">
+								<div className="mt-2 py-6 border-t border-gray-300 text-center">
 									<div className="flex flex-wrap justify-center">
 										<div className="w-full lg:w-9/12 px-4">
 											<p className="mb-2 text-lg leading-relaxed text-gray-800">

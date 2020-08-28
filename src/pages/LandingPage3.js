@@ -52,11 +52,10 @@ function LandingPage3() {
 							A place for curators!
 						</h1>
 						<p class="leading-normal text-2xl mb-8">
-							Start your curations. Build a following. And make money from
-							subscriptions.
+							Start your curations. Build a following. Discover amazing
+							curations.
 							<br />
-							You can make as many curations as you want. We make money only
-							when you do.
+							You can make as many curations as you want.
 						</p>
 
 						<button
@@ -715,7 +714,8 @@ function LandingPage3() {
 										xGETTING STARTED
 									</p> */}
 									<div class="w-full font-bold text-xl text-gray-800 px-6">
-										Monetize
+										Monetize{" "}
+										<span class="text-gray-400 text-xs">Coming soon!</span>
 									</div>
 									<p class="text-gray-800 text-base px-6 mb-5 p-2">
 										Easily monetize your finds by creating a list and setting a
