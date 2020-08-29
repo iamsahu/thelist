@@ -1,10 +1,20 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../context/UserContext";
 import { GetListsOfUser, createItem } from "../util/graphqlExecutor";
-import { Form, Dropdown, Button, Loader } from "semantic-ui-react";
+import { Form, Dropdown, Button, Loader, Dimmer } from "semantic-ui-react";
 import useForm from "../util/hook";
 import { connect } from "getstream";
 import history from "../util/history";
+
+function GetDetails(link) {
+	var data = { key: process.env.REACT_APP_LINKPREVIEW, q: link };
+	// console.log(data);
+	return fetch("https://api.linkpreview.net", {
+		method: "POST",
+		mode: "cors",
+		body: JSON.stringify(data),
+	});
+}
 
 function ShareSignedIn(props) {
 	const [listData, setlistData] = useState("");
@@ -13,6 +23,7 @@ function ShareSignedIn(props) {
 	const [seltags, setseltags] = useState("");
 	const [allTags, setallTags] = useState("");
 	const [loadingbut, setloadingbut] = useState(false);
+	const [dimmer, setdimmer] = useState(false);
 	// console.log(props);
 	//Data from props to be filled in the form's appropriate field
 
@@ -53,6 +64,7 @@ function ShareSignedIn(props) {
 			return;
 		}
 		setloadingbut(true);
+		setdimmer(true);
 		fetch(
 			//"https://obzz0p3mah.execute-api.eu-west-3.amazonaws.com/default/getUserToken",
 			"https://cors-anywhere.herokuapp.com/https://32mois0yg1.execute-api.eu-west-3.amazonaws.com/default/getUserTokenNode",
@@ -82,33 +94,61 @@ function ShareSignedIn(props) {
 				console.log(values);
 				console.log(list_id);
 				console.log(userC.loggedin_user_id);
-
-				createItem({
-					...values,
-					list_id: list_id,
-					selTags: seltags,
-					curator_id: userC.loggedin_user_id,
-					tags: allTags,
-					contentType: "dataentry",
-					currentListID: "",
-					currentTagID: "",
-					listfeed,
-				})
-					.then((response) => {
-						console.log(response);
-						// console.log(response2)
-						values.name = "";
-						values.link = "";
-						values.description = "";
-						// setlistDescription(false);
-						setloadingbut(false);
-						// window.close();
-						history.push("/" + userC.loggedin_user_id + "/lists/" + list_id);
-						window.location.href = window.location.href;
-						console.log("Done");
+				GetDetails(values.link)
+					.then(function (response) {
+						return response.text();
 					})
-					.catch((error) => {
-						console.log(error);
+					.then((data) => {
+						// var data = response.text();
+						// console.log(data);
+						var auto_description = "";
+						var auto_image = "";
+						data = JSON.parse(data);
+						// console.log(data["description"]);
+						if (data["description"] === "Invalid response status code (0)") {
+						} else if (data["description"] === "Linkpreview service denied") {
+						} else if (
+							data["description"] === "Too many requests / rate limit exceeded"
+						) {
+						} else {
+							// console.log(data["description"]);
+							auto_description = data["description"];
+							auto_image = data["image"];
+							values.name = data["title"];
+						}
+						// return "hello";
+						console.log(values);
+						createItem({
+							...values,
+							list_id: list_id,
+							selTags: seltags,
+							curator_id: userC.loggedin_user_id,
+							tags: allTags,
+							contentType: "dataentry",
+							currentListID: "",
+							currentTagID: "",
+							auto_description,
+							auto_image,
+						})
+							.then((response) => {
+								console.log(response);
+								// console.log(response2)
+								values.name = "";
+								values.link = "";
+								values.description = "";
+								// setlistDescription(false);
+								setloadingbut(false);
+								setdimmer(false);
+								// window.close();
+								history.push(
+									"/" + userC.loggedin_user_id + "/lists/" + list_id
+								);
+								window.location.href = window.location.href;
+								console.log("Done");
+							})
+							.catch((error) => {
+								console.log(error);
+							});
 					});
 			});
 	}
@@ -119,52 +159,58 @@ function ShareSignedIn(props) {
 	return (
 		<>
 			{" "}
-			<Form onSubmit={onSubmit}>
-				<Form.Field>
-					<label>Title</label>
-					<Form.Input
-						name="name"
-						placeholder="Title"
-						onChange={onChange}
-						value={values.name}
-					/>
-				</Form.Field>
-				<Form.Field>
-					<label>Link</label>
-					<Form.Input
-						name="link"
-						placeholder="link"
-						onChange={onChange}
-						value={values.link}
-					/>
-				</Form.Field>
-				<Form.Field>
-					<label>Description</label>
-					<Form.Input
-						name="description"
-						placeholder="You can add a description here"
-						onChange={onChange}
-						value={values.description}
-					/>
-				</Form.Field>
-				<Form.Field>
-					<label>List Name</label>
-					<Dropdown
-						label="List Name"
-						name="list_name"
-						options={Object.values(listData)}
-						placeholder="Choose list name"
-						search
-						selection
-						upward
-						onChange={handleChangeListAll}
-						onAddItem={handleChangeListAddition}
-					/>
-				</Form.Field>
-				<Button loading={loadingbut} primary type="submit">
-					Submit
-				</Button>
-			</Form>
+			<Dimmer.Dimmable dimmed={dimmer} inverted>
+				<Form onSubmit={onSubmit}>
+					<Form.Field>
+						<label>Title</label>
+						<Form.Input
+							name="name"
+							placeholder="Title"
+							onChange={onChange}
+							value={values.name}
+						/>
+					</Form.Field>
+					<Form.Field>
+						<label>Link</label>
+						<Form.Input
+							name="link"
+							placeholder="link"
+							onChange={onChange}
+							value={values.link}
+						/>
+					</Form.Field>
+					<Form.Field>
+						<label>Description</label>
+						<Form.Input
+							name="description"
+							placeholder="You can add a description here"
+							onChange={onChange}
+							value={values.description}
+						/>
+					</Form.Field>
+					<Form.Field>
+						<label>List Name</label>
+						<Dropdown
+							label="List Name"
+							name="list_name"
+							options={Object.values(listData)}
+							placeholder="Choose list name"
+							search
+							selection
+							upward
+							onChange={handleChangeListAll}
+							onAddItem={handleChangeListAddition}
+						/>
+					</Form.Field>
+					<Button loading={loadingbut} primary type="submit">
+						Submit
+					</Button>
+				</Form>
+				<Dimmer active={dimmer} inverted>
+					<Loader />
+					Saving
+				</Dimmer>
+			</Dimmer.Dimmable>
 		</>
 	);
 }

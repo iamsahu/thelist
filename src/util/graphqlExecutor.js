@@ -2890,6 +2890,46 @@ const UpdatePrivateStatus = (id, privat) => {
 		.catch((error) => console.log(error));
 };
 
+const DELETELIST = gql`
+	mutation MyMutation($list_id: uuid) {
+		delete_like_item(where: { item: { list_id: { _eq: $list_id } } }) {
+			affected_rows
+		}
+		delete_item_bookmark(where: { list_id: { _eq: $list_id } }) {
+			affected_rows
+		}
+		delete_item_tag(where: { item: { list_id: { _eq: $list_id } } }) {
+			affected_rows
+		}
+		delete_items(where: { list_id: { _eq: $list_id } }) {
+			affected_rows
+		}
+		delete_list_follow(where: { list_id: { _eq: $list_id } }) {
+			affected_rows
+		}
+		delete_like_list(where: { list_id: { _eq: $list_id } }) {
+			affected_rows
+		}
+		delete_lists(where: { id: { _eq: $list_id } }) {
+			affected_rows
+		}
+	}
+`;
+
+const DeleteList = (list_id) => {
+	// console.log(list_id);
+	// console.log(privat);
+	return client
+		.mutate({
+			mutation: DELETELIST,
+			variables: {
+				list_id: list_id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -2938,6 +2978,7 @@ export {
 	GetFeedItems,
 	GetListsOfUserNonPrivate,
 	UpdatePrivateStatus,
+	DeleteList,
 };
 
 export const DELETE_LIST = gql`

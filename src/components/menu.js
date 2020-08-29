@@ -171,7 +171,7 @@ function MenuBar(props) {
 							<>
 								<Menu.Item position="right">
 									<button
-										class="mx-auto lg:mx-0 gradient bg-white text-gray-700 font-bold rounded-md py-3 px-4 shadow-lg"
+										class="mx-auto lg:mx-0 gradient bg-white text-gray-700 font-bold rounded-md py-3 px-4 shadow-lg hover:bg-black hover:text-white"
 										onClick={() => {
 											var t = `/explore`;
 											routeChange(t);
@@ -216,7 +216,7 @@ function MenuBar(props) {
 							<>
 								<Menu.Item position="right" fitted="vertically">
 									<button
-										class="mr-1 gradient bg-white text-black font-bold rounded-md py-3 px-4 shadow-lg"
+										class="mr-1 gradient bg-white text-black font-bold rounded-md py-3 px-4 shadow-lg hover:bg-black hover:text-white"
 										onClick={() => {
 											var t = `/explore`;
 											routeChange(t);

@@ -11,6 +11,7 @@ import UserContext from "../context/UserContext";
 import useForm from "../util/hook";
 import { useMutation } from "@apollo/react-hooks";
 import PrivacyStatus from "./PrivacyStatus";
+import DeleteList from "./DeleteList";
 
 function CurationReasonCard(props) {
 	const [content, contentChange] = useContext(ContentContext);
@@ -151,7 +152,12 @@ function CurationReasonCard(props) {
 				</Card.Content> */}
 				{editState && (
 					<Card.Content extra>
-						<PrivacyStatus id={props.id} privatestate={privatestate} />
+						<PrivacyStatus
+							id={props.id}
+							privatestate={privatestate}
+							user={userC.loggedin_user_id}
+						/>
+						<DeleteList id={props.id} />
 						{editform}
 					</Card.Content>
 				)}
