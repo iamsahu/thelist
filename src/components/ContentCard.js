@@ -11,7 +11,7 @@ import { useAuth0 } from "../react-auth0-spa";
 // import { FETCH_FEED_ITEMS, INSERT_TAG, DELETE_ITEM } from "../util/graphql";
 import { useMutation } from "@apollo/react-hooks";
 import UserContext from "../context/UserContext";
-import grabity from "grabity";
+// import grabity from "grabity";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -97,27 +97,27 @@ function ContentCard(postdata) {
 	const [token, setToken] = useState("");
 	// console.log(postdata)
 	//Fetches thumbnail image
-	const thumb = async () => {
-		let it = await grabity.grabIt(
-			"https://cors-anywhere.herokuapp.com/" + postdata.postdata.link
-		);
-		// console.log(it)
-		if (it["favicon"]) {
-			if (it["favicon"]) {
-				thumbImageSet(it["favicon"]);
-			}
-		} else if (it["image"]) {
-			thumbImageSet(it["image"]);
-		}
-		if (postdata.postdata.description === "") {
-			if (it["description"]) {
-				postdata.postdata.description = it["description"];
-			}
-		}
-		// console.log(postdata.postdata.link)
-		// console.log(it)
-		setToken("l");
-	};
+	// const thumb = async () => {
+	// 	let it = await grabity.grabIt(
+	// 		"https://cors-anywhere.herokuapp.com/" + postdata.postdata.link
+	// 	);
+	// 	// console.log(it)
+	// 	if (it["favicon"]) {
+	// 		if (it["favicon"]) {
+	// 			thumbImageSet(it["favicon"]);
+	// 		}
+	// 	} else if (it["image"]) {
+	// 		thumbImageSet(it["image"]);
+	// 	}
+	// 	if (postdata.postdata.description === "") {
+	// 		if (it["description"]) {
+	// 			postdata.postdata.description = it["description"];
+	// 		}
+	// 	}
+	// 	// console.log(postdata.postdata.link)
+	// 	// console.log(it)
+	// 	setToken("l");
+	// };
 	if (postdata.postdata.auto_image === "none") {
 		try {
 			// thumb()

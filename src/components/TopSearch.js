@@ -1,17 +1,17 @@
 import _ from "lodash";
-import faker from "faker";
+// import faker from "faker";
 import React, { useState } from "react";
 import { Search, Grid, Header, Segment, Input } from "semantic-ui-react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_ALL } from "../util/graphql";
 import { useHistory } from "react-router-dom";
 
-const source = _.times(5, () => ({
-	title: faker.company.companyName(),
-	description: faker.company.catchPhrase(),
-	image: faker.internet.avatar(),
-	price: faker.finance.amount(0, 100, 2, "$"),
-}));
+// const source = _.times(5, () => ({
+// 	title: faker.company.companyName(),
+// 	description: faker.company.catchPhrase(),
+// 	image: faker.internet.avatar(),
+// 	price: faker.finance.amount(0, 100, 2, "$"),
+// }));
 
 const initialState = { isLoading: false, results: [], value: "" };
 
@@ -23,24 +23,24 @@ function TopSearch() {
 	if (loading) return "Loading...";
 	if (error) return `Error! ${error.message}`;
 
-	const handleResultSelect = (e, { result }) =>
-		setState({ value: result.title });
+	// const handleResultSelect = (e, { result }) =>
+	// 	setState({ value: result.title });
 
-	const handleSearchChange = (e, { value }) => {
-		setState({ isLoading: true, value });
+	// const handleSearchChange = (e, { value }) => {
+	// 	setState({ isLoading: true, value });
 
-		setTimeout(() => {
-			if (state.value.length < 1) return setState(initialState);
+	// 	setTimeout(() => {
+	// 		if (state.value.length < 1) return setState(initialState);
 
-			const re = new RegExp(_.escapeRegExp(state.value), "i");
-			const isMatch = (result) => re.test(result.title);
+	// 		const re = new RegExp(_.escapeRegExp(state.value), "i");
+	// 		const isMatch = (result) => re.test(result.title);
 
-			setState({
-				isLoading: false,
-				results: _.filter(source, isMatch),
-			});
-		}, 300);
-	};
+	// 		setState({
+	// 			isLoading: false,
+	// 			results: _.filter(source, isMatch),
+	// 		});
+	// 	}, 300);
+	// };
 
 	function KeyPress(ev) {
 		if (ev.key === "Enter") {
