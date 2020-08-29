@@ -1,5 +1,5 @@
 import React from "react";
-import Lottie from "react-lottie";
+// import Lottie from "react-lottie";
 import * as animationData from "../assets/animations/simpleloader.json";
 import { Loader } from "semantic-ui-react";
 

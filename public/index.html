@@ -26,6 +26,15 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
 		<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+		<link
+			async
+			rel="stylesheet"
+			href="//cdn.jsdelivr.net/npm/semantic-ui@${props.versions.sui}/dist/semantic.min.css"
+		/>
+		<script
+			async
+			src="//cdn.jsdelivr.net/npm/semantic-ui@${props.versions.sui}/dist/semantic.min.js"
+		></script>
 		<!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -77,8 +86,9 @@
 	<body class="bg-gray-100 antialiased">
 		<noscript>You need to enable JavaScript to run this app.</noscript>
 		<div id="root" class="h-full w-screen content-center">
+			Loading
 			<!-- <p class="page-info"> -->
-			<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+			<!-- <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 			<lottie-player
 				src="https://assets3.lottiefiles.com/packages/lf20_IelcBP.json"
 				background="transparent"
@@ -86,7 +96,7 @@
 				style="width: 200px; height: 200px;"
 				loop
 				autoplay
-			></lottie-player>
+			></lottie-player> -->
 			<!-- </p> -->
 		</div>
 		<script>
