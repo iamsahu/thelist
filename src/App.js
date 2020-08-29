@@ -669,7 +669,7 @@ function App() {
 										<Container
 											style={{ marginTop: "3em", height: "85vh" }}
 											fluid
-											class="bg-gray-100"
+											className="bg-gray-100"
 										>
 											<Switch>
 												<Route exact path="/privacy" component={Privacy} />

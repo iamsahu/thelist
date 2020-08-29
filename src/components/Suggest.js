@@ -6,6 +6,8 @@ import {
 	Dropdown,
 	Dimmer,
 	Loader,
+	Icon,
+	Header,
 } from "semantic-ui-react";
 import useForm from "../util/hook";
 // import { useMutation, useQuery } from "@apollo/react-hooks";
@@ -25,6 +27,7 @@ import ReactGA from "react-ga";
 import Mixpanel from "../util/mix";
 import useClippy from "use-clippy";
 import gql from "graphql-tag";
+import { useAuth0 } from "../react-auth0-spa";
 
 const ALL_TAGS = gql`
 	query MyQuery {
@@ -105,6 +108,14 @@ function Suggest(props) {
 		curator: userC.loggedin_user_id,
 		suggestion: true,
 	});
+
+	const {
+		user,
+		isAuthenticated,
+		loading,
+		loginWithRedirect,
+		logout,
+	} = useAuth0();
 
 	// const { loading, error, data } = useQuery(ALL_TAGS,{ fetchPolicy: "network-only" })
 
@@ -398,115 +409,158 @@ function Suggest(props) {
 
 	return (
 		<>
-			{/* <Reward
-				ref={(ref) => {
-					setreward(ref);
-				}}
-				type="confetti"
-			> */}
-			<Modal
-				size="small"
-				open={showModal}
-				closeOnDimmerClick={false}
-				onClose={OnClose}
-				closeIcon
-				centered={false}
-				onOpen={OpenHandle}
-				trigger={
-					<Button
-						size="tiny"
-						floated="right"
-						basic
-						color="black"
-						onClick={onClick}
-					>
-						Suggest
-					</Button>
-					// <button
-					// 	class="mx-auto lg:mx-0 gradient mb-1 hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right ml-2 bg-white text-black border-gray-800"
-					// 	onClick={onClick}
-					// >
-					// 	Suggest
-					// </button>
-				}
-			>
-				<Modal.Header>Add Item</Modal.Header>
-				<Modal.Content image scrolling>
-					<Dimmer.Dimmable dimmed={dimmer} inverted>
-						<Form onSubmit={onSubmit} size="large">
-							<Form.Group widths="equal">
-								<Form.Field inline name="name">
-									<label>Title for item</label>
-									<Form.Input
-										name="name"
-										placeholder="name"
-										onChange={onChange}
-										value={values.name}
-										error={errorName ? "Please Enter Name" : false}
-									/>
-								</Form.Field>
-								<Form.Field inline name="link">
-									<label>Link of the item</label>
-									<Form.Input
-										name="link"
-										placeholder="Link"
-										onChange={(e, { value }) => {
-											onChange(e);
-											linkCheck(e, { value });
-										}}
-										value={values.link}
-										error={errorLink ? "Please add a link" : false}
-									/>
-								</Form.Field>
-							</Form.Group>
-							<Form.Field inline name="description">
-								{/* <label>Description</label> */}
-								<Form.TextArea
-									label="Description"
-									name="description"
-									placeholder="Describe what your consumers should expect from this content. (If you are feeling lazy leave this upto us)"
-									style={{ minHeight: 100 }}
-									onChange={onChange}
-									value={values.description}
-									error={errorDescription ? "Please add a description" : false}
-								/>
-							</Form.Field>
-							<Form.Group>
-								<Form.Field inline name="tag">
-									<label>Tags</label>
-									<Form.Input>
-										{/* {loading?<Dropdown text='Dropdown' loading />: */}
-										<Dropdown
-											name="tag"
-											options={Object.values(dropTag)}
-											placeholder="Tags"
-											search
-											selection
-											fluid
-											multiple
-											allowAdditions
-											// value={currentValues}
-											onAddItem={handleAddition}
-											onChange={handleChange}
-											upward
+			{userC.loggedin_user_id !== "" ? (
+				<Modal
+					size="small"
+					open={showModal}
+					closeOnDimmerClick={false}
+					onClose={OnClose}
+					closeIcon
+					centered={false}
+					onOpen={OpenHandle}
+					trigger={
+						<Button
+							size="tiny"
+							floated="right"
+							basic
+							color="black"
+							onClick={onClick}
+						>
+							Suggest
+						</Button>
+						// <button
+						// 	class="mx-auto lg:mx-0 gradient mb-1 hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right ml-2 bg-white text-black border-gray-800"
+						// 	onClick={onClick}
+						// >
+						// 	Suggest
+						// </button>
+					}
+				>
+					<Modal.Header>Add Item</Modal.Header>
+					<Modal.Content image scrolling>
+						<Dimmer.Dimmable dimmed={dimmer} inverted>
+							<Form onSubmit={onSubmit} size="large">
+								<Form.Group widths="equal">
+									<Form.Field inline name="name">
+										<label>Title for item</label>
+										<Form.Input
+											name="name"
+											placeholder="name"
+											onChange={onChange}
+											value={values.name}
+											error={errorName ? "Please Enter Name" : false}
 										/>
-										{/* } */}
-									</Form.Input>
+									</Form.Field>
+									<Form.Field inline name="link">
+										<label>Link of the item</label>
+										<Form.Input
+											name="link"
+											placeholder="Link"
+											onChange={(e, { value }) => {
+												onChange(e);
+												linkCheck(e, { value });
+											}}
+											value={values.link}
+											error={errorLink ? "Please add a link" : false}
+										/>
+									</Form.Field>
+								</Form.Group>
+								<Form.Field inline name="description">
+									<Form.TextArea
+										label="Description"
+										name="description"
+										placeholder="Describe what your consumers should expect from this content. (If you are feeling lazy leave this upto us)"
+										style={{ minHeight: 100 }}
+										onChange={onChange}
+										value={values.description}
+										error={
+											errorDescription ? "Please add a description" : false
+										}
+									/>
 								</Form.Field>
-							</Form.Group>
-							<br />
-							<Button primary type="submit">
-								Submit
-							</Button>
-						</Form>
-						<Dimmer active={dimmer} inverted>
-							<Loader />
-							Fetching data
-						</Dimmer>
-					</Dimmer.Dimmable>
-				</Modal.Content>
-			</Modal>
-			{/* </Reward> */}
+								<Form.Group>
+									<Form.Field inline name="tag">
+										<label>Tags</label>
+										<Form.Input>
+											<Dropdown
+												name="tag"
+												options={Object.values(dropTag)}
+												placeholder="Tags"
+												search
+												selection
+												fluid
+												multiple
+												allowAdditions
+												// value={currentValues}
+												onAddItem={handleAddition}
+												onChange={handleChange}
+												upward
+											/>
+										</Form.Input>
+									</Form.Field>
+								</Form.Group>
+								<br />
+								<Button primary type="submit">
+									Submit
+								</Button>
+							</Form>
+							<Dimmer active={dimmer} inverted>
+								<Loader />
+								Fetching data
+							</Dimmer>
+						</Dimmer.Dimmable>
+					</Modal.Content>
+				</Modal>
+			) : (
+				<Modal
+					open={showModal}
+					onOpen={OpenHandle}
+					onClose={OnClose}
+					trigger={
+						<Button
+							size="tiny"
+							floated="right"
+							basic
+							color="black"
+							icon
+							onClick={onClick}
+						>
+							Suggest
+						</Button>
+					}
+					basic
+					size="small"
+				>
+					<Header icon="feed" content="Sign Up/Sign In" />
+					<Modal.Content>
+						<p>
+							To suggest you will have to sign in. Do you want to proceed to
+							sign in?
+						</p>
+					</Modal.Content>
+					<Modal.Actions>
+						<Button basic color="red" inverted onClick={OnClose}>
+							<Icon name="remove" /> No
+						</Button>
+						<Button
+							color="green"
+							inverted
+							onClick={() =>
+								loginWithRedirect({
+									appState: {
+										targetUrl: window.location.href.replace(
+											process.env.REACT_APP_BASE_URL,
+											""
+										),
+									},
+								})
+							}
+						>
+							<Icon name="checkmark" /> Yes
+						</Button>
+					</Modal.Actions>
+				</Modal>
+			)}
 		</>
 	);
 }
