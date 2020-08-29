@@ -49,7 +49,7 @@ function PopularProfile() {
 						{/* <Item.Group divided> */}
 						<GG container spacing={1}>
 							{allusers.user.map((theone) => (
-								<GG item xs={3}>
+								<GG item xs={3} key={theone.id}>
 									<ProfileListItem
 										key={theone.id}
 										image_link={theone.image_link}

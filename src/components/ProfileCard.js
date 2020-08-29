@@ -15,9 +15,9 @@ function ProfileCard() {
 	const [description, setdescription] = useState(
 		"Something witty that tells how witty you are"
 	);
-	const [twitterNumber, setTwitterNumber] = useState("1");
+	// const [twitterNumber, setTwitterNumber] = useState("1");
 	const [showModal, SetModal] = useState(false);
-	const [id, setid] = useState("");
+	// const [id, setid] = useState("");
 	const [editState, seteditState] = useState(false);
 
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
@@ -32,7 +32,7 @@ function ProfileCard() {
 					// console.log(response.user[0]['image_link'])
 					setuserProfile(response.user[0]["image_link"]);
 					setusername(response.user[0]["username"]);
-					setTwitterNumber(response.user[0]["id"]);
+					// setTwitterNumber(response.user[0]["id"]);
 					if (response.user[0]["description"] !== null) {
 						setdescription(response.user[0]["description"]);
 						values.description = response.user[0]["description"];
@@ -51,12 +51,12 @@ function ProfileCard() {
 
 	const updateCache = (cache, { data }) => {
 		// Fetch the items from the cache
-		const existingItems = cache.readQuery({
-			query: GET_USER,
-			variables: {
-				user_id: userC.loggedin_user_id,
-			},
-		});
+		// const existingItems = cache.readQuery({
+		// 	query: GET_USER,
+		// 	variables: {
+		// 		user_id: userC.loggedin_user_id,
+		// 	},
+		// });
 		// Add the new item to the cache
 		const newItem = data.update_lists.returning[0];
 		cache.writeQuery({

@@ -13,8 +13,6 @@ import {
 	Image,
 	Icon,
 	Dropdown,
-	Card,
-	Loader,
 } from "semantic-ui-react";
 import { UserProvider } from "./context/UserContext";
 import { ContentProvider } from "./context/ContentContext";

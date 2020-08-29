@@ -12,7 +12,10 @@ function LandingPageCard(props) {
 	var shrt = str.substr(0, 130);
 	return (
 		<>
-			<div class="bg-white border shadow-md mt-4 rounded-lg overflow-hidden text-gray-900 w-full font-sans">
+			<div
+				class="bg-white border shadow-md mt-4 rounded-lg overflow-hidden text-gray-900 w-full font-sans"
+				key={props.result.id}
+			>
 				<div class="flex h-40">
 					<div class="w-1/3 h-40">
 						<div class="rounded border-black p-2">
