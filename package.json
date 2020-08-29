@@ -48,6 +48,8 @@
 		"react-toastify": "^6.0.4",
 		"react-twitter-embed": "^3.0.3",
 		"react-youtube": "^7.11.2",
+		"semantic-ui-css": "^2.4.1",
+		"semantic-ui-react": "^0.88.2",
 		"use-clippy": "^1.0.6",
 		"youtube-id": "^1.0.0"
 	},
