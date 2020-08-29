@@ -907,6 +907,8 @@ export const GET_LIST_DESCRIPTION = gql`
 			description
 			id
 			list_name
+			private
+			paid
 		}
 	}
 `;
@@ -2861,6 +2863,33 @@ const GetFeedItems = (_in) => {
 		.catch((error) => console.log(error));
 };
 
+export const UPDATEPRIVATESTATUS = gql`
+	mutation MyMutation($id: uuid, $private: Boolean) {
+		update_lists(where: { id: { _eq: $id } }, _set: { private: $private }) {
+			affected_rows
+			returning {
+				id
+				private
+			}
+		}
+	}
+`;
+
+const UpdatePrivateStatus = (id, privat) => {
+	// console.log(id);
+	// console.log(privat);
+	return client
+		.mutate({
+			mutation: UPDATEPRIVATESTATUS,
+			variables: {
+				id: id,
+				private: privat,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -2908,6 +2937,7 @@ export {
 	GetFollowOfUser,
 	GetFeedItems,
 	GetListsOfUserNonPrivate,
+	UpdatePrivateStatus,
 };
 
 export const DELETE_LIST = gql`

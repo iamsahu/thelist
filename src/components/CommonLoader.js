@@ -13,7 +13,7 @@ function CommonLoader() {
 		},
 	};
 	return (
-		<div class="content-center flex">
+		<div className="content-center flex">
 			{/* <Lottie options={defaultOptions} height={100} width={100} /> */}
 			<Loader active inline="centered" />
 		</div>

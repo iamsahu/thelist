@@ -10,6 +10,7 @@ import {
 import UserContext from "../context/UserContext";
 import useForm from "../util/hook";
 import { useMutation } from "@apollo/react-hooks";
+import PrivacyStatus from "./PrivacyStatus";
 
 function CurationReasonCard(props) {
 	const [content, contentChange] = useContext(ContentContext);
@@ -17,6 +18,8 @@ function CurationReasonCard(props) {
 	const [id, setid] = useState("");
 	const [description, setDescription] = useState("");
 	const [editState, seteditState] = useState(false);
+	const [privatestate, setprivatestate] = useState(false);
+	const [paid, setPaid] = useState(false);
 	const [showModal, SetModal] = useState(false);
 	// console.log(props);
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
@@ -33,6 +36,8 @@ function CurationReasonCard(props) {
 					setid(response.lists[0].id);
 					// if (values.description === "")
 					values.description = response.lists[0].description;
+					setprivatestate(response.lists[0].private);
+					setPaid(response.lists[0].paid);
 					if (response.lists[0].curator_id === userC.loggedin_user_id) {
 						seteditState(true);
 					} else {
@@ -144,7 +149,12 @@ function CurationReasonCard(props) {
 						</div>
 					</Card.Description>
 				</Card.Content> */}
-				{editState && <Card.Content extra>{editform}</Card.Content>}
+				{editState && (
+					<Card.Content extra>
+						<PrivacyStatus id={props.id} privatestate={privatestate} />
+						{editform}
+					</Card.Content>
+				)}
 			</Card>
 		</>
 	);
