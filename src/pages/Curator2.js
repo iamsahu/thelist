@@ -422,7 +422,7 @@ function Curator(props) {
 				</div>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
-				<div class="bg-gray-100 py-10 px-2">
+				<div className="bg-gray-100 py-10 px-2">
 					<Grid stackable>
 						<Grid.Column width={1}></Grid.Column>
 						<Grid.Column width={3}>
@@ -439,7 +439,7 @@ function Curator(props) {
 							<ContentMiddleLists propSent={propSent} posts={posts} title={header}/>:
 							} */}
 							<div
-								class="text-gray-900 pb-4"
+								className="text-gray-900 pb-4"
 								style={{
 									background: "white",
 									// marginTop: "15px",

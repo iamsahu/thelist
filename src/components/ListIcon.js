@@ -26,7 +26,7 @@ function ListIcon(props) {
 		// console.log(props);
 		GetListImage(props.id).then((response) => {
 			// console.log(response);
-			if (typeof response.lists[0] !== "undefined")
+			if (typeof response.lists[0] !== "undefined") {
 				if (response.lists[0].image_url === '""') {
 					setimageurl(
 						"https://react.semantic-ui.com/images/wireframe/square-image.png"
@@ -37,10 +37,11 @@ function ListIcon(props) {
 					values.image_url = response.lists[0].image_url;
 				}
 
-			if (response.lists[0].curator_id === userC.loggedin_user_id) {
-				seteditstate(true);
-			} else {
-				seteditstate(false);
+				if (response.lists[0].curator_id === userC.loggedin_user_id) {
+					seteditstate(true);
+				} else {
+					seteditstate(false);
+				}
 			}
 		});
 	};

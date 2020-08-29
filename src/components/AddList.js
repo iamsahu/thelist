@@ -285,7 +285,7 @@ function AddList() {
 							/>
 						</Form.Field>
 						<Form.Field name="private">
-							<label>Privacy</label>
+							<label>Is the list Private?</label>
 							<Dropdown
 								name="private"
 								placeholder="Private"

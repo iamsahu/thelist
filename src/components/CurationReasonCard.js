@@ -152,12 +152,8 @@ function CurationReasonCard(props) {
 				</Card.Content> */}
 				{editState && (
 					<Card.Content extra>
-						<PrivacyStatus
-							id={props.id}
-							privatestate={privatestate}
-							user={userC.loggedin_user_id}
-						/>
-						<DeleteList id={props.id} />
+						<PrivacyStatus id={props.id} privatestate={privatestate} />
+						<DeleteList id={props.id} user={userC.loggedin_user_id} />
 						{editform}
 					</Card.Content>
 				)}

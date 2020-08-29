@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 function DeleteList(props) {
 	const history = useHistory();
-
+	console.log(props);
 	return (
 		<>
 			<Button
