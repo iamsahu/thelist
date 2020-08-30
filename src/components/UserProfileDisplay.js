@@ -234,7 +234,7 @@ function UserProfileDisplay(props) {
 												alt="..."
 												src={userProfile}
 												className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-20"
-												style={{ maxWidth: "150px" }}
+												style={{ maxWidth: "150px", minWidth: "150px" }}
 											/>
 										</div>
 									</div>

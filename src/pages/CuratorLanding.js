@@ -143,7 +143,7 @@ function CuratorLanding(props) {
 	return (
 		<>
 			<Responsive {...Responsive.onlyMobile}>
-				<div class="bg-gray-100 w-full">
+				<div class="bg-gray-100 w-full -mt-4">
 					<UserProfileDisplay user={u} />
 
 					<div class="p-2">
