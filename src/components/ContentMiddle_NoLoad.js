@@ -360,12 +360,12 @@ function ContentMiddleNoLoad(props) {
 						contentID={props.propSent.contentID}
 					/>
 
-					{/* {props.propSent.contentType === "lists" &&
+					{props.propSent.contentType === "lists" &&
 						userC.loggedin_user_id === props.propSent.curator_id && (
 							<>
 								<AddItem2 listID={props.propSent.contentID} />
-								
-								<Modal
+
+								{/* <Modal
 									closeIcon
 									trigger={
 										<Button
@@ -396,9 +396,9 @@ function ContentMiddleNoLoad(props) {
 										<br />
 										{fileUpload === "1" && <Button>Upload This</Button>}
 									</Modal.Content>
-								</Modal>
+								</Modal> */}
 							</>
-						)} */}
+						)}
 				</div>
 				<div class="mt-8">
 					<Menu pointing secondary>

@@ -31,6 +31,7 @@ function ShareSignedIn(props) {
 		name: props.title,
 		link: props.url,
 		description: "",
+		suggestion: false,
 		curator: userC.loggedin_user_id,
 	});
 
@@ -140,10 +141,10 @@ function ShareSignedIn(props) {
 								setloadingbut(false);
 								setdimmer(false);
 								// window.close();
-								history.push(
-									"/" + userC.loggedin_user_id + "/lists/" + list_id
-								);
-								window.location.href = window.location.href;
+								// history.push(
+								// 	"/" + userC.loggedin_user_id + "/lists/" + list_id
+								// );
+								// window.location.href = window.location.href;
 								console.log("Done");
 							})
 							.catch((error) => {
