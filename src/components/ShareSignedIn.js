@@ -140,7 +140,7 @@ function ShareSignedIn(props) {
 								// setlistDescription(false);
 								setloadingbut(false);
 								setdimmer(false);
-								// window.close();
+								window.close();
 								// history.push(
 								// 	"/" + userC.loggedin_user_id + "/lists/" + list_id
 								// );
