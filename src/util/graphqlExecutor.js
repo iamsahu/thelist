@@ -2764,6 +2764,11 @@ const GETUSERSTATS = gql`
 				}
 			}
 		}
+		list_follow_aggregate(where: { list: { user: { id: { _eq: $id } } } }) {
+			aggregate {
+				count(distinct: true)
+			}
+		}
 	}
 `;
 

@@ -26,6 +26,7 @@ function UserProfileDisplay(props) {
 	const [itemscount, setitemscount] = useState(0);
 	const [listviewcount, setlistviewcount] = useState(0);
 	const [listcount, setListcount] = useState(0);
+	const [followcount, setfollowcount] = useState(0);
 
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
 		description: "",
@@ -69,6 +70,7 @@ function UserProfileDisplay(props) {
 					setlistviewcount(response.lists_aggregate.aggregate.sum.view_count);
 				}
 				setListcount(response.lists_aggregate.aggregate.count);
+				setfollowcount(response.list_follow_aggregate.aggregate.count);
 			})
 			.catch((error) => console.log(error));
 	};
@@ -264,6 +266,12 @@ function UserProfileDisplay(props) {
 													{itemscount}
 												</span>
 												<span className="text-sm text-gray-500">Items</span>
+											</div>
+											<div className=" p-2 text-center">
+												<span className="text-xl font-bold block uppercase tracking-wide text-gray-700">
+													{followcount}
+												</span>
+												<span className="text-sm text-gray-500">Follows</span>
 											</div>
 										</div>
 									</div>
