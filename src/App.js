@@ -61,6 +61,7 @@ const Share = lazy(() => import("./pages/Share"));
 const UserSettings = lazy(() => import("./pages/UserSettings"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Feedback = lazy(() => import("./pages/Feedback"));
+const Referral = lazy(() => import("./pages/Referral"));
 // const LandingPage = lazy(() => import("./pages/LandingPage"));
 
 toast.configure();
@@ -595,6 +596,7 @@ function App() {
 												<Switch>
 													<Route exact path="/privacy" component={Privacy} />
 													<Route exact path="/feedback" component={Feedback} />
+													<Route exact path="/referral" component={Referral} />
 													<Route
 														exact
 														path="/settings/:id"
@@ -672,6 +674,7 @@ function App() {
 											<Switch>
 												<Route exact path="/privacy" component={Privacy} />
 												<Route exact path="/feedback" component={Feedback} />
+												<Route exact path="/referral" component={Referral} />
 												<Route
 													exact
 													path="/settings/:id"

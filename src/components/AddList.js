@@ -6,7 +6,7 @@ import { CREATE_LIST, COMBINED_FETCH } from "../util/graphql";
 import UserContext from "../context/UserContext";
 import ContentContext from "../context/ContentContext";
 import history from "../util/history";
-import { Formik } from "formik";
+// import { Formik } from "formik";
 
 function AddList() {
 	const [content, contentChange] = useContext(ContentContext);
