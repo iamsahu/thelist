@@ -47,7 +47,11 @@ function YourActivities(props) {
 						<div class="w-1/4 max-w-full h-48 relative">
 							<img
 								class="absolute h-48 w-full object-cover object-center"
-								src={item.auto_image}
+								src={
+									item.auto_image !== "none" && item.auto_image !== ""
+										? item.auto_image
+										: "https://i.imgur.com/MwTfvwo.png"
+								}
 							/>
 						</div>
 						<div class="p-2 w-3/4 h-48">

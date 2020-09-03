@@ -91,7 +91,7 @@ function ContentCard(postdata) {
 	};
 
 	const [thumbImage, thumbImageSet] = useState(
-		"https://react.semantic-ui.com/images/wireframe/image.png"
+		"https://i.imgur.com/MwTfvwo.png"
 	);
 
 	const [token, setToken] = useState("");
@@ -174,7 +174,8 @@ function ContentCard(postdata) {
 							<img
 								class="absolute h-48 w-full object-cover object-center"
 								src={
-									postdata.postdata.auto_image !== "none"
+									postdata.postdata.auto_image !== "none" &&
+									postdata.postdata.auto_image !== ""
 										? postdata.postdata.auto_image
 										: thumbImage
 								}
