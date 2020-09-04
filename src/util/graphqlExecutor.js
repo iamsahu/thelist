@@ -2674,6 +2674,8 @@ const USERDETAILS = gql`
 			image_link
 			patreon_id
 			username
+			pocket_token
+			pocket_username
 		}
 	}
 `;
@@ -2935,6 +2937,37 @@ const DeleteList = (list_id) => {
 		.catch((error) => console.log(error));
 };
 
+const UPDATEPOCKETCREDS = gql`
+	mutation MyMutation(
+		$id: String
+		$pocket_token: String
+		$pocket_username: String
+	) {
+		update_user(
+			where: { id: { _eq: $id } }
+			_set: { pocket_token: $pocket_token, pocket_username: $pocket_username }
+		) {
+			affected_rows
+		}
+	}
+`;
+
+const UpdatePocketCreds = (id, pocket_token, pocket_username) => {
+	// console.log(list_id);
+	// console.log(privat);
+	return client
+		.mutate({
+			mutation: UPDATEPOCKETCREDS,
+			variables: {
+				id: id,
+				pocket_token: pocket_token,
+				pocket_username: pocket_username,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -2984,6 +3017,7 @@ export {
 	GetListsOfUserNonPrivate,
 	UpdatePrivateStatus,
 	DeleteList,
+	UpdatePocketCreds,
 };
 
 export const DELETE_LIST = gql`

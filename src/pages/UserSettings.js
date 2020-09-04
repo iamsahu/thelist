@@ -9,10 +9,13 @@ import {
 	Loader,
 } from "semantic-ui-react";
 import useForm from "../util/hook";
+import PocketSignIn from "../components/PocketSignIn";
 
 function UserSettings(props) {
 	// console.log(props);
 	const [loaded, setLoaded] = useState("");
+	const [pocket_token, setPocket_token] = useState("");
+	const [pocket_username, setPocket_username] = useState("");
 
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
 		name: "",
@@ -41,6 +44,8 @@ function UserSettings(props) {
 			values.image = data.user[0].image_link;
 			values.description = data.user[0].description;
 			values.coffee = data.user[0].buymeacoffee;
+			setPocket_token(data.user[0].pocket_token);
+			setPocket_username(data.user[0].pocket_username);
 			setLoaded("loaded");
 			console.log("complete");
 		});
@@ -113,7 +118,16 @@ function UserSettings(props) {
 				>
 					<Grid.Column width={3}></Grid.Column>
 					<Grid.Column width={10}>{form}</Grid.Column>
-					<Grid.Column width={3}></Grid.Column>
+					<Grid.Column width={3}>
+						{process.env.REACT_APP_BASE_URL === "http://localhost:3000" ? (
+							<PocketSignIn
+								pocket_token={pocket_token}
+								pocket_username={pocket_username}
+							/>
+						) : (
+							<></>
+						)}
+					</Grid.Column>
 				</Grid>
 			</Responsive>
 		</>

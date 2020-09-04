@@ -62,6 +62,7 @@ const UserSettings = lazy(() => import("./pages/UserSettings"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Feedback = lazy(() => import("./pages/Feedback"));
 const Referral = lazy(() => import("./pages/Referral"));
+const PocketComp = lazy(() => import("./pages/PocketSignInComplete"));
 // const LandingPage = lazy(() => import("./pages/LandingPage"));
 
 toast.configure();
@@ -237,7 +238,7 @@ function App() {
 					.then((r) => r.json())
 					.then((data) => {
 						userToken = data["token"];
-						// console.log(userToken);
+						console.log(userToken);
 						// console.log(data);
 						// console.log(process.env.REACT_APP_STREAM_API_KEY);
 						const client2 = connect(
@@ -675,6 +676,11 @@ function App() {
 												<Route exact path="/privacy" component={Privacy} />
 												<Route exact path="/feedback" component={Feedback} />
 												<Route exact path="/referral" component={Referral} />
+												<Route
+													exact
+													path="/pocketcomp"
+													component={PocketComp}
+												/>
 												<Route
 													exact
 													path="/settings/:id"
