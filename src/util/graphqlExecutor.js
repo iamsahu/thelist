@@ -1253,7 +1253,8 @@ const GetAllTags = () => {
 const GET_ALL_USERS = gql`
 	query MyQuery {
 		user(
-			order_by: { created_at: desc_nulls_last }
+			# order_by: { created_at: desc_nulls_last }
+			order_by: { lists_aggregate: { sum: { view_count: desc_nulls_last } } }
 			where: { delete_status: { _eq: false } }
 		) {
 			description
@@ -2968,6 +2969,94 @@ const UpdatePocketCreds = (id, pocket_token, pocket_username) => {
 		.catch((error) => console.log(error));
 };
 
+const GETPOCKETDATA = gql`
+	query MyQuery($id: String) {
+		pocket_data(
+			where: { user_id: { _eq: $id } }
+			order_by: { time_added: desc_nulls_last }
+			limit: 10
+		) {
+			given_url
+			given_title
+			id
+			is_article
+			lang
+			user_id
+			word_count
+			resolved_url
+			time_added
+			top_image_url
+			excerpt
+		}
+	}
+`;
+
+const GetPocketData = (id) => {
+	console.log(id);
+	return client
+		.query({
+			query: GETPOCKETDATA,
+			variables: {
+				id: id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
+const INSERTITEM = gql`
+	mutation MyMutation(
+		$list_id: String
+		$id: String
+		$link: String
+		$description: String
+		$auto_description: String
+		$auto_image: String
+		$name: String
+	) {
+		insert_items(
+			objects: {
+				list_id: $list_id
+				user: { data: { id: $id } }
+				link: $link
+				description: $description
+				auto_description: $auto_description
+				auto_image: $auto_image
+				name: $name
+			}
+		) {
+			affected_rows
+		}
+	}
+`;
+
+const InsertItem2 = (
+	list_id,
+	id,
+	link,
+	description,
+	auto_description,
+	auto_image,
+	name
+) => {
+	console.log(id);
+	return client
+		.query({
+			query: INSERTITEM,
+			variables: {
+				list_id: list_id,
+				id: id,
+				link: link,
+				description: description,
+				auto_description: auto_description,
+				auto_image: auto_image,
+				name: name,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -3018,6 +3107,8 @@ export {
 	UpdatePrivateStatus,
 	DeleteList,
 	UpdatePocketCreds,
+	GetPocketData,
+	InsertItem2,
 };
 
 export const DELETE_LIST = gql`
