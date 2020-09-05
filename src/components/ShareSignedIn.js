@@ -66,101 +66,101 @@ function ShareSignedIn(props) {
 		}
 		setloadingbut(true);
 		setdimmer(true);
-		fetch(
-			//"https://obzz0p3mah.execute-api.eu-west-3.amazonaws.com/default/getUserToken",
-			"https://cors-anywhere.herokuapp.com/https://32mois0yg1.execute-api.eu-west-3.amazonaws.com/default/getUserTokenNode",
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ user: userC.loggedin_user_id }),
-			}
-		)
-			.then((r) => r.json())
+		// fetch(
+		// 	//"https://obzz0p3mah.execute-api.eu-west-3.amazonaws.com/default/getUserToken",
+		// 	"https://cors-anywhere.herokuapp.com/https://32mois0yg1.execute-api.eu-west-3.amazonaws.com/default/getUserTokenNode",
+		// 	{
+		// 		method: "POST",
+		// 		headers: {
+		// 			"Content-Type": "application/json",
+		// 		},
+		// 		body: JSON.stringify({ user: userC.loggedin_user_id }),
+		// 	}
+		// )
+		// 	.then((r) => r.json())
+		// 	.then((data) => {
+		// 		//Write the code here for create item
+		// 		userToken = data["token"];
+		// 		console.log(userToken);
+		// 		// console.log(data);
+		// 		// console.log(process.env.REACT_APP_STREAM_API_KEY);
+		// 		const client2 = connect(
+		// 			// process.env.REACT_APP_STREAM_API_KEY,
+		// 			"pf7sgqtb4h3x",
+		// 			userToken,
+		// 			"86395"
+		// 			// process.env.REACT_APP_STREAM_APP_ID
+		// 		);
+		// 		var listfeed = client2.feed("user", userC.loggedin_user_id);
+		// console.log(values);
+		// console.log(list_id);
+		// console.log(userC.loggedin_user_id);
+		GetDetails(values.link)
+			.then(function (response) {
+				return response.text();
+			})
 			.then((data) => {
-				//Write the code here for create item
-				userToken = data["token"];
-				console.log(userToken);
+				// var data = response.text();
 				// console.log(data);
-				// console.log(process.env.REACT_APP_STREAM_API_KEY);
-				const client2 = connect(
-					// process.env.REACT_APP_STREAM_API_KEY,
-					"pf7sgqtb4h3x",
-					userToken,
-					"86395"
-					// process.env.REACT_APP_STREAM_APP_ID
-				);
-				var listfeed = client2.feed("user", userC.loggedin_user_id);
+				var auto_description = "";
+				var auto_image = "";
+				data = JSON.parse(data);
+				// console.log(data["description"]);
+				if (data["description"] === "Invalid response status code (0)") {
+				} else if (data["description"] === "Linkpreview service denied") {
+				} else if (
+					data["description"] === "Too many requests / rate limit exceeded"
+				) {
+				} else {
+					// console.log(data["description"]);
+					auto_description = data["description"];
+					auto_image = data["image"];
+					values.name = data["title"];
+				}
+				// return "hello";
 				console.log(values);
-				console.log(list_id);
-				console.log(userC.loggedin_user_id);
-				GetDetails(values.link)
-					.then(function (response) {
-						return response.text();
+				createItem({
+					...values,
+					list_id: list_id,
+					selTags: seltags,
+					curator_id: userC.loggedin_user_id,
+					tags: allTags,
+					contentType: "dataentry",
+					currentListID: "",
+					currentTagID: "",
+					auto_description,
+					auto_image,
+				})
+					.then((response) => {
+						console.log(response);
+						// console.log(response2)
+						values.name = "";
+						values.link = "";
+						values.description = "";
+						// setlistDescription(false);
+						setloadingbut(false);
+						setdimmer(false);
+						window.close();
+						// history.push(
+						// 	"/" + userC.loggedin_user_id + "/lists/" + list_id
+						// );
+						// window.location.href = window.location.href;
+						console.log("Done");
 					})
-					.then((data) => {
-						// var data = response.text();
-						// console.log(data);
-						var auto_description = "";
-						var auto_image = "";
-						data = JSON.parse(data);
-						// console.log(data["description"]);
-						if (data["description"] === "Invalid response status code (0)") {
-						} else if (data["description"] === "Linkpreview service denied") {
-						} else if (
-							data["description"] === "Too many requests / rate limit exceeded"
-						) {
-						} else {
-							// console.log(data["description"]);
-							auto_description = data["description"];
-							auto_image = data["image"];
-							values.name = data["title"];
-						}
-						// return "hello";
-						console.log(values);
-						createItem({
-							...values,
-							list_id: list_id,
-							selTags: seltags,
-							curator_id: userC.loggedin_user_id,
-							tags: allTags,
-							contentType: "dataentry",
-							currentListID: "",
-							currentTagID: "",
-							auto_description,
-							auto_image,
-						})
-							.then((response) => {
-								console.log(response);
-								// console.log(response2)
-								values.name = "";
-								values.link = "";
-								values.description = "";
-								// setlistDescription(false);
-								setloadingbut(false);
-								setdimmer(false);
-								window.close();
-								// history.push(
-								// 	"/" + userC.loggedin_user_id + "/lists/" + list_id
-								// );
-								// window.location.href = window.location.href;
-								console.log("Done");
-							})
-							.catch((error) => {
-								console.log(error);
-							});
+					.catch((error) => {
+						console.log(error);
 					});
 			});
+		// });
 	}
 
 	function handleChangeListAddition(e, { value }) {}
 
 	if (listData === "") loadUser(userC.loggedin_user_id);
 	return (
-		<>
+		<div>
 			{" "}
-			<Dimmer.Dimmable dimmed={dimmer} inverted>
+			<Dimmer.Dimmable dimmed={dimmer} inverted className="p-4">
 				<Form onSubmit={onSubmit}>
 					<Form.Field>
 						<label>Title</label>
@@ -212,7 +212,7 @@ function ShareSignedIn(props) {
 					Saving
 				</Dimmer>
 			</Dimmer.Dimmable>
-		</>
+		</div>
 	);
 }
 
