@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { GetFollowOfUser } from "../util/graphqlExecutor";
 import { useHistory } from "react-router-dom";
 import { Loader, Responsive, Item, Button } from "semantic-ui-react";
 import { Grid as GG, Card as CC } from "@material-ui/core";
 import Follow from "./Follow";
 import CommonLoader from "./CommonLoader";
+import UserContext from "../context/UserContext";
+
 function YourFollow(props) {
+	const [userC, userChange] = useContext(UserContext);
 	const [loading, setloading] = useState("-1");
 	const [followData, setfollowData] = useState("");
 	const history = useHistory();
@@ -27,10 +30,29 @@ function YourFollow(props) {
 	if (loading === "-1") {
 		return <CommonLoader />;
 	}
-
-	if (followData.list_follow.length < 1) {
-		// console.log("follow Data");
-		return <div>You have not followed anyone</div>;
+	if (followData !== "") {
+		if (followData.list_follow.length < 1) {
+			// console.log("follow Data");
+			return (
+				<div>
+					{props.user === userC.loggedin_user_id
+						? "You have not followed anyone! You can find some interesting curators" +
+						  <a href="/explore">here</a> +
+						  " to follow"
+						: "The user has not followed any curations till now."}
+				</div>
+			);
+		}
+	} else {
+		return (
+			<div>
+				{props.user === userC.loggedin_user_id
+					? "You have not followed anyone! You can find some interesting curators" +
+					  <a href="/explore">here</a> +
+					  " to follow"
+					: "The user has not followed any curations till now."}
+			</div>
+		);
 	}
 
 	function Card(item) {

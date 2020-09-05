@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { Loader, Header, Item, Responsive } from "semantic-ui-react";
 import { GetItemsActivity } from "../util/graphqlExecutor";
 import { useHistory } from "react-router-dom";
 import CommonLoader from "./CommonLoader";
+import { AddList } from "../components/AddList";
+import UserContext from "../context/UserContext";
+
 function YourActivities(props) {
+	const [userC, userChange] = useContext(UserContext);
 	const [loading, setloading] = useState("-1");
 	const [activityData, setactivityData] = useState("");
 	// var feed = streamClient.feed("user", props.user);
@@ -21,20 +25,29 @@ function YourActivities(props) {
 				// console.log(response);
 				if (response.items.length > 0) {
 					setactivityData(response);
-					setloading("0");
 				}
+				setloading("0");
 			})
 			.catch((error) => console.log(error));
 
 	if (loading === "-1") {
 		return <CommonLoader />;
 	}
-
-	if (activityData.items.length < 1) {
-		// console.log("Activity Data");
+	if (activityData !== "") {
+		if (activityData.items.length < 1) {
+			// console.log("Activity Data");
+			return (
+				<div>
+					<Loader active inline="centered" />
+				</div>
+			);
+		}
+	} else {
 		return (
 			<div>
-				<Loader active inline="centered" />
+				{props.user === userC.loggedin_user_id
+					? "You have not added anything to either your list or not created any. You can start by creating a list by clicking Add List Button on the top."
+					: "The user has no activites till now. Encourage them to put some content they have a good taste in."}
 			</div>
 		);
 	}
