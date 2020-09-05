@@ -5,7 +5,6 @@ import { Loader, Responsive, Item, Button } from "semantic-ui-react";
 import { Grid as GG, Card as CC } from "@material-ui/core";
 import Follow from "./Follow";
 import CommonLoader from "./CommonLoader";
-
 function YourFollow(props) {
 	const [loading, setloading] = useState("-1");
 	const [followData, setfollowData] = useState("");

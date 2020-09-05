@@ -110,7 +110,14 @@ function ContentMiddleNoLoad(props) {
 			<div className="scrolly">
 				<div
 					className="imageFix"
-					style={{ background: "white", height: "100%", paddingTop: "10px" }}
+					style={{
+						background: "white",
+						height: "100%",
+						paddingTop: "10px",
+						"margin-left": "auto",
+						"margin-right": "auto",
+						"text-align": "center",
+					}}
 				>
 					<Header as="h1">
 						There is nothing here! Click on the add list button on the top right
