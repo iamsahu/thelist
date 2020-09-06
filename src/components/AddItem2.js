@@ -419,7 +419,7 @@ function AddItem2(props) {
 				trigger={
 					<Button
 						size="tiny"
-						floated="right"
+						// floated="right"
 						basic
 						color="black"
 						onClick={onClick}

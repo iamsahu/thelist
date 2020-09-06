@@ -3057,6 +3057,47 @@ const InsertItem2 = (
 		.catch((error) => console.log(error));
 };
 
+const GETCURATIONSTATS = gql`
+	query MyQuery {
+		lists_aggregate {
+			aggregate {
+				count
+				sum {
+					view_count
+				}
+			}
+		}
+	}
+`;
+
+const GetCurationStats = () => {
+	return client
+		.query({
+			query: GETCURATIONSTATS,
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
+const GETITEMSDATA = gql`
+	query MyQuery {
+		items_aggregate {
+			aggregate {
+				count
+			}
+		}
+	}
+`;
+
+const GetItemsData = () => {
+	return client
+		.query({
+			query: GETITEMSDATA,
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -3109,6 +3150,8 @@ export {
 	UpdatePocketCreds,
 	GetPocketData,
 	InsertItem2,
+	GetCurationStats,
+	GetItemsData,
 };
 
 export const DELETE_LIST = gql`

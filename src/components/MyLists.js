@@ -11,6 +11,7 @@ import AddList from "../components/AddList";
 import { useAuth0 } from "../react-auth0-spa";
 import UserContext from "../context/UserContext";
 import CommonLoader from "./CommonLoader";
+import CurationEncouragement from "../components/CurationEncouragement";
 
 function MyLists(props) {
 	const [listData, setlistData] = useState("");
@@ -60,8 +61,13 @@ function MyLists(props) {
 								"margin-right": "auto",
 								"text-align": "center",
 							}}
+							className="m-4"
 						>
-							You have no lists. Click <AddList /> to create one!
+							You have no curations. Click below to create one!
+							<br />
+							<AddList />
+							<br />
+							<CurationEncouragement />
 							<br />
 							<Image
 								centered
@@ -101,8 +107,13 @@ function MyLists(props) {
 								"margin-right": "auto",
 								"text-align": "center",
 							}}
+							className="m-4"
 						>
-							You have no lists. Click on <AddList /> to create one!
+							You have no curations. Click below to create one!
+							<br />
+							<AddList className="m-2" />
+							<br />
+							<CurationEncouragement />
 							<br />
 							<Image
 								centered

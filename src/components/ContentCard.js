@@ -179,6 +179,10 @@ function ContentCard(postdata) {
 										? postdata.postdata.auto_image
 										: thumbImage
 								}
+								onError={(e) => {
+									e.target.onerror = null;
+									e.target.src = "https://i.imgur.com/MwTfvwo.png";
+								}}
 							/>
 						</div>
 						<div class="p-2 w-3/4 h-48">

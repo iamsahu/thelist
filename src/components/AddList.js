@@ -252,7 +252,7 @@ function AddList() {
 							Add List
 						</Button> */}
 						<button
-							className="mx-auto lg:mx-0 gradient hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right ml-2 bg-white text-black border-gray-800"
+							className="mx-auto lg:mx-0 gradient hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg  ml-2 bg-white text-black border-gray-800"
 							onClick={() => SetModal(true)}
 						>
 							Add List
