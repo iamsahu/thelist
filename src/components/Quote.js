@@ -50,9 +50,12 @@ const quotes = [
 function Quote() {
 	var quote = quotes[Math.floor(Math.random() * quotes.length)];
 	return (
-		<div className="font-serif font-thin text-xl w-full pb-8 px-2">
-			<Divider />"{quote[0]}"<br />
-			<p className="float-right">{quote[1]}</p>
+		<div className="w-full">
+			<Divider />
+			<div className="font-serif font-thin text-xl w-full pb-8 border px-4 pt-4 shadow-xl rounded-lg bw">
+				"{quote[0]}"<br />
+				<p className="float-right">{quote[1]}</p>
+			</div>
 		</div>
 	);
 }
