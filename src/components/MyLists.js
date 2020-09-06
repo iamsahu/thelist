@@ -12,6 +12,7 @@ import { useAuth0 } from "../react-auth0-spa";
 import UserContext from "../context/UserContext";
 import CommonLoader from "./CommonLoader";
 import CurationEncouragement from "../components/CurationEncouragement";
+import Quote from "./Quote";
 
 function MyLists(props) {
 	const [listData, setlistData] = useState("");
@@ -75,17 +76,19 @@ function MyLists(props) {
 								size="large"
 								verticalAlign="middle"
 							/>
+							<Quote />
 						</div>
 					) : (
 						("Nothing to see here",
-						(
+						((
 							<Image
 								centered
 								src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47.png`}
 								size="large"
 								verticalAlign="middle"
 							/>
-						))
+						),
+						(<Quote />)))
 					)}
 				</Item.Group>
 			</Responsive>
@@ -121,17 +124,19 @@ function MyLists(props) {
 								size="large"
 								verticalAlign="middle"
 							/>
+							<Quote />
 						</div>
 					) : (
 						("Nothing to see here",
-						(
+						((
 							<Image
 								centered
 								src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47.png`}
 								size="large"
 								verticalAlign="middle"
 							/>
-						))
+						),
+						(<Quote />)))
 					)}
 				</GG>
 			</Responsive>

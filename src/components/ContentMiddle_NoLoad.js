@@ -42,6 +42,7 @@ import AddItem2 from "./AddItem2";
 import LikeList from "./LikeList";
 import ListIcon from "./ListIcon";
 import ItemsCountData from "./ItemsCountData";
+import Quote from "./Quote";
 // import {FETCH_FEED_ITEMS,FETCH_FEED_ITEMS_OFCURATOR} from '../util/graphql';
 import UserContext from "../context/UserContext";
 import {
@@ -555,7 +556,7 @@ function ContentMiddleNoLoad(props) {
 											suggest={true}
 										/>
 									)
-								) : (
+								) : props.propSent.curator_id === userC.loggedin_user_id ? (
 									<div className="imageFix m-2">
 										There is nothing here! Click on the button 'Add Item' on the
 										right side to add an item to your list!
@@ -569,11 +570,49 @@ function ContentMiddleNoLoad(props) {
 											verticalAlign="middle"
 										/>
 									</div>
+								) : (
+									<div
+										style={{
+											background: "white",
+											display: "block",
+											"margin-left": "auto",
+											"margin-right": "auto",
+											"text-align": "center",
+										}}
+										className="m-4"
+									>
+										No mojo as of now <br />
+										<Image
+											centered
+											src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47_w.png`}
+											size="large"
+											verticalAlign="middle"
+										/>
+									</div>
 								)
 							) : (
-								<div>No mojo as of now</div>
+								<div
+									style={{
+										background: "white",
+										display: "block",
+										"margin-left": "auto",
+										"margin-right": "auto",
+										"text-align": "center",
+									}}
+									className="m-4"
+								>
+									No mojo as of now
+									<br />
+									<Image
+										centered
+										src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47_w.png`}
+										size="large"
+										verticalAlign="middle"
+									/>
+								</div>
 							)}
 						</Item.Group>
+						<Quote />
 					</div>
 				</Responsive>
 				<Responsive minWidth={Responsive.onlyTablet.minWidth}>
@@ -603,9 +642,9 @@ function ContentMiddleNoLoad(props) {
 											suggest={true}
 										/>
 									)
-								) : (
+								) : props.propSent.curator_id === userC.loggedin_user_id ? (
 									<div
-										className="imageFix"
+										className="imageFix m-4"
 										style={{
 											background: "white",
 											display: "block",
@@ -613,7 +652,6 @@ function ContentMiddleNoLoad(props) {
 											"margin-right": "auto",
 											"text-align": "center",
 										}}
-										className="m-4"
 									>
 										There is nothing here! Click on the button 'Add Item' on the
 										right side to add an item to your list!
@@ -627,11 +665,48 @@ function ContentMiddleNoLoad(props) {
 											verticalAlign="middle"
 										/>
 									</div>
+								) : (
+									<div
+										style={{
+											background: "white",
+											display: "block",
+											"margin-left": "auto",
+											"margin-right": "auto",
+											"text-align": "center",
+										}}
+										className="m-4"
+									>
+										No mojo as of now <br />
+										<Image
+											centered
+											src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47_w.png`}
+											size="large"
+											verticalAlign="middle"
+										/>
+									</div>
 								)
 							) : (
-								<div>No mojo as of now</div>
+								<div
+									style={{
+										background: "white",
+										display: "block",
+										"margin-left": "auto",
+										"margin-right": "auto",
+										"text-align": "center",
+									}}
+									className="m-4"
+								>
+									No mojo as of now <br />
+									<Image
+										centered
+										src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47_w.png`}
+										size="large"
+										verticalAlign="middle"
+									/>
+								</div>
 							)}
 						</Item.Group>
+						<Quote />
 					</div>
 				</Responsive>
 			</Container>

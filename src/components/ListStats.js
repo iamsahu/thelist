@@ -26,7 +26,7 @@ function ListStats(props) {
 	const { loading, error, data } = useQuery(GET_STATS, {
 		variables: { list_id: props.listid },
 	});
-	console.log(props);
+	// console.log(props);
 	if (loading) {
 		return <CommonLoader />;
 	}
@@ -34,7 +34,7 @@ function ListStats(props) {
 		console.log(error);
 		return <div></div>;
 	}
-
+	if (typeof data.lists === "undefined") return <></>;
 	if (data.lists.length < 1) return <CommonLoader />;
 
 	// return(<div>Loaded</div>)
