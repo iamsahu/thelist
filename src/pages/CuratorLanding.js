@@ -99,7 +99,7 @@ function CuratorLanding(props) {
 		// dispatch({ activeItem:name })
 		// console.log(name);
 		switch (name) {
-			case "My Lists":
+			case "My Curations":
 				setactiveitem(<MyLists user={u} />);
 				setactiveTab("mylists");
 				break;
@@ -121,7 +121,7 @@ function CuratorLanding(props) {
 	const handleItemClickMobile = (e, { name }) => {
 		// dispatch({ activeItem:name })
 		switch (name) {
-			case "My Lists":
+			case "My Curations":
 				setactiveitem(<MyLists user={u} />);
 				setactiveTab("mylists");
 				break;
@@ -179,7 +179,7 @@ function CuratorLanding(props) {
 						<div class="mt-8">
 							<Menu pointing secondary>
 								<Menu.Item
-									name="My Lists"
+									name="My Curations"
 									active={activeTab === "mylists"}
 									onClick={handleItemClickMobile}
 								/>
@@ -226,7 +226,7 @@ function CuratorLanding(props) {
 						</div>
 
 						{/* <div>
-						MY LISTS
+						My Curations
 						<Divider />
 					</div> */}
 						<Suspense fallback={<CommonLoader />}>{activeitem}</Suspense>
@@ -255,7 +255,7 @@ function CuratorLanding(props) {
 							<Grid.Column width={10}>
 								<Menu pointing secondary>
 									<Menu.Item
-										name="My Lists"
+										name="My Curations"
 										active={activeTab === "mylists"}
 										onClick={handleItemClickDesktop}
 									/>
@@ -312,7 +312,7 @@ function CuratorLanding(props) {
 									</Menu.Menu>
 								</Menu>
 								{/* <div style={{ paddingBottom: "0.5em" }}>
-									MY LISTS
+									My Curations
 									{isAuthenticated && u === userC.loggedin_user_id && (
 										<Button
 											floated="right"

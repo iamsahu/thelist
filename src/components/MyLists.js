@@ -76,21 +76,21 @@ function MyLists(props) {
 								size="large"
 								verticalAlign="middle"
 							/>
-							<Quote />
+							{/* <Quote /> */}
 						</div>
 					) : (
 						("Nothing to see here",
-						((
+						(
 							<Image
 								centered
 								src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47.png`}
 								size="large"
 								verticalAlign="middle"
 							/>
-						),
-						(<Quote />)))
+						))
 					)}
 				</Item.Group>
+				<Quote />
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 				<GG container spacing={2}>
@@ -124,20 +124,19 @@ function MyLists(props) {
 								size="large"
 								verticalAlign="middle"
 							/>
-							<Quote />
 						</div>
 					) : (
 						("Nothing to see here",
-						((
+						(
 							<Image
 								centered
 								src={`${process.env.REACT_APP_BASE_URL}/undraw_empty_xct9_F5DD47.png`}
 								size="large"
 								verticalAlign="middle"
 							/>
-						),
-						(<Quote />)))
+						))
 					)}
+					<Quote />
 				</GG>
 			</Responsive>
 		</>
