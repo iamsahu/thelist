@@ -6,7 +6,7 @@ import { Grid as GG, Card as CC } from "@material-ui/core";
 import Follow from "./Follow";
 import CommonLoader from "./CommonLoader";
 import UserContext from "../context/UserContext";
-
+import Quote from "./Quote";
 function YourFollow(props) {
 	const [userC, userChange] = useContext(UserContext);
 	const [loading, setloading] = useState("-1");
@@ -40,6 +40,7 @@ function YourFollow(props) {
 						  <a href="/explore">here</a> +
 						  " to follow"
 						: "The user has not followed any curations till now."}
+					<Quote />
 				</div>
 			);
 		}
@@ -51,6 +52,7 @@ function YourFollow(props) {
 					  <a href="/explore">here</a> +
 					  " to follow"
 					: "The user has not followed any curations till now."}
+				<Quote />
 			</div>
 		);
 	}
@@ -127,6 +129,7 @@ function YourFollow(props) {
 				<Item.Group divided relaxed="very">
 					{followData.list_follow.map((item) => Card(item))}
 				</Item.Group>
+				<Quote />
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 				<GG container spacing={3}>
@@ -135,6 +138,7 @@ function YourFollow(props) {
 							{Card(item)}
 						</GG>
 					))}
+					<Quote />
 				</GG>
 			</Responsive>
 		</>

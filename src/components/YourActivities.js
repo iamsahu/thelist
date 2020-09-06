@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import CommonLoader from "./CommonLoader";
 import { AddList } from "../components/AddList";
 import UserContext from "../context/UserContext";
+import Quote from "./Quote";
 
 function YourActivities(props) {
 	const [userC, userChange] = useContext(UserContext);
@@ -48,6 +49,7 @@ function YourActivities(props) {
 				{props.user === userC.loggedin_user_id
 					? "You have not added anything to either your list or not created any. You can start by creating a list by clicking Add List Button on the top."
 					: "The user has no activites till now. Encourage them to put some content they have a good taste in."}
+				<Quote />
 			</div>
 		);
 	}
@@ -232,6 +234,7 @@ function YourActivities(props) {
 						  ))
 				)}
 			</Item.Group>
+			<Quote />
 		</>
 	);
 }

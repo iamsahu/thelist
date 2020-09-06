@@ -3,7 +3,7 @@ import { Responsive, Loader } from "semantic-ui-react";
 import StreamContext from "../context/StreamContext";
 import { connect } from "getstream";
 import { GetFeedItems } from "../util/graphqlExecutor";
-
+import Quote from "./Quote";
 function MyFeed(props) {
 	const [streamClient, streamuserFeed] = useContext(StreamContext);
 	const [activities, setActivities] = useState("");
@@ -125,7 +125,7 @@ function MyFeed(props) {
 				{activities === "" ? (
 					<div>Loading</div>
 				) : activities.items.length > 0 ? (
-					activities.items.map((item) => Activity(item))
+					(activities.items.map((item) => Activity(item)), (<Quote />))
 				) : (
 					<div class="content-center">
 						<Loader active inline="centered" />
@@ -136,7 +136,7 @@ function MyFeed(props) {
 				{activities === "" ? (
 					<div>Loading</div>
 				) : activities.items.length > 0 ? (
-					activities.items.map((item) => Activity(item))
+					(activities.items.map((item) => Activity(item)), (<Quote />))
 				) : (
 					<div class="content-center">
 						<Loader active inline="centered" />

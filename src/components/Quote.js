@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Divider } from "semantic-ui-react";
 const quotes = [
 	[
 		"Cultural confinement takes place when a curator imposes his own limits on an art exhibition, rather than asking an artist to set his limits. ",
@@ -50,8 +50,8 @@ const quotes = [
 function Quote() {
 	var quote = quotes[Math.floor(Math.random() * quotes.length)];
 	return (
-		<div className="font-serif m-4 font-thin text-xl">
-			"{quote[0]}"<br />
+		<div className="font-serif font-thin text-xl w-full pb-8 px-2">
+			<Divider />"{quote[0]}"<br />
 			<p className="float-right">{quote[1]}</p>
 		</div>
 	);
