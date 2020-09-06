@@ -317,7 +317,7 @@ function CurationList(props) {
 				menu={{ secondary: true, pointing: true }}
 				panes={[
 					{
-						menuItem: "Lists",
+						menuItem: "Curations",
 						render: () => <Tab.Pane>{RenderLists()} </Tab.Pane>,
 					},
 					{

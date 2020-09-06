@@ -255,12 +255,12 @@ function AddList() {
 							className="mx-auto lg:mx-0 gradient hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg  ml-2 bg-white text-black border-gray-800"
 							onClick={() => SetModal(true)}
 						>
-							Add List
+							Add Curation
 						</button>
 					</div>
 				}
 			>
-				<Modal.Header>Add List</Modal.Header>
+				<Modal.Header>Add Curation</Modal.Header>
 				<Modal.Content image scrolling>
 					<Form onSubmit={onSubmit}>
 						<Form.Field inline name="list_name">
@@ -285,7 +285,7 @@ function AddList() {
 							/>
 						</Form.Field>
 						<Form.Field name="private">
-							<label>Is the list Private?</label>
+							<label>Is the curation Private?</label>
 							<Dropdown
 								name="private"
 								placeholder="Private"
