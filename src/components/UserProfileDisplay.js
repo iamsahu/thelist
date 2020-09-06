@@ -237,6 +237,10 @@ function UserProfileDisplay(props) {
 												src={userProfile}
 												className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-20"
 												style={{ maxWidth: "150px", minWidth: "150px" }}
+												onError={(e) => {
+													e.target.onerror = null;
+													e.target.src = "https://i.imgur.com/MwTfvwo.png";
+												}}
 											/>
 										</div>
 									</div>
@@ -271,7 +275,7 @@ function UserProfileDisplay(props) {
 												<span className="text-xl font-bold block uppercase tracking-wide text-gray-700">
 													{followcount}
 												</span>
-												<span className="text-sm text-gray-500">Follows</span>
+												<span className="text-sm text-gray-500">Followers</span>
 											</div>
 										</div>
 									</div>

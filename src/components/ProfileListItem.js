@@ -68,9 +68,23 @@ function ProfileListItem(props) {
 				<div class="flex h-40">
 					<div class="flex w-1/4 max-h-full">
 						{props.image_link === '""' ? (
-							<img class="object-cover" src="https://i.imgur.com/MwTfvwo.png" />
+							<img
+								class="object-cover"
+								src="https://i.imgur.com/MwTfvwo.png"
+								onError={(e) => {
+									e.target.onerror = null;
+									e.target.src = "https://i.imgur.com/MwTfvwo.png";
+								}}
+							/>
 						) : (
-							<img class="object-cover" src={props.image_link} />
+							<img
+								class="object-cover"
+								src={props.image_link}
+								onError={(e) => {
+									e.target.onerror = null;
+									e.target.src = "https://i.imgur.com/MwTfvwo.png";
+								}}
+							/>
 						)}
 					</div>
 					<div class="p-2 w-3/4">

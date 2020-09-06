@@ -135,7 +135,16 @@ function ProfileCard() {
 			<div>
 				<Card fluid>
 					<Card.Content>
-						<Image floated="left" size="mini" src={userProfile} circular />
+						<Image
+							floated="left"
+							size="mini"
+							src={userProfile}
+							circular
+							onError={(e) => {
+								e.target.onerror = null;
+								e.target.src = "https://i.imgur.com/MwTfvwo.png";
+							}}
+						/>
 						<Card.Header>{username}</Card.Header>
 						{/* <Card.Meta>You are twitter user # {twitterNumber}</Card.Meta> */}
 						<Card.Description>
