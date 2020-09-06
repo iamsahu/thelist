@@ -41,7 +41,7 @@ function LandingPageCard(props) {
 								{props.result.list_name}
 							</a>
 							<p class="text-gray-700 font-thin overflow-hidden max-h-full mb-1 pb-1 h-40 text-base lg:text-lg">
-								{shrt}...
+								{shrt.length < 130 ? shrt : shrt + "..."}
 							</p>
 						</div>
 						{/* <div class="text-gray-500 mb-8 text-left uppercase tracking-widest object-bottom text-sm md:text-base">

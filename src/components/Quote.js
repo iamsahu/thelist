@@ -52,7 +52,7 @@ function Quote() {
 	return (
 		<div className="w-full">
 			<Divider />
-			<div className="font-serif font-thin text-xl w-full pb-8 border px-4 pt-4 shadow-xl rounded-lg bw">
+			<div className="font-serif font-thin text-xl w-full pb-8 border px-4 pt-4 shadow-xl rounded-lg bw sm:text-base">
 				"{quote[0]}"<br />
 				<p className="float-right">{quote[1]}</p>
 			</div>
