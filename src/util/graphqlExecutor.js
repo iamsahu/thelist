@@ -3098,6 +3098,30 @@ const GetItemsData = () => {
 		.catch((error) => console.log(error));
 };
 
+const GETUSERDATA = gql`
+	query MyQuery($id: String) {
+		items(where: { user: { id: { _eq: $id } } }) {
+			auto_description
+			auto_image
+			description
+			name
+			link
+		}
+	}
+`;
+
+const GetUserData = (id) => {
+	return client
+		.query({
+			query: GETUSERDATA,
+			variables: {
+				id: id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -3152,6 +3176,7 @@ export {
 	InsertItem2,
 	GetCurationStats,
 	GetItemsData,
+	GetUserData,
 };
 
 export const DELETE_LIST = gql`

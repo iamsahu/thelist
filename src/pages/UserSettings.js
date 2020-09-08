@@ -1,5 +1,9 @@
-import React, { useState } from "react";
-import { GetUserDetails, UpdateUserDetails } from "../util/graphqlExecutor";
+import React, { useState, useContext } from "react";
+import {
+	GetUserDetails,
+	UpdateUserDetails,
+	GetUserData,
+} from "../util/graphqlExecutor";
 import {
 	Form,
 	Button,
@@ -7,16 +11,22 @@ import {
 	Responsive,
 	Grid,
 	Loader,
+	Dimmer,
 } from "semantic-ui-react";
 import useForm from "../util/hook";
 import PocketSignIn from "../components/PocketSignIn";
+import { CSVLink, CSVDownload } from "react-csv";
+import UserContext from "../context/UserContext";
 
 function UserSettings(props) {
 	// console.log(props);
 	const [loaded, setLoaded] = useState("");
 	const [pocket_token, setPocket_token] = useState("");
 	const [pocket_username, setPocket_username] = useState("");
-
+	const [downloadData, setDownloadData] = useState("");
+	const [loadingbut, setloadingbut] = useState(false);
+	const [dimmer, setdimmer] = useState(false);
+	const [userC, userChange] = useContext(UserContext);
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
 		name: "",
 		image: "",
@@ -27,7 +37,7 @@ function UserSettings(props) {
 	function createPostCallback() {
 		// console.log(values);
 		UpdateUserDetails(
-			props.match.params.id,
+			userC.loggedin_user_id,
 			values.image,
 			values.name,
 			values.description,
@@ -35,6 +45,17 @@ function UserSettings(props) {
 		).then((response) => {
 			console.log(response);
 		});
+	}
+
+	function GetData() {
+		setdimmer(true);
+		GetUserData(userC.loggedin_user_id)
+			.then((data) => {
+				console.log(data);
+				setDownloadData(data.items);
+				setdimmer(false);
+			})
+			.catch((errors) => console.log(errors));
 	}
 
 	const load = (id) => {
@@ -50,8 +71,8 @@ function UserSettings(props) {
 			console.log("complete");
 		});
 	};
-	if (typeof props.match.params.id !== "undefined")
-		if (values.name === "") load(props.match.params.id);
+	if (typeof userC.loggedin_user_id !== "undefined")
+		if (values.name === "") load(userC.loggedin_user_id);
 	if (loaded === "")
 		return (
 			<div style={{ paddingTop: "40px" }}>
@@ -59,7 +80,7 @@ function UserSettings(props) {
 			</div>
 		);
 	const form = (
-		<Form onSubmit={onSubmit}>
+		<Form onSubmit={onSubmit} className="p-4">
 			<Form.Field>
 				<label>User Name</label>
 				<Form.Input
@@ -106,18 +127,49 @@ function UserSettings(props) {
 	);
 
 	// if (values.description === "") return <>Hello</>;
-
+	const dd = (
+		<Dimmer.Dimmable dimmed={dimmer} inverted className="p-4">
+			<div>
+				<Button onClick={GetData} primary type="submit">
+					Download Your Data
+				</Button>
+				{downloadData !== "" && (
+					<CSVLink
+						data={downloadData}
+						filename={"my-data.csv"}
+						className="btn btn-primary"
+						target="_blank"
+					>
+						Download CSV
+					</CSVLink>
+					// <CSVDownload data={downloadData} target="_blank" />
+				)}
+				<Dimmer active={dimmer} inverted>
+					<Loader />
+					Saving
+				</Dimmer>
+			</div>
+		</Dimmer.Dimmable>
+	);
 	return (
 		<>
 			{/* {form} */}
-			<Responsive {...Responsive.onlyMobile}>{form}</Responsive>
+			<Responsive {...Responsive.onlyMobile}>
+				{form}
+				{dd}
+			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 				<Grid
 					verticalAlign="middle"
 					style={{ background: "white", height: "100%", paddingTop: "40px" }}
 				>
 					<Grid.Column width={3}></Grid.Column>
-					<Grid.Column width={10}>{form}</Grid.Column>
+					<Grid.Column width={10}>
+						<div>
+							{form}
+							{dd}
+						</div>
+					</Grid.Column>
 					<Grid.Column width={3}>
 						{process.env.REACT_APP_BASE_URL === "http://localhost:3000" ? (
 							<PocketSignIn
