@@ -168,18 +168,18 @@ function UserSettings(props) {
 						<div>
 							{form}
 							{dd}
+							{process.env.REACT_APP_BASE_URL === "http://localhost:3000" ? (
+								<PocketSignIn
+									className="p-4"
+									pocket_token={pocket_token}
+									pocket_username={pocket_username}
+								/>
+							) : (
+								<></>
+							)}
 						</div>
 					</Grid.Column>
-					<Grid.Column width={3}>
-						{process.env.REACT_APP_BASE_URL === "http://localhost:3000" ? (
-							<PocketSignIn
-								pocket_token={pocket_token}
-								pocket_username={pocket_username}
-							/>
-						) : (
-							<></>
-						)}
-					</Grid.Column>
+					<Grid.Column width={3}></Grid.Column>
 				</Grid>
 			</Responsive>
 		</>
