@@ -92,6 +92,7 @@ function ContentMiddleNoLoad(props) {
 	const [open, setopen] = useState(false);
 	const [activeTab, setactiveTab] = useState("Home");
 	const [activeItem, setactiveItem] = useState("home");
+	const [itemsData, setitemsData] = useState("");
 	// console.log(props.propSent)
 	// console.log(props.propSent.description)
 
@@ -177,10 +178,24 @@ function ContentMiddleNoLoad(props) {
 			}
 		}
 		setfileUpload("1");
-		InsertMultiple(items)
-			.then((response) => console.log(response))
-			.catch((error) => console.log(error));
+		setitemsData(items);
+		// InsertMultiple(items)
+		// 	.then((response) => console.log(response))
+		// 	.catch((error) => console.log(error));
 	};
+
+	function UploadCSVDATA() {
+		if (itemsData !== "") {
+			InsertMultiple(itemsData)
+				.then((response) => {
+					console.log(response);
+					setopen(false);
+				})
+				.catch((error) => console.log(error));
+		} else {
+			setopen(false);
+		}
+	}
 
 	const handleOnError = (err, file, inputElem, reason) => {
 		console.log(err);
@@ -207,6 +222,11 @@ function ContentMiddleNoLoad(props) {
 
 	function OnClose() {
 		setopen(false);
+	}
+
+	function OnOpen() {
+		setopen(true);
+		setitemsData("");
 	}
 
 	const handleItemClick = (e, { name }) => {
@@ -447,8 +467,12 @@ function ContentMiddleNoLoad(props) {
 											<>
 												<AddItem2 listID={props.propSent.contentID} />
 
-												{/* <Modal
+												<Modal
 													closeIcon
+													open={open}
+													onClose={OnClose}
+													onOpen={OnOpen}
+													closeOnDimmerClick={false}
 													trigger={
 														<Button
 															size="tiny"
@@ -481,9 +505,19 @@ function ContentMiddleNoLoad(props) {
 															<span>Drop the file here</span>
 														</CSVReader>
 														<br />
-														{fileUpload === "1" && <Button>Upload This</Button>}
+														{fileUpload === "1" &&
+															"Items found in csv " + itemsData.length}
+														<br />
+														{fileUpload === "1" && (
+															<Button onClick={UploadCSVDATA}>
+																Upload Items
+															</Button>
+														)}
+
+														{fileUpload === "1" &&
+															"Please refresh the tab after this modal window closes to see the added items."}
 													</Modal.Content>
-												</Modal> */}
+												</Modal>
 											</>
 										)}
 								</div>
