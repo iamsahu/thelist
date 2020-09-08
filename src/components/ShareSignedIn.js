@@ -115,7 +115,7 @@ function ShareSignedIn(props) {
 					// console.log(data["description"]);
 					auto_description = data["description"];
 					auto_image = data["image"];
-					values.name = data["title"];
+					if (values.name !== "") values.name = data["title"];
 				}
 				// return "hello";
 				console.log(values);
