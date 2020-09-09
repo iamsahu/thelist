@@ -167,7 +167,7 @@ function ContentMiddleNoLoad(props) {
 		for (let index = 1; index < data.length; index++) {
 			const element = data[index];
 			// console.log(element.data);
-			if (element.data !== "") {
+			if (element.data !== "" && typeof element.data[2] !== "undefined") {
 				items.push({
 					list_id: props.propSent.contentID,
 					link: element.data[2],
@@ -177,6 +177,7 @@ function ContentMiddleNoLoad(props) {
 				});
 			}
 		}
+		// console.log(items);
 		setfileUpload("1");
 		setitemsData(items);
 		// InsertMultiple(items)
@@ -186,6 +187,7 @@ function ContentMiddleNoLoad(props) {
 
 	function UploadCSVDATA() {
 		if (itemsData !== "") {
+			// console.log(itemsData);
 			InsertMultiple(itemsData)
 				.then((response) => {
 					console.log(response);

@@ -2343,6 +2343,7 @@ const INSERT_MULTIPLE_ITEMS = gql`
 `;
 
 const InsertMultiple = (items) => {
+	// console.log(items);
 	return client
 		.mutate({
 			mutation: INSERT_MULTIPLE_ITEMS,
