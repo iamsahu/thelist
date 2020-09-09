@@ -106,7 +106,7 @@ function AddItem2(props) {
 	const [errorLink, setErrorLink] = useState(false);
 	const [errorName, setErrorName] = useState(false);
 	const [errorDescription, setErrorDescription] = useState(false);
-	const [streamClient, streamuserFeed] = useContext(StreamContext);
+	// const [streamClient, streamuserFeed] = useContext(StreamContext);
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
 		name: "",
 		link: "",

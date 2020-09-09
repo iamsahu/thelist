@@ -11,7 +11,7 @@ import { useAuth0 } from "../react-auth0-spa";
 
 function Follow(props) {
 	const [userC, userChange] = useContext(UserContext);
-	const [streamClient, streamuserFeed] = useContext(StreamContext);
+	// const [streamClient, streamuserFeed] = useContext(StreamContext);
 	const [follow, setfollow] = useState(0);
 	const [open, setopen] = useState(false);
 
@@ -51,9 +51,9 @@ function Follow(props) {
 							basic
 							color="black"
 							onClick={() => {
-								streamClient
-									.feed("timeline", userC.loggedin_user_id)
-									.follow("listfeed", props.contentID);
+								// streamClient
+								// 	.feed("timeline", userC.loggedin_user_id)
+								// 	.follow("listfeed", props.contentID);
 								FollowThisList(props.contentID, userC.loggedin_user_id);
 								setfollow(1);
 							}}
@@ -70,9 +70,9 @@ function Follow(props) {
 							basic
 							color="black"
 							onClick={() => {
-								streamClient
-									.feed("timeline", userC.loggedin_user_id)
-									.unfollow("listfeed", props.contentID);
+								// streamClient
+								// 	.feed("timeline", userC.loggedin_user_id)
+								// 	.unfollow("listfeed", props.contentID);
 								UnfollowThisList(props.contentID, userC.loggedin_user_id);
 								setfollow(0);
 							}}

@@ -99,7 +99,7 @@ function Suggest(props) {
 	const [errorLink, setErrorLink] = useState(false);
 	const [errorName, setErrorName] = useState(false);
 	const [errorDescription, setErrorDescription] = useState(false);
-	const [streamClient, streamuserFeed] = useContext(StreamContext);
+	// const [streamClient, streamuserFeed] = useContext(StreamContext);
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
 		name: "",
 		link: "",
@@ -201,7 +201,7 @@ function Suggest(props) {
 		} else if (content.contentType === "lists") {
 			//If current list is open is the list to which the new item is being added
 		}
-		var listfeed = streamuserFeed; //streamClient; //.feed("listfeed", props.id);
+		// var listfeed = streamuserFeed; //streamClient; //.feed("listfeed", props.id);
 		console.log(props.id);
 		if (!errors) {
 			var auto_description = "";

@@ -11,7 +11,7 @@ import { useAuth0 } from "../react-auth0-spa";
 
 function FollowCard(props) {
 	const [userC, userChange] = useContext(UserContext);
-	const [streamClient, streamuserFeed] = useContext(StreamContext);
+	// const [streamClient, streamuserFeed] = useContext(StreamContext);
 	const [follow, setfollow] = useState(0);
 	const [open, setopen] = useState(false);
 
@@ -47,9 +47,9 @@ function FollowCard(props) {
 						<button
 							class="mx-auto lg:mx-0 gradient hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right bg-white text-black border-gray-800"
 							onClick={() => {
-								streamClient
-									.feed("timeline", userC.loggedin_user_id)
-									.follow("listfeed", props.contentID);
+								// streamClient
+								// 	.feed("timeline", userC.loggedin_user_id)
+								// 	.follow("listfeed", props.contentID);
 								FollowThisList(props.contentID, userC.loggedin_user_id);
 								setfollow(1);
 							}}
@@ -95,9 +95,9 @@ function FollowCard(props) {
 						<button
 							class="mx-auto lg:mx-0 gradient hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right ml-1 bg-white text-black border-gray-800"
 							onClick={() => {
-								streamClient
-									.feed("timeline", userC.loggedin_user_id)
-									.unfollow("listfeed", props.contentID);
+								// streamClient
+								// 	.feed("timeline", userC.loggedin_user_id)
+								// 	.unfollow("listfeed", props.contentID);
 								UnfollowThisList(props.contentID, userC.loggedin_user_id);
 								setfollow(0);
 							}}

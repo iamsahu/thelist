@@ -87,7 +87,7 @@ function ContentMiddleNoLoad(props) {
 	// const [listlike, setlistlike] = useState(false);
 	// const [loadState, setloadState] = useState(-1);
 	const [fileUpload, setfileUpload] = useState("0");
-	const [streamClient, streamuserFeed] = useContext(StreamContext);
+	// const [streamClient, streamuserFeed] = useContext(StreamContext);
 	const [follow, setfollow] = useState(0);
 	const [open, setopen] = useState(false);
 	const [activeTab, setactiveTab] = useState("Home");
