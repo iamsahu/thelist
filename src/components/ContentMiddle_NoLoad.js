@@ -74,7 +74,7 @@ function ContentMiddleNoLoad(props) {
 	// console.log(props);
 	// console.log(process.env)
 	// console.log(process.env.REACT_APP_BASE_URL)
-	const [content] = useContext(ContentContext);
+	const [content, contentChange] = useContext(ContentContext);
 	// const [posts, setPosts] = useState(null);
 	const [userC, userChange] = useContext(UserContext);
 	const [shareUrl, setshareUrl] = useState(window.location.href);
@@ -192,6 +192,7 @@ function ContentMiddleNoLoad(props) {
 				.then((response) => {
 					console.log(response);
 					setopen(false);
+					contentChange((content) => ({ ...content, add: "ad" }));
 				})
 				.catch((error) => console.log(error));
 		} else {

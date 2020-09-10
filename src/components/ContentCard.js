@@ -34,6 +34,7 @@ import ContentContext from "../context/ContentContext";
 import Linkify from "react-linkify";
 import LikeArticle from "./LikeArticle";
 import BookMarkItem from "./BookMarkItem";
+import EditItem from "./EditItem";
 
 const COPY_COUNT = gql`
 	mutation MyMutation($id: uuid) {
@@ -234,6 +235,10 @@ function ContentCard(postdata) {
 													});
 											}}
 										/>
+									)}
+								{isAuthenticated &&
+									postdata.postdata.user.id === userC.loggedin_user_id && (
+										<EditItem item={postdata.postdata} />
 									)}
 								{/* <img
 									class="h-4 float-right mr-1 object-bottom"

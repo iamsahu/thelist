@@ -3042,8 +3042,8 @@ const InsertItem2 = (
 ) => {
 	console.log(id);
 	return client
-		.query({
-			query: INSERTITEM,
+		.mutate({
+			mutation: INSERTITEM,
 			variables: {
 				list_id: list_id,
 				id: id,
@@ -3123,6 +3123,85 @@ const GetUserData = (id) => {
 		.catch((error) => console.log(error));
 };
 
+const UPDATEITEM = gql`
+	mutation MyMutation(
+		$id: uuid
+		$link: String
+		$name: String
+		$auto_image: String
+		$auto_description: String
+		$description: String
+	) {
+		update_items(
+			where: { id: { _eq: $id } }
+			_set: {
+				link: $link
+				name: $name
+				auto_image: $auto_image
+				auto_description: $auto_description
+				description: $description
+			}
+		) {
+			returning {
+				appreciation_count
+				auto_description
+				auto_image
+				bookmarks_count
+				copy_count
+				created_at
+				curator
+				description
+				id
+				link
+				list_id
+				name
+				share_count
+				suggestion
+				view_count
+				user {
+					id
+				}
+			}
+		}
+	}
+`;
+
+const UpdateItem = (
+	id,
+	link,
+	description,
+	auto_description,
+	auto_image,
+	name,
+	list_id,
+	curator
+) => {
+	console.log(id);
+	return client
+		.mutate({
+			mutation: UPDATEITEM,
+			variables: {
+				id: id,
+				link: link,
+				description: description,
+				auto_description: auto_description,
+				auto_image: auto_image,
+				name: name,
+			},
+			refetchQueries: [
+				{
+					query: GET_LIST,
+					variables: {
+						userid: curator,
+						listid: list_id,
+					},
+				},
+			],
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -3178,6 +3257,7 @@ export {
 	GetCurationStats,
 	GetItemsData,
 	GetUserData,
+	UpdateItem,
 };
 
 export const DELETE_LIST = gql`
