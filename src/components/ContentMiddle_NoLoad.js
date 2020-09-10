@@ -513,7 +513,7 @@ function ContentMiddleNoLoad(props) {
 														<br />
 														{fileUpload === "1" && (
 															<Button onClick={UploadCSVDATA}>
-																Upload Items
+																Click here to confirm upload
 															</Button>
 														)}
 
