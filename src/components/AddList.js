@@ -224,8 +224,8 @@ function AddList() {
 	// );
 
 	const options = [
-		{ key: 1, text: "True", value: true },
-		{ key: 2, text: "False", value: false },
+		{ key: 1, text: "Yes", value: true },
+		{ key: 2, text: "No", value: false },
 	];
 
 	const handleChange = (e, { value }) => {

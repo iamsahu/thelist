@@ -1255,7 +1255,10 @@ const GET_ALL_USERS = gql`
 		user(
 			# order_by: { created_at: desc_nulls_last }
 			order_by: { lists_aggregate: { sum: { view_count: desc_nulls_last } } }
-			where: { delete_status: { _eq: false } }
+			where: {
+				delete_status: { _eq: false }
+				lists: { view_count: { _gte: 0 } }
+			}
 		) {
 			description
 			id
