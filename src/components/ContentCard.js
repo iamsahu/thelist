@@ -92,7 +92,9 @@ function ContentCard(postdata) {
 	};
 
 	const [thumbImage, thumbImageSet] = useState(
-		"https://i.imgur.com/MwTfvwo.png"
+		"https://picsum.photos/400/500?blur=2&random=" +
+			Math.floor(Math.random() * 101)
+		// "https://i.imgur.com/MwTfvwo.png"
 	);
 
 	const [token, setToken] = useState("");
@@ -182,7 +184,9 @@ function ContentCard(postdata) {
 								}
 								onError={(e) => {
 									e.target.onerror = null;
-									e.target.src = "https://i.imgur.com/MwTfvwo.png";
+									e.target.src =
+										"https://picsum.photos/400/500?blur=2&random=" +
+										Math.floor(Math.random() * 101);
 								}}
 							/>
 						</div>
