@@ -131,33 +131,30 @@ function LandingPageAlt(props) {
 							)}
 							<div className="flex-wrap border mt-4 rounded-md shadow-md p-2 mx-2 border-gray-300">
 								<div className="border-b flex text-xl p-2">
-									<div className=" text-2xl font-medium align-text-top flex w-full">
-										<div className="w-3/4 flex-none">
-											<a
-												href={item[0].curator + "/lists/" + item[0].id}
-												className="text-gray-800"
-											>
-												{item[0].list.list_name}
-											</a>{" "}
-											<br />
-											<span className="text-base font-light">
-												{" "}
-												by{" "}
-												<a href={item[0].curator} className="text-gray-800">
-													{item[0].user.username}
-												</a>
-											</span>
-										</div>
-										<div className="float-right w-1/4 flex-1">
-											<Follow contentID={item[0].list.id} />
-										</div>
+									<div className=" text-2xl font-medium align-text-top flex-wrap">
+										<a
+											href={item[0].curator + "/lists/" + item[0].id}
+											className="text-gray-800"
+										>
+											{item[0].list.list_name}
+										</a>
+										<br />
+										<span className="text-base font-light">
+											by{" "}
+											<a href={item[0].curator} className="text-gray-800">
+												{item[0].user.username}
+											</a>
+										</span>
+									</div>
+									<div className="float-right w-1/4 flex-1">
+										<Follow contentID={item[0].list.id} />
 									</div>
 								</div>
-								<div className="border-b">
+								<div>
 									{item.slice(0, 3).map((ite) => (
 										<a href={ite.link} className="text-gray-700">
-											<div className="flex m-2" key={ite.id}>
-												<div className="sm:w-1/6 md:w-1/12 flex-none">
+											<div className="flex m-2 text-base" key={ite.id}>
+												<div className="sm:w-1/6 md:w-1/12 flex md:flex-none">
 													<img
 														className="rounded h-16 w-16 object-cover"
 														src={ite.auto_image}
@@ -169,7 +166,7 @@ function LandingPageAlt(props) {
 														}}
 													/>
 												</div>
-												<div className=" text-lg px-3 sm:w-5/6 md:w-11/12">
+												<div className=" text-lg px-3 sm:w-5/6 md:w-11/12 flex-1">
 													{ite.name}
 												</div>
 											</div>
@@ -232,7 +229,7 @@ function LandingPageAlt(props) {
 									{item.map((ite) => (
 										<a href={ite.link} className="text-gray-700">
 											<div className="flex m-2 text-base" key={ite.id}>
-												<div className="sm:w-1/6 md:w-1/12 flex-none">
+												<div className="sm:w-1/6 md:w-1/12 flex md:flex-none">
 													<img
 														className="rounded h-16 w-16 object-cover"
 														src={ite.auto_image}
@@ -244,7 +241,7 @@ function LandingPageAlt(props) {
 														}}
 													/>
 												</div>
-												<div className=" text-lg px-3 sm:w-5/6 md:w-11/12">
+												<div className=" text-lg px-3 sm:w-5/6 md:w-11/12 flex-1">
 													{ite.name}
 												</div>
 											</div>
