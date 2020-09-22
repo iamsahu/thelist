@@ -32,9 +32,9 @@ function TopCurations() {
 									src={ite.image_url}
 									onError={(e) => {
 										e.target.onerror = null;
-										e.target.src =
-											"https://picsum.photos/100?blur=2&random=" +
-											Math.floor(Math.random() * 101);
+										e.target.src = "https://i.imgur.com/MwTfvwo.png";
+										// "https://picsum.photos/100?blur=2&random=" +
+										// Math.floor(Math.random() * 101);
 									}}
 								/>
 							</div>
