@@ -3205,6 +3205,83 @@ const UpdateItem = (
 		.catch((error) => console.log(error));
 };
 
+const GETITEMSMAIN = gql`
+	query MyQuery {
+		grp_items(where: { list: { id: { _is_null: false } } }) {
+			appreciation_count
+			auto_description
+			auto_image
+			bookmarks_count
+			copy_count
+			created_at
+			curator
+			description
+			id
+			link
+			list {
+				description
+				id
+				list_name
+				image_url
+			}
+			name
+			list_id
+			share_count
+			suggestion
+			view_count
+			user {
+				id
+				image_link
+				username
+			}
+		}
+	}
+`;
+
+const GetItemsMain = () => {
+	// console.log(id);
+	return client
+		.query({
+			query: GETITEMSMAIN,
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
+const GETTOPLISTS = gql`
+	query MyQuery {
+		lists(
+			order_by: { view_count: desc }
+			where: { private: { _eq: false } }
+			limit: 10
+		) {
+			description
+			id
+			curator_id
+			list_name
+			image_url
+			user {
+				username
+				image_link
+			}
+		}
+		lists_aggregate {
+			aggregate {
+				count(distinct: true)
+			}
+		}
+	}
+`;
+const GetTopLists = () => {
+	// console.log(id);
+	return client
+		.query({
+			query: GETTOPLISTS,
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -3261,6 +3338,8 @@ export {
 	GetItemsData,
 	GetUserData,
 	UpdateItem,
+	GetItemsMain,
+	GetTopLists,
 };
 
 export const DELETE_LIST = gql`

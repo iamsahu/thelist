@@ -63,6 +63,8 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Feedback = lazy(() => import("./pages/Feedback"));
 const Referral = lazy(() => import("./pages/Referral"));
 const PocketComp = lazy(() => import("./pages/PocketSignInComplete"));
+const PocketConsumption = lazy(() => import("./pages/PocketConsumption"));
+const LandingPageAlt = lazy(() => import("./pages/LandingPageAlt"));
 // const LandingPage = lazy(() => import("./pages/LandingPage"));
 
 toast.configure();
@@ -239,8 +241,7 @@ function App() {
 					.then((data) => {
 						userToken = data["token"];
 						console.log(userToken);
-						// console.log(data);
-						// console.log(process.env.REACT_APP_STREAM_API_KEY);
+
 						const client2 = connect(
 							// process.env.REACT_APP_STREAM_API_KEY,
 							"pf7sgqtb4h3x",
@@ -249,13 +250,10 @@ function App() {
 							// process.env.REACT_APP_STREAM_APP_ID
 						);
 						var t = client2.feed("user", userID);
-						// t.get()
-						// 	.then((activitiesSuccess) => console.log(activitiesSuccess))
-						// 	.catch((activitiesError) => console.log(activitiesError));
+
 						console.log(t);
 						setstreamClient(client2);
 						setstreamuserFeed(t);
-						// console.log(t.id);
 					});
 				// const userToken = client.createUserToken(userID);
 			}
@@ -598,12 +596,27 @@ function App() {
 													<Route exact path="/privacy" component={Privacy} />
 													<Route exact path="/feedback" component={Feedback} />
 													<Route exact path="/referral" component={Referral} />
+													{/* <Route
+														exact
+														path="/landalt"
+														component={LandingPageAlt}
+													/> */}
+													<Route
+														exact
+														path="/pocketconsumption/:user"
+														component={PocketConsumption}
+													/>
 													<Route
 														exact
 														path="/settings/:id"
 														component={UserSettings}
 													/>
-													<Route exact path="/explore" component={Home2} />
+													<Route
+														exact
+														path="/explore"
+														component={LandingPageAlt}
+													/>
+													<Route exact path="/explore2" component={Home2} />
 													<Route exact path="/share" component={Share} />
 													<Route
 														exact
@@ -637,7 +650,7 @@ function App() {
 														path="/:user"
 														component={CuratorLanding}
 													/>
-													{isAuthenticated && !loading && !loadingT ? (
+													{/* {isAuthenticated && !loading && !loadingT ? (
 														<Route
 															path="/"
 															render={(props) => (
@@ -653,7 +666,7 @@ function App() {
 															path="/:user"
 															component={CuratorLanding}
 														/>
-													)}
+													)} */}
 													<Route exact path="/" component={LandingPage} />
 												</Switch>
 												{/* </Container> */}
@@ -676,10 +689,20 @@ function App() {
 												<Route exact path="/privacy" component={Privacy} />
 												<Route exact path="/feedback" component={Feedback} />
 												<Route exact path="/referral" component={Referral} />
+												{/* <Route
+													exact
+													path="/landalt"
+													component={LandingPageAlt}
+												/> */}
 												<Route
 													exact
 													path="/pocketcomp"
 													component={PocketComp}
+												/>
+												<Route
+													exact
+													path="/pocketconsumption/:user"
+													component={PocketConsumption}
 												/>
 												<Route
 													exact
@@ -693,7 +716,12 @@ function App() {
 												/>
 												{/* <Route exact path="/notes/:user" component={NotesView} /> */}
 												{/* <Route exact path="/readfeed" component={ReadFeed} /> */}
-												<Route exact path="/explore" component={Home2} />
+												<Route
+													exact
+													path="/explore"
+													component={LandingPageAlt}
+												/>
+												<Route exact path="/explore2" component={Home2} />
 												<Route exact path="/dataentry" component={DataEntry} />
 												<Route exact path="/search" component={SearchResults} />
 
@@ -715,7 +743,7 @@ function App() {
 
 												<Route exact path="/:user" component={CuratorLanding} />
 
-												{isAuthenticated && !loading && !loadingT ? (
+												{/* {isAuthenticated && !loading && !loadingT ? (
 													<Route
 														path="/"
 														render={(props) => (
@@ -727,12 +755,8 @@ function App() {
 													/>
 												) : (
 													<Route exact path="/" component={LandingPage} />
-												)}
-												{/* {isAuthenticated && !loading && !loadingT ? (
-												
-											) : (
-												<></>
-											)} */}
+												)} */}
+												<Route exact path="/" component={LandingPage} />
 											</Switch>
 										</Container>
 									</div>

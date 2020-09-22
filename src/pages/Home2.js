@@ -22,9 +22,20 @@ const HomeTagsDisplay = lazy(() => import("../components/HomeTagsDisplay"));
 const Explore2 = lazy(() => import("../components/Explore2"));
 
 function Home2(props) {
+	var hash = window.location.hash.substr(1);
 	const [welcomeBox, setwelcomeBox] = useState(true);
-	const [activeItem, setactiveItem] = useState(<PopularProfile />);
-	const [activeTab, setactiveTab] = useState("curators");
+	const [activeItem, setactiveItem] = useState(
+		hash === "lists" ? (
+			<Explore2 />
+		) : hash === "tags" ? (
+			<HomeTagsDisplay />
+		) : (
+			<PopularProfile />
+		)
+	);
+	const [activeTab, setactiveTab] = useState(hash);
+	// const [activeItem, setactiveItem] = useState(<PopularProfile />);
+	// const [activeTab, setactiveTab] = useState("curators");
 
 	// function reducer(state, action) {
 	//     switch (action.type) {
