@@ -129,7 +129,7 @@ function LandingPageAlt(props) {
 									</h1>
 								))
 							)}
-							<div className="flex-wrap border mt-4 rounded-md shadow-md p-2 md:mx-0 mx-2 border-gray-300">
+							<div className="flex-wrap border mt-4 rounded-md shadow-md p-2 mx-2 border-gray-300">
 								<div className="border-b flex text-xl p-2">
 									<div className=" text-2xl font-medium align-text-top flex w-full">
 										<div className="w-3/4 flex-none">
@@ -207,7 +207,7 @@ function LandingPageAlt(props) {
 									</h1>
 								))
 							)}
-							<div className="flex-wrap border mt-4 rounded-md shadow-md p-2 md:mx-0 mx-2 border-gray-300">
+							<div className="flex-wrap border mt-4 rounded-md shadow-md p-2 mx-2 border-gray-300">
 								<div className="border-b flex text-xl p-2">
 									<div className=" text-2xl font-medium align-text-top flex-wrap">
 										<a
