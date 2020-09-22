@@ -115,7 +115,7 @@ function LandingPageAlt(props) {
 							{lastDate === "" ? (
 								((lastDate = GiveMeDate2(item[0].created_at)),
 								(
-									<h1 className="px-1 text-lg ml-2 font-normal border-gray-300">
+									<h1 className="px-1 text-lg ml-2 font-normal border-gray-300 mt-4">
 										{lastDate}
 									</h1>
 								))
@@ -124,7 +124,7 @@ function LandingPageAlt(props) {
 							) : (
 								((lastDate = GiveMeDate2(item[0].created_at)),
 								(
-									<h1 className="px-1 text-lg ml-2 font-normal border-gray-300">
+									<h1 className="px-1 text-lg ml-2 font-normal border-gray-300 mt-4">
 										{lastDate}
 									</h1>
 								))
@@ -193,7 +193,7 @@ function LandingPageAlt(props) {
 							{lastDate === "" ? (
 								((lastDate = GiveMeDate2(item[0].created_at)),
 								(
-									<h1 className="text-lg px-1 ml-2 font-normal border-gray-300">
+									<h1 className="text-lg px-1 ml-2 font-normal border-gray-300 mt-4">
 										{lastDate}
 									</h1>
 								))
@@ -202,7 +202,7 @@ function LandingPageAlt(props) {
 							) : (
 								((lastDate = GiveMeDate2(item[0].created_at)),
 								(
-									<h1 className="text-lg px-1 ml-2 font-normal border-gray-300">
+									<h1 className="text-lg px-1 ml-2 font-normal border-gray-300 mt-4">
 										{lastDate}
 									</h1>
 								))
@@ -304,7 +304,7 @@ function LandingPageAlt(props) {
 				<div className=" md:w-4/12 h-full divide-y flex-wrap md:flex-none">
 					{IndiDate()}
 				</div>
-				<div className="md:w-3/12 h-full flex-1 hidden md:block">
+				<div className="md:w-3/12 h-full flex-1 hidden md:block ml-2">
 					<TopUsers />
 					<TopCurations />
 				</div>
