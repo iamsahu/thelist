@@ -161,6 +161,12 @@ function LandingPageAlt(props) {
 													<img
 														className="rounded h-16 w-16 object-cover"
 														src={ite.auto_image}
+														onError={(e) => {
+															e.target.onerror = null;
+															e.target.src =
+																"https://picsum.photos/100?blur=2&random=" +
+																Math.floor(Math.random() * 101);
+														}}
 													/>
 												</div>
 												<div className=" text-lg px-3 sm:w-5/6 md:w-11/12">
@@ -230,6 +236,12 @@ function LandingPageAlt(props) {
 													<img
 														className="rounded h-16 w-16 object-cover"
 														src={ite.auto_image}
+														onError={(e) => {
+															e.target.onerror = null;
+															e.target.src =
+																"https://picsum.photos/100?blur=2&random=" +
+																Math.floor(Math.random() * 101);
+														}}
 													/>
 												</div>
 												<div className=" text-lg px-3 sm:w-5/6 md:w-11/12">
