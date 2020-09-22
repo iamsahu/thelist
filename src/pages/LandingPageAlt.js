@@ -159,7 +159,7 @@ function LandingPageAlt(props) {
 											<div className="flex m-2" key={ite.id}>
 												<div className="sm:w-1/6 md:w-1/12 flex-none">
 													<img
-														className="rounded h-16 w-16"
+														className="rounded h-16 w-16 object-cover"
 														src={ite.auto_image}
 													/>
 												</div>
@@ -228,7 +228,7 @@ function LandingPageAlt(props) {
 											<div className="flex m-2 text-base" key={ite.id}>
 												<div className="sm:w-1/6 md:w-1/12 flex-none">
 													<img
-														className="rounded h-16 w-16"
+														className="rounded h-16 w-16 object-cover"
 														src={ite.auto_image}
 													/>
 												</div>

@@ -26,7 +26,7 @@ function TopUsers() {
 						<div className="flex my-4">
 							<div className="sm:w-1/6 md:w-1/12">
 								<img
-									className="h-10 w-10 rounded-full"
+									className="h-10 w-10 rounded-full object-cover"
 									src={ite.image_link}
 									onError={(e) => {
 										e.target.onerror = null;
