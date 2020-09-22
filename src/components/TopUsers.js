@@ -24,10 +24,10 @@ function TopUsers() {
 				{allusers.user.slice(0, 5).map((ite) => (
 					<a href={ite.id} className="text-gray-700">
 						<div className="flex my-4">
-							<div className="sm:w-1/6 md:w-1/12 flex-none">
+							<div className="sm:w-1/6 md:w-1/12">
 								<img className="h-10 w-10 rounded-full" src={ite.image_link} />
 							</div>
-							<div className=" text-xl font-light px-3 sm:w-5/6 md:w-11/12 justify-center text-center align-middle">
+							<div className=" text-xl font-light px-3 sm:w-5/6 md:w-11/12 align-middle">
 								{ite.username}
 							</div>
 						</div>
