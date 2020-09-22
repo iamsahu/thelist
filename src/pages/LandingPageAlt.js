@@ -301,7 +301,7 @@ function LandingPageAlt(props) {
 			<div className="flex w-full h-full mt-8 pt-8">
 				{/* <div className="flex w-full"> */}
 				<div className="md:w-3/12 h-full flex-1 hidden md:block"></div>
-				<div className=" md:w-4/12 h-full divide-y flex-wrap md:flex-none">
+				<div className=" md:w-4/12 h-full flex-wrap md:flex-none">
 					{IndiDate()}
 				</div>
 				<div className="md:w-3/12 h-full flex-1 hidden md:block ml-2">
