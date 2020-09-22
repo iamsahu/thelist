@@ -27,7 +27,16 @@ function TopCurations() {
 					<a href={ite.id} className="text-gray-700">
 						<div className="flex my-2">
 							<div className="sm:w-1/6 md:w-1/12 ">
-								<img className="h-10 w-10 rounded-full" src={ite.image_url} />
+								<img
+									className="h-10 w-10 rounded-full"
+									src={ite.image_url}
+									onError={(e) => {
+										e.target.onerror = null;
+										e.target.src =
+											"https://picsum.photos/100?blur=2&random=" +
+											Math.floor(Math.random() * 101);
+									}}
+								/>
 							</div>
 							<div className=" text-xl font-light px-3 sm:w-5/6 md:w-11/12 align-middle">
 								{ite.list_name}
