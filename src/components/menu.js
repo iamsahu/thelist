@@ -47,6 +47,12 @@ function MenuBar(props) {
 			icon: "bug",
 			value: "feedback",
 		},
+		{
+			key: "pocket",
+			text: "Pocket Consumption",
+			icon: "setting",
+			value: "pocket",
+		},
 		{ key: "sign-out", text: "Sign Out", icon: "sign out", value: "logout" },
 	];
 
@@ -62,6 +68,9 @@ function MenuBar(props) {
 				break;
 			case "settings":
 				history.push("/settings/" + user["sub"].split("|")[1]);
+				break;
+			case "pocket":
+				history.push("/pocketconsumption/" + user["sub"].split("|")[1]);
 				break;
 			case "feedback":
 				history.push("/feedback");

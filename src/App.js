@@ -240,7 +240,7 @@ function App() {
 					.then((r) => r.json())
 					.then((data) => {
 						userToken = data["token"];
-						console.log(userToken);
+						// console.log(userToken);
 
 						const client2 = connect(
 							// process.env.REACT_APP_STREAM_API_KEY,
@@ -251,7 +251,7 @@ function App() {
 						);
 						var t = client2.feed("user", userID);
 
-						console.log(t);
+						// console.log(t);
 						setstreamClient(client2);
 						setstreamuserFeed(t);
 					});

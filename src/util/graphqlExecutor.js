@@ -3008,6 +3008,43 @@ const GetPocketData = (id) => {
 		.catch((error) => console.log(error));
 };
 
+const GETPOCKETDATADATE = gql`
+	query MyQuery($id: String, $start: timestamptz, $end: timestamptz) {
+		pocket_data(
+			where: { user_id: { _eq: $id }, time_added: { _gte: $start, _lte: $end } }
+			order_by: { time_added: desc_nulls_last }
+			limit: 10
+		) {
+			given_url
+			given_title
+			id
+			is_article
+			lang
+			user_id
+			word_count
+			resolved_url
+			time_added
+			top_image_url
+			excerpt
+		}
+	}
+`;
+
+const GetPocketDataDate = (id, start, end) => {
+	console.log(id);
+	return client
+		.query({
+			query: GETPOCKETDATADATE,
+			variables: {
+				id: id,
+				start: start,
+				end: end,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 const INSERTITEM = gql`
 	mutation MyMutation(
 		$list_id: String
@@ -3282,6 +3319,49 @@ const GetTopLists = () => {
 		.catch((error) => console.log(error));
 };
 
+const INSERTPOCKET = gql`
+	mutation MyMutation($list_id: uuid, $pocket_id: uuid) {
+		insert_pocket_item(objects: { list_id: $list_id, pocket_id: $pocket_id }) {
+			affected_rows
+		}
+	}
+`;
+
+const InsertPocket = (list_id, pocket_id) => {
+	// console.log(list_id);
+	// console.log(privat);
+	return client
+		.mutate({
+			mutation: INSERTPOCKET,
+			variables: {
+				list_id: list_id,
+				pocket_id: pocket_id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
+const GETPOCKETSTATUS = gql`
+	query MyQuery($id: String) {
+		user(where: { id: { _eq: $id } }) {
+			pocket_username
+		}
+	}
+`;
+
+const GetPocketStatus = (id) => {
+	return client
+		.query({
+			query: GETPOCKETSTATUS,
+			variables: {
+				id: id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -3340,6 +3420,9 @@ export {
 	UpdateItem,
 	GetItemsMain,
 	GetTopLists,
+	GetPocketDataDate,
+	InsertPocket,
+	GetPocketStatus,
 };
 
 export const DELETE_LIST = gql`

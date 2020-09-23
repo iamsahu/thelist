@@ -11,13 +11,7 @@ function AddPocketItemToList(props) {
 	];
 	return (
 		<>
-			<Dropdown
-				placeholder="Add to List"
-				search
-				selection
-				options={vt}
-				upward
-			/>{" "}
+			<Dropdown placeholder="Add to List" search selection options={vt} />{" "}
 			<Button primary>Primary</Button>
 		</>
 	);

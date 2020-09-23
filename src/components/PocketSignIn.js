@@ -5,7 +5,7 @@ import UserContext from "../context/UserContext";
 function PocketSignIn(props) {
 	const [userC, userChange] = useContext(UserContext);
 	const [token, settoken] = useState(props.pocket_token);
-	console.log(props);
+	// console.log(props);
 	function SignIn() {
 		fetch(
 			"https://wfjiolg53e.execute-api.eu-west-3.amazonaws.com/default/pocketAuth"
@@ -39,10 +39,20 @@ function PocketSignIn(props) {
 
 	return (
 		<>
-			{token !== null ? (
-				<button onClick={UnlinkPocket}>Unlink Pocket</button>
+			{token !== null && token !== "" ? (
+				<button
+					className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4"
+					onClick={UnlinkPocket}
+				>
+					Unlink Pocket
+				</button>
 			) : (
-				<button onClick={SignIn}>Link Pocket</button>
+				<button
+					className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4"
+					onClick={SignIn}
+				>
+					Link Pocket
+				</button>
 			)}
 		</>
 	);

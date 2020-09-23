@@ -234,7 +234,7 @@ function CuratorLanding(props) {
 				</div>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
-				<div className="scrollyCuratorLanding" class="bg-gray-100">
+				<div className="scrollyCuratorLanding bg-gray-100">
 					<div id="content" className="ui">
 						<Container fluid>
 							{/* <Grid>

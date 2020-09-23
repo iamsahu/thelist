@@ -157,6 +157,13 @@ function UserSettings(props) {
 			<Responsive {...Responsive.onlyMobile}>
 				{form}
 				{dd}
+				{
+					<PocketSignIn
+						className="p-4"
+						pocket_token={pocket_token}
+						pocket_username={pocket_username}
+					/>
+				}
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 				<Grid
@@ -168,7 +175,14 @@ function UserSettings(props) {
 						<div>
 							{form}
 							{dd}
-							{process.env.REACT_APP_BASE_URL === "http://localhost:3000" ? (
+							{
+								<PocketSignIn
+									className="p-4 justify-center ml-4"
+									pocket_token={pocket_token}
+									pocket_username={pocket_username}
+								/>
+							}
+							{/* {process.env.REACT_APP_BASE_URL === "http://localhost:3000" ? (
 								<PocketSignIn
 									className="p-4"
 									pocket_token={pocket_token}
@@ -176,7 +190,7 @@ function UserSettings(props) {
 								/>
 							) : (
 								<></>
-							)}
+							)} */}
 						</div>
 					</Grid.Column>
 					<Grid.Column width={3}></Grid.Column>
