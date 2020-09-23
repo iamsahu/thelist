@@ -600,49 +600,7 @@ function LandingPage3() {
 						</div>
 					</div>
 				</section> */}
-				<section class="bg-white py-8 border-b">
-					<div class="container mx-auto flex flex-wrap pt-4 pb-8">
-						<h3 class="w-full my-2 text-4xl font-bold leading-tight text-center text-gray-800">
-							Who curates on The List Space?
-						</h3>
-						<div class="w-full mb-4">
-							<div class="container mx-auto flex flex-wrap pt-4 pb-8">
-								<div class="w-full md:w-1/3 p-2 flex flex-col flex-grow flex-shrink">
-									<FeaturedUserCard user="774642558853009408" />
-								</div>
-								<div class="w-full md:w-1/3 p-2 flex flex-col flex-grow flex-shrink">
-									<FeaturedUserCard user="7958322" />
-								</div>
-								<div class="w-full md:w-1/3 p-2 flex flex-col flex-grow flex-shrink">
-									<FeaturedUserCard user="9615352" />
-								</div>
-								<div class="w-full md:w-1/3 p-2 flex flex-col flex-grow flex-shrink">
-									<FeaturedUserCard user="92636986" />
-								</div>
-								<div class="w-full md:w-1/3 p-2 flex flex-col flex-grow flex-shrink">
-									<FeaturedUserCard user="33969688" />
-								</div>
-								<div class="w-full md:w-1/3 p-2 flex flex-col flex-grow flex-shrink">
-									<FeaturedUserCard user="240049622" />
-								</div>
-							</div>
-							{/* <div class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"> */}
-							<div class="flex items-center justify-center">
-								<button
-									class="mx-auto lg:mx-0 gradient bg-black text-white font-bold rounded-lg py-4 px-8 shadow-lg"
-									onClick={() => {
-										var t = `/explore`;
-										routeChange(t);
-									}}
-								>
-									Explore more curators
-								</button>
-							</div>
-							{/* </div> */}
-						</div>
-					</div>
-				</section>
-				<section class="bg-white py-8">
+				<section class="bg-white py-8  border-t">
 					<div class="container mx-auto flex flex-wrap pt-4 pb-8">
 						{/* <h1 class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800">
 							Title
@@ -730,6 +688,48 @@ function LandingPage3() {
 									</button>
 								</div>
 							</div> */}
+						</div>
+					</div>
+				</section>
+				<section class="bg-white py-8 border-b">
+					<div class="container mx-auto flex flex-wrap pt-4 pb-8">
+						<h3 class="w-full my-2 text-4xl font-bold leading-tight text-center text-gray-800">
+							Who curates on The List Space?
+						</h3>
+						<div class="w-full mb-4">
+							<div class="container mx-auto flex flex-wrap pt-4 pb-8">
+								<div class="w-full md:w-1/3 p-2 flex flex-col flex-grow flex-shrink">
+									<FeaturedUserCard user="774642558853009408" />
+								</div>
+								<div class="w-full md:w-1/3 p-2 flex flex-col flex-grow flex-shrink">
+									<FeaturedUserCard user="7958322" />
+								</div>
+								<div class="w-full md:w-1/3 p-2 flex flex-col flex-grow flex-shrink">
+									<FeaturedUserCard user="9615352" />
+								</div>
+								<div class="w-full md:w-1/3 p-2 flex flex-col flex-grow flex-shrink">
+									<FeaturedUserCard user="92636986" />
+								</div>
+								<div class="w-full md:w-1/3 p-2 flex flex-col flex-grow flex-shrink">
+									<FeaturedUserCard user="33969688" />
+								</div>
+								<div class="w-full md:w-1/3 p-2 flex flex-col flex-grow flex-shrink">
+									<FeaturedUserCard user="240049622" />
+								</div>
+							</div>
+							{/* <div class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"> */}
+							<div class="flex items-center justify-center">
+								<button
+									class="mx-auto lg:mx-0 gradient bg-black text-white font-bold rounded-lg py-4 px-8 shadow-lg"
+									onClick={() => {
+										var t = `/explore`;
+										routeChange(t);
+									}}
+								>
+									Explore more curators
+								</button>
+							</div>
+							{/* </div> */}
 						</div>
 					</div>
 				</section>
