@@ -13,6 +13,7 @@ import { UpdateUserDetails, GetTopLists } from "../util/graphqlExecutor";
 import UserContext from "../context/UserContext";
 import { Grid as GG, Card as CC } from "@material-ui/core";
 import FollowSignUpCard from "../components/FollowSignUpCard";
+import CurationEncouragement from "../components/CurationEncouragement";
 import history from "../util/history";
 
 function SignUpProfilePage(props) {
@@ -82,7 +83,7 @@ function SignUpProfilePage(props) {
 			</Form.Field> */}
 
 			<Button secondary type="submit">
-				Submit
+				Save
 			</Button>
 			<Button basic color="black" onClick={() => setdisplayTopLists(true)}>
 				Skip
@@ -113,7 +114,7 @@ function SignUpProfilePage(props) {
 						Welcome to The List Space!
 					</div>
 				)}
-				<div className="bg-white shadow-md rounded px-2 pt-2 pb-2 mt-20 flex align-middle">
+				<div className="bg-white shadow-md rounded px-2 pt-2 pb-2 mt-20 flex align-middle h-auto">
 					{displayTopLists ? (
 						<>
 							<div className="px-2 md:px-2">
@@ -146,8 +147,15 @@ function SignUpProfilePage(props) {
 						</>
 					) : (
 						<>
-							<div className="w-full ">{form}</div>
-							<div className="hidden md:inline w-1/2"></div>
+							<div className="sm:w-full md:w-1/2 lg:w-1/2 xl:w-1/2">
+								<div className="pl-4">
+									We need few details to finish up your profile!
+								</div>
+								{form}
+							</div>
+							<div className="md:inline hidden w-1/2 text-2xl h-auto content-center items-center justify-center pt-16 px-4 bg-hero-pattern text-center">
+								<CurationEncouragement className="h-auto" />
+							</div>
 						</>
 					)}
 				</div>

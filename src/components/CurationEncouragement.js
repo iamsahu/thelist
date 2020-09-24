@@ -16,8 +16,14 @@ function CurationEncouragement() {
 		return (
 			<div className="font-thin">
 				Did you know curators have created{" "}
-				{data.lists_aggregate.aggregate.count} curations which have got{" "}
-				{data.lists_aggregate.aggregate.sum.view_count} views on The List Space
+				<span className="font-semibold">
+					{data.lists_aggregate.aggregate.count}
+				</span>{" "}
+				curations which have got{" "}
+				<span className="font-semibold">
+					{data.lists_aggregate.aggregate.sum.view_count}
+				</span>{" "}
+				views on The List Space
 			</div>
 		);
 	}
