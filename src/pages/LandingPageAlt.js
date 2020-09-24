@@ -133,7 +133,7 @@ function LandingPageAlt(props) {
 								<div className="border-b flex text-xl p-2">
 									<div className=" text-2xl font-medium align-text-top flex-wrap">
 										<a
-											href={item[0].curator + "/lists/" + item[0].id}
+											href={item[0].curator + "/lists/" + item[0].list.id}
 											className="text-gray-800"
 										>
 											{item[0].list.list_name}
@@ -208,7 +208,7 @@ function LandingPageAlt(props) {
 								<div className="border-b flex text-xl p-2">
 									<div className=" text-2xl font-medium align-text-top flex-wrap">
 										<a
-											href={item[0].curator + "/lists/" + item[0].id}
+											href={item[0].curator + "/lists/" + item[0].list.id}
 											className="text-gray-800"
 										>
 											{item[0].list.list_name}
