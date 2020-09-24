@@ -82,7 +82,7 @@ function UserSettings(props) {
 	const form = (
 		<Form onSubmit={onSubmit} className="p-4">
 			<Form.Field>
-				<label>User Name</label>
+				<label>Display Name</label>
 				<Form.Input
 					name="name"
 					placeholder="User Name"
@@ -100,7 +100,7 @@ function UserSettings(props) {
 				/>
 			</Form.Field>
 			<Form.Field>
-				<label>Image Link</label>
+				<label>Profile Photo</label>
 				<Form.Input
 					name="image"
 					placeholder="Image Link"

@@ -47,6 +47,7 @@ import ReactGA from "react-ga";
 import { connect } from "getstream";
 // import { client } from "./ApolloProvider";
 import algoliasearch from "algoliasearch";
+import SignUpProfilePage from "./pages/SignUpProfilePage";
 
 const MenuBar = lazy(() => import("./components/menu"));
 const AddList = lazy(() => import("./components/AddList"));
@@ -194,6 +195,9 @@ function App() {
 						})
 							.then((response) => {
 								console.log(response);
+								history.push("/signupprofile/" + user_id);
+								window.location.href = window.location.href;
+								//Redirect to Profile Creation
 							})
 							.catch((error) => {
 								// console.log(error)
@@ -628,7 +632,13 @@ function App() {
 														path="/search"
 														component={SearchResults}
 													/>
-
+													{isAuthenticated && !loading && !loadingT && (
+														<Route
+															exact
+															path="/signupprofile/:user"
+															component={SignUpProfilePage}
+														/>
+													)}
 													<Route
 														exact
 														path="/:user/:contenttype/:contentid"
@@ -645,11 +655,13 @@ function App() {
 														path="/manage/:user"
 														component={Curator2}
 													/>
+
 													<Route
 														exact
 														path="/:user"
 														component={CuratorLanding}
 													/>
+
 													{/* {isAuthenticated && !loading && !loadingT ? (
 														<Route
 															path="/"
@@ -689,6 +701,13 @@ function App() {
 												<Route exact path="/privacy" component={Privacy} />
 												<Route exact path="/feedback" component={Feedback} />
 												<Route exact path="/referral" component={Referral} />
+												{isAuthenticated && !loading && !loadingT && (
+													<Route
+														exact
+														path="/signupprofile/:user"
+														component={SignUpProfilePage}
+													/>
+												)}
 												{/* <Route
 													exact
 													path="/landalt"

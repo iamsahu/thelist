@@ -3,7 +3,7 @@ import { Card, Button, Image, Header } from "semantic-ui-react";
 import history from "../util/history";
 import FollowCard from "./FollowCard";
 
-function CuratorLandingCard(props) {
+function FollowSignUpCard(props) {
 	const routeChange = (t) => {
 		history.push(t);
 		window.location.href = window.location.href;
@@ -41,16 +41,34 @@ function CuratorLandingCard(props) {
 						</div>
 					</div>
 					<div className="p-2 w-2/3 h-56">
-						<div className="mb-1 max-h-full h-40">
-							<a
-								className="font-normal text-gray-800 w-full text-lg md:text-xl"
-								href={props.item.curator_id + "/lists/" + props.item.id}
-							>
-								{props.item.list_name}
-							</a>
-							<p className="text-gray-700 text-base lg:text-lg font-thin overflow-hidden max-h-full mb-1 pb-1 h-32">
-								{shrt}
-							</p>
+						<div className="mb-1 max-h-full h-40 flex-row">
+							<div>
+								<a
+									className="font-normal text-gray-800 w-full text-lg md:text-xl"
+									href={props.item.curator_id + "/lists/" + props.item.id}
+								>
+									{props.item.list_name}
+								</a>
+							</div>
+							{/* by */}
+							{/* <div class="flex items-center pt-3">
+								<img
+									class="w-12 h-12 rounded-full"
+									alt="sss"
+									src={props.item.user.image_link}
+								/>
+								<div class="ml-1">
+									<p class="font-bold">{props.item.user.username}</p>
+								</div>
+							</div> */}
+							{/* <div className="text-gray-700 text-base lg:text-lg font-thin overflow-hidden max-h-full mb-1 pb-1 h-32 w-full">
+								by{" "}
+								<img
+									src={props.item.user.image_link}
+									className="rounded-full w-8 h-8"
+								/>{" "}
+								{props.item.user.username}
+							</div> */}
 						</div>
 						<div className="text-gray-500 mb-8 text-left uppercase tracking-widest text-sm md:text-base">
 							<FollowCard
@@ -86,4 +104,4 @@ function CuratorLandingCard(props) {
 	);
 }
 
-export default CuratorLandingCard;
+export default FollowSignUpCard;

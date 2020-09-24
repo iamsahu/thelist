@@ -3300,6 +3300,7 @@ const GETTOPLISTS = gql`
 			user {
 				username
 				image_link
+				id
 			}
 		}
 		lists_aggregate {

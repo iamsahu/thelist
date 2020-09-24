@@ -45,7 +45,7 @@ function FollowCard(props) {
 				(userC.loggedin_user_id !== "" ? (
 					follow === 0 ? (
 						<button
-							class="mx-auto lg:mx-0 gradient hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right bg-white text-black border-gray-800"
+							className="mx-auto lg:mx-0 gradient hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right bg-white text-black border-gray-800"
 							onClick={() => {
 								// streamClient
 								// 	.feed("timeline", userC.loggedin_user_id)
@@ -54,7 +54,7 @@ function FollowCard(props) {
 								setfollow(1);
 							}}
 						>
-							<i class="fas fa-rss"></i> Follow
+							<i className="fas fa-rss"></i> Follow
 						</button>
 					) : (
 						// <Button
@@ -93,7 +93,7 @@ function FollowCard(props) {
 						// 	Unfollow
 						// </Button>
 						<button
-							class="mx-auto lg:mx-0 gradient hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right ml-1 bg-white text-black border-gray-800"
+							className="mx-auto lg:mx-0 gradient hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right ml-1 bg-white text-black border-gray-800"
 							onClick={() => {
 								// streamClient
 								// 	.feed("timeline", userC.loggedin_user_id)
@@ -102,7 +102,7 @@ function FollowCard(props) {
 								setfollow(0);
 							}}
 						>
-							<i class="fas fa-rss text-red-700"></i> Unfollow
+							<i className="fas fa-rss text-red-700"></i> Unfollow
 						</button>
 					)
 				) : (
@@ -111,10 +111,10 @@ function FollowCard(props) {
 						onClose={OnClose}
 						trigger={
 							<button
-								class="mx-auto lg:mx-0 gradient hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right ml-1 bg-white text-black border-gray-800"
+								className="mx-auto lg:mx-0 gradient hover:bg-black hover:text-white font-bold rounded-md py-3 px-4 shadow-lg float-right ml-1 bg-white text-black border-gray-800"
 								onClick={() => setopen(true)}
 							>
-								<i class="fas fa-rss"></i> Follow
+								<i className="fas fa-rss"></i> Follow
 							</button>
 							// <Button
 							// 	size="tiny"
