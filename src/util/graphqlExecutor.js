@@ -3363,6 +3363,33 @@ const GetPocketStatus = (id) => {
 		.catch((error) => console.log(error));
 };
 
+const USERPROFILESTATS = gql`
+	query MyQuery($id: String) {
+		lists_aggregate(where: { curator_id: { _eq: $id } }) {
+			aggregate {
+				count
+			}
+		}
+		list_follow_aggregate(where: { user_id: { _eq: $id } }) {
+			aggregate {
+				count
+			}
+		}
+	}
+`;
+
+const UserProfileStats = (id) => {
+	return client
+		.query({
+			query: USERPROFILESTATS,
+			variables: {
+				id: id,
+			},
+		})
+		.then((response) => response.data)
+		.catch((error) => console.log(error));
+};
+
 export {
 	createItem,
 	GetList,
@@ -3424,6 +3451,7 @@ export {
 	GetPocketDataDate,
 	InsertPocket,
 	GetPocketStatus,
+	UserProfileStats,
 };
 
 export const DELETE_LIST = gql`

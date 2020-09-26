@@ -1,7 +1,11 @@
 import React, { useContext, useState, Suspense, lazy } from "react";
 import { Container, Grid, Button, Responsive, Menu } from "semantic-ui-react";
 import UserContext from "../context/UserContext";
-import { DoesUserExists, GetTagsOfUser } from "../util/graphqlExecutor";
+import {
+	DoesUserExists,
+	GetTagsOfUser,
+	UserProfileStats,
+} from "../util/graphqlExecutor";
 import { Link } from "react-router-dom";
 // import ContentContext from "../context/ContentContext";
 import history from "../util/history";
@@ -41,6 +45,8 @@ function CuratorLanding(props) {
 	const [editState, seteditState] = useState(false);
 	// const [listData, setlistData] = useState("");
 	const [tagData, settagData] = useState("");
+	const [listCount, setListCount] = useState(0);
+	const [followCount, setFollowCount] = useState(0);
 	var u;
 	if (typeof props.user !== "undefined") u = props.user;
 	else u = props.match.params.user;
@@ -76,6 +82,13 @@ function CuratorLanding(props) {
 			.then((response) => {
 				// console.log(response);
 				settagData(response);
+			})
+			.catch((error) => console.log(error));
+		UserProfileStats(user)
+			.then((response) => {
+				// console.log(response);
+				setListCount(response.lists_aggregate.aggregate.count);
+				setFollowCount(response.list_follow_aggregate.aggregate.count);
 			})
 			.catch((error) => console.log(error));
 	};
@@ -179,7 +192,7 @@ function CuratorLanding(props) {
 						<div class="mt-8">
 							<Menu pointing secondary>
 								<Menu.Item
-									name="My Curations"
+									name={listCount + " Curations"}
 									active={activeTab === "mylists"}
 									onClick={handleItemClickMobile}
 								/>
@@ -197,7 +210,7 @@ function CuratorLanding(props) {
 									onClick={handleItemClickMobile}
 								/>
 								<Menu.Item
-									name="Following"
+									name={followCount + " Following"}
 									active={activeTab === "Following"}
 									onClick={handleItemClickMobile}
 								/>
@@ -255,7 +268,7 @@ function CuratorLanding(props) {
 							<Grid.Column width={10}>
 								<Menu pointing secondary>
 									<Menu.Item
-										name="My Curations"
+										name={listCount + " Curations"}
 										active={activeTab === "mylists"}
 										onClick={handleItemClickDesktop}
 									/>
@@ -273,7 +286,7 @@ function CuratorLanding(props) {
 										onClick={handleItemClickDesktop}
 									/>
 									<Menu.Item
-										name="Following"
+										name={followCount + " Following"}
 										active={activeTab === "Following"}
 										onClick={handleItemClickMobile}
 									/>
